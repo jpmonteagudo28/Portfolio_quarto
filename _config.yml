@@ -1,5 +1,5 @@
 title: Juan Pablo Monteagudo
-#logo: assets/img.jpg
+<img src="./img.jpg">
 description: Aspiring statistician
 show_downloads: true
 theme: jekyll-theme-minimal
