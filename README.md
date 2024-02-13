@@ -1,9 +1,10 @@
 # Aspiring Biostatistician ☣️
 What's your professional goal?
+
 ## Projects 👨‍💼
-    The use of Quantile Beta Regression to determine range of improvement in patients with m-TBI
-    TRooPs - an interactive Shiny app to calculate GI Bill pay rates for students at Liberty University
-    Investigating COVID-19 case fatality rate (CFR) in Chile - a case study in quantile beta regression
+    I. The use of Quantile Beta Regression to determine range of improvement in patients with m-TBI
+    II. TRooPs - an interactive Shiny app to calculate GI Bill pay rates for students at Liberty University
+    III. Investigating COVID-19 case fatality rate (CFR) in Chile - a case study in quantile beta regression
       
 ## Education 👨‍🎓
      MPH Epidemiology
