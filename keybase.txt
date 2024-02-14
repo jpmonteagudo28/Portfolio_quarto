@@ -1,0 +1,67 @@
+### Keybase proof
+
+I hereby claim:
+
+  * I am jpmonteagudo28 on github.
+  * I am jpmonteagudo (https://keybase.io/jpmonteagudo) on keybase.
+  * I have a public key ASBc5_q0eXEu9m3dgeeHXQGyyqH9SHYelxwFio5fFmV8pAo
+
+To claim this, I am signing this object:
+
+```json
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01205ce7fab479712ef66ddd81e7875d01b2caa1fd48761e971c058a8e5f16657ca40a",
+      "host": "keybase.io",
+      "kid": "01205ce7fab479712ef66ddd81e7875d01b2caa1fd48761e971c058a8e5f16657ca40a",
+      "uid": "22ec331c4f24ed49799e11d9117c4319",
+      "username": "jpmonteagudo"
+    },
+    "merkle_root": {
+      "ctime": 1707947443,
+      "hash": "7b57ff4fb684c1ecd8fb57bfba21b5205586eeb30d1dc5ede6ab19d069adb1e6d1a5bbcf386b9dbb9e8dea1148d0103f8e987e518db01ddf6aa29db5f0db318f",
+      "hash_meta": "e1aaa850c74df52ded2bad16ce9f14efbb9b9ff2b8dcf0763f5d0b895c6d0538",
+      "seqno": 25459451
+    },
+    "service": {
+      "entropy": "BBXFTnn67e7i2mZuptGgNRim",
+      "name": "github",
+      "username": "jpmonteagudo28"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.2.5"
+  },
+  "ctime": 1707947454,
+  "expire_in": 504576000,
+  "prev": "01e35543ae92a356b0c4d38727a476cec9a2f9c246f6e2303d5971245354e576",
+  "seqno": 10,
+  "tag": "signature"
+}
+```
+
+with the key [ASBc5_q0eXEu9m3dgeeHXQGyyqH9SHYelxwFio5fFmV8pAo](https://keybase.io/jpmonteagudo), yielding the signature:
+
+```
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgXOf6tHlxLvZt3YHnh10Bssqh/Uh2HpccBYqOXxZlfKQKp3BheWxvYWTESpcCCsQgAeNVQ66So1awxNOHJ6R2zsmi+cJG9uIwPVlxJFNU5XbEIN685v6avJZNHamVRMGRemdllurIWDpkdJRrJv9dczvWAgHCo3NpZ8RAx3psPm+7ENPa81X7qg9bVVV/vzUh3n5o8gPtmMcOxhgwPa455g1YTNDPlPcesMgOg/MajFKhQeQuNO0w5KDWBqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIFNZYm1n81aKutFNj37lMM/8DncAVWnvZur9iJVuTURRo3RhZ80CAqd2ZXJzaW9uAQ==
+
+```
+
+And finally, I am proving ownership of the github account by posting this as a gist.
+
+### My publicly-auditable identity:
+
+https://keybase.io/jpmonteagudo
+
+### From the command line:
+
+Consider the [keybase command line program](https://keybase.io/download).
+
+```bash
+# look me up
+keybase id jpmonteagudo
+```
