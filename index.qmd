@@ -1,9 +1,9 @@
 ---
-title: "¡Hola!"
+title: "¡Bienvenido!"
 pagetitle: "JP Monteagudo"
-main-photo: /files/profiles/profile_2024.jpg
-main-photo-square: /files/profiles/profile_2024.jpg
-title-block-banner: "#F6D645"
+main-photo: /files/profile_2024.png
+main-photo-square: /files/profile_2024.png
+title-block-banner: "#F2AC57"
 format:
   html:
     quarto-template-params:

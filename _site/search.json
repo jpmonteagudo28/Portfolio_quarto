@@ -1,0 +1,177 @@
+[
+  {
+    "objectID": "uses/index.html",
+    "href": "uses/index.html",
+    "title": "What I use",
+    "section": "",
+    "text": "I’ve gradually discovered a research workflow that suits my needs (and my budget😅) and maximizes productivity.\nI’m leaving a list of the programs/software I regularly use as a way to track the changes to my workflow and also provide guidance to those looking for free resources to increase their efficiency and organization.\nAs of February 27, 2024, this is what I use:"
+  },
+  {
+    "objectID": "uses/index.html#discovery-and-idea-generation",
+    "href": "uses/index.html#discovery-and-idea-generation",
+    "title": "What I use",
+    "section": "Discovery and Idea Generation",
+    "text": "Discovery and Idea Generation\nWriting\n\nI use Joplin– an open-source note-taking app with a markdown editor and customizable plugins. Another great option is Obsidian which includes knowledge graphs to organize your thoughts.\nI use Typora to create stand-alone markdown files. Typora also supports pandoc-flavored markdown which makes it easier to transform markdown to other formats like .docx, .pdf, etc.\nI use a good ol’ Mead Five Star Spiral Fat Lil’ Pocket Notebook for note-taking (books I read, ideas, summaries, schedules, to-do lists). I’ve tried planners, calendars, apps and none of those things seem to keep me on track as brilliantly as a handwritten note in one of those fat little notebooks.\nI use Mendeley as my bibliography and citation manager. The free plan includes 2GB of storage, which is more than I need. I store my bibliographies in Bibtex format.\nI use LaTeX and Detexify which makes finding LateX symbols a breeze. Just draw the symbol you’re looking for and the site provides a list of possible matches with their LateX syntax."
+  },
+  {
+    "objectID": "uses/index.html#data-collection-and-analysis",
+    "href": "uses/index.html#data-collection-and-analysis",
+    "title": "What I use",
+    "section": "Data Collection and Analysis",
+    "text": "Data Collection and Analysis\nScience and Research\n\nI currently use R and RStudio for my data analysis and graphing needs, and VSCode for everything else.\nI used G-Power and piface for sample size calculations, but their utility decreased as I began to use more complicated models.\nMy main statistical programming software was SPSS until 2020, but its lackluster versatility left me disappointed. I especially didn’t like all the clicking and the way their syntax, output, and data panels were set up. Unfortunately, that’s the software of choice in many universities in the U.S., including mine.\nI also use Notepad ++ which is a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.\nI use Github to store almost everything I write and for version control."
+  },
+  {
+    "objectID": "uses/index.html#publication",
+    "href": "uses/index.html#publication",
+    "title": "What I use",
+    "section": "Publication",
+    "text": "Publication\nGraphic Design\n\nI’ve used Canva for every design in this website and personal documents. I also have free access to Adobe InDesign but haven’t used it much.\nI totally recommend Practical Typography, by Matthew Butterick– a typograhpy primer for the graphic designer and they lay person trying to create beautiful documents.\nI use PowerPoint to create simple and stunning presentations. I have free access to Microsoft products, and it’s also the best slide editor I’ve seen.\nI use Google Fonts API for font selection. After reading Matthew Butterick’s typography book, I’m really careful about text composition and formatting. My preferred fonts are IBM Plex Serif, IBM Plex Sans, Source Code Pro, Charter, Concourse, and Cooper Hewitt.\nProductivity\n\nI use Dropbox and Google One for file storage and backup. I get Dropbox for free through my school, and I pay for a family Google One subscription. However, both services cost about the same and offer similar storage space (3TB and 2TB respectively).\nI use the Windows Clock app focus feature to track my time. I’m not easily distracted if I’m working towards a concrete, timed goal so scheduling times of intense mental activity is a huge help.\nI use Otter.ai as my audio recording and automatic transcription service. I record presentations, interviews, talks, etc. and Otter.ai produces a solid transcript that I can then save or use in content creation.\nI use Chat GPT to answer all sorts of questions and to guide me in the creative process."
+  },
+  {
+    "objectID": "uses/index.html#hardware",
+    "href": "uses/index.html#hardware",
+    "title": "What I use",
+    "section": "Hardware",
+    "text": "Hardware\n\nI use Yubico and Keybase for privacy and security.\nI use a 2020 15.6″ i5Core Dell, a 2020 13″ MacBook Pro, and an iPhone 13 mini."
+  },
+  {
+    "objectID": "uses/index.html#guides",
+    "href": "uses/index.html#guides",
+    "title": "What I use",
+    "section": "Guides",
+    "text": "Guides\n\n\nGood enough practices in scientific computing detail the process of organizing, structuring, and sharing data and research with collaborators while keeping track of all the changes.\n\nFour steps to an applied micro paper, by Jesse Shapiro, outlines the process of writing an academic paper in the applied sciences. It’s a very succinct guide to help students and researchers improve their writing.\n.How to give an applied micro talk, also by Jesse Shapiro, is a brief explanation of why your presentations should be short and engaging, not so tediously structured and technical.\n\nPublic speaking for academic economists, by Rachel Meager, provides a simple and witty guide to public speaking for researchers and academics.\n\nThe Plain Person’s Guide to Plain Text Social Science. A useful primer on organizing and structuring your writing and research process in the Social Science sphere. It provides a template for research and writing that you can transform to suit your needs and budget (I mostly use free software except for Typora and Google One).\nKieran Healy’s Making Slides guide to creating engaging slides by using layers, highlighting, and repetition to build your argument."
+  },
+  {
+    "objectID": "research/articles/peck-heiss-2021/index.html",
+    "href": "research/articles/peck-heiss-2021/index.html",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "",
+    "text": "Paper (preprint)\nStatistical analysis notebook\nGitHub repository"
+  },
+  {
+    "objectID": "research/articles/peck-heiss-2021/index.html#important-links",
+    "href": "research/articles/peck-heiss-2021/index.html#important-links",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "",
+    "text": "Paper (preprint)\nStatistical analysis notebook\nGitHub repository"
+  },
+  {
+    "objectID": "research/articles/peck-heiss-2021/index.html#abstract",
+    "href": "research/articles/peck-heiss-2021/index.html#abstract",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Abstract",
+    "text": "Abstract\nEcological theorists have generated several yet unresolved disputes that try to untangle the difficulty in understanding the nature of complex ecological communities. In this paper, we combine two recent theoretical approaches that used together suggest a promising way to consider how evolutionary and ecological processes may be used to frame a general theory of community ecology and its functional stability. First, we consider the theoretical proposal by Mark Vellend (2016) to focus on a small set of higher-level evolutionary and ecological processes that act on species within an ecological community. These processes provide a basis for ecological theory similar to the way in which theoretical population genetics has focused on a small set of mathematical descriptions to undergird its theory. Second, we explore ideas that might be applied to ecosystem functioning developed by Alvaro Moreno and Matteo Mossio’s (2015) work on how biologically autonomous systems emerge from closure of relevant constraints. To explore the possibility that combining these two ideas may provide a more general theoretical understanding of ecological communities, we have developed a stochastic, agent-based model, with agents representing species, that explores the potential of using evolutionary and ecological processes as a constraint on the flow of species through an ecosystem. We explore how these ideas help illuminate aspects of stability found in many ecological communities. These agent-based modeling results provide in-principle arguments that suggest that constraint closure, using evolutionary and ecological processes, explains general features of ecological communities. In particular, we find that our model suggests a perspective useful in explaining repeated patterns of stability in ecological evenness, species turnover, species richness, and in measures of fitness."
+  },
+  {
+    "objectID": "research/articles/peck-heiss-2021/index.html#important-figure",
+    "href": "research/articles/peck-heiss-2021/index.html#important-figure",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Important figure",
+    "text": "Important figure\nFigure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent, and with uniform random values of parameters pulled from their possible values in the model iterations. The whiskers in the box plot show the range of variation. The actual data used to construct the boxplots are shown as fine gray dots to the right of each box plot. (a) Effect of the number of constraints on landscape fitness. (b) Effect of the number of constraints on ecological evenness. (c) Effect of the number of constraints on the average cell species richness (number of species defined as functional groups) present in the cell-niche. (d) Effect of the number of constraints on the difference between turnover in mutualistic linked and unlinked species. The turnover rate is the number of new species created at each time step in each cell.\n\n\n\nFigure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent"
+  },
+  {
+    "objectID": "research/articles/peck-heiss-2021/index.html#citation",
+    "href": "research/articles/peck-heiss-2021/index.html#citation",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Citation",
+    "text": "Citation\n\n{{&lt; ai zotero &gt;}} Add to Zotero \n\n@article{PeckHeiss:2021,\n    Author = {Steven L. Peck and Andrew Heiss},\n    Doi = {10.1111/oik.07621},\n    Journal = {Oikos},\n    Month = {9},\n    Number = {9},\n    Pages = {1425--1439},\n    Title = {Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?},\n    Volume = {130},\n    Year = {2021}}"
+  },
+  {
+    "objectID": "now/index.html",
+    "href": "now/index.html",
+    "title": "Nowadays",
+    "section": "",
+    "text": "This year will be a busy one for me:\n\nI’m doing my MPH in Epidemiology and figuring out what research opportunities are available at my university.\nAfter the COVID-19 pandemic, I’ve been working from home and spent a lot fo time with my family.\nI’m working full-time as a Learning and Development Specialist and doing some freelancing and working on personal projects on the side whenever I get a chance.\nI’m deepening my understanding of statistics and programming and that occupies a good chunk of my free time.\nI have been obsessed with kettlebells for the past two and a half years. I’ve mastered a few movements but there’s still a lot of ground to cover.\nEversince we moved to our new house, I’ve been working on some sort of house repair.\nI’ve been really intentional about spending quality time with my wife and daughters. They’re honestly the best and deserve all of my time!\nI’ve been reading science and religion books for the past three years until recently, when I decided to reread the classics and tell them to my girls who aren’t old enough to read those yet."
+  },
+  {
+    "objectID": "cv/index.html",
+    "href": "cv/index.html",
+    "title": "Résumé",
+    "section": "",
+    "text": "Download résumé"
+  },
+  {
+    "objectID": "blog/2024/02/index.html",
+    "href": "blog/2024/02/index.html",
+    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
+    "section": "",
+    "text": "The quantile beta regression model discussed in the 2021 paper by"
+  },
+  {
+    "objectID": "blog/2024/02/index.html#quantile-beta-regression",
+    "href": "blog/2024/02/index.html#quantile-beta-regression",
+    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
+    "section": "",
+    "text": "The quantile beta regression model discussed in the 2021 paper by"
+  },
+  {
+    "objectID": "blog/2024/02/index.html#running-code",
+    "href": "blog/2024/02/index.html#running-code",
+    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "blog/index.html#section",
+    "href": "blog/index.html#section",
+    "title": "Blog",
+    "section": "2024",
+    "text": "2024\n\n\n    \n    \n                  \n            February 26, 2024\n        \n        \n            A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages\n\n            \n            \n                \n                \n                    r\n                \n                \n                \n                    betareg\n                \n                \n                \n                    percentile\n                \n                \n                \n                    regression\n                \n                \n                \n                    beta distribution\n                \n                \n                \n                    COVID-19\n                \n                \n                \n                    GLMs\n                \n                \n                \n                    modeling\n                \n                \n            \n            \n\n            Using the betareg and RBE3 packages to model ratios and proportions\n            \n            \n            10.59350/pe5s8-e0f47\n            \n        \n        \n    \n    \n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "¡Bienvenido!",
+    "section": "",
+    "text": "I’m an aspiring epidemiologist currently pursuing post-graduate studies in Epidemiology at Liberty University. I have previously obtained degrees in psychology and biostatistics in 2020 and 2023.\nI’m interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology and nutritional epidemiology. I absolutely love mathematical applied statistics and the R programming language, one of the best tools for clinical statistics and epidemiological research.\nI’m currently taking a deep dive into generalized linear models, causal inference and data visualization. Nowadays, I’m conducting a pilot study to analyze the impact of new hire training on performance in a fast-paced contact center environment for the financial services division of a large university."
+  },
+  {
+    "objectID": "research/articles/index.html",
+    "href": "research/articles/index.html",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "",
+    "text": "Paper (preprint)\nStatistical analysis notebook\nGitHub repository"
+  },
+  {
+    "objectID": "research/articles/index.html#important-links",
+    "href": "research/articles/index.html#important-links",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "",
+    "text": "Paper (preprint)\nStatistical analysis notebook\nGitHub repository"
+  },
+  {
+    "objectID": "research/articles/index.html#abstract",
+    "href": "research/articles/index.html#abstract",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Abstract",
+    "text": "Abstract\nEcological theorists have generated several yet unresolved disputes that try to untangle the difficulty in understanding the nature of complex ecological communities. In this paper, we combine two recent theoretical approaches that used together suggest a promising way to consider how evolutionary and ecological processes may be used to frame a general theory of community ecology and its functional stability. First, we consider the theoretical proposal by Mark Vellend (2016) to focus on a small set of higher-level evolutionary and ecological processes that act on species within an ecological community. These processes provide a basis for ecological theory similar to the way in which theoretical population genetics has focused on a small set of mathematical descriptions to undergird its theory. Second, we explore ideas that might be applied to ecosystem functioning developed by Alvaro Moreno and Matteo Mossio’s (2015) work on how biologically autonomous systems emerge from closure of relevant constraints. To explore the possibility that combining these two ideas may provide a more general theoretical understanding of ecological communities, we have developed a stochastic, agent-based model, with agents representing species, that explores the potential of using evolutionary and ecological processes as a constraint on the flow of species through an ecosystem. We explore how these ideas help illuminate aspects of stability found in many ecological communities. These agent-based modeling results provide in-principle arguments that suggest that constraint closure, using evolutionary and ecological processes, explains general features of ecological communities. In particular, we find that our model suggests a perspective useful in explaining repeated patterns of stability in ecological evenness, species turnover, species richness, and in measures of fitness."
+  },
+  {
+    "objectID": "research/articles/index.html#important-figure",
+    "href": "research/articles/index.html#important-figure",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Important figure",
+    "text": "Important figure\nFigure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent, and with uniform random values of parameters pulled from their possible values in the model iterations. The whiskers in the box plot show the range of variation. The actual data used to construct the boxplots are shown as fine gray dots to the right of each box plot. (a) Effect of the number of constraints on landscape fitness. (b) Effect of the number of constraints on ecological evenness. (c) Effect of the number of constraints on the average cell species richness (number of species defined as functional groups) present in the cell-niche. (d) Effect of the number of constraints on the difference between turnover in mutualistic linked and unlinked species. The turnover rate is the number of new species created at each time step in each cell.\n\n\n\nFigure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent"
+  },
+  {
+    "objectID": "research/articles/index.html#citation",
+    "href": "research/articles/index.html#citation",
+    "title": "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?",
+    "section": "Citation",
+    "text": "Citation\n\n{{&lt; ai zotero &gt;}} Add to Zotero \n\n@article{PeckHeiss:2021,\n    Author = {Steven L. Peck and Andrew Heiss},\n    Doi = {10.1111/oik.07621},\n    Journal = {Oikos},\n    Month = {9},\n    Number = {9},\n    Pages = {1425--1439},\n    Title = {Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?},\n    Volume = {130},\n    Year = {2021}}"
+  },
+  {
+    "objectID": "research/index.html",
+    "href": "research/index.html",
+    "title": "Research",
+    "section": "",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "objectID": "research/index.html#journal-articles",
+    "href": "research/index.html#journal-articles",
+    "title": "Research",
+    "section": "Journal articles",
+    "text": "Journal articles\n\n\n\n    \n        \n            \n                Steven L. Peck and Andrew Heiss, “Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?” Oikos 130, no. 9 (September 2021): 1425–1439, doi: 10.1111/oik.07621\n            \n\n            \n            \n                \n                    \n                            Data visualization\n                        \n                    \n                    \n                            Ecology\n                        \n                    \n                    \n                            Simulation\n                        \n                    \n            \n            \n\n            \n            \n            \n            \n                Fitness, turnover,\n            \n                 / stability, evenness—\n            \n                 / all due to constraints.\n            \n            \n            \n            \n            \n                \n                    \n                        \n                             Full details »\n                        \n                    \n                    \n                        \n                    \n                        \n                        \n                        \n                             Preprint\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Final version\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Code\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Add to Zotero\n                        \n                    \n                        \n                    \n                \n            \n        \n        \n\n\n\nNo matching items"
+  }
+]

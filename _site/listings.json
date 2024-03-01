@@ -1,0 +1,20 @@
+[
+  {
+    "listing": "/atom.html",
+    "items": [
+      "/blog/2024/02/index.html"
+    ]
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/2024/02/index.html"
+    ]
+  },
+  {
+    "listing": "/research/index.html",
+    "items": [
+      "/research/articles/peck-heiss-2021/index.html"
+    ]
+  }
+]

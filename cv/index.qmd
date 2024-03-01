@@ -1,8 +1,8 @@
 ---
-title: Curriculum vitæ
-description: "JP Monteagudo's CV"
+title: Résumé
+description: "JP Monteagudo's Résumé"
 date: 2024-03-01
-title-block-banner: "#118230"
+title-block-banner: "#A52C60"
 published-title: CV last updated
 engine: knitr
 freeze: false
@@ -39,7 +39,7 @@ cv:
 ```{=html}
 <p class="text-center">
   <a class="btn btn-primary btn-lg cv-download" href="`r rmarkdown::metadata$cv$pdf`" target="_blank">
-    <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download current CV
+    <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download résumé
   </a>
 </p>
 
