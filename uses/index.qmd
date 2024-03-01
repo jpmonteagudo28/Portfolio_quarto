@@ -1,0 +1,74 @@
+---
+title: What I use
+date: 2024-02-27
+description: Some projects, new learning experiences and home-life adventures
+title-block-banner: "#EE6A24"
+published-title: Last updated
+toc: true
+toc-location: left
+toc-title: "Contents"
+engine: knitr
+freeze: false
+---
+
+```{css, echo=FALSE}
+#title-block-header .description {
+    display: none;
+}
+```
+
+I've gradually discovered a research workflow that suits my needs (and my budget😅) and maximizes productivity.
+
+I'm leaving a list of the programs/software I regularly use as a way to track the changes to my workflow and also provide guidance to those looking for free resources to increase their efficiency and organization.
+
+As of February 27, 2024, this is what I use:
+
+## Discovery and Idea Generation
+
+### Writing
+
+-   I use [Joplin](https://joplinapp.org/)– an open-source note-taking app with a markdown editor and customizable plugins. Another great option is [Obsidian](https://www.marclittlemore.com/beginners-guide-note-taking-obsidian/) which includes knowledge graphs to organize your thoughts.
+-   I use [Typora](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) to create stand-alone markdown files. Typora also supports [pandoc-flavored markdown](https://pandoc.org/index.html) which makes it easier to transform markdown to other formats like .docx, .pdf, etc.
+-   I use a good ol' [Mead Five Star Spiral Fat Lil' Pocket Notebook](https://www.fivestarbuiltstrong.com/p/multipacks/fat-lil-wirebound-notebook-college-ruled-6-pack-38027/) for note-taking (books I read, ideas, summaries, schedules, to-do lists). I've tried planners, calendars, apps and none of those things seem to keep me on track as brilliantly as a handwritten note in one of those fat little notebooks.
+-   I use [Mendeley](https://www.mendeley.com/search/) as my bibliography and citation manager. The free plan includes 2GB of storage, which is more than I need. I store my bibliographies in [Bibtex format](https://www.bibtex.org/).
+-   I use [***LaTeX***](https://www.latex-project.org/) and [Detexify](https://detexify.kirelabs.org/classify.html) which makes finding LateX symbols a breeze. Just draw the symbol you're looking for and the site provides a list of possible matches with their LateX syntax.
+
+## Data Collection and Analysis
+
+### Science and Research
+
+-   I currently use [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/) for my data analysis and graphing needs, and [VSCode](https://code.visualstudio.com/) for everything else.
+-   I used [G-Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) and [piface](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) for sample size calculations, but their utility decreased as I began to use more complicated models.
+-   My main statistical programming software was [SPSS](https://studentdiscounts.com/?gad_source=1&gclid=CjwKCAiAivGuBhBEEiwAWiFmYQw5XZfX_CVYuuY1zt8nJZsSbSLOtD9sRVQbcqyBNEUejnnA1-3OVBoCLVgQAvD_BwE) until 2020, but its lackluster versatility left me disappointed. I especially didn't like all the clicking and the way their syntax, output, and data panels were set up. Unfortunately, that's the software of choice in many universities in the U.S., including mine.
+-   I also use Notepad ++ which is a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.
+-   I use [Github](https://github.com/) to store almost everything I write and for version control.
+
+## Publication
+
+### Graphic Design
+
+-   I've used [Canva](https://www.canva.com/) for every design in this website and personal documents. I also have free access to [Adobe InDesign](https://www.adobe.com/) but haven't used it much.
+-   I totally recommend [Practical Typography](https://practicaltypography.com/), by Matthew Butterick– a typograhpy primer for the graphic designer and they lay person trying to create beautiful documents.
+-   I use PowerPoint to create simple and stunning presentations. I have free access to Microsoft products, and it's also the best slide editor I've seen.
+-   I use [Google Fonts API](https://fonts.google.com/) for font selection. After reading Matthew Butterick's typography book, I'm really careful about text composition and formatting. My preferred fonts are IBM Plex Serif, IBM Plex Sans, Source Code Pro, Charter, Concourse, and Cooper Hewitt.
+
+### Productivity
+
+-   I use [Dropbox](https://www.dropbox.com/) and [Google One](https://one.google.com/overview/) for file storage and backup. I get Dropbox for free through my school, and I pay for a family Google One subscription. However, both services cost about the same and offer similar storage space (3TB and 2TB respectively).
+-   I use the Windows Clock app focus feature to track my time. I'm not easily distracted if I'm working towards a concrete, timed goal so scheduling times of intense mental activity is a huge help.
+-   I use [Otter.ai](https://otter.ai/home) as my audio recording and automatic transcription service. I record presentations, interviews, talks, etc. and Otter.ai produces a solid transcript that I can then save or use in content creation.
+-   I use [Chat GPT](https://chat.openai.com/) to answer all sorts of questions and to guide me in the creative process.
+
+## Hardware
+
+-   I use [Yubico](https://www.yubico.com/) and [Keybase](https://keybase.io/) for privacy and security.
+-   I use a 2020 15.6″ i5Core Dell, a 2020 13″ MacBook Pro, and an iPhone 13 mini.
+
+## Guides
+
+-   [Good enough practices in scientific computing](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510) detail the process of organizing, structuring, and sharing data and research with collaborators while keeping track of all the changes.
+-   [Four steps to an applied micro paper](https://scholar.harvard.edu/files/shapiro/files/foursteps.pdf), by Jesse Shapiro, outlines the process of writing an academic paper in the applied sciences. It's a very succinct guide to help students and researchers improve their writing.
+-   .[How to give an applied micro talk](https://scholar.harvard.edu/files/shapiro/files/applied_micro_slides.pdf), also by Jesse Shapiro, is a brief explanation of why your presentations should be short and engaging, not so tediously structured and technical.
+-   [Public speaking for academic economists](https://www.princeton.edu/~reddings/tradephd/public_speaking_for_academic_economists.pdf), by Rachel Meager, provides a simple and witty guide to public speaking for researchers and academics.
+-   [The Plain Person’s Guide to Plain Text Social Science](https://plain-text.co/). A useful primer on organizing and structuring your writing and research process in the Social Science sphere. It provides a template for research and writing that you can transform to suit your needs and budget (I mostly use free software except for Typora and Google One).
+-   Kieran Healy's [*Making Slides*](https://kieranhealy.org/blog/archives/2018/03/24/making-slides/) guide to creating engaging slides by using layers, highlighting, and repetition to build your argument.

@@ -1,0 +1,27 @@
+---
+title: Nowadays
+date: 2024-02-26
+description: Some projects, new learning experiences and home-life adventures
+published-title: Last updated
+title-block-banner: "#3093CF"
+toc: false
+engine: knitr
+freeze: false
+---
+
+```{css, echo=FALSE}
+#title-block-header .description {
+    display: none;
+}
+```
+
+This year will be a busy one for me:
+
+-   I'm doing my [MPH in Epidemiology](https://www.liberty.edu/explore/mph-master-public-health-epidemiology/) and figuring out what research opportunities are available at my university.
+-   After the COVID-19 pandemic, I've been working from home and spent a lot fo time with my family.
+-   I'm working full-time as a Learning and Development Specialist and doing some freelancing and working on personal projects on the side whenever I get a chance.
+-   I'm deepening my understanding of statistics and programming and that occupies a good chunk of my free time.
+-   I have been obsessed with [kettlebells](https://www.roguefitness.com/conditioning/strength-equipment/kettlebells?gad_source=1&gclid=CjwKCAiArfauBhApEiwAeoB7qGKW1QZiYRoVee6Ak1xK2fM9izidlnV-h8GoWOpbN58oTeEv43dAFxoC_iYQAvD_BwE) for the past two and a half years. I've mastered a few movements but there's still a lot of ground to cover.
+-   Eversince we moved to our new house, I've been working on some sort of house repair.
+-   I've been really intentional about spending quality time with my wife and daughters. They're honestly the best and deserve all of my time!
+-   I've been reading science and religion books for the past three years until recently, when I decided to reread the classics and tell them to my girls who aren't old enough to read those yet.

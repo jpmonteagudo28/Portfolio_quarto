@@ -1,6 +1,6 @@
 ---
 title: "Page not found!"
-title-block-banner: "#3256a8"
+title-block-banner: "#f2ac57"
 ---
 
 ### whoops!

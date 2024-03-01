@@ -1,0 +1,61 @@
+---
+title: "Research"
+listing:
+  - id: articles
+    contents: "articles/*/index.qmd"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+    categories: true
+  - id: working-papers
+    contents: "working-papers/*/index.qmd"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+  - id: reviews
+    contents: "reviews/*/index.qmd"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+  - id: seminar-papers
+    contents: "seminar-papers/*/index.qmd"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+  - id: presentations
+    contents: "presentations/*/index.qmd"
+    sort: "date desc"
+    template: ../html/research/listing.ejs
+page-layout: full
+include-back-link: false
+toc-location: right
+---
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. {{< ai blank-just-to-add-ai-dependency-to-this-page >}}
+
+
+
+## Journal articles
+
+:::{#articles}
+:::
+
+
+## Working papers
+
+:::{#working-papers}
+:::
+
+
+## Reviews
+
+:::{#reviews}
+:::
+
+
+## Selected seminar papers
+
+:::{#seminar-papers}
+:::
+
+
+## Presentations
+
+:::{#presentations}
+:::

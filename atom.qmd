@@ -1,0 +1,16 @@
+---
+---
+title: "JP's blog"
+search: false
+listing:
+  sort: "date desc"
+  feed: 
+    title: "JP's blog"
+    description: "JP's blog"
+    items: 10
+    type: full
+    language: en
+  contents:
+    - "blog/**/index.qmd"
+    - "!blog/index.qmd"
+---

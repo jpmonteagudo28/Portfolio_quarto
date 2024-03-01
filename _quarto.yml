@@ -3,16 +3,14 @@ project:
   render:
     - "*.qmd"
     - "*.md"
-    - "!etc/"
   resources:
     - "files/**"
-    - "etc/**"
 
     # Things that need to be at the site root
-    - "LiveSearchSiteAuth.xml"
+    - "LiveSearchAuth.xml"
     - "keybase.txt"
-    - "y_key_31e0c4105fc75710.html"
-    - "pgp_ath.asc.txt"
+    #- "y_key_31e0c4105fc75710.html"
+    - "pgp_jpm.asc.txt"
 
 execute:
   freeze: auto
@@ -21,26 +19,26 @@ bibliography: files/bib/references.bib
 csl: files/bib/chicago-author-date.csl
 
 # Metadata stuff
-pagetitle: "{{< meta title >}} | {{< meta website.title >}}"
-description-meta: "{{< meta description >}}"
+pagetitle: "{{< meta title >}} | JP Monteagudo"
 author-meta: "JP Monteagudo"
 
 website:
   title: "JP Monteagudo"
-  description: "JP is an aaspiring biostatistician currently pursuing his degree in epidemiology from Liberty University."
-  favicon: "/files/favicon-512.png"
+  description: "JP is an aspiring epidemiologist currently pursuing his degree in epidemiology from Liberty University."
+  favicon: "/files/cards/favicon_no_bg.png"
   site-url: "https://www.jpmonteagudo.com"
-
   repo-url: "https://github.com/jpmonteagudo28/portfolio_quarto"
+  
+  # google-analytics: "UA-527449-5"
 
   twitter-card: 
-    image: "/files/profiles/twitter-card-large.png"
+    image: "/files/cards/favicon_no_bg.png"
     card-style: summary_large_image
     creator: "@jpPabl0"
     site: "@jpPabl0"
 
   open-graph: 
-    image: "/files/profiles/twitter-card-large.png"
+    image: "/files/cards/favicon_no_bg.png"
     locale: en_US
   
   navbar:
@@ -55,10 +53,6 @@ website:
         file: blog/index.qmd
       - text: "Research"
         file: research/index.qmd
-      - text: "Teaching"
-        href: "teaching/index.qmd"
-      - text: "Talks"
-        href: "talks/index.qmd"
       - text: "Now"
         href: now/index.qmd
       - text: "Uses"
@@ -81,7 +75,7 @@ website:
         rel: me
       - icon: youtube
         aria-label: youtube
-        href: https://www.youtube.com/jpmonteagudo
+        href: https://www.youtube.com/@jpmonteagudo2893
         rel: me
       - icon: linkedin
         aria-label: linkedin
@@ -102,7 +96,9 @@ website:
 format:
   html:
     theme: 
-      - html/ath.scss
+      - html/jpm.scss
+    grid: 
+      body-width: 900px
     toc: false
     code-link: true
     anchor-sections: true
