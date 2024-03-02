@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>JP&#39;s blog</title>
+<link>https://www.jpmonteagudo.com/atom.html</link>
+<atom:link href="https://www.jpmonteagudo.com/atom.xml" rel="self" type="application/rss+xml"/>
+<description>JP&#39;s blog</description>
+<language>en</language>
+<generator>quarto-1.4.550</generator>
+<lastBuildDate>Mon, 26 Feb 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/</link>
+  <description><![CDATA[ <section id="quantile-beta-regression" class="level2"><h2 class="anchored" data-anchor-id="quantile-beta-regression">Quantile Beta Regression</h2>
+<p>The quantile beta regression model discussed in the 2021 paper by</p>
+</section><section id="running-code" class="level2"><h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
+<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>You can add options to executable code like this</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+
+
+<!-- -->
+
+</section> ]]></description>
+  <category>r</category>
+  <category>betareg</category>
+  <category>percentile</category>
+  <category>regression</category>
+  <category>beta distribution</category>
+  <category>COVID-19</category>
+  <category>GLMs</category>
+  <category>modeling</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/</guid>
+  <pubDate>Mon, 26 Feb 2024 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
