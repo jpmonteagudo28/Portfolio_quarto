@@ -1,5 +1,5 @@
 ---
-title: “Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic \(n \geqslant 30\)”
+title: “Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic \(n \geqslant 30\)”
 date: 2024-03-06
 description: "The Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
 categories:
