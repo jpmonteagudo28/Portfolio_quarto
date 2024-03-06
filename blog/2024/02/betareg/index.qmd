@@ -1,7 +1,7 @@
 ---
 title: "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages"
 date: 2024-02-26
-description: "Using the betareg and RBE3 packages to model ratios and proportions"
+description: "Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data"
 categories:
   - r
   - betareg
@@ -15,7 +15,15 @@ resources:
   - "_book/**"
   - "img/*"
 doi: 10.59350/pe5s8-e0f47
+citation: true
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE)
+options(digits = 3, width = 300)
+```
 
 ## Quantile Beta Regression
 

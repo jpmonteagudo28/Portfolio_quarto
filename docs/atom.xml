@@ -11,39 +11,110 @@
 <description>JP&#39;s blog</description>
 <language>en</language>
 <generator>quarto-1.4.550</generator>
-<lastBuildDate>Mon, 26 Feb 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 06 Mar 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}”</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/clt/</link>
+  <description><![CDATA[ <section id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" class="level2"><h2 class="anchored" data-anchor-id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30">RQ: What exactly is the CLT and what’s the deal with n <img src="https://latex.codecogs.com/png.latex?%20%5Cgeqslant%20"> 30?</h2>
+<ul>
+<li><p>CLT - mathematical definition and simple terms definition</p></li>
+<li><p>How we use CLT</p></li>
+<li><p>How to know when empirical distribution converges to normal distribution?</p></li>
+<li>
+<p>How did we come up with n $ $ 30?</p>
+<ul>
+<li>
+<p>Cohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.</p>
+<blockquote class="blockquote">
+<p>It wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</p>
+</blockquote>
+<ul>
+<li>Simply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</li>
+<li>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</li>
+<li>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</li>
+</ul>
+</li>
+</ul>
+<h2 id="solution" class="anchored">Solution</h2>
+<ul>
+<li>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired <img src="https://latex.codecogs.com/png.latex?%5Calpha">, <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> and effect size measure. This way, you don’t have to assume</li>
+</ul>
+</li>
+</ul>
+
+
+<!-- -->
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+  author = {Monteagudo, JP},
+  title = {“{\{Can} {I} Have the {CLT,} Please– a Straightforward
+    Explanation of the {Central} {Limit} {Theorem} and the Magic
+    \textbackslash(n \textbackslash Geqslant 30\textbackslash)\}”},
+  date = {2024-03-06},
+  url = {https://www.jpmonteagudo.com/blog/2024/02/clt},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“<span>‘{Can I Have the CLT, Please– a
+Straightforward Explanation of the Central Limit Theorem and the Magic
+\(n \Geqslant 30\)}’</span>.”</span> March 6, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/02/clt">https://www.jpmonteagudo.com/blog/2024/02/clt</a>.
+</div></div></section></div> ]]></description>
+  <category>r</category>
+  <category>clt</category>
+  <category>sample size</category>
+  <category>t–test</category>
+  <category>normal distribution</category>
+  <category>statistics</category>
+  <category>Gaussian</category>
+  <category>random variables</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/clt/</guid>
+  <pubDate>Wed, 06 Mar 2024 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages</title>
   <dc:creator>JP Monteagudo</dc:creator>
-  <link>https://www.jpmonteagudo.com/blog/2024/02/</link>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/betareg/</link>
   <description><![CDATA[ <section id="quantile-beta-regression" class="level2"><h2 class="anchored" data-anchor-id="quantile-beta-regression">Quantile Beta Regression</h2>
 <p>The quantile beta regression model discussed in the 2021 paper by</p>
 </section><section id="running-code" class="level2"><h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
 <p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
+font-style: inherit;">1</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">## [1] 2</span></span></code></pre></div>
 </div>
 <p>You can add options to executable code like this</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<pre><code>## [1] 4</code></pre>
 </div>
 <p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
 
 
 <!-- -->
 
-</section> ]]></description>
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+  author = {Monteagudo, JP},
+  title = {A Parametric Quantile Beta Regression for Modeling Case
+    Fatality Rates of {COVID-19.} {Building} Models Using the Betareg
+    and {RBE3} Packages},
+  date = {2024-02-26},
+  url = {https://www.jpmonteagudo.com/blog/2024/02/betareg},
+  doi = {10.59350/pe5s8-e0f47},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“A Parametric Quantile Beta Regression for
+Modeling Case Fatality Rates of COVID-19. Building Models Using the
+Betareg and RBE3 Packages.”</span> February 26, 2024. <a href="https://doi.org/10.59350/pe5s8-e0f47">https://doi.org/10.59350/pe5s8-e0f47</a>.
+</div></div></section></div> ]]></description>
   <category>r</category>
   <category>betareg</category>
   <category>percentile</category>
@@ -52,7 +123,7 @@ font-style: inherit;">1</span></span></code></pre></div>
   <category>COVID-19</category>
   <category>GLMs</category>
   <category>modeling</category>
-  <guid>https://www.jpmonteagudo.com/blog/2024/02/</guid>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/betareg/</guid>
   <pubDate>Mon, 26 Feb 2024 05:00:00 GMT</pubDate>
 </item>
 </channel>

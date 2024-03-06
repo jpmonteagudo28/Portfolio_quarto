@@ -2,13 +2,15 @@
   {
     "listing": "/atom.html",
     "items": [
-      "/blog/2024/02/index.html"
+      "/blog/2024/02/clt/index.html",
+      "/blog/2024/02/betareg/index.html"
     ]
   },
   {
     "listing": "/blog/index.html",
     "items": [
-      "/blog/2024/02/index.html"
+      "/blog/2024/02/clt/index.html",
+      "/blog/2024/02/betareg/index.html"
     ]
   },
   {
