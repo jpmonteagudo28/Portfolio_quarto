@@ -112,6 +112,20 @@
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
   },
   {
+    "objectID": "blog/2024/02/clt.html",
+    "href": "blog/2024/02/clt.html",
+    "title": "",
+    "section": "",
+    "text": "Code\n# Can I have the CLT, please?"
+  },
+  {
+    "objectID": "blog/2024/02/clt.html#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30",
+    "href": "blog/2024/02/clt.html#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30",
+    "title": "",
+    "section": "RQ: What exactly is the CLT and what’s the deal with n \\[ \\geqslant \\] 30?",
+    "text": "RQ: What exactly is the CLT and what’s the deal with n \\[ \\geqslant \\] 30?\n\nCLT - mathematical definition and simple terms definition\nHow we use CLT\nHow to know when empirical distribution converges to normal distribution?\nHow did we come up with n $ $​ 30?\n\nCohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.\n\nIt wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.\n\n\nSimply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher’s Statistical Methods for Research Workers (1925))\nSample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.\nWhen data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.\n\n\nSolution\n\nUse power analysis to determine the sample size needed to obtain statistically significant results using your desired \\(\\alpha\\), \\(\\beta\\) and effect size measure. This way, you don’t have to assume"
+  },
+  {
     "objectID": "blog/index.html#section",
     "href": "blog/index.html#section",
     "title": "Blog",
