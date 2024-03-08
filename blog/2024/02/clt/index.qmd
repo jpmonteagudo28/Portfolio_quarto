@@ -11,7 +11,7 @@ categories:
   - statistics
   - Gaussian
   - random variables
-# doi:
+doi: 10.59350/bje88-8r592
 citation: true
 ---
 

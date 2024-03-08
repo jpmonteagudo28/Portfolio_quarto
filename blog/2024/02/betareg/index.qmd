@@ -14,7 +14,7 @@ categories:
 resources:
   - "_book/**"
   - "img/*"
-doi: 10.59350/pe5s8-e0f47
+doi: 10.59350/qgdjk-8ph86
 citation: true
 ---
 

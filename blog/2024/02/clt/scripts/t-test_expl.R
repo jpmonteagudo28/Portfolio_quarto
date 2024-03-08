@@ -2,7 +2,7 @@
 ##
 ## Concrete example of t–test on highly skewed data 
 ### ### Medical cost data for two groups with two age bands with > 3000 obs each
-### ### Sub-gtoups of people with very different cost distributions (woman v. men, chronic v. acute v. no conditions)
+### ### Sub-groups of people with very different cost distributions (woman v. men, chronic v. acute v. no conditions)
 ### ### More than half the values are zero - indicating more than 5% of people had no medical care that year
 ##
 ##
