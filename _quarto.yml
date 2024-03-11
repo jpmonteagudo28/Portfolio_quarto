@@ -30,7 +30,7 @@ website:
   site-url: "https://www.jpmonteagudo.com"
   repo-url: "https://github.com/jpmonteagudo28/portfolio_quarto"
   
-  # google-analytics: "UA-527449-5"
+  google-analytics: "G-SM9D5VRX5P"
 
   twitter-card: 
     image: "/files/cards/favicon_no_bg.png"
