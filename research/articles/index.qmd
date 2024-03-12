@@ -58,7 +58,7 @@ Figure 4: Boxplots show ecological measures across parameter space for different
 ## Citation
 
 <p class="buttons" style="text-align:center;">
-<a class="btn btn-danger" target="_blank" href="https://www.zotero.org/save?type=doi&q=10.1111/oik.07621">{{< ai zotero >}}&emsp;Add to Zotero {{< fa square-arrow-up-right >}}</a>
+<a class="btn btn-danger" target="_blank" href="https://www.zotero.org/save?type=doi&q=10.1111/oik.07621">&emsp;Add to Zotero {{< fa square-arrow-up-right >}}</a>
 </p>
 
 ```bibtex

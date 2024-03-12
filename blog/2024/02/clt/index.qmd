@@ -1,5 +1,5 @@
 ---
-title: “Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic \(n \geqslant 30\)”
+title: “Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$”
 date: 2024-03-06
 description: "The Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
 categories:
@@ -22,24 +22,24 @@ knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
 options(digits = 3, width = 300)
 ```
 
-## The Central Limit Theorem 
+## The Central Limit Theorem
 
 -   CLT - mathematical definition and simple terms definition
 
 -   How we use CLT
 
-- How to know when empirical distribution converges to normal distribution?
+-   How to know when empirical distribution converges to normal distribution?
 
-  ## what's the deal with \(n \geqslant 30\)?
+    ## what's the deal with $n \geq 30$?
 
-  -   Jacob Cohen (1991) mentioned that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.
+    -   Jacob Cohen (1991) mentioned that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.
 
-      > It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
+        > It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
 
-      -   Simply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
-      -   Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
-      -   When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
+        -   Simply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
+        -   Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
+        -   When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
 
-  ## Solution
+    ## Solution
 
-  -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$ and effect size measure. This way, you don't have to assume
+    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$ and effect size measure. This way, you don't have to assume
