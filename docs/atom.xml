@@ -48,18 +48,18 @@
 
 </section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
   author = {Monteagudo, JP},
-  title = {“{Can} {I} Have the {CLT,} Please? {A} Straightforward
-    Explanation of the {Central} {Limit} {Theorem} and the Magic
-    \textbackslash(n \textbackslash Geqslant 30\textbackslash)”},
+  title = {Can {I} Have the {CLT,} Please? {A} Straightforward
+    Explanation of the {Central} {Limit} {Theorem} and the Magic \$n
+    \textbackslash Geq 30\$},
   date = {2024-03-06},
   url = {https://www.jpmonteagudo.com/blog/2024/02/clt},
   doi = {10.59350/bje88-8r592},
   langid = {en}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
-Monteagudo, JP. 2024. <span>“<span>‘Can I Have the CLT, Please? A
+Monteagudo, JP. 2024. <span>“Can I Have the CLT, Please? A
 Straightforward Explanation of the Central Limit Theorem and the Magic
-\(n \Geqslant 30\)’</span>.”</span> March 6, 2024. <a href="https://doi.org/10.59350/bje88-8r592">https://doi.org/10.59350/bje88-8r592</a>.
+$n \Geq 30$.”</span> March 6, 2024. <a href="https://doi.org/10.59350/bje88-8r592">https://doi.org/10.59350/bje88-8r592</a>.
 </div></div></section></div> ]]></description>
   <category>r</category>
   <category>clt</category>
