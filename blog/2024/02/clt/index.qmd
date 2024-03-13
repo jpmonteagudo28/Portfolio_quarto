@@ -1,5 +1,5 @@
 ---
-title: “Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$”
+title: Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$
 date: 2024-03-06
 description: "The Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
 categories:
@@ -24,7 +24,10 @@ options(digits = 3, width = 300)
 
 ## The Central Limit Theorem
 
--   CLT - mathematical definition and simple terms definition
+The rudiments of the Central Limit Theorem can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, we're more likely to arrive at an average outcome.\
+The Central limit theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, and mode– to arrive at the *limiting distribution* of independent, identically distributed random variables– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating he theorem helps us answer the question: \>If an outcome $p$ has occured $p$ times out of $p + q = n$ number otrials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?
+
+Let's now talk about the *conditions* we must meet for our distribution to converge or arrive at the standard normal distribution ($\mu = 0$, $\sigma^{2} = 1$) .
 
 -   How we use CLT
 
