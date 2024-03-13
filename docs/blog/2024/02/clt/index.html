@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.550">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="JP Monteagudo">
 <meta name="description" content="The Central Limit Theorem and the mythical sample size requirements for the health and social sciences">
+
 <title>“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}” | JP Monteagudo</title>
 <style>
 code{white-space: pre-wrap;}
@@ -55,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,7 +76,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -98,19 +103,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script><script type="text/javascript">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script>
+
+<script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
-</script><style>
+</script>
+<style>
 
       .quarto-title-block .quarto-title-banner {
         background: #112540;
       }
 </style>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -136,6 +149,7 @@ window.Quarto = {
   typesetMath
 };
 </script>
+
 <meta property="og:title" content="“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}” | JP Monteagudo">
 <meta property="og:description" content="Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences">
 <meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
@@ -152,10 +166,13 @@ window.Quarto = {
 <meta name="twitter:image-height" content="500">
 <meta name="twitter:image-width" content="500">
 </head>
+
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">JP Monteagudo</span>
@@ -167,7 +184,7 @@ window.Quarto = {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="../../../../index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -192,8 +209,8 @@ window.Quarto = {
 <span class="menu-text">Uses</span></a>
   </li>  
 </ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item compact">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
     <a class="nav-link" href="../../../../atom.xml"> <i class="bi bi-rss" role="img" aria-label="rss">
 </i> 
 <span class="menu-text"></span></a>
@@ -224,11 +241,15 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <div class="quarto-title-block"><div><h1 class="title">“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}”</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
@@ -272,26 +293,35 @@ window.Quarto = {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-<li><a href="#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" id="toc-rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" class="nav-link active" data-scroll-target="#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30">RQ: What exactly is the CLT and what’s the deal with n <span class="math display">\[ \geqslant \]</span> 30?</a></li>
-  </ul></nav>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+  <li><a href="#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" id="toc-rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" class="nav-link active" data-scroll-target="#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30">RQ: What exactly is the CLT and what’s the deal with n <span class="math display">\[ \geqslant \]</span> 30?</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" class="level2"><h2 class="anchored" data-anchor-id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30">RQ: What exactly is the CLT and what’s the deal with n <span class="math display">\[ \geqslant \]</span> 30?</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30" class="level2">
+<h2 class="anchored" data-anchor-id="rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30">RQ: What exactly is the CLT and what’s the deal with n <span class="math display">\[ \geqslant \]</span> 30?</h2>
 <ul>
 <li><p>CLT - mathematical definition and simple terms definition</p></li>
 <li><p>How we use CLT</p></li>
 <li><p>How to know when empirical distribution converges to normal distribution?</p></li>
-<li>
-<p>How did we come up with n $ $ 30?</p>
+<li><p>How did we come up with n $ $ 30?</p>
 <ul>
-<li>
-<p>Cohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.</p>
+<li><p>Cohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.</p>
 <blockquote class="blockquote">
 <p>It wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</p>
 </blockquote>
@@ -299,20 +329,20 @@ window.Quarto = {
 <li>Simply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</li>
 <li>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</li>
 <li>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <h2 id="solution" class="anchored">Solution</h2>
 <ul>
 <li>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and effect size measure. This way, you don’t have to assume</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 
 
 <!-- -->
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
   author = {Monteagudo, JP},
   title = {Can {I} Have the {CLT,} Please? {A} Straightforward
     Explanation of the {Central} {Limit} {Theorem} and the Magic \$n
@@ -325,7 +355,8 @@ window.Quarto = {
 Monteagudo, JP. 2024. <span>“Can I Have the CLT, Please? A
 Straightforward Explanation of the Central Limit Theorem and the Magic
 $n \Geq 30$.”</span> March 6, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/02/clt">https://www.jpmonteagudo.com/blog/2024/02/clt</a>.
-</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -762,8 +793,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
-</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+</script>
+<script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-03-06</span></span>
@@ -826,7 +860,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="in">    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
 <p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023–2024 JP Monteagudo</span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by-sa/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> <i class="fa-brands fa-creative-commons-sa" aria-label="creative-commons-sa"></i> Creative Commons CC BY-SA 4.0</a></span></p>
 </div>   
@@ -838,6 +873,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

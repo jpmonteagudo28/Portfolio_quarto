@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>JP&#39;s blog</title>
+<link>https://www.jpmonteagudo.com/atom.html</link>
+<atom:link href="https://www.jpmonteagudo.com/atom.xml" rel="self" type="application/rss+xml"/>
+<description>JP&#39;s blog</description>
+<language>en</language>
+<generator>quarto-1.4.550</generator>
+<lastBuildDate>Wed, 06 Mar 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>{B4F502887207:/blog/2024/02/clt/index.html}</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/clt/</link>
+  <description>{B4F502887207:/blog/2024/02/clt/index.html}</description>
+  <category>r</category>
+  <category>clt</category>
+  <category>sample size</category>
+  <category>t–test</category>
+  <category>normal distribution</category>
+  <category>statistics</category>
+  <category>Gaussian</category>
+  <category>random variables</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/clt/</guid>
+  <pubDate>Wed, 06 Mar 2024 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/blog/2024/02/betareg/index.html}</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/betareg/</link>
+  <description>{B4F502887207:/blog/2024/02/betareg/index.html}</description>
+  <category>r</category>
+  <category>betareg</category>
+  <category>percentile</category>
+  <category>regression</category>
+  <category>beta distribution</category>
+  <category>COVID-19</category>
+  <category>GLMs</category>
+  <category>modeling</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/betareg/</guid>
+  <pubDate>Mon, 26 Feb 2024 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
