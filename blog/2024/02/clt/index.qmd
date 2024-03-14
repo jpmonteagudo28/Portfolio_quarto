@@ -13,6 +13,7 @@ categories:
   - random variables
 doi: 10.59350/bje88-8r592
 citation: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}

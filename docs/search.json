@@ -91,46 +91,11 @@
     "text": "Download résumé"
   },
   {
-    "objectID": "blog/2024/02/clt/index.html",
-    "href": "blog/2024/02/clt/index.html",
-    "title": "“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}”",
-    "section": "",
-    "text": "CLT - mathematical definition and simple terms definition\nHow we use CLT\nHow to know when empirical distribution converges to normal distribution?\n\nHow did we come up with n $ $ 30?\n\n\nCohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.\n\nIt wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.\n\n\nSimply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher’s Statistical Methods for Research Workers (1925))\nSample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.\nWhen data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.\n\n\n\n\n\nUse power analysis to determine the sample size needed to obtain statistically significant results using your desired \\(\\alpha\\), \\(\\beta\\) and effect size measure. This way, you don’t have to assume"
-  },
-  {
-    "objectID": "blog/2024/02/clt/index.html#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30",
-    "href": "blog/2024/02/clt/index.html#rq-what-exactly-is-the-clt-and-whats-the-deal-with-n-geqslant-30",
-    "title": "“{Can I have the CLT, please– a straightforward explanation of the Central Limit Theorem and the magic (n )}”",
-    "section": "",
-    "text": "CLT - mathematical definition and simple terms definition\nHow we use CLT\nHow to know when empirical distribution converges to normal distribution?\n\nHow did we come up with n $ $ 30?\n\n\nCohen (1991) Taught that at least 30 observations were needed to use critical-ratio approach used in t-tables when comparing groups. If sample size smaller than 30, then students would be forced to “small” sample statistics.\n\nIt wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.\n\n\nSimply a rule of thumb that allowed students to use critical t–tables. These tables could only span 30 lines to fit in one page. Fisher created the t–table and only went up to n = 30 (Fisher’s Statistical Methods for Research Workers (1925))\nSample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.\nWhen data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.\n\n\n\n\n\nUse power analysis to determine the sample size needed to obtain statistically significant results using your desired \\(\\alpha\\), \\(\\beta\\) and effect size measure. This way, you don’t have to assume"
-  },
-  {
-    "objectID": "blog/2024/02/betareg/index.html",
-    "href": "blog/2024/02/betareg/index.html",
-    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
-    "section": "",
-    "text": "The quantile beta regression model discussed in the 2021 paper by"
-  },
-  {
-    "objectID": "blog/2024/02/betareg/index.html#quantile-beta-regression",
-    "href": "blog/2024/02/betareg/index.html#quantile-beta-regression",
-    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
-    "section": "",
-    "text": "The quantile beta regression model discussed in the 2021 paper by"
-  },
-  {
-    "objectID": "blog/2024/02/betareg/index.html#running-code",
-    "href": "blog/2024/02/betareg/index.html#running-code",
-    "title": "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages",
-    "section": "Running Code",
-    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n## [1] 2\n\nYou can add options to executable code like this\n\n## [1] 4\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
     "objectID": "blog/index.html#section",
     "href": "blog/index.html#section",
     "title": "Blog",
     "section": "2024",
-    "text": "2024\n\n\n    \n    \n                  \n            March 6, 2024\n        \n        \n            Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \\geq 30$\n\n            \n            \n                \n                \n                    r\n                \n                \n                \n                    clt\n                \n                \n                \n                    sample size\n                \n                \n                \n                    t–test\n                \n                \n                \n                    normal distribution\n                \n                \n                \n                    statistics\n                \n                \n                \n                    Gaussian\n                \n                \n                \n                    random variables\n                \n                \n            \n            \n\n            Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences\n            \n            \n            10.59350/bje88-8r592\n            \n        \n        \n    \n    \n    \n                  \n            February 26, 2024\n        \n        \n            A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages\n\n            \n            \n                \n                \n                    r\n                \n                \n                \n                    betareg\n                \n                \n                \n                    percentile\n                \n                \n                \n                    regression\n                \n                \n                \n                    beta distribution\n                \n                \n                \n                    COVID-19\n                \n                \n                \n                    GLMs\n                \n                \n                \n                    modeling\n                \n                \n            \n            \n\n            Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data\n            \n            \n            10.59350/qgdjk-8ph86\n            \n        \n        \n    \n    \n\n\nNo matching items"
+    "text": "2024\n\n\n    \n\n\nNo matching items"
   },
   {
     "objectID": "index.html",

@@ -16,6 +16,7 @@ resources:
   - "img/*"
 doi: 10.59350/qgdjk-8ph86
 citation: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}
