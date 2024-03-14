@@ -1,16 +1,16 @@
 ---
 title: Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$
 date: 2024-03-06
-description: "Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
+description: Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences
 categories:
-  - r
-  - clt
-  - sample size
-  - t–test
-  - normal distribution
-  - statistics
-  - Gaussian
-  - random variables
+ - r
+ - clt
+ - sample size
+ - t–test
+ - normal distribution
+ - statistics
+ - Gaussian
+ - random variables
 doi: 10.59350/bje88-8r592
 citation: true
 draft: true
