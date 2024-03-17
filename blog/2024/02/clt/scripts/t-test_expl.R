@@ -11,7 +11,7 @@
 ## 5/8 of data are zeros in any case
 ## the remaining data have log-normal distribution
 ## the parameters of that distribution are arranged to reproduce the observed means 
-## and third quartile provided in the stack exchange example
+## and third quantile provided in the stack exchange example
 ##
 ## Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 ## 0.0      0.0      0.0   4536.0    302.6 395300.0 
@@ -22,6 +22,7 @@
 # and given mean. Make a proportion 1-e of them true zeros.
 ##
 ##
+library(here)
 rskew <- function(n, x.mean, x.q3, e=3/8) {
   beta <- qnorm(1 - (1/4)/e)
   gamma <- 2*(log(x.q3) - log(x.mean/e))
@@ -33,7 +34,7 @@ rskew <- function(n, x.mean, x.q3, e=3/8) {
 ##
 ##
 ## See how closely the summary statistics are reproduced.
-# (The quartiles will be close; the maxima not too far off;
+# (The quantiles will be close; the maxima not too far off;
 # the means may differ a lot, though.)
 ##
 set.seed(23)
@@ -44,10 +45,11 @@ summary(y)
 ##
 ## Estimate the sampling distribution of the mean.
 ##
+par(las=1,mfrow=c(3,1),mai=c(.5,1,.5,.1))
 set.seed(17)
 sim.x <- replicate(10^4, mean(rskew(3367, 4536, 302.6)))
-hist(sim.x, freq=FALSE, ylim=c(0, dnorm(0, sd=sd(sim.x))))
-curve(dnorm(x, mean(sim.x), sd(sim.x)), add=TRUE, col="Red")
+hist(sim.x, freq=FALSE,col = "dodgerblue4", ylim=c(0, dnorm(0, sd=sd(sim.x))))
+curve(dnorm(x, mean(sim.x), sd(sim.x)), add=TRUE, col="orangered")
 ##
 ## The histogram of these means estimates the sampling distribution of the mean. 
 ## The t-test is valid when this distribution is approximately Normal; 
@@ -55,17 +57,20 @@ curve(dnorm(x, mean(sim.x), sd(sim.x)), add=TRUE, col="Red")
 ## indicates the extent to which the Student t distribution will err.
 ## 
 ##
-hist(sim.x[sim.x < 10000], xlab="x", freq=FALSE) # focusing on the observations that aren't outliers
-curve(dnorm(x, mean(sim.x), sd(sim.x)), add=TRUE, col="Red")
+hist(sim.x[sim.x < 10000], xlab="x", freq=FALSE, col = "dodgerblue4",
+     main = "Histogram of x < $10,000") # focusing on the observations that aren't outliers
+curve(dnorm(x, mean(sim.x), sd(sim.x)), add=TRUE, col="orangered")
 ##
 # Can a t-test detect a difference with more data?
 ##
 set.seed(23)
 n.factor <- 50
-z <- replicate(10^3, {
+z <- replicate(10^3, { # storing t-test results inside variable and creating histogram of p_values.
   x <- rskew(3300*n.factor, 4536, 302.6)
   y <- rskew(3400*n.factor, 4964, 423.8)
   t.test(x,y)$p.value
 })
-hist(z)
-mean(z < .05) # The estimated power at a 5% significance level
+hist(z, col = "dodgerblue4")
+pow <- mean(z < .05) # The estimated power at a 5% significance level
+cat("The estimated power of our test to detect a .05 significant difference is", pow, "\n")
+

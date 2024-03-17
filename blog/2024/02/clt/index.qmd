@@ -1,7 +1,7 @@
 ---
-title: Can I have the CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$
+title: "What's this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$"
 date: 2024-03-06
-description: Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences
+description: "Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
 categories:
  - r
  - clt
@@ -11,9 +11,13 @@ categories:
  - statistics
  - Gaussian
  - random variables
+format:
+  html:
+    code-fold: true
+    code-tools: true
 doi: 10.59350/bje88-8r592
 citation: true
-draft: true
+#draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +29,9 @@ options(digits = 3, width = 300)
 
 ## The Central Limit Theorem
 
-The rudiments of the Central Limit Theorem can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, we're more likely to arrive at an average outcome. The Central limit theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables [In this context, independence refers to the probability of one variable not affecting the probability of another variable.]{.aside}– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– think normal distribution– of our independent variables, the theorem helps us answer the question:
+The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton is likely to eventually arrive at the expected outcome.
+
+The theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:
 
 > If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?
 
@@ -37,11 +43,39 @@ I'll start referring to a standard normal distribution with mean equal to zero a
 $$\mathcal{N}(0,1)$$
 :::
 
+### Random processes
+
+The variables under study must be the outcome of a random phenomenon for which we know the type of outcomes that can happen but cannot know how or when they will occur. We can know some of the causes of this phenomenon, but their deviations from a supposed pattern are unknown to us.
+
+A classic example of a random variable is a game of cards in which we know what the cards on the deck are but cannot tell which one will come up next– unless we cheat and then the whole thing is not a random phenomenon anymore. In the life and social sciences, we can find random variables everywhere: the height and weight of a population, hemoglobin levels in healthy adults, the number of patients in the ER on any given night, pH levels in different types of topsoil or the scores on the UCLA Loneliness scale. The common thread here is that one *random* observation doesn't provide information on the occurrence of the next one.
+
+### Independence and identical distribution
+
+In the life and social sciences, we'll typically see *conditional independence*, where variables A and B are measurements of the same underlying quantity C. We say that A and B are conditionally independent if, once C is known, the value of B doesn't give new information about A.
+
+```{mermaid}
+---
+title: Conditional independence
+---
+flowchart LR
+C((C))<---> A([A])
+C((C))<---> B([B])
+A([A])<-.No effect.->B([B])
+```
+
+::: column-margin
+This fancy expression represents our conditional independence,  $P(A = a| B = b, C = c) = P(A = a| C = c)$.
+:::
+
+Independent variables are also uncorrelated – their covariance ($cov[A,B] = E[A]\cdot E[B]$​) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}$) are equal to zero.
+
+Two variables $A$ and $B$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.
+
 -   How we use CLT
 
 -   How to know when empirical distribution converges to normal distribution?
 
-    ## what's the deal with $n \geq 30$?
+    ### what's the deal with $n \geq 30$?
 
     -   Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.
 

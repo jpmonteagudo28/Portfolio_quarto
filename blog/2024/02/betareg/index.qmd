@@ -11,10 +11,14 @@ categories:
   - COVID-19
   - GLMs
   - modeling
-resources:
+#resources:
   - "_book/**"
   - "img/*"
 doi: 10.59350/qgdjk-8ph86
+format: 
+  html:
+    code-fold: true
+    code-tools: true
 citation: true
 draft: true
 ---
