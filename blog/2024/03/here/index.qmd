@@ -1,0 +1,116 @@
+---
+title: "Using the `here` package for reproducible workflows"
+date: 2024-03-17
+description: "Gentle reminders when using the `here` package for your `RStudio` projects"
+categories:
+ - r
+ - packages
+ - here
+ - working dir
+ - setwd
+ - programming
+ - code errors
+ - workflow
+ - reproducibility
+format:
+  html:
+    code-fold: true
+    code-tools: true
+#doi: 10.59350/bje88-8r592
+citation: true
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE)
+options(digits = 3, width = 300)
+```
+
+## TL; DR: 
+
+Use the `here` package instead of `setwd()` or `getwd()` to increase reproducibility and avoid wasting your and other people's time.
+
+Since I created this website, I've been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and  the forging of new paths– quite literally:smile:. At first, I kept things pretty organized, but now it's nearly impossible to know where I saved `such_and_such.txt` file without wasting at least 5 minutes of my day. 
+
+This is what I used to do:
+
+```{r, eval = FALSE echo = TRUE}
+url1 <- "https://somefile_online_data_source_here.com"
+download.file(url1, destfile = "./data_file_here.zip")
+unzip("data_file_here.zip", exdir = getwd())
+Dat <- readRDS("summaryDat.rds")
+Dat2 <- readRDS("SummaryDat2.rds")
+```
+
+This is fine until it's time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using `setwd()`, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my `R` scripts to a different folder the original file path won't work anymore. 
+
+## `here` comes the package :file_folder:
+
+The `here` package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.
+
+### the `here` function 
+
+Here you can see what my root directory is and how I'm going up one folder with each iteration of the `here` command.
+
+```{r, echo = TRUE}
+here::here()
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project"
+  here::here("blog")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"
+  here::here("2024")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"
+  here::here("02")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"
+  here::here("post")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"
+  here::here("scripts")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"
+```
+
+```{r echo = TRUE}
+here::here("blog","2024","02","post","scripts","Dat.R")
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Poroject/blog/2024/02/post/scripts/Dat.R"
+```
+
+I can also go up several folders by calling the full relative path in one single command. However, when I call the `here` function again, it sends me back to my root directory.
+
+```{r echo = TRUE}
+here::here()
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project"
+```
+
+It looks like I would use the `here` function to get or write files and not just be there. If I don't need anything from my subdirectory, then `R` will go back to where the `.Rproj` file is located. For example, if I want to save a `.png` file with a series of plots to one of my folders, I can use the `here::here` function to assign the relative path within my save command.
+
+```{r, eval = FALSE echo = TRUE}
+ggsave("plots.png",arranged_plots, 
+       path = here::here("blog","2024","02","post","img"),
+                width = 800,
+                height = 600,
+                units = "px",
+                dpi = 72)
+```
+
+### the `set_here` function 
+
+Another function available in this package is the `set_here` function which creates a `.here` file anywhere in your project so you can use the directory that contains this file as `root`. This is the description in the function's syntax
+
+>When `here` encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that `here()` picks up the newly created file.
+
+```{r, eval = FALSE echo = TRUE}
+here::set_here("blog/2024")
+# Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. Please start a new R session in the new project directory.
+```
+
+Next, I start a new `R` session from this new directory, and `RStudio` will automatically set my directory to this folder. I don't need to open the `R` project to reach this new directory. It will give me access to the folder's files and I can then set a relative path to other folders and files.
+
+```{r, eval = FALSE echo = TRUE}
+here::here()
+# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"
+```
+
+From this new directory, I can reach files anywhere by just calling `here::here()` function to specify the location of the file I'd like to get. 
+
+### The confusing `i_am` function
+

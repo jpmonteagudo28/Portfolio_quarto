@@ -11,9 +11,7 @@ library(gridExtra)
 ##
 xx <- seq(-5,5,by=.01)
 ## Saving plot image
-png("iid.png", width = 800, height = 600) # assign name and dimensions to plot
 par(las=1,mfrow=c(3,1),mai=c(.5,.5,.5,.1))
-
 ## Plot graphics
 plot(xx,dnorm(xx,-1),type="b",lwd=1,xlab="",ylab="",
      col = "darkorchid4", main="Identically distributed")
@@ -25,10 +23,11 @@ plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",
      col = "darkorchid4",main="Shift in means")
 lines(xx,dnorm(xx,1),lwd=2,col="orangered")
 
-plot(xx,dnorm(x,-1),type="l",lwd=2,xlab="",ylab="",
+plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",
      col = "darkorchid4",main="Different distributions",ylim=c(0,0.6))
 lines(xx,dchisq(xx,2),lwd=2,col="orangered")
 ## Close graphics device to save plot
+dev.copy(png,"iid.png", width = 800, height = 600)
 dev.off()
 ##------------------------------------------------------------------------------------- ##
 ## Generating two conditionally independent random variables
@@ -119,10 +118,11 @@ comp_micro_plot <- ggplot2::ggplot(df1, aes(complaints, def_micro))+
 ## gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, 
 ##                        top = "Devices, Defective microships, Complaints",ncol = 1) # I prefer the vertical plots rather than the horizontal ones
 arranged_plots <- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, 
-                        top = "Devices, Defective microships, Complaints",nrow = 1)
+                        top = "Devices, Defective microchips, Complaints",nrow = 1)
 ## Saving plots to img file in blog
 here::here("blog","2024","02","clt","img")
 ggsave("cond_ind.png",arranged_plots, 
+       path = here::here("blog","2024","02","clt","img"),
                 width = 800,
                 height = 600,
                 units = "px",
