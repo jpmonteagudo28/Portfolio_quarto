@@ -64,7 +64,7 @@ A([A])<-.No effect.->B([B])
 ```
 
 ::: column-margin
-This fancy expression represents our conditional independence,  $P(A = a| B = b, C = c) = P(A = a| C = c)$.
+This fancy expression represents our conditional independence, $P(A = a| B = b, C = c) = P(A = a| C = c)$.
 :::
 
 Independent variables are also uncorrelated – their covariance ($cov[A,B] = E[A]\cdot E[B]$​) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}$) are equal to zero.
