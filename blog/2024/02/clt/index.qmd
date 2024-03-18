@@ -1,5 +1,5 @@
 ---
-title: "What's this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic $n \geq 30$"
+title: "What's this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic ($n =30$) sample size requirements"
 date: 2024-03-06
 description: "Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences"
 categories:

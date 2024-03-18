@@ -1,7 +1,7 @@
 ---
 title: "Don't be an absolutist. Use the `here` package for reproducible workflows"
 date: 2024-03-17
-description: "Gentle reminders when using the \pkg{here} package for your RStudio projects"
+description: "Gentle reminders when using the here package for your RStudio projects"
 categories:
  - r
  - packages
@@ -116,7 +116,7 @@ From this new directory, I can reach files anywhere by calling `here::here()` fu
 
 This function has unnecessarily given me a headache. The `here` package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn't get the `i_am` function to work.
 
-Let's suppose my directory is located in the Project folder. The `here` package is going to look for the `.Rproj` file and establish the root directory there.
+Suppose my directory is located in the Project folder. The `here` package is going to look for the `.Rproj` file and establish the root directory there.
 
 ```{r, echo =TRUE}
 # Project/
@@ -141,11 +141,11 @@ Let's suppose my directory is located in the Project folder. The `here` package 
 #	   |____ cond.R
 ```
 
-
+Call the `here::i_am()` function at the top of your script in the first chunk of your markdown file. The `i_am` function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I'd like to work with. If the current directory is outside of the project where your current script is running, you'll get an error message: `Could not find associated project in working directory or any parent directory`. 
 
 ```         {r, eval =FALSE, echo = TRUE}
 
-The `i_am` function will accept a relative path you provide and then establish your document root there.
-here::i_am("data/summaryDat.rds")
-# Each script should contain a call to here::i_am("file/path") at the top. 
+# Include at the top of your script 
+here::i_am("02/here/dat2.R")
+# I'm redirecting all traffic within my document to a folder containing my Dat2.R
 ```
