@@ -11,6 +11,529 @@
 <description>JP&#39;s blog</description>
 <language>en</language>
 <generator>quarto-1.4.550</generator>
-<lastBuildDate>Thu, 14 Mar 2024 19:12:45 GMT</lastBuildDate>
+<lastBuildDate>Sun, 17 Mar 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Don’t be an absolutist. Use the here package for reproducible workflows</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/03/here/</link>
+  <description><![CDATA[ <section id="tl-dr" class="level2"><h2 class="anchored" data-anchor-id="tl-dr">TL; DR:</h2>
+<p>Don’t be an absolutist– use relative paths. Use the <code>here</code> package instead of <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> or <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> to increase reproducibility and avoid wasting your and other people’s time.</p>
+<p>Since I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally:smile:. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved <code>such_and_such.txt</code> file without wasting at least 5 minutes of my day.</p>
+<p>This is what I used to do:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://somefile_online_data_source_here.com"</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">url1</span>, destfile <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"./data_file_here.zip"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data_file_here.zip"</span>, exdir <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Dat</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"summaryDat.rds"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Dat2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SummaryDat2.rds"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>This is fine until it’s time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my <code>R</code> scripts to a different folder the original file path won’t work anymore.</p>
+</section><section id="here-comes-the-package-file_folder" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package-file_folder">
+<code>here</code> comes the package :file_folder:</h2>
+<p>The <code>here</code> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.</p>
+<section id="the-here-function" class="level3"><h3 class="anchored" data-anchor-id="the-here-function">the <code>here</code> function</h3>
+<p>Here you can see what my root directory is and how I’m going up one folder with each iteration of the <code>here</code> command.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blog"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"02"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"post"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"scripts"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"</span></span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blog"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"02"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"post"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"scripts"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Dat.R"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Poroject/blog/2024/02/post/scripts/ind.R"</span></span></code></pre></div>
+</div>
+<p>I can also go up several folders by calling the full relative path in one single command. However, when I call the <code>here</code> function again, it sends me back to my root directory.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span></code></pre></div>
+</div>
+<p>It looks like I would use the <code>here</code> function to get or write files and not just be there. If I don’t need anything from my subdirectory, then <code>R</code> will go back to where the <code>.Rproj</code> file is located. For example, if I want to save a <code>.png</code> file with a series of plots to one of my folders, I can use the <code><a href="https://here.r-lib.org//reference/here.html">here::here</a></code> function to assign the relative path within my save command.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggsave</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"plots.png"</span>,<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">arranged_plots</span>, </span>
+<span>       path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blog"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"02"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"post"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"img"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>                width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">800</span>,</span>
+<span>                height <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">600</span>,</span>
+<span>                units <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"px"</span>,</span>
+<span>                dpi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">72</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+</section><section id="the-set_here-function" class="level3"><h3 class="anchored" data-anchor-id="the-set_here-function">the <code>set_here</code> function</h3>
+<p>Another function available in this package is the <code>set_here</code> function which creates a <code>.here</code> file anywhere in your project so you can use the directory that contains this file as <code>root</code>. This is the description in the function’s syntax</p>
+<blockquote class="blockquote">
+<p>When <code>here</code> encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that <code>here()</code> picks up the newly created file.</p>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/set_here.html">set_here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blog/2024"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. Please start a new R session in the new project directory.</span></span></code></pre></div>
+</div>
+<p>Next, I start a new <code>R</code> session from this new directory, and <code>RStudio</code> will automatically set my directory to this folder. I don’t need to open the <code>R</code> project to reach this new directory. It will give me access to the folder’s files and I can then set a relative path to other folders and files.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"</span></span></code></pre></div>
+</div>
+<p>From this new directory, I can reach files anywhere by calling <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> function specifying the location of the file I’d like to get.</p>
+</section><section id="the-confusing-i_am-function" class="level3"><h3 class="anchored" data-anchor-id="the-confusing-i_am-function">The confusing <code>i_am</code> function</h3>
+<p>This function has unnecessarily given me a headache. The <code>here</code> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn’t get the <code>i_am</code> function to work.</p>
+<p>Let’s assume my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Project/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |__data/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |    |____ summaryDat.rds</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |    |____ summaryDat2.rds</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |__ blog/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |    |____ 2024/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |       |_____ 02/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |           |____  post/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |            |       |____ index.qmd</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |           |____  img/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |              |____pic.png</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |__    scripts/        </span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#           |____ ind.R</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#             |____ cond.R</span></span></code></pre></div>
+</div>
+<p>The <code>i_am</code> function will accept a relative path you provide and then establish your document root there.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Include at the top of your script </span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://here.r-lib.org//reference/i_am.html">i_am</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"02/here/dat2.R"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># I'm redirecting all traffic within my document to a folder containing my Dat2.R</span></span></code></pre></div>
+</div>
+
+
+<!-- -->
+
+</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+  author = {Monteagudo, JP},
+  title = {Don’t Be an Absolutist. {Use} the `Here` Package for
+    Reproducible Workflows},
+  date = {2024-03-17},
+  url = {https://www.jpmonteagudo.com/blog/2024/03/here},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“Don’t Be an Absolutist. Use the `Here`
+Package for Reproducible Workflows.”</span> March 17, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/03/here">https://www.jpmonteagudo.com/blog/2024/03/here</a>.
+</div></div></section></div> ]]></description>
+  <category>r</category>
+  <category>packages</category>
+  <category>here</category>
+  <category>working dir</category>
+  <category>setwd</category>
+  <category>programming</category>
+  <category>code errors</category>
+  <category>workflow</category>
+  <category>reproducibility</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/03/here/</guid>
+  <pubDate>Sun, 17 Mar 2024 04:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>What’s this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic (\(n =30\)) sample size requirements</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/02/clt/</link>
+  <description><![CDATA[ <section id="the-central-limit-theorem" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
+<p>The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton is likely to eventually arrive at the expected outcome.</p>
+<p>The theorem derives its name from the fact that we’re using a parameter of <em>central</em> tendency – typically the mean, median, or mode– to arrive at the <em>limiting distribution</em> of independent random variables– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the <img src="https://latex.codecogs.com/png.latex?n"> samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</p>
+<blockquote class="blockquote">
+<p>If an outcome <img src="https://latex.codecogs.com/png.latex?p"> has occurred <img src="https://latex.codecogs.com/png.latex?p"> times out of <img src="https://latex.codecogs.com/png.latex?p%20+%20q%20=%20n"> number of trials, what’s the probability of our desired outcome occurring <img src="https://latex.codecogs.com/png.latex?r"> times in a further <img src="https://latex.codecogs.com/png.latex?r%20+%20q%20=%20m"> number of trials?</p>
+</blockquote>
+<p>Let’s now talk about the <em>conditions</em> we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>I’ll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D(0,1)"></p>
+</div></div><section id="random-processes" class="level3"><h3 class="anchored" data-anchor-id="random-processes">Random processes</h3>
+<p>The variables under study must be the outcome of a random phenomenon for which we know the type of outcomes that can happen but cannot know how or when they will occur. We can know some of the causes of this phenomenon, but their deviations from a supposed pattern are unknown to us.</p>
+<p>A classic example of a random variable is a game of cards in which we know what the cards on the deck are but cannot tell which one will come up next– unless we cheat and then the whole thing is not a random phenomenon anymore. In the life and social sciences, we can find random variables everywhere: the height and weight of a population, hemoglobin levels in healthy adults, the number of patients in the ER on any given night, pH levels in different types of topsoil or the scores on the UCLA Loneliness scale. The common thread here is that one <em>random</em> observation doesn’t provide information on the occurrence of the next one.</p>
+</section><section id="independence-and-identical-distribution" class="level3 page-columns page-full"><h3 class="anchored">Independence and identical distribution</h3>
+<p>In the life and social sciences, we’ll typically see <em>conditional independence</em>, where variables A and B are measurements of the same underlying quantity C. We say that A and B are conditionally independent if, once C is known, the value of B doesn’t give new information about A.</p>
+<div class="cell" data-layout-align="default">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1">---</span>
+<span id="cb1-2">title: Conditional independence</span>
+<span id="cb1-3">---</span>
+<span id="cb1-4">flowchart LR</span>
+<span id="cb1-5">C((C))&lt;---&gt; A([A])</span>
+<span id="cb1-6">C((C))&lt;---&gt; B([B])</span>
+<span id="cb1-7">A([A])&lt;-.No effect.-&gt;B([B])</span></code></pre></div>
+</details><div class="cell-output-display">
+<div>
+<p></p><figure class="figure"></figure><p></p>
+<div>
+<pre class="mermaid mermaid-js">---
+title: Conditional independence
+---
+flowchart LR
+C((C))&lt;---&gt; A([A])
+C((C))&lt;---&gt; B([B])
+A([A])&lt;-.No effect.-&gt;B([B])
+</pre>
+</div>
+<p></p>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>This fancy expression represents our conditional independence, <img src="https://latex.codecogs.com/png.latex?P(A%20=%20a%7C%20B%20=%20b,%20C%20=%20c)%20=%20P(A%20=%20a%7C%20C%20=%20c)">.</p>
+</div></div><p>Independent variables are also uncorrelated – their covariance (<img src="https://latex.codecogs.com/png.latex?cov%5BA,B%5D%20=%20E%5BA%5D%5Ccdot%20E%5BB%5D">​) and Pearson’s <img src="https://latex.codecogs.com/png.latex?r"> (<img src="https://latex.codecogs.com/png.latex?%5Crho_%7BX,Y%7D%20=%20%5Cfrac%7Bcov%5BA,B%5D%7D%7B%5Csigma_%7BA%7D%5Csigma_%7BB%7D%7D">) are equal to zero.</p>
+<p>Two variables <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> are identically distributed when their probability distributions match exactly, and their means and variances (<img src="https://latex.codecogs.com/png.latex?%5Cmu_%7BA%7D%20=%20%5Cmu_%7BB%7D,%20%5Csigma_%7BA%7D%5E2%20=%20%5Csigma_%7BB%7D%5E2">) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</p>
+<ul>
+<li><p>How we use CLT</p></li>
+<li>
+<p>How to know when empirical distribution converges to normal distribution?</p>
+<h3 id="whats-the-deal-with-n-geq-30" class="anchored">what’s the deal with <img src="https://latex.codecogs.com/png.latex?n%20%5Cgeq%2030">?</h3>
+<ul>
+<li>
+<p>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</p>
+<blockquote class="blockquote">
+<p>It wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</p>
+</blockquote>
+<ul>
+<li>
+<p>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</p>
+<p>t-table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</p>
+</li>
+<li><p>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</p></li>
+<li><p>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</p></li>
+</ul>
+</li>
+</ul>
+<h2 id="solution" class="anchored" data-anchor-id="independence-and-identical-distribution">Solution</h2>
+<ul>
+<li>The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we’re seeking to answer, and the test we plan to use to arrive at our hypothesis.</li>
+<li>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired <img src="https://latex.codecogs.com/png.latex?%5Calpha">, <img src="https://latex.codecogs.com/png.latex?%5Cbeta">, and effect size measure. This way, you don’t have to assume</li>
+</ul>
+</li>
+</ul>
+
+
+<!-- -->
+
+</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+  author = {Monteagudo, JP},
+  title = {What’s This {CLT,} Please? {A} Straightforward Explanation of
+    the {Central} {Limit} {Theorem} and the Magic (\$n =30\$) Sample
+    Size Requirements},
+  date = {2024-03-06},
+  url = {https://www.jpmonteagudo.com/blog/2024/02/clt},
+  doi = {10.59350/bje88-8r592},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“What’s This CLT, Please? A Straightforward
+Explanation of the Central Limit Theorem and the Magic ($n =30$) Sample
+Size Requirements.”</span> March 6, 2024. <a href="https://doi.org/10.59350/bje88-8r592">https://doi.org/10.59350/bje88-8r592</a>.
+</div></div></section></div> ]]></description>
+  <category>r</category>
+  <category>clt</category>
+  <category>sample size</category>
+  <category>t–test</category>
+  <category>normal distribution</category>
+  <category>statistics</category>
+  <category>Gaussian</category>
+  <category>random variables</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/02/clt/</guid>
+  <pubDate>Wed, 06 Mar 2024 05:00:00 GMT</pubDate>
+</item>
 </channel>
 </rss>

@@ -141,7 +141,7 @@ Suppose my directory is located in the Project folder. The `here` package is goi
 #	   |____ cond.R
 ```
 
-Call the `here::i_am()` function at the top of your script in the first chunk of your markdown file. The `i_am` function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I'd like to work with. If the current directory is outside of the project where your current script is running, you'll get an error message: `Could not find associated project in working directory or any parent directory`. 
+Call the `here::i_am()` function at the top of your script in the first chunk of your markdown file. The `i_am` function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I'd like to work with. If I choose a file path that's not  If the current directory is outside of the project where your current script is running, you'll get an error message: `Could not find associated project in working directory or any parent directory`. 
 
 ```         {r, eval =FALSE, echo = TRUE}
 
