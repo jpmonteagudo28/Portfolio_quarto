@@ -86,8 +86,8 @@ background-color: null;
 font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>This is fine until it’s time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my <code>R</code> scripts to a different folder the original file path won’t work anymore.</p>
-</section><section id="here-comes-the-package-file_folder" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package-file_folder">
-<code>here</code> comes the package :file_folder:</h2>
+</section><section id="here-comes-the-package" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package">
+<code>here</code> comes the package 📁</h2>
 <p>The <code>here</code> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.</p>
 <section id="the-here-function" class="level3"><h3 class="anchored" data-anchor-id="the-here-function">the <code>here</code> function</h3>
 <p>Here you can see what my root directory is and how I’m going up one folder with each iteration of the <code>here</code> command.</p>
@@ -332,54 +332,73 @@ font-style: inherit;"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"<
 <p>From this new directory, I can reach files anywhere by calling <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> function specifying the location of the file I’d like to get.</p>
 </section><section id="the-confusing-i_am-function" class="level3"><h3 class="anchored" data-anchor-id="the-confusing-i_am-function">The confusing <code>i_am</code> function</h3>
 <p>This function has unnecessarily given me a headache. The <code>here</code> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn’t get the <code>i_am</code> function to work.</p>
-<p>Let’s assume my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
+<p>Suppose my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Project/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |__data/</span></span>
+font-style: inherit;">#    |</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |    |____ summaryDat.rds</span></span>
+font-style: inherit;">#    |__ data/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |    |____ summaryDat2.rds</span></span>
+font-style: inherit;">#    |    |___  summaryDat.rds</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |    |___  summaryDat2.rds</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#    |__ blog/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |    |____ 2024/</span></span>
+font-style: inherit;">#    |    |_____index.qmd</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |       |_____ 02/</span></span>
+font-style: inherit;">#    |    |</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |           |____  post/</span></span>
+font-style: inherit;">#    |    |__ post/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |            |       |____ index.qmd</span></span>
+font-style: inherit;">#    |    | |______ 2024/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |           |____  img/</span></span>
+font-style: inherit;">#    |    |       |____ 02/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |              |____pic.png</span></span>
+font-style: inherit;">#    |    |          |____  index.qmd</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#    |__    scripts/        </span></span>
+font-style: inherit;">#    |    |              |____  dat3.R</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#           |____ ind.R</span></span>
+font-style: inherit;">#    |    |__ img/</span></span>
 <span><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">#             |____ cond.R</span></span></code></pre></div>
+font-style: inherit;">#    |      |_____  pic.png</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#    |__ scripts/</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#      |____ ind.R</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#      |____ cond.R</span></span></code></pre></div>
 </div>
-<p>The <code>i_am</code> function will accept a relative path you provide and then establish your document root there.</p>
+<p>Call the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code> function at the top of your script in the first chunk of your markdown file. The <code>i_am</code> function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I’d like to work with. If I choose a file path that’s not If the current directory is outside of the project where your current script is running, you’ll get an error message: <code>Could not find associated project in working directory or any parent directory</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Include at the top of your script </span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -431,7 +450,14 @@ Package for Reproducible Workflows.”</span> March 17, 2024. <a href="https://w
   <title>What’s this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic (\(n =30\)) sample size requirements</title>
   <dc:creator>JP Monteagudo</dc:creator>
   <link>https://www.jpmonteagudo.com/blog/2024/02/clt/</link>
-  <description><![CDATA[ <section id="the-central-limit-theorem" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-central-limit-theorem" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
 <p>The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton is likely to eventually arrive at the expected outcome.</p>
 <p>The theorem derives its name from the fact that we’re using a parameter of <em>central</em> tendency – typically the mean, median, or mode– to arrive at the <em>limiting distribution</em> of independent random variables– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the <img src="https://latex.codecogs.com/png.latex?n"> samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</p>
 <blockquote class="blockquote">
@@ -442,22 +468,28 @@ Package for Reproducible Workflows.”</span> March 17, 2024. <a href="https://w
 <div class="no-row-height column-margin column-container"><div class="">
 <p>I’ll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation</p>
 <p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D(0,1)"></p>
-</div></div><section id="random-processes" class="level3"><h3 class="anchored" data-anchor-id="random-processes">Random processes</h3>
+</div></div><section id="random-processes" class="level3">
+<h3 class="anchored" data-anchor-id="random-processes">Random processes</h3>
 <p>The variables under study must be the outcome of a random phenomenon for which we know the type of outcomes that can happen but cannot know how or when they will occur. We can know some of the causes of this phenomenon, but their deviations from a supposed pattern are unknown to us.</p>
 <p>A classic example of a random variable is a game of cards in which we know what the cards on the deck are but cannot tell which one will come up next– unless we cheat and then the whole thing is not a random phenomenon anymore. In the life and social sciences, we can find random variables everywhere: the height and weight of a population, hemoglobin levels in healthy adults, the number of patients in the ER on any given night, pH levels in different types of topsoil or the scores on the UCLA Loneliness scale. The common thread here is that one <em>random</em> observation doesn’t provide information on the occurrence of the next one.</p>
-</section><section id="independence-and-identical-distribution" class="level3 page-columns page-full"><h3 class="anchored">Independence and identical distribution</h3>
+</section>
+<section id="independence-and-identical-distribution" class="level3 page-columns page-full">
+<h3 class="anchored">Independence and identical distribution</h3>
 <p>In the life and social sciences, we’ll typically see <em>conditional independence</em>, where variables A and B are measurements of the same underlying quantity C. We say that A and B are conditionally independent if, once C is known, the value of B doesn’t give new information about A.</p>
 <div class="cell" data-layout-align="default">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1">---</span>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1">---</span>
 <span id="cb1-2">title: Conditional independence</span>
 <span id="cb1-3">---</span>
 <span id="cb1-4">flowchart LR</span>
 <span id="cb1-5">C((C))&lt;---&gt; A([A])</span>
 <span id="cb1-6">C((C))&lt;---&gt; B([B])</span>
 <span id="cb1-7">A([A])&lt;-.No effect.-&gt;B([B])</span></code></pre></div>
-</details><div class="cell-output-display">
+</details>
+<div class="cell-output-display">
 <div>
-<p></p><figure class="figure"></figure><p></p>
+<p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">---
 title: Conditional independence
@@ -468,7 +500,7 @@ C((C))&lt;---&gt; B([B])
 A([A])&lt;-.No effect.-&gt;B([B])
 </pre>
 </div>
-<p></p>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
@@ -479,37 +511,34 @@ A([A])&lt;-.No effect.-&gt;B([B])
 <p>Two variables <img src="https://latex.codecogs.com/png.latex?A"> and <img src="https://latex.codecogs.com/png.latex?B"> are identically distributed when their probability distributions match exactly, and their means and variances (<img src="https://latex.codecogs.com/png.latex?%5Cmu_%7BA%7D%20=%20%5Cmu_%7BB%7D,%20%5Csigma_%7BA%7D%5E2%20=%20%5Csigma_%7BB%7D%5E2">) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</p>
 <ul>
 <li><p>How we use CLT</p></li>
-<li>
-<p>How to know when empirical distribution converges to normal distribution?</p>
+<li><p>How to know when empirical distribution converges to normal distribution?</p>
 <h3 id="whats-the-deal-with-n-geq-30" class="anchored">what’s the deal with <img src="https://latex.codecogs.com/png.latex?n%20%5Cgeq%2030">?</h3>
 <ul>
-<li>
-<p>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</p>
+<li><p>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</p>
 <blockquote class="blockquote">
 <p>It wasn’t until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</p>
 </blockquote>
 <ul>
-<li>
-<p>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</p>
-<p>t-table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</p>
-</li>
+<li><p>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</p>
+<p>t-table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</p></li>
 <li><p>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</p></li>
 <li><p>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</p></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <h2 id="solution" class="anchored" data-anchor-id="independence-and-identical-distribution">Solution</h2>
 <ul>
 <li>The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we’re seeking to answer, and the test we plan to use to arrive at our hypothesis.</li>
 <li>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired <img src="https://latex.codecogs.com/png.latex?%5Calpha">, <img src="https://latex.codecogs.com/png.latex?%5Cbeta">, and effect size measure. This way, you don’t have to assume</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 
 
 <!-- -->
 
-</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{monteagudo2024,
   author = {Monteagudo, JP},
   title = {What’s This {CLT,} Please? {A} Straightforward Explanation of
     the {Central} {Limit} {Theorem} and the Magic (\$n =30\$) Sample

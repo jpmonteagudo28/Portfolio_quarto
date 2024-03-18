@@ -1,47 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.jpmonteagudo.com/uses/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.796Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/research/articles/peck-heiss-2021/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.675Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/now/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.597Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/cv/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.048Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
-    <lastmod>2024-03-18T19:54:33.596Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.jpmonteagudo.com/atom.html</loc>
     <lastmod>2024-03-14T19:26:28.977Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/02/clt/index.html</loc>
-    <lastmod>2024-03-18T18:49:34.790Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
+    <lastmod>2024-03-18T20:23:26.332Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/blog/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.041Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.581Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/research/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.783Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/research/articles/index.html</loc>
     <lastmod>2024-03-14T19:26:29.649Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/research/index.html</loc>
-    <lastmod>2024-03-14T19:26:29.783Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/cv/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.048Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/blog/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.041Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/now/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.597Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/research/articles/peck-heiss-2021/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.675Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/uses/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.796Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/index.html</loc>
+    <lastmod>2024-03-14T19:26:29.581Z</lastmod>
   </url>
 </urlset>

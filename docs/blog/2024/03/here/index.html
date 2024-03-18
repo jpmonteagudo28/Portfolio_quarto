@@ -207,7 +207,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       <div class="quarto-title-block"><div><h1 class="title">Don’t be an absolutist. Use the <code>here</code> package for reproducible workflows</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          Gentle reminders when using the <code>here</code> package for your <code>RStudio</code> projects
+          Gentle reminders when using the here package for your RStudio projects
         </div>
       </div>
                           <div class="quarto-categories">
@@ -252,7 +252,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
   <ul>
 <li><a href="#tl-dr" id="toc-tl-dr" class="nav-link active" data-scroll-target="#tl-dr">TL; DR:</a></li>
   <li>
-<a href="#here-comes-the-package-file_folder" id="toc-here-comes-the-package-file_folder" class="nav-link" data-scroll-target="#here-comes-the-package-file_folder"><code>here</code> comes the package :file_folder:</a>
+<a href="#here-comes-the-package" id="toc-here-comes-the-package" class="nav-link" data-scroll-target="#here-comes-the-package"><code>here</code> comes the package 📁</a>
   <ul class="collapse">
 <li><a href="#the-here-function" id="toc-the-here-function" class="nav-link" data-scroll-target="#the-here-function">the <code>here</code> function</a></li>
   <li><a href="#the-set_here-function" id="toc-the-set_here-function" class="nav-link" data-scroll-target="#the-set_here-function">the <code>set_here</code> function</a></li>
@@ -277,8 +277,8 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <span><span class="va">Dat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"SummaryDat2.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This is fine until it’s time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my <code>R</code> scripts to a different folder the original file path won’t work anymore.</p>
-</section><section id="here-comes-the-package-file_folder" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package-file_folder">
-<code>here</code> comes the package :file_folder:</h2>
+</section><section id="here-comes-the-package" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package">
+<code>here</code> comes the package 📁</h2>
 <p>The <code>here</code> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.</p>
 <section id="the-here-function" class="level3"><h3 class="anchored" data-anchor-id="the-here-function">the <code>here</code> function</h3>
 <p>Here you can see what my root directory is and how I’m going up one folder with each iteration of the <code>here</code> command.</p>
@@ -331,26 +331,33 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <p>From this new directory, I can reach files anywhere by calling <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> function specifying the location of the file I’d like to get.</p>
 </section><section id="the-confusing-i_am-function" class="level3"><h3 class="anchored" data-anchor-id="the-confusing-i_am-function">The confusing <code>i_am</code> function</h3>
 <p>This function has unnecessarily given me a headache. The <code>here</code> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn’t get the <code>i_am</code> function to work.</p>
-<p>Let’s assume my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
+<p>Suppose my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Project/</span></span>
-<span><span class="co">#    |__data/</span></span>
-<span><span class="co">#    |    |____ summaryDat.rds</span></span>
-<span><span class="co">#    |    |____ summaryDat2.rds</span></span>
+<span><span class="co">#    |</span></span>
+<span><span class="co">#    |__ data/</span></span>
+<span><span class="co">#    |    |___  summaryDat.rds</span></span>
+<span><span class="co">#    |    |___  summaryDat2.rds</span></span>
+<span><span class="co">#    |</span></span>
 <span><span class="co">#    |__ blog/</span></span>
-<span><span class="co">#    |    |____ 2024/</span></span>
-<span><span class="co">#    |       |_____ 02/</span></span>
-<span><span class="co">#    |           |____  post/</span></span>
-<span><span class="co">#    |            |       |____ index.qmd</span></span>
-<span><span class="co">#    |           |____  img/</span></span>
-<span><span class="co">#    |              |____pic.png</span></span>
-<span><span class="co">#    |__    scripts/        </span></span>
-<span><span class="co">#           |____ ind.R</span></span>
-<span><span class="co">#             |____ cond.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">#    |    |_____index.qmd</span></span>
+<span><span class="co">#    |    |</span></span>
+<span><span class="co">#    |    |__ post/</span></span>
+<span><span class="co">#    |    | |______ 2024/</span></span>
+<span><span class="co">#    |    |       |____ 02/</span></span>
+<span><span class="co">#    |    |          |____  index.qmd</span></span>
+<span><span class="co">#    |    |              |____  dat3.R</span></span>
+<span><span class="co">#    |    |__ img/</span></span>
+<span><span class="co">#    |      |_____  pic.png</span></span>
+<span><span class="co">#    |</span></span>
+<span><span class="co">#    |__ scripts/</span></span>
+<span><span class="co">#      |____ ind.R</span></span>
+<span><span class="co">#      |____ cond.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>i_am</code> function will accept a relative path you provide and then establish your document root there.</p>
+<p>Call the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code> function at the top of your script in the first chunk of your markdown file. The <code>i_am</code> function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I’d like to work with. If I choose a file path that’s not If the current directory is outside of the project where your current script is running, you’ll get an error message: <code>Could not find associated project in working directory or any parent directory</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Include at the top of your script </span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="co"># Include at the top of your script </span></span>
 <span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/i_am.html">i_am</a></span><span class="op">(</span><span class="st">"02/here/dat2.R"</span><span class="op">)</span></span>
 <span><span class="co"># I'm redirecting all traffic within my document to a folder containing my Dat2.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
