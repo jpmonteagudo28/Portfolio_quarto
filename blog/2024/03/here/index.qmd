@@ -16,9 +16,9 @@ format:
   html:
     code-fold: false
     code-tools: true
-#doi: 10.59350/bje88-8r592
+doi: 10.59350/4a9fr-acc34
 citation: true
-# draft: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -32,7 +32,9 @@ options(digits = 3, width = 300)
 
 Don't be an absolutist– use relative paths. Use the `here` package instead of `setwd()` or `getwd()` to increase reproducibility and avoid wasting your and other people's time.
 
-Since I created this website, I've been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally:smile:. At first, I kept things pretty organized, but now it's nearly impossible to know where I saved `such_and_such.txt` file without wasting at least 5 minutes of my day.
+## What's the problem with `setwd()`?
+
+Since I created this website, I've been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally​ :smile:. At first, I kept things pretty organized, but now it's nearly impossible to know where I saved `such_and_such.txt` file without wasting at least 5 minutes of my day.
 
 This is what I used to do:
 
@@ -67,9 +69,7 @@ here::here()
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"
   here::here("scripts")
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"
-```
-
-```{r, eval = FALSE, echo = TRUE}
+#| I'll point R to the actual document by providing the full relative path
 here::here("blog","2024","02","post","scripts","Dat.R")
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Poroject/blog/2024/02/post/scripts/ind.R"
 ```
