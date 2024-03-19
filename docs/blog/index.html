@@ -76,9 +76,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: [{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-project','listing-execute','listing-bibliography','listing-csl','listing-pagetitle','listing-author-meta','listing-website','listing-format','listing-_quarto-vars','listing-language','listing-date-format','listing-title-block-banner','listing-toc','listing-toc-title','listing-toc-location','listing-freeze','listing-author','listing-title','listing-date','listing-description','listing-categories','listing-doi','listing-citation','listing-draft','listing-path','listing-outputHref','listing-date-modified','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: [],
+      searchColumns: ["listing-project","listing-execute","listing-bibliography","listing-csl","listing-pagetitle","listing-author-meta","listing-website","listing-format","listing-_quarto-vars","listing-language","listing-date-format","listing-title-block-banner","listing-toc","listing-toc-title","listing-toc-location","listing-freeze","listing-author","listing-title","listing-date","listing-description","listing-categories","listing-doi","listing-citation","listing-draft","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -253,7 +253,7 @@ window.Quarto = {
   <ul>
 <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">2024</a></li>
   </ul></nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code errors">code errors <span class="quarto-category-count">(1)</span></div><div class="category" data-category="here">here <span class="quarto-category-count">(1)</span></div><div class="category" data-category="packages">packages <span class="quarto-category-count">(1)</span></div><div class="category" data-category="programming">programming <span class="quarto-category-count">(1)</span></div><div class="category" data-category="r">r <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reproducibility">reproducibility <span class="quarto-category-count">(1)</span></div><div class="category" data-category="setwd">setwd <span class="quarto-category-count">(1)</span></div><div class="category" data-category="workflow">workflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="working dir">working dir <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content"><div class="cell">
 <style type="text/css">
@@ -265,6 +265,64 @@ window.Quarto = {
 <section id="section" class="level2"><h2 class="anchored" data-anchor-id="section">2024</h2>
 <div id="listing-posts_2024" class="quarto-listing quarto-listing-container-custom">
 <div class="list blog">
+    
+    <div class="blog-entry" data-index="0" data-categories="r,packages,here,working dir,setwd,programming,code errors,workflow,reproducibility" data-listing-date-sort="1710648000000" data-listing-file-modified-sort="1710822230044" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1135">
+        <div class="metadata">          
+            <p class="date listing-date">March 17, 2024</p>
+        </div>
+        <div class="body">
+            <p class="title listing-title"><a href="../blog/2024/03/here/index.html">Don't be an absolutist. Use the `here` package for reproducible workflows</a></p>
+
+            
+            <div class="post-categories listing-categories">
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('r'); return false;">
+                    r
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('packages'); return false;">
+                    packages
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('here'); return false;">
+                    here
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('working dir'); return false;">
+                    working dir
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('setwd'); return false;">
+                    setwd
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('programming'); return false;">
+                    programming
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('code errors'); return false;">
+                    code errors
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('workflow'); return false;">
+                    workflow
+                </div>
+                
+                <div class="post-category listing-category" onclick="window.quartoListingCategory('reproducibility'); return false;">
+                    reproducibility
+                </div>
+                
+            </div>
+            
+
+            <p class="description listing-description">Gentle reminders when using the `here` package for your `RStudio` projects</p>
+            
+            
+            <p class="post-doi"><img src="../files/doi.svg" class="doi-icon img-fluid" alt="DOI"><a href="https://doi.org/10.59350/4a9fr-acc34" target="_blank" rel="noopener noreferrer">10.59350/4a9fr-acc34</a></p>
+            
+        </div>
+        
+    </div>
     
 </div>
 <div class="listing-no-matching d-none">

@@ -207,7 +207,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       <div class="quarto-title-block"><div><h1 class="title">Don’t be an absolutist. Use the <code>here</code> package for reproducible workflows</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          Gentle reminders when using the here package for your RStudio projects
+          Gentle reminders when using the <code>here</code> package for your <code>RStudio</code> projects
         </div>
       </div>
                           <div class="quarto-categories">
@@ -261,11 +261,12 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <li><a href="#tl-dr" id="toc-tl-dr" class="nav-link active" data-scroll-target="#tl-dr">TL; DR:</a></li>
   <li><a href="#whats-the-problem-with-setwd" id="toc-whats-the-problem-with-setwd" class="nav-link" data-scroll-target="#whats-the-problem-with-setwd">What’s the problem with <code>setwd()</code>?</a></li>
   <li>
-<a href="#here-comes-the-package" id="toc-here-comes-the-package" class="nav-link" data-scroll-target="#here-comes-the-package"><code>here</code> comes the package 📁</a>
+<a href="#here-is-the-solution" id="toc-here-is-the-solution" class="nav-link" data-scroll-target="#here-is-the-solution"><code>here</code> is the solution 📁</a>
   <ul class="collapse">
-<li><a href="#the-here-function" id="toc-the-here-function" class="nav-link" data-scroll-target="#the-here-function">the <code>here</code> function</a></li>
-  <li><a href="#the-set_here-function" id="toc-the-set_here-function" class="nav-link" data-scroll-target="#the-set_here-function">the <code>set_here</code> function</a></li>
+<li><a href="#the-here-function" id="toc-the-here-function" class="nav-link" data-scroll-target="#the-here-function">The <code>here</code> function</a></li>
+  <li><a href="#the-set_here-function" id="toc-the-set_here-function" class="nav-link" data-scroll-target="#the-set_here-function">The <code>set_here</code> function</a></li>
   <li><a href="#the-confusing-i_am-function" id="toc-the-confusing-i_am-function" class="nav-link" data-scroll-target="#the-confusing-i_am-function">The confusing <code>i_am</code> function</a></li>
+  <li><a href="#the-dr_here-function" id="toc-the-dr_here-function" class="nav-link" data-scroll-target="#the-dr_here-function">The <code>dr_here</code> function</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -275,7 +276,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="tl-dr" class="level2"><h2 class="anchored" data-anchor-id="tl-dr">TL; DR:</h2>
-<p>Don’t be an absolutist– use relative paths. Use the <code>here</code> package instead of <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> or <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> to increase reproducibility and avoid wasting your and other people’s time.</p>
+<p>Don’t be an absolutist– use relative paths. Use the <code>here</code> <a href="https://here.r-lib.org/">package</a> instead of <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> or <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> to increase reproducibility and avoid wasting your and other people’s time.</p>
 </section><section id="whats-the-problem-with-setwd" class="level2"><h2 class="anchored" data-anchor-id="whats-the-problem-with-setwd">What’s the problem with <code>setwd()</code>?</h2>
 <p>Since I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally​ :smile:. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved <code>such_and_such.txt</code> file without wasting at least 5 minutes of my day.</p>
 <p>This is what I used to do:</p>
@@ -286,63 +287,14 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <span><span class="va">Dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"summaryDat.rds"</span><span class="op">)</span></span>
 <span><span class="va">Dat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"SummaryDat2.rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This is fine until it’s time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my <code>R</code> scripts to a different folder the original file path won’t work anymore.</p>
-</section><section id="here-comes-the-package" class="level2"><h2 class="anchored" data-anchor-id="here-comes-the-package">
-<code>here</code> comes the package 📁</h2>
-<p>The <code>here</code> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.</p>
-<section id="the-here-function" class="level3"><h3 class="anchored" data-anchor-id="the-here-function">the <code>here</code> function</h3>
-<p>Here you can see what my root directory is and how I’m going up one folder with each iteration of the <code>here</code> command.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
-<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"</span></span>
-<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"2024"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"</span></span>
-<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"02"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"</span></span>
-<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"post"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"</span></span>
-<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"scripts"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"</span></span>
-<span><span class="co">#| I'll point R to the actual document by providing the full relative path</span></span>
-<span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span>,<span class="st">"2024"</span>,<span class="st">"02"</span>,<span class="st">"post"</span>,<span class="st">"scripts"</span>,<span class="st">"Dat.R"</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Poroject/blog/2024/02/post/scripts/ind.R"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>I can also go up several folders by calling the full relative path in one single command. However, when I call the <code>here</code> function again, it sends me back to my root directory.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>It looks like I would use the <code>here</code> function to get or write files and not just be there. If I don’t need anything from my subdirectory, then <code>R</code> will go back to where the <code>.Rproj</code> file is located. For example, if I want to save a <code>.png</code> file with a series of plots to one of my folders, I can use the <code><a href="https://here.r-lib.org//reference/here.html">here::here</a></code> function to assign the relative path within my save command.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"plots.png"</span>,<span class="va">arranged_plots</span>, </span>
-<span>       path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span>,<span class="st">"2024"</span>,<span class="st">"02"</span>,<span class="st">"post"</span>,<span class="st">"img"</span><span class="op">)</span>,</span>
-<span>                width <span class="op">=</span> <span class="fl">800</span>,</span>
-<span>                height <span class="op">=</span> <span class="fl">600</span>,</span>
-<span>                units <span class="op">=</span> <span class="st">"px"</span>,</span>
-<span>                dpi <span class="op">=</span> <span class="fl">72</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section><section id="the-set_here-function" class="level3"><h3 class="anchored" data-anchor-id="the-set_here-function">the <code>set_here</code> function</h3>
-<p>Another function available in this package is the <code>set_here</code> function which creates a <code>.here</code> file anywhere in your project so you can use the directory that contains this file as <code>root</code>. This is the description in the function’s syntax</p>
-<blockquote class="blockquote">
-<p>When <code>here</code> encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that <code>here()</code> picks up the newly created file.</p>
-</blockquote>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/set_here.html">set_here</a></span><span class="op">(</span><span class="st">"blog/2024"</span><span class="op">)</span></span>
-<span><span class="co"># Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. Please start a new R session in the new project directory.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Next, I start a new <code>R</code> session from this new directory, and <code>RStudio</code> will automatically set my directory to this folder. I don’t need to open the <code>R</code> project to reach this new directory. It will give me access to the folder’s files and I can then set a relative path to other folders and files.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>From this new directory, I can reach files anywhere by calling <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> function specifying the location of the file I’d like to get.</p>
-</section><section id="the-confusing-i_am-function" class="level3"><h3 class="anchored" data-anchor-id="the-confusing-i_am-function">The confusing <code>i_am</code> function</h3>
-<p>This function has unnecessarily given me a headache. The <code>here</code> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn’t get the <code>i_am</code> function to work.</p>
+<p>My directory will be anywhere on my device unless I have previously specified it using <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my <code>R</code> scripts to a different folder the original file path won’t work anymore.</p>
+</section><section id="here-is-the-solution" class="level2"><h2 class="anchored" data-anchor-id="here-is-the-solution">
+<code>here</code> is the solution 📁</h2>
+<p>The <code>here</code> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path.</p>
+<section id="the-here-function" class="level3"><h3 class="anchored" data-anchor-id="the-here-function">The <code>here</code> function</h3>
 <p>Suppose my directory is located in the Project folder. The <code>here</code> package is going to look for the <code>.Rproj</code> file and establish the root directory there.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Project/</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Project/</span></span>
 <span><span class="co">#    |</span></span>
 <span><span class="co">#    |__ data/</span></span>
 <span><span class="co">#    |    |___  summaryDat.rds</span></span>
@@ -357,19 +309,75 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <span><span class="co">#    |    |          |____  index.qmd</span></span>
 <span><span class="co">#    |    |              |____  dat3.R</span></span>
 <span><span class="co">#    |    |__ img/</span></span>
-<span><span class="co">#    |      |_____  pic.png</span></span>
+<span><span class="co">#    |      |_____  plots.png</span></span>
 <span><span class="co">#    |</span></span>
 <span><span class="co">#    |__ scripts/</span></span>
 <span><span class="co">#      |____ ind.R</span></span>
 <span><span class="co">#      |____ cond.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Call the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code> function at the top of your script in the first chunk of your markdown file. The <code>i_am</code> function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I’d like to work with. If I choose a file path that’s not If the current directory is outside of the project where your current script is running, you’ll get an error message: <code>Could not find associated project in working directory or any parent directory</code>.</p>
+<p>Here you can see my root directory and how that changes with each iteration of the <code>here</code> command.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
-<span><span class="co"># Include at the top of your script </span></span>
-<span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/i_am.html">i_am</a></span><span class="op">(</span><span class="st">"02/here/dat2.R"</span><span class="op">)</span></span>
-<span><span class="co"># I'm redirecting all traffic within my document to a folder containing my Dat2.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
+<span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
+<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"</span></span>
+<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"2024"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"</span></span>
+<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"02"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"</span></span>
+<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"post"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"</span></span>
+<span>  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"scripts"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"</span></span>
+<span><span class="co">#| I'll point R to the actual document by providing the full relative path</span></span>
+<span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span>,<span class="st">"post"</span>,<span class="st">"2024"</span>,<span class="st">"02"</span>,<span class="st">"dat3.R"</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/post/2024/02/dat3.R"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>I can also go up several folders at once by using the full relative path. However, when I call the <code>here</code> function again, it sends me back to my root directory.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I would use the <code>here</code> function to get or write files and not just be there. If I don’t need anything from my subdirectory, then <code>R</code> will go back to its root, the <code>.Rproj</code>. For example, saving a <code>.png</code> file with multiple plots involves specifying the relative path using <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggsave</span><span class="op">(</span><span class="st">"plots.png"</span>,<span class="va">arranged_plots</span>, </span>
+<span>       path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"blog"</span>,<span class="st">"2024"</span>,<span class="st">"02"</span>,<span class="st">"post"</span>,<span class="st">"img"</span><span class="op">)</span>,</span>
+<span>                width <span class="op">=</span> <span class="fl">800</span>,</span>
+<span>                height <span class="op">=</span> <span class="fl">600</span>,</span>
+<span>                units <span class="op">=</span> <span class="st">"px"</span>,</span>
+<span>                dpi <span class="op">=</span> <span class="fl">72</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-set_here-function" class="level3"><h3 class="anchored" data-anchor-id="the-set_here-function">The <code>set_here</code> function</h3>
+<p>If I want to “just be somewhere” anytime I open my project, I would use another function– the <code>set_here</code> function. Basically, this function creates a <code>.here</code> file anywhere in your project so you can use this directory as your <code>root</code>. Here’s the description in the function’s syntax</p>
+<blockquote class="blockquote">
+<p>When <code>here</code> encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> picks up the newly created file.</p>
+</blockquote>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/set_here.html">set_here</a></span><span class="op">(</span><span class="st">"blog/2024"</span><span class="op">)</span></span>
+<span><span class="co"># Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. </span></span>
+<span><span class="co"># Please start a new R session in the new project directory.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, I start a new <code>R</code> session here, and <code>RStudio</code> will automatically set my directory to this folder. I don’t need to open the <code>R</code> project to reach this new directory. It will give me access to the folder’s files, and I can then set a relative path to other files.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Checking directory in new R session</span></span>
+<span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From this new directory, I can reach files anywhere by using the <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code> function.</p>
+</section><section id="the-confusing-i_am-function" class="level3"><h3 class="anchored" data-anchor-id="the-confusing-i_am-function">The confusing <code>i_am</code> function</h3>
+<p>This function has given me a headache. The <code>here</code> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn’t get it to work until now.</p>
+<p>Call the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code> function at the top of your script in the first chunk of your markdown file. It will accept a relative path and then establish the new project root there. So far, it only works when I point R to a specific file I’d like to work with. If I choose a file path that’s not in my project directory, it will just point to the original directory and throw an error. If the current directory is outside of the project where the current script is running, you’ll get an error message: <code>Could not find associated project in working directory or any parent directory</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># You're in the scripts folder working on ind.R but need to access summaryDat2.rds.</span></span>
+<span><span class="co">#  Simply include the relative path to the data file at the top of your script:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/i_am.html">i_am</a></span><span class="op">(</span><span class="st">"data/summaryDat2.rds"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># From my script I'm now pointing to a folder containing my Dat2.R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-dr_here-function" class="level3"><h3 class="anchored" data-anchor-id="the-dr_here-function">The <code>dr_here</code> function</h3>
+<p>The <code><a href="https://here.r-lib.org//reference/dr_here.html">here::dr_here()</a></code> shows a default message explaining why the current directory was chosen. You probably won’t use this function often– unless you’re curious and want to understand how the package selects the root directory. However, if you used <code>here::here("file_path")</code> and got an unexpected result, go ahead and call <code><a href="https://here.r-lib.org//reference/dr_here.html">here::dr_here</a></code>. It’ll most likely ask you to create a <code>.here</code> file or set your directory using the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code> function.</p>
+<p>In the end, the <code>here</code> package will make it easy to collaborate and work on your projects on any device by using the <code><a href="https://here.r-lib.org//reference/i_am.html">here::i_am()</a></code>, <code><a href="https://here.r-lib.org//reference/here.html">here::here()</a></code>, and <code><a href="https://here.r-lib.org//reference/set_here.html">here::set_here()</a></code> functions.</p>
 
 
 <!-- -->
@@ -828,7 +836,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Don't be an absolutist. Use the `here` package for reproducible workflows"</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-03-17</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Gentle reminders when using the here package for your RStudio projects"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Gentle reminders when using the `here` package for your `RStudio` projects"</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"> - r</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"> - packages</span></span>
@@ -845,7 +853,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="an">doi:</span><span class="co"> 10.59350/4a9fr-acc34</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
@@ -857,7 +865,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## TL; DR:</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>Don't be an absolutist– use relative paths. Use the <span class="in">`here`</span> package instead of <span class="in">`setwd()`</span> or <span class="in">`getwd()`</span> to increase reproducibility and avoid wasting your and other people's time.</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>Don't be an absolutist– use relative paths. Use the <span class="in">`here`</span> <span class="co">[</span><span class="ot">package</span><span class="co">](https://here.r-lib.org/)</span> instead of <span class="in">`setwd()`</span> or <span class="in">`getwd()`</span> to increase reproducibility and avoid wasting your and other people's time.</span>
 <span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's the problem with `setwd()`?</span></span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
@@ -873,109 +881,122 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="in">Dat2 &lt;- readRDS("SummaryDat2.rds")</span></span>
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>This is fine until it's time to either save or get new files. My directory will be anywhere on my device unless I have previously specified it using <span class="in">`setwd()`</span>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If later on I change my <span class="in">`R`</span> scripts to a different folder the original file path won't work anymore.</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a> My directory will be anywhere on my device unless I have previously specified it using <span class="in">`setwd()`</span>, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my <span class="in">`R`</span> scripts to a different folder the original file path won't work anymore.</span>
 <span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## `here` comes the package 📁</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## `here` is the solution 📁</span></span>
 <span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>The <span class="in">`here`</span> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path directory.</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>The <span class="in">`here`</span> package allows you to set up a relative path mapped onto your R project directory on every device regardless of your absolute path.</span>
 <span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### the `here` function</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `here` function</span></span>
 <span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>Here you can see what my root directory is and how I'm going up one folder with each iteration of the <span class="in">`here`</span> command.</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>Suppose my directory is located in the Project folder. The <span class="in">`here`</span> package is going to look for the <span class="in">`.Rproj`</span> file and establish the root directory there.</span>
 <span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("blog")</span></span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"</span></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("2024")</span></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("02")</span></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"</span></span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("post")</span></span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"</span></span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("scripts")</span></span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"</span></span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="in">#| I'll point R to the actual document by providing the full relative path</span></span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="in">here::here("blog","2024","02","post","scripts","Dat.R")</span></span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Poroject/blog/2024/02/post/scripts/ind.R"</span></span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>I can also go up several folders by calling the full relative path in one single command. However, when I call the <span class="in">`here`</span> function again, it sends me back to my root directory.</span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo =TRUE}</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="in"># Project/</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ data/</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |___  summaryDat.rds</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |___  summaryDat2.rds</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ blog/</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |_____index.qmd</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |__ post/</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    | |______ 2024/</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |       |____ 02/</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |          |____  index.qmd</span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |              |____  dat3.R</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |__ img/</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="in">#    |      |_____  plots.png</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ scripts/</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="in">#      |____ ind.R</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="in">#      |____ cond.R</span></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>It looks like I would use the <span class="in">`here`</span> function to get or write files and not just be there. If I don't need anything from my subdirectory, then <span class="in">`R`</span> will go back to where the <span class="in">`.Rproj`</span> file is located. For example, if I want to save a <span class="in">`.png`</span> file with a series of plots to one of my folders, I can use the <span class="in">`here::here`</span> function to assign the relative path within my save command.</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>Here you can see my root directory and how that changes with each iteration of the <span class="in">`here`</span> command.</span>
 <span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="in">ggsave("plots.png",arranged_plots, </span></span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="in">       path = here::here("blog","2024","02","post","img"),</span></span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a><span class="in">                width = 800,</span></span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="in">                height = 600,</span></span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="in">                units = "px",</span></span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="in">                dpi = 72)</span></span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### the `set_here` function</span></span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>Another function available in this package is the <span class="in">`set_here`</span> function which creates a <span class="in">`.here`</span> file anywhere in your project so you can use the directory that contains this file as <span class="in">`root`</span>. This is the description in the function's syntax</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; When </span><span class="in">`here`</span><span class="at"> encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that </span><span class="in">`here()`</span><span class="at"> picks up the newly created file.</span></span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="in">here::set_here("blog/2024")</span></span>
-<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="in"># Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. Please start a new R session in the new project directory.</span></span>
-<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>Next, I start a new <span class="in">`R`</span> session from this new directory, and <span class="in">`RStudio`</span> will automatically set my directory to this folder. I don't need to open the <span class="in">`R`</span> project to reach this new directory. It will give me access to the folder's files and I can then set a relative path to other folders and files.</span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
-<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"</span></span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>From this new directory, I can reach files anywhere by calling <span class="in">`here::here()`</span> function specifying the location of the file I'd like to get.</span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="fu">### The confusing `i_am` function</span></span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>This function has unnecessarily given me a headache. The <span class="in">`here`</span> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn't get the <span class="in">`i_am`</span> function to work.</span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>Suppose my directory is located in the Project folder. The <span class="in">`here`</span> package is going to look for the <span class="in">`.Rproj`</span> file and establish the root directory there.</span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo =TRUE}</span></span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a><span class="in"># Project/</span></span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ data/</span></span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |___  summaryDat.rds</span></span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |___  summaryDat2.rds</span></span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ blog/</span></span>
-<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |_____index.qmd</span></span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |</span></span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |__ post/</span></span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    | |______ 2024/</span></span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |       |____ 02/</span></span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |          |____  index.qmd</span></span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |              |____  dat3.R</span></span>
-<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a><span class="in">#    |    |__ img/</span></span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a><span class="in">#    |      |_____  pic.png</span></span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="in">#    |</span></span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="in">#    |__ scripts/</span></span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="in">#      |____ ind.R</span></span>
-<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a><span class="in">#      |____ cond.R</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("blog")</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"</span></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("2024")</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("02")</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("post")</span></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="in">  here::here("scripts")</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="in">#| I'll point R to the actual document by providing the full relative path</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="in">here::here("blog","post","2024","02","dat3.R")</span></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/post/2024/02/dat3.R"</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>I can also go up several folders at once by using the full relative path. However, when I call the <span class="in">`here`</span> function again, it sends me back to my root directory.</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project"</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>I would use the <span class="in">`here`</span> function to get or write files and not just be there. If I don't need anything from my subdirectory, then <span class="in">`R`</span> will go back to its root, the <span class="in">`.Rproj`</span>. For example, saving a <span class="in">`.png`</span> file with multiple plots involves specifying the relative path using <span class="in">`here::here()`</span>.</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="in">ggsave("plots.png",arranged_plots, </span></span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="in">       path = here::here("blog","2024","02","post","img"),</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="in">                width = 800,</span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="in">                height = 600,</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="in">                units = "px",</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="in">                dpi = 72)</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `set_here` function</span></span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>If I want to “just be somewhere” anytime I open my project, I would use another function– the <span class="in">`set_here`</span> function. Basically, this function creates a <span class="in">`.here`</span> file anywhere in your project so you can use this directory as your <span class="in">`root`</span>. Here's the description in the function's syntax</span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; When </span><span class="in">`here`</span><span class="at"> encounters such a file, it uses the directory that contains this file as root. This is useful if none of the default criteria apply. You need to restart the R session so that </span><span class="in">`here()`</span><span class="at"> picks up the newly created file.</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-overflow: wrap</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="in">here::set_here("blog/2024")</span></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="in"># Created file .here in C:\Users\jpmonteagudo\Desktop\R\Project\blog\2024. </span></span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in"># Please start a new R session in the new project directory.</span></span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>Next, I start a new <span class="in">`R`</span> session here, and <span class="in">`RStudio`</span> will automatically set my directory to this folder. I don't need to open the <span class="in">`R`</span> project to reach this new directory. It will give me access to the folder's files, and I can then set a relative path to other files.</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = FALSE, echo = TRUE}</span></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="in"># Checking directory in new R session</span></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="in">here::here()</span></span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a><span class="in"># [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/2024"</span></span>
 <span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>Call the <span class="in">`here::i_am()`</span> function at the top of your script in the first chunk of your markdown file. The <span class="in">`i_am`</span> function will accept a relative path you provide and then establish this implied project root there. So far, it only works when I point R to a specific file I'd like to work with. If I choose a file path that's not  If the current directory is outside of the project where your current script is running, you'll get an error message: <span class="in">`Could not find associated project in working directory or any parent directory`</span>. </span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>From this new directory, I can reach files anywhere by using the <span class="in">`here::here()`</span> function.</span>
 <span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">```         {r, eval =FALSE, echo = TRUE}</span></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="fu">### The confusing `i_am` function</span></span>
 <span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="in"># Include at the top of your script </span></span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="in">here::i_am("02/here/dat2.R")</span></span>
-<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a><span class="in"># I'm redirecting all traffic within my document to a folder containing my Dat2.R</span></span>
-<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>This function has given me a headache. The <span class="in">`here`</span> package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn't get it to work until now.</span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>Call the <span class="in">`here::i_am()`</span> function at the top of your script in the first chunk of your markdown file. It will accept a relative path and then establish the new project root there. So far, it only works when I point R to a specific file I'd like to work with. If I choose a file path that's not in my project directory, it will just point to the original directory and throw an error. If the current directory is outside of the project where the current script is running, you'll get an error message: <span class="in">`Could not find associated project in working directory or any parent directory`</span>. </span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="in">```         {r, eval =FALSE, echo = TRUE}</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a><span class="in"># You're in the scripts folder working on ind.R but need to access summaryDat2.rds.</span></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a><span class="in">#  Simply include the relative path to the data file at the top of your script:</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a><span class="in">library(readr)</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- read_csv(here::i_am("data/summaryDat2.rds"))</span></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in"># From my script I'm now pointing to a folder containing my Dat2.R</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `dr_here` function</span></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a> The <span class="in">`here::dr_here()`</span> shows a default message explaining why the current directory was chosen. You probably won't use this function often– unless you're curious and want to understand how the package selects the root directory. However, if you used <span class="in">`here::here("file_path")`</span> and got an unexpected result, go ahead and call <span class="in">`here::dr_here`</span>. It'll most likely ask you to create a <span class="in">`.here`</span> file or set your directory using the <span class="in">`here::i_am()`</span> function. </span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a>In the end, the <span class="in">`here`</span> package will make it easy to collaborate and work on your projects on any device by using the <span class="in">`here::i_am()`</span>, <span class="in">`here::here()`</span>, and <span class="in">`here::set_here()`</span> functions. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
