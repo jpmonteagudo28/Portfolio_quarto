@@ -1,6 +1,6 @@
 ---
 title: What I use
-date: 2024-02-27
+date: 2024-03-17
 description: Some projects, new learning experiences and home-life adventures
 title-block-banner: "#EE6A24"
 published-title: Last updated
@@ -21,8 +21,6 @@ I've gradually discovered a research workflow that suits my needs (and my budget
 
 I'm leaving a list of the programs/software I regularly use as a way to track the changes to my workflow and also provide guidance to those looking for free resources to increase their efficiency and organization.
 
-As of February 27, 2024, this is what I use:
-
 ## Discovery and Idea Generation
 
 ### Writing
@@ -31,7 +29,8 @@ As of February 27, 2024, this is what I use:
 -   I use [Typora](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) to create stand-alone markdown files. Typora also supports [pandoc-flavored markdown](https://pandoc.org/index.html) which makes it easier to transform markdown to other formats like .docx, .pdf, etc.
 -   I use a good ol' [Mead Five Star Spiral Fat Lil' Pocket Notebook](https://www.fivestarbuiltstrong.com/p/multipacks/fat-lil-wirebound-notebook-college-ruled-6-pack-38027/) for note-taking (books I read, ideas, summaries, schedules, to-do lists). I've tried planners, calendars, apps and none of those things seem to keep me on track as brilliantly as a handwritten note in one of those fat little notebooks.
 -   I use [Mendeley](https://www.mendeley.com/search/) as my bibliography and citation manager. The free plan includes 2GB of storage, which is more than I need. I store my bibliographies in [Bibtex format](https://www.bibtex.org/).
--   I use [***LaTeX***](https://www.latex-project.org/) and [Detexify](https://detexify.kirelabs.org/classify.html) which makes finding LateX symbols a breeze. Just draw the symbol you're looking for and the site provides a list of possible matches with their LateX syntax.
+-   I use [***Overleaf***](https://www.overleaf.com/) and [Detexify](https://detexify.kirelabs.org/classify.html) which makes finding LateX symbols a breeze. Just draw the symbol you're looking for and the site provides a list of possible matches with their LateX syntax.
+-   I use [Natural Speech Reader](https://www.naturalreaders.com/) to help with text editing.
 
 ## Data Collection and Analysis
 
@@ -41,7 +40,7 @@ As of February 27, 2024, this is what I use:
 -   I used [G-Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) and [piface](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) for sample size calculations, but their utility decreased as I began to use more complicated models.
 -   My main statistical programming software was [SPSS](https://studentdiscounts.com/?gad_source=1&gclid=CjwKCAiAivGuBhBEEiwAWiFmYQw5XZfX_CVYuuY1zt8nJZsSbSLOtD9sRVQbcqyBNEUejnnA1-3OVBoCLVgQAvD_BwE) until 2020, but its lackluster versatility left me disappointed. I especially didn't like all the clicking and the way their syntax, output, and data panels were set up. Unfortunately, that's the software of choice in many universities in the U.S., including mine.
 -   I also use Notepad ++ which is a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.
--   I use [Github](https://github.com/) to store almost everything I write and for version control.
+-   I use [Github](https://github.com/) and [Git Bash](https://git-scm.com/downloads) to store almost everything I write and for version control.
 
 ## Publication
 

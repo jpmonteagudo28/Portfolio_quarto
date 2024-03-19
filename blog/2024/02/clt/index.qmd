@@ -71,6 +71,12 @@ Independent variables are also uncorrelated – their covariance ($cov[A,B] = E[
 
 Two variables $A$ and $B$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.
 
+### A sum of additive processes
+
+The random, independent, and identically distributed variables $A$ and $B$ must be 
+
+
+
 -   How we use CLT
 
 -   How to know when empirical distribution converges to normal distribution?
