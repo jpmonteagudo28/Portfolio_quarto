@@ -17,7 +17,7 @@ format:
     code-tools: true
 doi: 10.59350/bje88-8r592
 citation: true
-#draft: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}

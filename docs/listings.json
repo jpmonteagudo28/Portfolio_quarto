@@ -1,22 +1,16 @@
 [
   {
     "listing": "/atom.html",
-    "items": [
-      "/blog/2024/03/here/index.html",
-      "/blog/2024/02/clt/index.html"
-    ]
+    "items": []
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": []
   },
   {
     "listing": "/research/index.html",
     "items": [
       "/research/articles/peck-heiss-2021/index.html"
-    ]
-  },
-  {
-    "listing": "/blog/index.html",
-    "items": [
-      "/blog/2024/03/here/index.html",
-      "/blog/2024/02/clt/index.html"
     ]
   }
 ]
