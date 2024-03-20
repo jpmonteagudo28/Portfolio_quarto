@@ -45,12 +45,12 @@ $dark:      $black !default;
 
 $font-family-sans-serif: "Arsenal" !default;
 
-$headings-font-family: "IBM Plex Sans" !default;
-$headings-font-weight: 400 !default;
+$headings-font-family: "Roboto Serif" !default;
+$headings-font-weight: 300 !default;
 
-$navbar-font-family: "IBM Plex Sans" !default;
-$toc-font-family: "IBM Plex Sans" !default;
-$footer-font-family: "IBM Plex Sans" !default;
+$navbar-font-family: "Roboto Serif" !default;
+$toc-font-family: "Roboto Serif" !default;
+$footer-font-family: "Roboto Serif" !default;
 
 // $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
 // $font-size-sm: $font-size-base * .875 !default;
@@ -74,7 +74,7 @@ $btn-code-copy-color-active: $red !default;
 
 // TOC
 $toc-color: $red;
-$toc-font-size: 1em;
+$toc-font-size: .8em;
 
 // Navbar
 $navbar-bg: $blue !default;
@@ -87,7 +87,7 @@ $footer-fg: $gray-300 !default;
 
 /*-- scss:rules --*/
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
@@ -166,7 +166,7 @@ pre.text, pre.sourceCode, .cell-output pre {
     .quarto-listing-category {
         font-family: $toc-font-family;
         font-weight: 300;
-        font-size: 1em;
+        font-size: .8em;
         line-height: 1.1;
         padding-left: 0.6rem;
         margin-left: 0.5em;
@@ -207,7 +207,7 @@ pre.text, pre.sourceCode, .cell-output pre {
 
     .fingerprint {
         font-family: $font-family-sans-serif;
-        font-size: 0.8em;
+        font-size: 0.6em;
     }
 
     // In the default Quarto template, .nav-footer-center has position: absolute 
@@ -354,7 +354,7 @@ pre.text, pre.sourceCode, .cell-output pre {
             background-color: shift-color($purple, -25%);
             border-color: shift-color($purple, -45%);
             color: $white;
-            font-size: 0.65em;
+            font-size: 0.735em;
             opacity: 1;
         }
     }
@@ -485,7 +485,7 @@ pre.text, pre.sourceCode, .cell-output pre {
         font-style: italic;
         text-align: right;
         color: $gray-600;
-        font-size: 1.1em;
+        font-size: .9em;
 
         @media (max-width: map-get($grid-breakpoints, md)) {
             font-size: 0.95rem;
