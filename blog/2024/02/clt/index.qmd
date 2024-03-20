@@ -31,7 +31,9 @@ options(digits = 3, width = 300)
 
 The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton is likely to eventually arrive at the expected outcome.
 
-The theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables– which, under certain conditions, will typically be the standard normal distribution. To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:
+The theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables– which, under certain conditions, will typically be the standard normal distribution. 
+
+To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:
 
 > If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?
 
@@ -51,7 +53,7 @@ A classic example of a random variable is a game of cards in which we know what 
 
 ### Independence and identical distribution
 
-In the life and social sciences, we'll typically see *conditional independence*, where variables A and B are measurements of the same underlying quantity C. We say that A and B are conditionally independent if, once C is known, the value of B doesn't give new information about A.
+In the life and social sciences, we'll typically see *conditional independence*, where variables $A$ and $B$ are measurements of the same underlying quantity $C$. We say that $A$ and $B$ are conditionally independent if, once C is known, the value of $B$ doesn't give new information about $A$. Knowing what happens to $B$ after $C$ takes place doesn't increase our chances of correctly predicting the outcome of $A$. In addition, independent variables are also uncorrelated – their covariance ($cov[A,B] = E[A]\cdot E[B]$) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}$) are equal to zero.
 
 ```{mermaid}
 ---
@@ -63,19 +65,30 @@ C((C))<---> B([B])
 A([A])<-.No effect.->B([B])
 ```
 
+
+
+Two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.
+
+### Additive processes
+
+ A process $Y$ is  considered additive
+
 ::: column-margin
-This fancy expression represents our conditional independence, $P(A = a| B = b, C = c) = P(A = a| C = c)$.
+$$
+Y_{i} = Y(0) + Y_{1}(i) + Y_{2}(i), i \geq 0 \\
+\text{where} Y(0) = f(i),  \text{is a non-random function}
+$$
 :::
 
-Independent variables are also uncorrelated – their covariance ($cov[A,B] = E[A]\cdot E[B]$​) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}$) are equal to zero.
+when the value of each observation is determined by adding a variable quantity to the value of a previous observation. The process is characterized by an initial value $Y(0)$ and the increments $Y_{i} - Y_{h}$ with $i > h \geq 0$, where $Y_{i}$ represents the value of an observation at a certain point and $Y_{h}$, the value of the subsequent observation. This additive process typically consists of three components. 
 
-Two variables $A$ and $B$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.
++ An initial value $Y_{0}$ that serves as the starting point of the process.
 
-### A sum of additive processes
++ A random, slow, and gradual change component $Y_{1}$ around the central tendency represents the continuous evolution of the process over time.
 
-The random, independent, and identically distributed variables $A$ and $B$ must be 
++ A third random component $Y_{2}$​ represents sudden jumps or changes in the process, which may occur unpredictably at certain time points.
 
-
+Together, these components contribute to the behavior of the $Y$ process and its evolution across time through a combination of unexpected slow changes and sudden jumps.
 
 -   How we use CLT
 
