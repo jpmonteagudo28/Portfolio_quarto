@@ -1,58 +1,60 @@
 ---
-title: "Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?"
-date: 2021-04-16
+title: "On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient"
+date: 2178-09-09
 author:
-  - name: Steven L. Peck
-    orcid: 0000-0001-7307-5589
-    affiliation: Brigham Young University
-  - name: Andrew Heiss
-    url: https://www.andrewheiss.com/
-    orcid: 0000-0002-3948-3914
-    affiliation: Andrew Young School of Policy Studies, Georgia State University
+  - name: Julian Bashir
+    orcid: 0009-0003-6465-6658
+    affiliation: Starbase Deep Space Nine
+  - name: JP Monteagudo
+    url: https://www.jpmonteagudo.com/
+    orcid: 0009-0003-6465-6658
+    affiliation: Liberty University School of Health Sicences
 categories: 
-  - Data visualization
-  - Ecology
-  - Simulation
+  - Cranial Implants
+  - Space Travel
+  - Surgery
+  - Mock-up
+  - Placeholder
 pub-info:
   reference: >-
-    <a href="https://lifesciences.byu.edu/directory/steven-peck">Steven L. Peck</a> and <strong>Andrew Heiss</strong>, “Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?” <em>Oikos</em> 130, no. 9 (September 2021): 1425–1439, doi: <a href="https://doi.org/10.1111/oik.07621"><code>10.1111/oik.07621</code></a>
+    <a href="https://www.jpmonteagudo.com"/>Julian Bashir</a> and <strong>JP Monteagudo</strong>, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” <em>Starbase Deep Nine Archives</em> 130, no. 9 (September 2178): 1425–1439
   links:
   - name: Preprint
-    url: peck-heiss-constraint-closure.pdf
+    url: hikmah-testing-default-manuscript.pdf
     icon: fa-solid fa-file-pdf
     local: true
   - name: Final version
-    url: https://doi.org/10.1111/oik.07621
+    #url: https://doi.org/10.1111/oik.07621
     icon: fa-solid fa-scroll
   - name: Code
-    url: https://github.com/andrewheiss/constraint-closure/
+    url: https://github.com/jpmonteagudo28/hikmah-academic-quarto
     icon: fa-brands fa-github
   - name: Add to Zotero
     url: https://www.zotero.org/save?type=doi&q=10.1111/oik.07621
     icon: ai ai-zotero
-doi: 10.1111/oik.07621
+#doi: 10.1111/oik.07621
 haiku: 
-  - Fitness, turnover,
-  - stability, evenness—
-  - all due to constraints.
+ - These brain distortions–
+ - horse loose in a hospital.
+ - Surgery?...Proceed.
 ---
 
 ## Important links
 
-- [Paper (preprint)](peck-heiss-constraint-closure.pdf)
-- [Statistical analysis notebook](https://stats.andrewheiss.com/constraint-closure/)
-- [GitHub repository](https://github.com/andrewheiss/constraint-closure/)
+- [Paper (preprint)](hikmah-testing-default-manuscript.pdf)
+- [Statistical analysis notebook](https://github.com/jpmonteagudo28/hikmah-academic-quarto)
+- [GitHub repository](https://github.com/jpmonteagudo28/hikmah-academic-quarto)
 
 ## Abstract
 
-Ecological theorists have generated several yet unresolved disputes that try to untangle the difficulty in understanding the nature of complex ecological communities. In this paper, we combine two recent theoretical approaches that used together suggest a promising way to consider how evolutionary and ecological processes may be used to frame a general theory of community ecology and its functional stability. First, we consider the theoretical proposal by Mark Vellend (2016) to focus on a small set of higher-level evolutionary and ecological processes that act on species within an ecological community. These processes provide a basis for ecological theory similar to the way in which theoretical population genetics has focused on a small set of mathematical descriptions to undergird its theory. Second, we explore ideas that might be applied to ecosystem functioning developed by Alvaro Moreno and Matteo Mossio's (2015) work on how biologically autonomous systems emerge from closure of relevant constraints. To explore the possibility that combining these two ideas may provide a more general theoretical understanding of ecological communities, we have developed a stochastic, agent-based model, with agents representing species, that explores the potential of using evolutionary and ecological processes as a constraint on the flow of species through an ecosystem. We explore how these ideas help illuminate aspects of stability found in many ecological communities. These agent-based modeling results provide in-principle arguments that suggest that constraint closure, using evolutionary and ecological processes, explains general features of ecological communities. In particular, we find that our model suggests a perspective useful in explaining repeated patterns of stability in ecological evenness, species turnover, species richness, and in measures of fitness.
+I have reset the sensors to scan for frequencies outside the usual range. By emitting harmonic vibrations to shatter the lattices. We will monitor and adjust the frequency of the resonators. He has this ability of instantly interpreting and extrapolating any verbal communication he hears. It may be due to the envelope over the structure, causing hydrogen-carbon helix patterns throughout. I'm comparing the molecular integrity of that bubble against our phasers.
 
 
-## Important figure
+## Important notes
 
-Figure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent, and with uniform random values of parameters pulled from their possible values in the model iterations. The whiskers in the box plot show the range of variation. The actual data used to construct the boxplots are shown as fine gray dots to the right of each box plot. (a) Effect of the number of constraints on landscape fitness. (b) Effect of the number of constraints on ecological evenness. (c) Effect of the number of constraints on the average cell species richness (number of species defined as functional groups) present in the cell-niche. (d) Effect of the number of constraints on the difference between turnover in mutualistic linked and unlinked species. The turnover rate is the number of new species created at each time step in each cell.
+Stellar flares are increasing in magnitude and frequency. Set course for Rhomboid Dronegar 006, warp seven. There's no evidence of an advanced communication network. Total guidance system failure, with less than 24 hours' reserve power. Shield effectiveness has been reduced 12 percent. We have covered the area in a spherical pattern which a ship without warp drive could cross in the given time.
 
-![Figure 4: Boxplots show ecological measures across parameter space for different numbers of constraints generated by 2000 iterations of the simulation model across all 64 possible permutations of the proposed constraints being present or absent](oikos-21_fig-4.png)
+Resistance is futile.
 
 
 ## Citation
@@ -62,14 +64,13 @@ Figure 4: Boxplots show ecological measures across parameter space for different
 </p>
 
 ```bibtex
-@article{PeckHeiss:2021,
-    Author = {Steven L. Peck and Andrew Heiss},
-    Doi = {10.1111/oik.07621},
-    Journal = {Oikos},
+@article{BashirMonteagudo:2178,
+    Author = {Julian Bashier and JP Monteagudo},
+    Journal = {Starbase Deep Space Nine},
     Month = {9},
     Number = {9},
     Pages = {1425--1439},
-    Title = {Can Constraint Closure Provide a Generalized Understanding of Community Dynamics in Ecosystems?},
-    Volume = {130},
-    Year = {2021}}
+    Title = {On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient},
+    Volume = {435},
+    Year = {2178}}
 ```

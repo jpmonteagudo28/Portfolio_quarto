@@ -2,7 +2,7 @@
 title: "Research"
 listing:
   - id: articles
-    contents: "articles/*/index.qmd"
+    contents: "articles/index.qmd"
     sort: "date desc"
     template: ../html/research/listing.ejs
     categories: true
