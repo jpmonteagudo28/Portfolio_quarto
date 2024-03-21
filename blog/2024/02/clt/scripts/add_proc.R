@@ -62,3 +62,64 @@ final_states <- simulate_SIR_network(network, beta, gamma, initial_infected, day
 # Plot final states
 plot(network, vertex.color = ifelse(final_states == 0, "dodgerblue", ifelse(final_states == 1, "firebrick1", "forestgreen")),
      vertex.size = 10, vertex.label = NA, main = "SIR Model on Contact Network")
+
+## ---------------------------------------------------------------------------------- ##
+## Simple random wlak algorithm with animated graph
+## ---------------------------------------------------------------------------------- ##
+## 
+##Function to simulate random walk with disease transmission
+simulate_random_walk <- function(steps, transmission_prob) {
+  # Initialize variables
+  position <- 0  # Initial position
+  infected <- FALSE  # Initial infection status
+  
+## Simulate random walk
+  positions <- numeric(steps)
+  infections <- logical(steps)
+  for (i in 1:steps) {
+    # Update position
+    position <- position + sample(c(-1, 1), 1)
+    positions[i] <- position
+    
+## Check for infection
+    if (!infected && runif(1) < transmission_prob) {
+      infected <- TRUE
+      infections[i] <- TRUE
+    } else {
+      infections[i] <- FALSE
+    }
+  }
+  
+## Return results
+  return(list(positions = positions, infections = infections))
+}
+
+# Parameters
+steps <- 100  # Number of steps in the random walk
+transmission_prob <- 0.1  # Probability of disease transmission at each step
+
+# Run simulation
+sim <- simulate_random_walk(steps, transmission_prob)
+
+# Print results
+print(sim$positions)
+print(sim$infections)
+
+## Load required libraries
+library(ggplot2)
+library(gganimate)
+
+# Create data frame for plotting
+df <- data.frame(step = 1:steps, position = sim$positions, infection = sim$infections)
+
+# Plot animated graph
+p <- ggplot(df, aes(x = step, y = position, color = factor(infection))) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(values = c("dodgerblue", "firebrick1"), labels = c("Uninfected", "Infected")) +
+  labs(title = "Random Walk with Disease Transmission", x = "Step", y = "Position") +
+  transition_states(step, transition_length = 0.5, state_length = 1) +
+  theme_minimal()
+
+# Save animation
+animate(p, renderer = gifski_renderer("random_walk_animation.gif"))

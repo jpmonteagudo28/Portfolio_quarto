@@ -5,7 +5,7 @@ author:
   - name: Julian Bashir
     orcid: 0009-0003-6465-6658
     affiliation: Starbase Deep Space Nine
-  - name: JP Monteagudo
+  - name: Elim Garak
     url: https://www.jpmonteagudo.com/
     orcid: 0009-0003-6465-6658
     affiliation: Liberty University School of Health Sicences
@@ -17,7 +17,7 @@ categories:
   - Placeholder
 pub-info:
   reference: >-
-    <a href="https://www.jpmonteagudo.com"/>Julian Bashir</a> and <strong>JP Monteagudo</strong>, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” <em>Starbase Deep Nine Archives</em> 130, no. 9 (September 2178): 1425–1439
+    <a href="https://www.jpmonteagudo.com"/>Julian Bashir</a> and <strong>Elim Garak</strong>, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” <em>Starbase Deep Nine Archives</em> 130, no. 9 (September 2178): 1425–1439
   links:
   - name: Preprint
     url: hikmah-testing-default-manuscript.pdf
@@ -29,9 +29,9 @@ pub-info:
   - name: Code
     url: https://github.com/jpmonteagudo28/hikmah-academic-quarto
     icon: fa-brands fa-github
-  - name: Add to Zotero
-    url: https://www.zotero.org/save?type=doi&q=10.1111/oik.07621
-    icon: ai ai-zotero
+  - name: Add to Mendeley
+    url: https://www.mendeley.com/search/
+   # icon: ai ai-zotero
 #doi: 10.1111/oik.07621
 haiku: 
  - These brain distortions–
@@ -60,17 +60,17 @@ Resistance is futile.
 ## Citation
 
 <p class="buttons" style="text-align:center;">
-<a class="btn btn-danger" target="_blank" href="https://www.zotero.org/save?type=doi&q=10.1111/oik.07621">&emsp;Add to Zotero {{< fa square-arrow-up-right >}}</a>
+<a class="btn btn-danger" target="_blank" href="https://www.mendeley.com/search/">&emsp;Add to Mendeley {{< fa square-arrow-up-right >}}</a>
 </p>
 
 ```bibtex
-@article{BashirMonteagudo:2178,
-    Author = {Julian Bashier and JP Monteagudo},
+@article{BashirGarak:2178,
+    Author = {Julian Bashier and Elim Garak},
     Journal = {Starbase Deep Space Nine},
     Month = {9},
     Number = {9},
     Pages = {1425--1439},
     Title = {On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient},
-    Volume = {435},
+    Volume = {130},
     Year = {2178}}
 ```
