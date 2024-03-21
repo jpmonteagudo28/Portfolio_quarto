@@ -207,7 +207,7 @@ pre.text, pre.sourceCode, .cell-output pre {
 
     .fingerprint {
         font-family: $font-family-sans-serif;
-        font-size: 0.6em;
+        font-size: 0.83em;
     }
 
     // In the default Quarto template, .nav-footer-center has position: absolute 
@@ -299,7 +299,7 @@ pre.text, pre.sourceCode, .cell-output pre {
 
         .description {
             font-weight: 300;
-            font-size: 1em;
+            font-size: .85em;
             margin-bottom: 0.3em;
         }
 
@@ -321,8 +321,8 @@ pre.text, pre.sourceCode, .cell-output pre {
                 color: $gray-600;
                 border: 1px solid $gray-500;
                 border-radius: 0.25rem;
-                text-transform: uppercase;
-                font-size: 0.65em;
+                text-transform: lowercase;
+                font-size: 0.6em;
                 padding: 0.15em 0.5em;
                 cursor: pointer;
             }
@@ -351,10 +351,10 @@ pre.text, pre.sourceCode, .cell-output pre {
         margin-top: 1.5em;
 
         .quarto-category {
-            background-color: shift-color($purple, -25%);
-            border-color: shift-color($purple, -45%);
+            background-color: shift-color($blue, -25%);
+            border-color: shift-color($blue, -45%);
             color: $white;
-            font-size: 0.735em;
+            font-size: 0.61em;
             opacity: 1;
         }
     }
@@ -393,7 +393,7 @@ pre.text, pre.sourceCode, .cell-output pre {
     }
 
     .project-details {
-        background-color: rgba($red, 0.1);
+        background-color: rgba($cobalt, 0.1);
         padding: 0.75em;
         margin: 1em 0;
     }
@@ -422,12 +422,12 @@ pre.text, pre.sourceCode, .cell-output pre {
 
 .research {
     .back-nav a {
-        color: shift-color($red, -50%);
+        color: shift-color($cobalt, -50%);
     }
     
     .quarto-title .quarto-categories .quarto-category {
-        background-color: shift-color($red, -75%);
-        color: $red;
+        background-color: shift-color($cobalt, -75%);
+        color: $cobalt;
         font-size: 0.65em;
         opacity: 1;
     }
@@ -459,7 +459,7 @@ pre.text, pre.sourceCode, .cell-output pre {
 
         li.project {
             margin-bottom: 2.5em;
-            border-left: 6px solid shift-color($red, -90%);
+            border-left: 6px solid shift-color($cobalt, -90%);
 
             p {
                 margin: 0;
@@ -498,7 +498,7 @@ pre.text, pre.sourceCode, .cell-output pre {
 
     .project-details-listing {
         margin-top: 0.8em;
-        background-color: shift-color($red, -90%);
+        background-color: shift-color($cobalt, -90%);
         font-size: 0.9rem;
 
         @media (max-width: map-get($grid-breakpoints, md)) {
@@ -512,7 +512,7 @@ pre.text, pre.sourceCode, .cell-output pre {
         }
 
         .details {
-            background-color: $red;
+            background-color: $cobalt;
             padding-right: 1.5em;
 
             a {
