@@ -73,7 +73,7 @@ simulate_random_walk <- function(steps, transmission_prob) {
   position <- 0  # Initial position
   infected <- FALSE  # Initial infection status
   
-## Simulate random walk
+  # Simulate random walk
   positions <- numeric(steps)
   infections <- logical(steps)
   for (i in 1:steps) {
@@ -81,21 +81,20 @@ simulate_random_walk <- function(steps, transmission_prob) {
     position <- position + sample(c(-1, 1), 1)
     positions[i] <- position
     
-## Check for infection
+    # Check for infection
     if (!infected && runif(1) < transmission_prob) {
       infected <- TRUE
-      infections[i] <- TRUE
-    } else {
-      infections[i] <- FALSE
     }
+    infections[i] <- infected
   }
   
-## Return results
+  # Return results
   return(list(positions = positions, infections = infections))
 }
 
+
 # Parameters
-steps <- 100  # Number of steps in the random walk
+steps <- 10000  # Number of steps in the random walk
 transmission_prob <- 0.1  # Probability of disease transmission at each step
 
 # Run simulation

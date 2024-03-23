@@ -112,12 +112,20 @@ here::here()
 I would use the `here` function to get or write files and not just be there. If I don't need anything from my subdirectory, then `R` will go back to its root, the `.Rproj`. For example, saving a `.png` file with multiple plots involves specifying the relative path using `here::here()`.
 
 ```{r, eval = FALSE, echo = TRUE}
+
+## Using ggplot2 to save my plots
+
 ggsave("plots.png",arranged_plots, 
        path = here::here("blog","2024","02","post","img"),
                 width = 800,
                 height = 600,
                 units = "px",
                 dpi = 72)
+
+## The same can be done using base R
+
+dev.copy(png,here::here("blog","2024","02","clt","img","plots.png"), width = 800, height = 600)
+dev.off()
 ```
 
 ### The `set_here` function

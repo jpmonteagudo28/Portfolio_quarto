@@ -2,7 +2,7 @@
 title: What I use
 date: 2024-03-17
 description: Some projects, new learning experiences and home-life adventures
-title-block-banner: "#EE6A24"
+title-block-banner: "#F2AC57"
 published-title: Last updated
 toc: true
 toc-location: left
