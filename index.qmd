@@ -3,7 +3,7 @@ title: "¡Bienvenido!"
 pagetitle: "JP Monteagudo"
 main-photo: /files/profile_2024.png
 main-photo-square: /files/profile_2024.png
-title-block-banner: "#F2AC57"
+title-block-banner: "#f25050"
 format:
   html:
     quarto-template-params:
