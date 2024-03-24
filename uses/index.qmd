@@ -39,7 +39,7 @@ I'm leaving a list of the programs/software I regularly use as a way to track th
 -   I currently use [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/) for my data analysis and graphing needs, and [VSCode](https://code.visualstudio.com/) for everything else.
 -   I used [G-Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) and [piface](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) for sample size calculations, but their utility decreased as I began to use more complicated models.
 -   My main statistical programming software was [SPSS](https://studentdiscounts.com/?gad_source=1&gclid=CjwKCAiAivGuBhBEEiwAWiFmYQw5XZfX_CVYuuY1zt8nJZsSbSLOtD9sRVQbcqyBNEUejnnA1-3OVBoCLVgQAvD_BwE) until 2020, but its lackluster versatility left me disappointed. I especially didn't like all the clicking and the way their syntax, output, and data panels were set up. Unfortunately, that's the software of choice in many universities in the U.S., including mine.
--   I also use Notepad ++ which is a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.
+-   I also use Notepad ++, a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.
 -   I use [Github](https://github.com/) and [Git Bash](https://git-scm.com/downloads) to store almost everything I write and for version control.
 
 ## Publication
@@ -47,9 +47,9 @@ I'm leaving a list of the programs/software I regularly use as a way to track th
 ### Graphic Design
 
 -   I've used [Canva](https://www.canva.com/) for every design in this website and personal documents. I also have free access to [Adobe InDesign](https://www.adobe.com/) but haven't used it much.
--   I totally recommend [Practical Typography](https://practicaltypography.com/), by Matthew Butterick– a typograhpy primer for the graphic designer and they lay person trying to create beautiful documents.
+-   I totally recommend [Practical Typography](https://practicaltypography.com/), by Matthew Butterick– a typograhpy primer for the graphic designer and the layperson trying to create beautiful documents.
 -   I use PowerPoint to create simple and stunning presentations. I have free access to Microsoft products, and it's also the best slide editor I've seen.
--   I use [Google Fonts API](https://fonts.google.com/) for font selection. After reading Matthew Butterick's typography book, I'm really careful about text composition and formatting. My preferred fonts are IBM Plex Serif, IBM Plex Sans, Source Code Pro, Charter, Concourse, and Cooper Hewitt.
+-   I use [Google Fonts API](https://fonts.google.com/) for font selection. After reading Matthew Butterick's typography book, I'm careful about text composition and formatting. My preferred fonts are Arsenal, ETBembo, Roboto Serif, Charter, and Cooper Hewitt.
 
 ### Productivity
 
