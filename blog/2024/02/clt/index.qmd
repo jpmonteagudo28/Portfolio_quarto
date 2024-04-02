@@ -12,9 +12,11 @@ format:
   html:
     code-fold: true
     code-tools: true
+    highlight-style: tango
+    code-line-numbers: true
 doi: 10.59350/bje88-8r592
 citation: true
-draft: true
+#draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -30,7 +32,7 @@ set.seed(09)
 
 The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton can eventually arrive at the expected outcome.
 
-The theorem derives its name from the fact that we're using a parameter of **central** tendency – typically the mean, median, or mode– to arrive at the **limiting distribution** of independent random variables– which, under certain conditions, will typically be the standard normal distribution.
+The theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables– which, under certain conditions, will typically be the standard normal distribution.
 
 To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:
 
@@ -52,7 +54,7 @@ A classic example of a random variable is a game of cards in which we know what 
 
 In the life and social sciences, we'll typically see *conditional independence*, where variables $A$ and $B$ are measurements of the same underlying quantity $C$. We say that $A$ and $B$ are conditionally independent if, once C is known, the value of $B$ doesn't give new information about $A$. Knowing what happens to $B$ after $C$ takes place doesn't increase our chances of correctly predicting the outcome of $A$. In addition, independent variables are also uncorrelated – their covariance ($cov[A,B] = E[A]\cdot E[B]$) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}$​) are equal to zero.
 
-```{r, eval = TRUE}
+```{r, eval = TRUE, attr.source= '.numberLines'}
 #| label: fig_iid
 #| fig-cap: "Simulated identically distributed and non-identically distributed variables."
 #| lightbox:
@@ -96,14 +98,14 @@ Let's look at a scenario in R:
 
 Let's say a microchip manufacturer records the weekly number of defective microchips (`def_micros`) for each of its 8–hour shifts to evaluate whether the number of complaints (`complaints`) received in a 24 hours has to do with `def_micro`. They also want to know if the number of complaints given `def_micro` is related to the number of devices (`devices`) bought and returned through their online retailer. We would say that the `complaints` and `devices` are conditionally independent if, each variable is clearly associated with`def_micr0`, but their [partial correlation](https://en.wikipedia.org/wiki/Partial_correlation) coefficient is close to zero ($\rho = -.021$).
 
-```{r, eval = TRUE, warning = FALSE, message = FALSE}
+```{r, eval = TRUE, warning = FALSE, message = FALSE, attr.source= '.numberLines'}
 #| fig-cap-label: cond_ind
 #| fig-cap: "Relationship between devices, complaints, and defective microchips"
 #| lightbox:
 #| group: r-graph
 #| column: margin
 
-##---------------------------------------------------------------------------------##
+##---------------------------------------------------------------------------------- ##
 ## Generating two random variables that meet the i.i.d assumption
 ## --------------------------------------------------------------------------------- ##
 library(here)
@@ -112,7 +114,7 @@ library(ggplot2)
 library(gridExtra)
 library(showtext)
 library(knitr)
-##------------------------------------------------------------------------------------- 
+##------------------------------------------------------------------------------------- ##
 ## Generating two conditionally independent random variables
 ## ------------------------------------------------------------------------------------ ##
 ## Creating function to generate random variable with defined correlation to an existing var.
@@ -121,10 +123,10 @@ complement <- function(y, rho, x) { # corr. coefficient
   y.perp <- residuals(lm(x ~ y))
   rho * sd(y.perp) * y + y.perp * sd(y) * sqrt(1 - rho^2)
 }
-def_micro <- rpois(1050, 6) # lambda = n*p, p = .006 defective microchips manufactured by company in 12 hrs
-complaints <- complement(def_micro, rho = .273) # no. complaints received on 24 hr period for devices using the microchip in question
-devices <- complement(def_micro, rho = .331) # weekly no. devices processed at online retailer (+) bought (-)returned
-##
+def_micro <- rpois(1050, 6) # lambda = n*p, p = .006 defective microchips 
+complaints <- complement(def_micro, rho = .273) # no. complaints received on 24 hr period 
+devices <- complement(def_micro, rho = .331) # weekly no. devices processed at online retailer
+
 ## Creating function to summarize list of variables
 group_summary <- function(...) {
   summaries <- lapply(list(...), summary)
@@ -133,7 +135,6 @@ group_summary <- function(...) {
 }
 
 group_summary(def_micro, devices, complaints)
-
 ## ------------------------------------------------------------------------------- ##
 ## Creating function to find Spearman's rho among all variables
 ## ------------------------------------------------------------------------------- ##
@@ -142,20 +143,20 @@ spearman_correlation <- function(...) {
   correlation_matrix <- round(cor(df, method = "spearman"), 3)
   return(correlation_matrix)
 }
-
 spearman <- spearman_correlation(def_micro, devices, complaints)
 ##
 ##              def_micro devices complaints
 ## def_micro      1.000   0.378      0.297
 ## devices        0.378   1.000      0.099
 ## complaints     0.297   0.099      1.000
-##
-## Use ppcor package to calculate partial correlation between complaints and devices
 
+
+## Use ppcor package to calculate partial correlation between complaints and devices
 part_cor <- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman")
 ##      estimate  p.value  statistic  n gp   Method
 ##  -0.02075897 0.501827 -0.6718506 1050  1 spearman
-## Relationship between devices and complaints is technically non-existent. We can say they're conditionally independent.
+## Relationship between devices and complaints is technically non-existent.
+## We can say they're conditionally independent.
 ## -------------------------------------------------------------------------------- ##
 ## Creating scatterplots to visualize relationship between variables
 ## -------------------------------------------------------------------------------- ##
@@ -250,7 +251,8 @@ comp_micro_plot <- ggplot2::ggplot(df1, aes(complaints, def_micro)) +
     y = "microchips") +
   theme_nice_dist() # Apply a custom theme
 # Creating grid panel displaying all three plots vertically. 
-arranged_plots <- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, nrow = 1) # I prefer the vertical plots rather than the horizontal ones
+# I prefer the vertical plots rather than the horizontal ones
+arranged_plots <- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, nrow = 1) 
 
 ```
 
@@ -282,7 +284,7 @@ An example of such a random process in epidemiology is the spread of an infectio
 
             t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
 
-        -   Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
+        -   Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
 
         -   When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
 
@@ -290,5 +292,4 @@ An example of such a random process in epidemiology is the spread of an infectio
 
     -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.
     -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume
-  
 

@@ -5,7 +5,7 @@ $theme: "jpm" !default;
 // Color system
 //
 $white:    #ffffff !default;
-$gray-100: #f8f9fa !default;
+$gray-100: #f9f9f9 !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
@@ -15,6 +15,7 @@ $gray-700: #495057 !default;
 $gray-800: #373a3c !default;
 $gray-900: #212529 !default;
 $black:    #0D0D0D !default;
+$code-gray:#eeeeee !default;
 
 $blue:    #112540 !default;
 $cobalt:  #035AA6 !default;
@@ -27,6 +28,8 @@ $yellow:  #F6D645 !default;
 $green:   #118230 !default;
 $teal:    #20c997 !default;
 $cyan:    #3093CF !default;
+$rose:    #c7254e !default;
+$in-code: #0a254e !default;
 
 $primary:   $cobalt !default;
 $secondary: $gray-500 !default;
@@ -51,6 +54,7 @@ $headings-font-weight: 700 !default;
 $navbar-font-family: "Mate SC" !default;
 $toc-font-family: "EB Garamond" !default;
 $footer-font-family: "EB Garamond" !default;
+$code-font-family: "Source Code Pro" !default;
 
 // $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
 // $font-size-sm: $font-size-base * .875 !default;
@@ -67,10 +71,13 @@ $link-hover-decoration: underline !default;
 
 // Inline code
 $code-bg: $gray-200 !default;
-$code-color: $gray-900 !default;
+$code-color: $in-code !default;
+$code-font-size: .75em !default;
+$font-style: normal !default;
+
 
 // Code copy
-$btn-code-copy-color-active: $red !default;
+$btn-code-copy-color-active: $rose !default;
 
 // TOC
 $toc-color: $red;
@@ -87,7 +94,7 @@ $footer-fg: $gray-300 !default;
 
 /*-- scss:rules --*/
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Mate+SC&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Mate+SC&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
@@ -139,9 +146,13 @@ body {
 //  }
 }
 
-// Shrink blocks of code
+// Shrink blocks of code. border-collapse and padding conflict with the tango highlight style
 pre.text, pre.sourceCode, .cell-output pre {
     font-size: 0.65em;
+    font-family: $code-font-family;
+    color: $rose;
+    background-color:$code-gray;
+    border-radius: 5px;
 }
 
 .navbar {

@@ -243,12 +243,8 @@ window.Quarto = {
                 <div class="quarto-category">r</div>
                 <div class="quarto-category">clt</div>
                 <div class="quarto-category">sample size</div>
-                <div class="quarto-category">t–test</div>
-                <div class="quarto-category">normal</div>
                 <div class="quarto-category">Lyndeberg-Lévy</div>
-                <div class="quarto-category">i.i.d</div>
                 <div class="quarto-category">Gaussian</div>
-                <div class="quarto-category">random</div>
               </div>
                   </div>
   </div>
@@ -303,7 +299,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="the-central-limit-theorem" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-central-limit-theorem">The Central Limit Theorem</h2>
 <p>The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton can eventually arrive at the expected outcome.</p>
-<p>The theorem derives its name from the fact that we’re using a parameter of <strong>central</strong> tendency – typically the mean, median, or mode– to arrive at the <strong>limiting distribution</strong> of independent random variables– which, under certain conditions, will typically be the standard normal distribution.</p>
+<p>The theorem derives its name from the fact that we’re using a parameter of <em>central</em> tendency – typically the mean, median, or mode– to arrive at the <em>limiting distribution</em> of independent random variables– which, under certain conditions, will typically be the standard normal distribution.</p>
 <p>To put it differently, by sampling a finite population an increasing number of times and using the mean of the <span class="math inline">\(n\)</span> samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</p>
 <blockquote class="blockquote">
 <p>If an outcome <span class="math inline">\(p\)</span> has occurred <span class="math inline">\(p\)</span> times out of <span class="math inline">\(p + q = n\)</span> number of trials, what’s the probability of our desired outcome occurring <span class="math inline">\(r\)</span> times in a further <span class="math inline">\(r + q = m\)</span> number of trials?</p>
@@ -318,39 +314,39 @@ window.Quarto = {
 </section><section id="independence-and-identical-distribution" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="independence-and-identical-distribution">Independence and identical distribution</h3>
 <p>In the life and social sciences, we’ll typically see <em>conditional independence</em>, where variables <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are measurements of the same underlying quantity <span class="math inline">\(C\)</span>. We say that <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are conditionally independent if, once C is known, the value of <span class="math inline">\(B\)</span> doesn’t give new information about <span class="math inline">\(A\)</span>. Knowing what happens to <span class="math inline">\(B\)</span> after <span class="math inline">\(C\)</span> takes place doesn’t increase our chances of correctly predicting the outcome of <span class="math inline">\(A\)</span>. In addition, independent variables are also uncorrelated – their covariance (<span class="math inline">\(cov[A,B] = E[A]\cdot E[B]\)</span>) and Pearson’s <span class="math inline">\(r\)</span> (<span class="math inline">\(\rho_{X,Y} = \frac{cov[A,B]}{\sigma_{A}\sigma_{B}}\)</span>​) are equal to zero.</p>
 <div class="cell page-columns page-full" data-layout-align="center" data-group="r-graph">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">clrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="co"># Creating custom color palette</span></span>
-<span>  <span class="st">"#FFBE00"</span>, <span class="co">#  yellow</span></span>
-<span>  <span class="st">"#B92F0A"</span>, <span class="co">#  red</span></span>
-<span>  <span class="st">"#7C225C"</span>, <span class="co">#  purple</span></span>
-<span>  <span class="st">"#792A26"</span>, <span class="co">#  brown</span></span>
-<span>  <span class="st">"#242424"</span>, <span class="co">#  dark gray</span></span>
-<span>  <span class="st">"#394DAA"</span><span class="op">)</span> <span class="co">#  blue</span></span>
-<span></span>
-<span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span>,by<span class="op">=</span><span class="fl">.01</span><span class="op">)</span> <span class="co"># Creating variable to use in dens. curve</span></span>
-<span><span class="co">## Plot graphics</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>las <span class="op">=</span> <span class="fl">1</span>, mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, mai <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">.5</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## Plot graphics</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">xx</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,type <span class="op">=</span> <span class="st">"b"</span>, lwd <span class="op">=</span> <span class="fl">1</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  col <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"Identically distributed"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">3</span>, pch <span class="op">=</span> <span class="fl">18</span>, col <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
-<span><span class="co">## Plot graphics</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">""</span>,</span>
-<span>     col <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,main<span class="op">=</span><span class="st">"Shift in means"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fl">1</span><span class="op">)</span>,lty <span class="op">=</span> <span class="fl">2</span>, lwd<span class="op">=</span><span class="fl">3</span>,pch <span class="op">=</span> <span class="fl">18</span>,col<span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
-<span><span class="co">## Plot graphics</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span>,<span class="op">-</span><span class="fl">1</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">""</span>,</span>
-<span>     col <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"Different distributions"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op">(</span><span class="va">xx</span>, <span class="fl">2</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">clrs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r numberLines number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>clrs <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="co"># Creating custom color palette</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="st">"#FFBE00"</span>, <span class="co">#  yellow</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="st">"#B92F0A"</span>, <span class="co">#  red</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="st">"#7C225C"</span>, <span class="co">#  purple</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">"#792A26"</span>, <span class="co">#  brown</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="st">"#242424"</span>, <span class="co">#  dark gray</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="st">"#394DAA"</span>) <span class="co">#  blue</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>xx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="at">by=</span>.<span class="dv">01</span>) <span class="co"># Creating variable to use in dens. curve</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="do">## Plot graphics</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">par</span>(<span class="at">las =</span> <span class="dv">1</span>, <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mai =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, .<span class="dv">1</span>))</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="do">## Plot graphics</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">plot</span>(xx, <span class="fu">dnorm</span>(xx, <span class="sc">-</span><span class="dv">1</span>),<span class="at">type =</span> <span class="st">"b"</span>, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>,</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="at">col =</span> clrs[<span class="dv">3</span>], <span class="at">main =</span> <span class="st">"Identically distributed"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="fu">lines</span>(xx, <span class="fu">dnorm</span>(xx, <span class="sc">-</span><span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">18</span>, <span class="at">col =</span> clrs[<span class="dv">1</span>])</span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="at">col =</span> <span class="fu">c</span>(clrs[<span class="dv">3</span>], clrs[<span class="dv">1</span>]), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="do">## Plot graphics</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="fu">plot</span>(xx,<span class="fu">dnorm</span>(xx,<span class="sc">-</span><span class="dv">1</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">xlab=</span><span class="st">""</span>,<span class="at">ylab=</span><span class="st">""</span>,</span>
+<span id="cb1-20"><a href="#cb1-20"></a>     <span class="at">col =</span> clrs[<span class="dv">3</span>],<span class="at">main=</span><span class="st">"Shift in means"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">lines</span>(xx,<span class="fu">dnorm</span>(xx,<span class="dv">1</span>),<span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">pch =</span> <span class="dv">18</span>,<span class="at">col=</span> clrs[<span class="dv">1</span>])</span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb1-23"><a href="#cb1-23"></a>       <span class="at">col =</span> <span class="fu">c</span>(clrs[<span class="dv">3</span>], clrs[<span class="dv">1</span>]), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="do">## Plot graphics</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">plot</span>(xx,<span class="fu">dnorm</span>(xx,<span class="sc">-</span><span class="dv">1</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">xlab=</span><span class="st">""</span>,<span class="at">ylab=</span><span class="st">""</span>,</span>
+<span id="cb1-26"><a href="#cb1-26"></a>     <span class="at">col =</span> clrs[<span class="dv">3</span>], <span class="at">main =</span> <span class="st">"Different distributions"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))</span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="fu">lines</span>(xx, <span class="fu">dchisq</span>(xx, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> clrs[<span class="dv">1</span>])</span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb1-29"><a href="#cb1-29"></a>       <span class="at">col =</span> <span class="fu">c</span>(clrs[<span class="dv">3</span>], clrs[<span class="dv">1</span>]), <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/fig_iid-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Simulated identically distributed and non-identically distributed variables."><img src="index_files/figure-html/fig_iid-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Simulated identically distributed and non-identically distributed variables."></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig_iid-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Simulated identically distributed and non-identically distributed variables."><img src="index_files/figure-html/fig_iid-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Simulated identically distributed and non-identically distributed variables."></a></p>
 <figcaption>Simulated identically distributed and non-identically distributed variables.</figcaption></figure>
 </div>
 </div></div></div>
@@ -358,169 +354,169 @@ window.Quarto = {
 <p>Let’s look at a scenario in R:</p>
 <p>Let’s say a microchip manufacturer records the weekly number of defective microchips (<code>def_micros</code>) for each of its 8–hour shifts to evaluate whether the number of complaints (<code>complaints</code>) received in a 24 hours has to do with <code>def_micro</code>. They also want to know if the number of complaints given <code>def_micro</code> is related to the number of devices (<code>devices</code>) bought and returned through their online retailer. We would say that the <code>complaints</code> and <code>devices</code> are conditionally independent if, each variable is clearly associated with<code>def_micr0</code>, but their <a href="https://en.wikipedia.org/wiki/Partial_correlation">partial correlation</a> coefficient is close to zero (<span class="math inline">\(\rho = -.021\)</span>).</p>
 <div class="cell page-columns page-full" data-layout-align="center" data-fig-cap-label="cond_ind" data-group="r-graph">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##---------------------------------------------------------------------------------##</span></span>
-<span><span class="co">## Generating two random variables that meet the i.i.d assumption</span></span>
-<span><span class="co">## --------------------------------------------------------------------------------- ##</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ppcor</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
-<span><span class="co">##------------------------------------------------------------------------------------- </span></span>
-<span><span class="co">## Generating two conditionally independent random variables</span></span>
-<span><span class="co">## ------------------------------------------------------------------------------------ ##</span></span>
-<span><span class="co">## Creating function to generate random variable with defined correlation to an existing var.</span></span>
-<span><span class="va">complement</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">y</span>, <span class="va">rho</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="co"># corr. coefficient</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html">rgamma</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">.5</span><span class="op">)</span> <span class="co"># Optional: supply a default if `x` is not given</span></span>
-<span>  <span class="va">y.perp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">rho</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">y.perp</span><span class="op">)</span> <span class="op">*</span> <span class="va">y</span> <span class="op">+</span> <span class="va">y.perp</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">rho</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">def_micro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">1050</span>, <span class="fl">6</span><span class="op">)</span> <span class="co"># lambda = n*p, p = .006 defective microchips manufactured by company in 12 hrs</span></span>
-<span><span class="va">complaints</span> <span class="op">&lt;-</span> <span class="fu">complement</span><span class="op">(</span><span class="va">def_micro</span>, rho <span class="op">=</span> <span class="fl">.273</span><span class="op">)</span> <span class="co"># no. complaints received on 24 hr period for devices using the microchip in question</span></span>
-<span><span class="va">devices</span> <span class="op">&lt;-</span> <span class="fu">complement</span><span class="op">(</span><span class="va">def_micro</span>, rho <span class="op">=</span> <span class="fl">.331</span><span class="op">)</span> <span class="co"># weekly no. devices processed at online retailer (+) bought (-)returned</span></span>
-<span><span class="co">##</span></span>
-<span><span class="co">## Creating function to summarize list of variables</span></span>
-<span><span class="va">group_summary</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">summaries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>, <span class="va">summary</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">summaries</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Summary_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">summaries</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">summaries</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu">group_summary</span><span class="op">(</span><span class="va">def_micro</span>, <span class="va">devices</span>, <span class="va">complaints</span><span class="op">)</span></span>
-<span><span class="co">## $Summary_1</span></span>
-<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##    0.00    4.00    6.00    6.09    8.00   14.00 </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $Summary_2</span></span>
-<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##    -7.2     0.8     4.6     6.0     9.8    48.9 </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $Summary_3</span></span>
-<span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##    -7.2    -0.3     3.3     4.5     8.0    34.8</span></span>
-<span></span>
-<span><span class="co">## ------------------------------------------------------------------------------- ##</span></span>
-<span><span class="co">## Creating function to find Spearman's rho among all variables</span></span>
-<span><span class="co">## ------------------------------------------------------------------------------- ##</span></span>
-<span><span class="va">spearman_correlation</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
-<span>  <span class="va">correlation_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">correlation_matrix</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">spearman</span> <span class="op">&lt;-</span> <span class="fu">spearman_correlation</span><span class="op">(</span><span class="va">def_micro</span>, <span class="va">devices</span>, <span class="va">complaints</span><span class="op">)</span></span>
-<span><span class="co">##</span></span>
-<span><span class="co">##              def_micro devices complaints</span></span>
-<span><span class="co">## def_micro      1.000   0.378      0.297</span></span>
-<span><span class="co">## devices        0.378   1.000      0.099</span></span>
-<span><span class="co">## complaints     0.297   0.099      1.000</span></span>
-<span><span class="co">##</span></span>
-<span><span class="co">## Use ppcor package to calculate partial correlation between complaints and devices</span></span>
-<span></span>
-<span><span class="va">part_cor</span> <span class="op">&lt;-</span> <span class="fu">ppcor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ppcor/man/pcor.test.html">pcor.test</a></span><span class="op">(</span><span class="va">devices</span>, <span class="va">complaints</span>, <span class="va">def_micro</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span>
-<span><span class="co">##      estimate  p.value  statistic  n gp   Method</span></span>
-<span><span class="co">##  -0.02075897 0.501827 -0.6718506 1050  1 spearman</span></span>
-<span><span class="co">## Relationship between devices and complaints is technically non-existent. We can say they're conditionally independent.</span></span>
-<span><span class="co">## -------------------------------------------------------------------------------- ##</span></span>
-<span><span class="co">## Creating scatterplots to visualize relationship between variables</span></span>
-<span><span class="co">## -------------------------------------------------------------------------------- ##</span></span>
-<span><span class="co"># Custom ggplot theme to make nicer plots</span></span>
-<span><span class="co"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Fira Sans"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">theme_nice</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Fira Sans"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>      panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>      plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
-<span>        family <span class="op">=</span> <span class="st">"Fira Sans Bold"</span>,</span>
-<span>        face <span class="op">=</span> <span class="st">"plain"</span>,</span>
-<span>        size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">1.35</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
-<span>        family <span class="op">=</span> <span class="st">"Fira Sans Medium"</span>,</span>
-<span>        face <span class="op">=</span> <span class="st">"plain"</span>,</span>
-<span>        size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
-<span>        family <span class="op">=</span> <span class="st">"Fira Sans SemiBold"</span>,</span>
-<span>        face <span class="op">=</span> <span class="st">"plain"</span>,</span>
-<span>        size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>      axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>      axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
-<span>        family <span class="op">=</span> <span class="st">"Fira Sans Light"</span>,</span>
-<span>        face <span class="op">=</span> <span class="st">"plain"</span>,</span>
-<span>        size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
-<span>        family <span class="op">=</span> <span class="st">"Fira Sans"</span>,</span>
-<span>        face <span class="op">=</span> <span class="st">"bold"</span>,</span>
-<span>        size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span>        hjust <span class="op">=</span> <span class="fl">0</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey95"</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">theme_nice_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">theme_nice</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>      panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>      panel.spacing.x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, units <span class="op">=</span> <span class="st">"pt"</span><span class="op">)</span>,</span>
-<span>      axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
-<span>      axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">theme_nice</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Updating defaults to chosen font</span></span>
-<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/update_defaults.html">update_geom_defaults</a></span><span class="op">(</span><span class="st">"label"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Fira Sans SemiBold"</span>, fontface <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/update_defaults.html">update_geom_defaults</a></span><span class="op">(</span><span class="st">"text"</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Fira Sans"</span>, fontface <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Making df with previously created variables</span></span>
-<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">def_micro</span>, <span class="va">devices</span>, <span class="va">complaints</span><span class="op">)</span></span>
-<span><span class="co"># Making plot to show correlation between devices v. complaints.</span></span>
-<span><span class="va">dev_comp_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">devices</span>, <span class="va">complaints</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"glm"</span>, <span class="co"># Use either glm or gam models</span></span>
-<span>    se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="st">"devices"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"complaints"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_nice_dist</span><span class="op">(</span><span class="op">)</span> <span class="co"># Apply a custom theme</span></span>
-<span><span class="co"># Making plot to show correlation between devices v. microchips</span></span>
-<span><span class="va">dev_micro_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">devices</span>, <span class="va">def_micro</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>,</span>
-<span>    se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="st">"devices"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"microchips"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_nice_dist</span><span class="op">(</span><span class="op">)</span> <span class="co"># Apply a classic theme</span></span>
-<span><span class="co"># Making plot to show correlation between complaints v. microchips</span></span>
-<span><span class="va">comp_micro_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">complaints</span>, <span class="va">def_micro</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>,</span>
-<span>    se <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    color <span class="op">=</span> <span class="va">clrs</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>,</span>
-<span>    linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="st">"complaints"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"microchips"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_nice_dist</span><span class="op">(</span><span class="op">)</span> <span class="co"># Apply a custom theme</span></span>
-<span><span class="co"># Creating grid panel displaying all three plots vertically. </span></span>
-<span><span class="va">arranged_plots</span> <span class="op">&lt;-</span> <span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">dev_comp_plot</span>, <span class="va">dev_micro_plot</span>, <span class="va">comp_micro_plot</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># I prefer the vertical plots rather than the horizontal ones</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r numberLines number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">##---------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="do">## Generating two random variables that meet the i.i.d assumption</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="do">## --------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">library</span>(here)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">library</span>(ppcor)</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="do">##------------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="do">## Generating two conditionally independent random variables</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="do">## ------------------------------------------------------------------------------------ ##</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="do">## Creating function to generate random variable with defined correlation to an existing var.</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>complement <span class="ot">&lt;-</span> <span class="cf">function</span>(y, rho, x) { <span class="co"># corr. coefficient</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(x)) x <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="fu">length</span>(y), <span class="dv">2</span>, .<span class="dv">5</span>) <span class="co"># Optional: supply a default if `x` is not given</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  y.perp <span class="ot">&lt;-</span> <span class="fu">residuals</span>(<span class="fu">lm</span>(x <span class="sc">~</span> y))</span>
+<span id="cb2-17"><a href="#cb2-17"></a>  rho <span class="sc">*</span> <span class="fu">sd</span>(y.perp) <span class="sc">*</span> y <span class="sc">+</span> y.perp <span class="sc">*</span> <span class="fu">sd</span>(y) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb2-18"><a href="#cb2-18"></a>}</span>
+<span id="cb2-19"><a href="#cb2-19"></a>def_micro <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">1050</span>, <span class="dv">6</span>) <span class="co"># lambda = n*p, p = .006 defective microchips </span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>complaints <span class="ot">&lt;-</span> <span class="fu">complement</span>(def_micro, <span class="at">rho =</span> .<span class="dv">273</span>) <span class="co"># no. complaints received on 24 hr period </span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>devices <span class="ot">&lt;-</span> <span class="fu">complement</span>(def_micro, <span class="at">rho =</span> .<span class="dv">331</span>) <span class="co"># weekly no. devices processed at online retailer</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="do">## Creating function to summarize list of variables</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>group_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb2-25"><a href="#cb2-25"></a>  summaries <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">list</span>(...), summary)</span>
+<span id="cb2-26"><a href="#cb2-26"></a>  <span class="fu">names</span>(summaries) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Summary_"</span>, <span class="fu">seq_along</span>(summaries))</span>
+<span id="cb2-27"><a href="#cb2-27"></a>  <span class="fu">return</span>(summaries)</span>
+<span id="cb2-28"><a href="#cb2-28"></a>}</span>
+<span id="cb2-29"><a href="#cb2-29"></a></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="fu">group_summary</span>(def_micro, devices, complaints)</span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="do">## $Summary_1</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="do">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="do">##    0.00    4.00    6.00    6.09    8.00   14.00 </span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="do">## </span></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="do">## $Summary_2</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="do">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb2-37"><a href="#cb2-37"></a><span class="do">##    -7.2     0.8     4.6     6.0     9.8    48.9 </span></span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="do">## </span></span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="do">## $Summary_3</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="do">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="do">##    -7.2    -0.3     3.3     4.5     8.0    34.8</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="do">## ------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="do">## Creating function to find Spearman's rho among all variables</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a><span class="do">## ------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a>spearman_correlation <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb2-46"><a href="#cb2-46"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(...)</span>
+<span id="cb2-47"><a href="#cb2-47"></a>  correlation_matrix <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(df, <span class="at">method =</span> <span class="st">"spearman"</span>), <span class="dv">3</span>)</span>
+<span id="cb2-48"><a href="#cb2-48"></a>  <span class="fu">return</span>(correlation_matrix)</span>
+<span id="cb2-49"><a href="#cb2-49"></a>}</span>
+<span id="cb2-50"><a href="#cb2-50"></a>spearman <span class="ot">&lt;-</span> <span class="fu">spearman_correlation</span>(def_micro, devices, complaints)</span>
+<span id="cb2-51"><a href="#cb2-51"></a><span class="do">##</span></span>
+<span id="cb2-52"><a href="#cb2-52"></a><span class="do">##              def_micro devices complaints</span></span>
+<span id="cb2-53"><a href="#cb2-53"></a><span class="do">## def_micro      1.000   0.378      0.297</span></span>
+<span id="cb2-54"><a href="#cb2-54"></a><span class="do">## devices        0.378   1.000      0.099</span></span>
+<span id="cb2-55"><a href="#cb2-55"></a><span class="do">## complaints     0.297   0.099      1.000</span></span>
+<span id="cb2-56"><a href="#cb2-56"></a></span>
+<span id="cb2-57"><a href="#cb2-57"></a></span>
+<span id="cb2-58"><a href="#cb2-58"></a><span class="do">## Use ppcor package to calculate partial correlation between complaints and devices</span></span>
+<span id="cb2-59"><a href="#cb2-59"></a>part_cor <span class="ot">&lt;-</span> ppcor<span class="sc">::</span><span class="fu">pcor.test</span>(devices, complaints, def_micro, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb2-60"><a href="#cb2-60"></a><span class="do">##      estimate  p.value  statistic  n gp   Method</span></span>
+<span id="cb2-61"><a href="#cb2-61"></a><span class="do">##  -0.02075897 0.501827 -0.6718506 1050  1 spearman</span></span>
+<span id="cb2-62"><a href="#cb2-62"></a><span class="do">## Relationship between devices and complaints is technically non-existent.</span></span>
+<span id="cb2-63"><a href="#cb2-63"></a><span class="do">## We can say they're conditionally independent.</span></span>
+<span id="cb2-64"><a href="#cb2-64"></a><span class="do">## -------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-65"><a href="#cb2-65"></a><span class="do">## Creating scatterplots to visualize relationship between variables</span></span>
+<span id="cb2-66"><a href="#cb2-66"></a><span class="do">## -------------------------------------------------------------------------------- ##</span></span>
+<span id="cb2-67"><a href="#cb2-67"></a><span class="co"># Custom ggplot theme to make nicer plots</span></span>
+<span id="cb2-68"><a href="#cb2-68"></a><span class="co"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
+<span id="cb2-69"><a href="#cb2-69"></a><span class="fu">font_add_google</span>(<span class="st">"Fira Sans"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb2-71"><a href="#cb2-71"></a>theme_nice <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-72"><a href="#cb2-72"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"Fira Sans"</span>) <span class="sc">+</span></span>
+<span id="cb2-73"><a href="#cb2-73"></a>    <span class="fu">theme</span>(</span>
+<span id="cb2-74"><a href="#cb2-74"></a>      <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-75"><a href="#cb2-75"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-76"><a href="#cb2-76"></a>        <span class="at">family =</span> <span class="st">"Fira Sans Bold"</span>,</span>
+<span id="cb2-77"><a href="#cb2-77"></a>        <span class="at">face =</span> <span class="st">"plain"</span>,</span>
+<span id="cb2-78"><a href="#cb2-78"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.35</span>)</span>
+<span id="cb2-79"><a href="#cb2-79"></a>      ),</span>
+<span id="cb2-80"><a href="#cb2-80"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-81"><a href="#cb2-81"></a>        <span class="at">family =</span> <span class="st">"Fira Sans Medium"</span>,</span>
+<span id="cb2-82"><a href="#cb2-82"></a>        <span class="at">face =</span> <span class="st">"plain"</span>,</span>
+<span id="cb2-83"><a href="#cb2-83"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.2</span>)</span>
+<span id="cb2-84"><a href="#cb2-84"></a>      ),</span>
+<span id="cb2-85"><a href="#cb2-85"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-86"><a href="#cb2-86"></a>        <span class="at">family =</span> <span class="st">"Fira Sans SemiBold"</span>,</span>
+<span id="cb2-87"><a href="#cb2-87"></a>        <span class="at">face =</span> <span class="st">"plain"</span>,</span>
+<span id="cb2-88"><a href="#cb2-88"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>)</span>
+<span id="cb2-89"><a href="#cb2-89"></a>      ),</span>
+<span id="cb2-90"><a href="#cb2-90"></a>      <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb2-91"><a href="#cb2-91"></a>      <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb2-92"><a href="#cb2-92"></a>      <span class="at">axis.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-93"><a href="#cb2-93"></a>        <span class="at">family =</span> <span class="st">"Fira Sans Light"</span>,</span>
+<span id="cb2-94"><a href="#cb2-94"></a>        <span class="at">face =</span> <span class="st">"plain"</span>,</span>
+<span id="cb2-95"><a href="#cb2-95"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.8</span>)</span>
+<span id="cb2-96"><a href="#cb2-96"></a>      ),</span>
+<span id="cb2-97"><a href="#cb2-97"></a>      <span class="at">strip.text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-98"><a href="#cb2-98"></a>        <span class="at">family =</span> <span class="st">"Fira Sans"</span>,</span>
+<span id="cb2-99"><a href="#cb2-99"></a>        <span class="at">face =</span> <span class="st">"bold"</span>,</span>
+<span id="cb2-100"><a href="#cb2-100"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>),</span>
+<span id="cb2-101"><a href="#cb2-101"></a>        <span class="at">hjust =</span> <span class="dv">0</span></span>
+<span id="cb2-102"><a href="#cb2-102"></a>      ),</span>
+<span id="cb2-103"><a href="#cb2-103"></a>      <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>)</span>
+<span id="cb2-104"><a href="#cb2-104"></a>    )</span>
+<span id="cb2-105"><a href="#cb2-105"></a>}</span>
+<span id="cb2-106"><a href="#cb2-106"></a></span>
+<span id="cb2-107"><a href="#cb2-107"></a>theme_nice_dist <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-108"><a href="#cb2-108"></a>  <span class="fu">theme_nice</span>() <span class="sc">+</span></span>
+<span id="cb2-109"><a href="#cb2-109"></a>    <span class="fu">theme</span>(</span>
+<span id="cb2-110"><a href="#cb2-110"></a>      <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-111"><a href="#cb2-111"></a>      <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">10</span>, <span class="at">units =</span> <span class="st">"pt"</span>),</span>
+<span id="cb2-112"><a href="#cb2-112"></a>      <span class="at">axis.ticks.x =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="fl">0.25</span>),</span>
+<span id="cb2-113"><a href="#cb2-113"></a>      <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb2-114"><a href="#cb2-114"></a>    )</span>
+<span id="cb2-115"><a href="#cb2-115"></a>}</span>
+<span id="cb2-116"><a href="#cb2-116"></a></span>
+<span id="cb2-117"><a href="#cb2-117"></a><span class="fu">theme_set</span>(<span class="fu">theme_nice</span>())</span>
+<span id="cb2-118"><a href="#cb2-118"></a><span class="co"># Updating defaults to chosen font</span></span>
+<span id="cb2-119"><a href="#cb2-119"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"label"</span>,<span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Fira Sans SemiBold"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
+<span id="cb2-120"><a href="#cb2-120"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"text"</span>,<span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Fira Sans"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
+<span id="cb2-121"><a href="#cb2-121"></a></span>
+<span id="cb2-122"><a href="#cb2-122"></a><span class="co"># Making df with previously created variables</span></span>
+<span id="cb2-123"><a href="#cb2-123"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(def_micro, devices, complaints)</span>
+<span id="cb2-124"><a href="#cb2-124"></a><span class="co"># Making plot to show correlation between devices v. complaints.</span></span>
+<span id="cb2-125"><a href="#cb2-125"></a>dev_comp_plot <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(devices, complaints)) <span class="sc">+</span></span>
+<span id="cb2-126"><a href="#cb2-126"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> clrs[<span class="dv">2</span>]) <span class="sc">+</span></span>
+<span id="cb2-127"><a href="#cb2-127"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>, <span class="co"># Use either glm or gam models</span></span>
+<span id="cb2-128"><a href="#cb2-128"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-129"><a href="#cb2-129"></a>    <span class="at">color =</span> clrs[<span class="dv">5</span>],</span>
+<span id="cb2-130"><a href="#cb2-130"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-131"><a href="#cb2-131"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-132"><a href="#cb2-132"></a>    <span class="at">x =</span> <span class="st">"devices"</span>,</span>
+<span id="cb2-133"><a href="#cb2-133"></a>    <span class="at">y =</span> <span class="st">"complaints"</span>) <span class="sc">+</span></span>
+<span id="cb2-134"><a href="#cb2-134"></a>  <span class="fu">theme_nice_dist</span>() <span class="co"># Apply a custom theme</span></span>
+<span id="cb2-135"><a href="#cb2-135"></a><span class="co"># Making plot to show correlation between devices v. microchips</span></span>
+<span id="cb2-136"><a href="#cb2-136"></a>dev_micro_plot <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(devices, def_micro)) <span class="sc">+</span></span>
+<span id="cb2-137"><a href="#cb2-137"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> clrs[<span class="dv">3</span>]) <span class="sc">+</span></span>
+<span id="cb2-138"><a href="#cb2-138"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb2-139"><a href="#cb2-139"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-140"><a href="#cb2-140"></a>    <span class="at">color =</span> clrs[<span class="dv">5</span>],</span>
+<span id="cb2-141"><a href="#cb2-141"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-142"><a href="#cb2-142"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-143"><a href="#cb2-143"></a>    <span class="at">x =</span> <span class="st">"devices"</span>,</span>
+<span id="cb2-144"><a href="#cb2-144"></a>    <span class="at">y =</span> <span class="st">"microchips"</span>) <span class="sc">+</span></span>
+<span id="cb2-145"><a href="#cb2-145"></a>  <span class="fu">theme_nice_dist</span>() <span class="co"># Apply a classic theme</span></span>
+<span id="cb2-146"><a href="#cb2-146"></a><span class="co"># Making plot to show correlation between complaints v. microchips</span></span>
+<span id="cb2-147"><a href="#cb2-147"></a>comp_micro_plot <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(complaints, def_micro)) <span class="sc">+</span></span>
+<span id="cb2-148"><a href="#cb2-148"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> clrs[<span class="dv">6</span>]) <span class="sc">+</span></span>
+<span id="cb2-149"><a href="#cb2-149"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb2-150"><a href="#cb2-150"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-151"><a href="#cb2-151"></a>    <span class="at">color =</span> clrs[<span class="dv">5</span>],</span>
+<span id="cb2-152"><a href="#cb2-152"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-153"><a href="#cb2-153"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-154"><a href="#cb2-154"></a>    <span class="at">x =</span> <span class="st">"complaints"</span>,</span>
+<span id="cb2-155"><a href="#cb2-155"></a>    <span class="at">y =</span> <span class="st">"microchips"</span>) <span class="sc">+</span></span>
+<span id="cb2-156"><a href="#cb2-156"></a>  <span class="fu">theme_nice_dist</span>() <span class="co"># Apply a custom theme</span></span>
+<span id="cb2-157"><a href="#cb2-157"></a><span class="co"># Creating grid panel displaying all three plots vertically. </span></span>
+<span id="cb2-158"><a href="#cb2-158"></a><span class="co"># I prefer the vertical plots rather than the horizontal ones</span></span>
+<span id="cb2-159"><a href="#cb2-159"></a>arranged_plots <span class="ot">&lt;-</span> gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(dev_comp_plot, dev_micro_plot, comp_micro_plot, <span class="at">nrow =</span> <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Relationship between devices, complaints, and defective microchips"><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Relationship between devices, complaints, and defective microchips"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Relationship between devices, complaints, and defective microchips"><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Relationship between devices, complaints, and defective microchips"></a></p>
 <figcaption>Relationship between devices, complaints, and defective microchips</figcaption></figure>
 </div>
 </div></div></div>
@@ -549,7 +545,7 @@ window.Quarto = {
 <p>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</p>
 <p>t-table and only went up to n = 30 (Fisher’s <em>Statistical Methods for Research Workers</em> (1925))</p>
 </li>
-<li><p>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</p></li>
+<li><p>Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</p></li>
 <li><p>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</p></li>
 </ul>
 </li>
@@ -1012,299 +1008,300 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "What's this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic ($n =30$) sample size requirements"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-03-06</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"> - r</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"> - clt</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"> - sample size</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"> - Lyndeberg-Lévy</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"> - Gaussian</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="an">doi:</span><span class="co"> 10.59350/bje88-8r592</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3, width = 300)</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(09)</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Central Limit Theorem</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton can eventually arrive at the expected outcome.</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>The theorem derives its name from the fact that we're using a parameter of **central** tendency – typically the mean, median, or mode– to arrive at the **limiting distribution** of independent random variables– which, under certain conditions, will typically be the standard normal distribution.</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>::: column-margin</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>I'll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation $\mathcal{N}(0,1)$</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### Random processes</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>The variables under study must be the outcome of a random phenomenon for which we know the type of outcomes that can happen but cannot know how or when they will occur. We can know some of the causes of this phenomenon, but their deviations from a supposed pattern are unknown to us.</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>A classic example of a random variable is a game of cards in which we know what the cards on the deck are but cannot tell which one will come up next– unless we cheat and then the whole thing is not a random phenomenon anymore. In the life and social sciences, we can find random variables everywhere: the height and weight of a population, hemoglobin levels in healthy adults, the number of patients in the ER on any given night, pH levels in different types of topsoil or the scores on the UCLA Loneliness scale. The common thread here is that one *random* observation doesn't provide information on the occurrence of the next one.</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Independence and identical distribution</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>In the life and social sciences, we'll typically see *conditional independence*, where variables $A$ and $B$ are measurements of the same underlying quantity $C$. We say that $A$ and $B$ are conditionally independent if, once C is known, the value of $B$ doesn't give new information about $A$. Knowing what happens to $B$ after $C$ takes place doesn't increase our chances of correctly predicting the outcome of $A$. In addition, independent variables are also uncorrelated – their covariance ($cov<span class="co">[</span><span class="ot">A,B</span><span class="co">]</span> = E<span class="co">[</span><span class="ot">A</span><span class="co">]</span>\cdot E<span class="co">[</span><span class="ot">B</span><span class="co">]</span>$) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov<span class="co">[</span><span class="ot">A,B</span><span class="co">]</span>}{\sigma_{A}\sigma_{B}}$​) are equal to zero.</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = TRUE}</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig_iid</span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Simulated identically distributed and non-identically distributed variables."</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="in">#| lightbox:</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="in">#| group: r-graph</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="in">#| column: margin</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="in">clrs &lt;- c( # Creating custom color palette</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="in">  "#FFBE00", #  yellow</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="in">  "#B92F0A", #  red</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="in">  "#7C225C", #  purple</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="in">  "#792A26", #  brown</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="in">  "#242424", #  dark gray</span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="in">  "#394DAA") #  blue</span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="in">xx &lt;- seq(-5,5,by=.01) # Creating variable to use in dens. curve</span></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="in">## Plot graphics</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="in">par(las = 1, mfrow = c(1,3), mai = c(.5, .5, .5, .1))</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="in">## Plot graphics</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="in">plot(xx, dnorm(xx, -1),type = "b", lwd = 1, xlab = "", ylab = "",</span></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="in">  col = clrs[3], main = "Identically distributed")</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="in">lines(xx, dnorm(xx, -1), lty = 2, lwd = 3, pch = 18, col = clrs[1])</span></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="in">legend("topright",legend = c("A", "B"),</span></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="in">  col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="in">## Plot graphics</span></span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="in">plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",</span></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="in">     col = clrs[3],main="Shift in means")</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="in">lines(xx,dnorm(xx,1),lty = 2, lwd=3,pch = 18,col= clrs[1])</span></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="in">legend("topright", legend = c("A", "B"),</span></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="in">       col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="in">## Plot graphics</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="in">plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",</span></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="in">     col = clrs[3], main = "Different distributions", ylim = c(0, 0.6))</span></span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="in">lines(xx, dchisq(xx, 2), lwd = 2, col = clrs[1])</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="in">legend("topright", legend = c("A", "B"),</span></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="in">       col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>Two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>Let's look at a scenario in R:</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>Let's say a microchip manufacturer records the weekly number of defective microchips (<span class="in">`def_micros`</span>) for each of its 8–hour shifts to evaluate whether the number of complaints (<span class="in">`complaints`</span>) received in a 24 hours has to do with <span class="in">`def_micro`</span>. They also want to know if the number of complaints given <span class="in">`def_micro`</span> is related to the number of devices (<span class="in">`devices`</span>) bought and returned through their online retailer. We would say that the <span class="in">`complaints`</span> and <span class="in">`devices`</span> are conditionally independent if, each variable is clearly associated with<span class="in">`def_micr0`</span>, but their <span class="co">[</span><span class="ot">partial correlation</span><span class="co">](https://en.wikipedia.org/wiki/Partial_correlation)</span> coefficient is close to zero ($\rho = -.021$).</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval = TRUE, warning = FALSE, message = FALSE}</span></span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap-label: cond_ind</span></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Relationship between devices, complaints, and defective microchips"</span></span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="in">#| lightbox:</span></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="in">#| group: r-graph</span></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="in">#| column: margin</span></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="in">##---------------------------------------------------------------------------------##</span></span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="in">## Generating two random variables that meet the i.i.d assumption</span></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="in">## --------------------------------------------------------------------------------- ##</span></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="in">library(ppcor)</span></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="in">library(gridExtra)</span></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="in">library(showtext)</span></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="in">##------------------------------------------------------------------------------------- </span></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="in">## Generating two conditionally independent random variables</span></span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="in">## ------------------------------------------------------------------------------------ ##</span></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="in">## Creating function to generate random variable with defined correlation to an existing var.</span></span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="in">complement &lt;- function(y, rho, x) { # corr. coefficient</span></span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="in">  if (missing(x)) x &lt;- rgamma(length(y), 2, .5) # Optional: supply a default if `x` is not given</span></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="in">  y.perp &lt;- residuals(lm(x ~ y))</span></span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="in">  rho * sd(y.perp) * y + y.perp * sd(y) * sqrt(1 - rho^2)</span></span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="in">def_micro &lt;- rpois(1050, 6) # lambda = n*p, p = .006 defective microchips manufactured by company in 12 hrs</span></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="in">complaints &lt;- complement(def_micro, rho = .273) # no. complaints received on 24 hr period for devices using the microchip in question</span></span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="in">devices &lt;- complement(def_micro, rho = .331) # weekly no. devices processed at online retailer (+) bought (-)returned</span></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="in">##</span></span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="in">## Creating function to summarize list of variables</span></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="in">group_summary &lt;- function(...) {</span></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="in">  summaries &lt;- lapply(list(...), summary)</span></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="in">  names(summaries) &lt;- paste0("Summary_", seq_along(summaries))</span></span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="in">  return(summaries)</span></span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="in">group_summary(def_micro, devices, complaints)</span></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="in">## ------------------------------------------------------------------------------- ##</span></span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="in">## Creating function to find Spearman's rho among all variables</span></span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="in">## ------------------------------------------------------------------------------- ##</span></span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="in">spearman_correlation &lt;- function(...) {</span></span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="in">  df &lt;- data.frame(...)</span></span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="in">  correlation_matrix &lt;- round(cor(df, method = "spearman"), 3)</span></span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="in">  return(correlation_matrix)</span></span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="in">spearman &lt;- spearman_correlation(def_micro, devices, complaints)</span></span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="in">##</span></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="in">##              def_micro devices complaints</span></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="in">## def_micro      1.000   0.378      0.297</span></span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="in">## devices        0.378   1.000      0.099</span></span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="in">## complaints     0.297   0.099      1.000</span></span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="in">##</span></span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="in">## Use ppcor package to calculate partial correlation between complaints and devices</span></span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="in">part_cor &lt;- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman")</span></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="in">##      estimate  p.value  statistic  n gp   Method</span></span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="in">##  -0.02075897 0.501827 -0.6718506 1050  1 spearman</span></span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="in">## Relationship between devices and complaints is technically non-existent. We can say they're conditionally independent.</span></span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="in">## -------------------------------------------------------------------------------- ##</span></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="in">## Creating scatterplots to visualize relationship between variables</span></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="in">## -------------------------------------------------------------------------------- ##</span></span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="in"># Custom ggplot theme to make nicer plots</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="in"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="in">font_add_google("Fira Sans")</span></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_auto()</span></span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="in">theme_nice &lt;- function() {</span></span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal(base_family = "Fira Sans") +</span></span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="in">      panel.grid.minor = element_blank(),</span></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.title = element_text(</span></span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="in">        family = "Fira Sans Bold",</span></span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="in">        face = "plain",</span></span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="in">        size = rel(1.35)</span></span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="in">      ),</span></span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="in">      plot.subtitle = element_text(</span></span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="in">        family = "Fira Sans Medium",</span></span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="in">        face = "plain",</span></span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="in">        size = rel(1.2)</span></span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="in">      ),</span></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.title = element_text(</span></span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="in">        family = "Fira Sans SemiBold",</span></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="in">        face = "plain",</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="in">        size = rel(1)</span></span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="in">      ),</span></span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.title.x = element_text(hjust = 0.5),</span></span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.title.y = element_text(hjust = 0.5),</span></span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text = element_text(</span></span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="in">        family = "Fira Sans Light",</span></span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="in">        face = "plain",</span></span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="in">        size = rel(0.8)</span></span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="in">      ),</span></span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="in">      strip.text = element_text(</span></span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="in">        family = "Fira Sans",</span></span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a><span class="in">        face = "bold",</span></span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="in">        size = rel(1),</span></span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="in">        hjust = 0</span></span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="in">      ),</span></span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="in">      strip.background = element_rect(fill = "grey95", color = NA)</span></span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="in">theme_nice_dist &lt;- function() {</span></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_nice() +</span></span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(</span></span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="in">      panel.grid = element_blank(),</span></span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="in">      panel.spacing.x = unit(10, units = "pt"),</span></span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.ticks.x = element_line(linewidth = 0.25),</span></span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="in">      axis.text.y = element_blank()</span></span>
-<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
-<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="in">theme_set(theme_nice())</span></span>
-<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="in"># Updating defaults to chosen font</span></span>
-<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot2::update_geom_defaults("label",list(family = "Fira Sans SemiBold", fontface = "plain"))</span></span>
-<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot2::update_geom_defaults("text",list(family = "Fira Sans", fontface = "plain"))</span></span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a><span class="in"># Making df with previously created variables</span></span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="in">df1 &lt;- data.frame(def_micro, devices, complaints)</span></span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="in"># Making plot to show correlation between devices v. complaints.</span></span>
-<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a><span class="in">dev_comp_plot &lt;- ggplot2::ggplot(df1, aes(devices, complaints)) +</span></span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(color = clrs[2]) +</span></span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_smooth(method = "glm", # Use either glm or gam models</span></span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="in">    se = FALSE,</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a><span class="in">    color = clrs[5],</span></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1) +</span></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "devices",</span></span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "complaints") +</span></span>
-<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_nice_dist() # Apply a custom theme</span></span>
-<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="in"># Making plot to show correlation between devices v. microchips</span></span>
-<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="in">dev_micro_plot &lt;- ggplot2::ggplot(df1, aes(devices, def_micro)) +</span></span>
-<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(color = clrs[3]) +</span></span>
-<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_smooth(method = "lm",</span></span>
-<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="in">    se = FALSE,</span></span>
-<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="in">    color = clrs[5],</span></span>
-<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1) +</span></span>
-<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "devices",</span></span>
-<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "microchips") +</span></span>
-<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_nice_dist() # Apply a classic theme</span></span>
-<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a><span class="in"># Making plot to show correlation between complaints v. microchips</span></span>
-<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a><span class="in">comp_micro_plot &lt;- ggplot2::ggplot(df1, aes(complaints, def_micro)) +</span></span>
-<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(color = clrs[6]) +</span></span>
-<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_smooth(method = "lm",</span></span>
-<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a><span class="in">    se = FALSE,</span></span>
-<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="in">    color = clrs[5],</span></span>
-<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a><span class="in">    linewidth = 1) +</span></span>
-<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
-<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "complaints",</span></span>
-<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "microchips") +</span></span>
-<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_nice_dist() # Apply a custom theme</span></span>
-<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="in"># Creating grid panel displaying all three plots vertically. </span></span>
-<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a><span class="in">arranged_plots &lt;- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, nrow = 1) # I prefer the vertical plots rather than the horizontal ones</span></span>
-<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a><span class="fu">### Additive processes</span></span>
-<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a>A process $Y$ is considered additive when the value of each observation is determined by adding a variable quantity to the value of a previous observation. The process is characterized by an initial value $Y(0)$ and the increments $Y_{i} - Y_{h}$ with $i &gt; h \geq 0$, where $Y_{i}$ represents the value of an observation at a certain point and $Y_{h}$, the value of the subsequent observation. This additive process typically consists of three components.</span>
-<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>An initial value $Y_{0}$ that serves as the starting point of the process.</span>
-<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A random, slow, and gradual change component $Y_{1}$ around the central tendency represents the continuous evolution of the process over time.</span>
-<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A third random component $Y_{2}$​ represents sudden jumps or changes in the process, which may occur unpredictably at certain time points.</span>
-<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a>Together, these components contribute to the behavior of the $Y$​ process and its evolution across time through a combination of unexpected slow changes and sudden jumps.</span>
-<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a>An example of such a random process in epidemiology is the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.</span>
-<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>How we use CLT</span>
-<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>How to know when empirical distribution converges to normal distribution?</span>
-<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a>    ### what's the deal with $n \geq 30$?</span>
-<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</span>
-<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="at">        &gt; It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</span></span>
-<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="ss">        -   </span>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</span>
-<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>            t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))</span>
-<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a><span class="ss">        -   </span>Sample size at least 30 so that the error variance between t–t-distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</span>
-<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="ss">        -   </span>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</span>
-<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>    ## Solution</span>
-<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="in">    -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span></span>
-<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="in">    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></span>
-<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "What's this CLT, please? A straightforward explanation of the Central Limit Theorem and the magic ($n =30$) sample size requirements"</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-03-06</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> "Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="an">categories:</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"> - r</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"> - clt</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"> - sample size</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"> - Lyndeberg-Lévy</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"> - Gaussian</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="an">format:</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">  html:</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">    code-fold: true</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">    code-tools: true</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">    highlight-style: tango</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">    code-line-numbers: true</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="an">doi:</span><span class="co"> 10.59350/bje88-8r592</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#draft: true</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">---</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="in">options(digits = 3, width = 300)</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="in">set.seed(09)</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="in">```</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a></span>
+<span id="cb3-31"><a href="#cb3-31"></a><span class="fu">## The Central Limit Theorem</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>The rudiments of the Central Limit Theorem (CLT) can be traced back to Bernoulli, who famously penned: “even the stupidest person without any prior instruction knows that the more observations are made, the less danger there is of missing the target”, hinting at the notion that, as the number of trials increases, even a simpleton can eventually arrive at the expected outcome.</span>
+<span id="cb3-34"><a href="#cb3-34"></a></span>
+<span id="cb3-35"><a href="#cb3-35"></a>The theorem derives its name from the fact that we're using a parameter of *central* tendency – typically the mean, median, or mode– to arrive at the *limiting distribution* of independent random variables– which, under certain conditions, will typically be the standard normal distribution.</span>
+<span id="cb3-36"><a href="#cb3-36"></a></span>
+<span id="cb3-37"><a href="#cb3-37"></a>To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</span>
+<span id="cb3-38"><a href="#cb3-38"></a></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="at">&gt; If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a></span>
+<span id="cb3-41"><a href="#cb3-41"></a>Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</span>
+<span id="cb3-42"><a href="#cb3-42"></a></span>
+<span id="cb3-43"><a href="#cb3-43"></a>::: column-margin</span>
+<span id="cb3-44"><a href="#cb3-44"></a>I'll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation $\mathcal{N}(0,1)$</span>
+<span id="cb3-45"><a href="#cb3-45"></a>:::</span>
+<span id="cb3-46"><a href="#cb3-46"></a></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="fu">### Random processes</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a></span>
+<span id="cb3-49"><a href="#cb3-49"></a>The variables under study must be the outcome of a random phenomenon for which we know the type of outcomes that can happen but cannot know how or when they will occur. We can know some of the causes of this phenomenon, but their deviations from a supposed pattern are unknown to us.</span>
+<span id="cb3-50"><a href="#cb3-50"></a></span>
+<span id="cb3-51"><a href="#cb3-51"></a>A classic example of a random variable is a game of cards in which we know what the cards on the deck are but cannot tell which one will come up next– unless we cheat and then the whole thing is not a random phenomenon anymore. In the life and social sciences, we can find random variables everywhere: the height and weight of a population, hemoglobin levels in healthy adults, the number of patients in the ER on any given night, pH levels in different types of topsoil or the scores on the UCLA Loneliness scale. The common thread here is that one *random* observation doesn't provide information on the occurrence of the next one.</span>
+<span id="cb3-52"><a href="#cb3-52"></a></span>
+<span id="cb3-53"><a href="#cb3-53"></a><span class="fu">### Independence and identical distribution</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a></span>
+<span id="cb3-55"><a href="#cb3-55"></a>In the life and social sciences, we'll typically see *conditional independence*, where variables $A$ and $B$ are measurements of the same underlying quantity $C$. We say that $A$ and $B$ are conditionally independent if, once C is known, the value of $B$ doesn't give new information about $A$. Knowing what happens to $B$ after $C$ takes place doesn't increase our chances of correctly predicting the outcome of $A$. In addition, independent variables are also uncorrelated – their covariance ($cov<span class="co">[</span><span class="ot">A,B</span><span class="co">]</span> = E<span class="co">[</span><span class="ot">A</span><span class="co">]</span>\cdot E<span class="co">[</span><span class="ot">B</span><span class="co">]</span>$) and Pearson's $r$ ($\rho_{X,Y} = \frac{cov<span class="co">[</span><span class="ot">A,B</span><span class="co">]</span>}{\sigma_{A}\sigma_{B}}$​) are equal to zero.</span>
+<span id="cb3-56"><a href="#cb3-56"></a></span>
+<span id="cb3-57"><a href="#cb3-57"></a><span class="in">```{r, eval = TRUE, attr.source= '.numberLines'}</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="in">#| label: fig_iid</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a><span class="in">#| fig-cap: "Simulated identically distributed and non-identically distributed variables."</span></span>
+<span id="cb3-60"><a href="#cb3-60"></a><span class="in">#| lightbox:</span></span>
+<span id="cb3-61"><a href="#cb3-61"></a><span class="in">#| group: r-graph</span></span>
+<span id="cb3-62"><a href="#cb3-62"></a><span class="in">#| column: margin</span></span>
+<span id="cb3-63"><a href="#cb3-63"></a></span>
+<span id="cb3-64"><a href="#cb3-64"></a><span class="in">clrs &lt;- c( # Creating custom color palette</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a><span class="in">  "#FFBE00", #  yellow</span></span>
+<span id="cb3-66"><a href="#cb3-66"></a><span class="in">  "#B92F0A", #  red</span></span>
+<span id="cb3-67"><a href="#cb3-67"></a><span class="in">  "#7C225C", #  purple</span></span>
+<span id="cb3-68"><a href="#cb3-68"></a><span class="in">  "#792A26", #  brown</span></span>
+<span id="cb3-69"><a href="#cb3-69"></a><span class="in">  "#242424", #  dark gray</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a><span class="in">  "#394DAA") #  blue</span></span>
+<span id="cb3-71"><a href="#cb3-71"></a></span>
+<span id="cb3-72"><a href="#cb3-72"></a><span class="in">xx &lt;- seq(-5,5,by=.01) # Creating variable to use in dens. curve</span></span>
+<span id="cb3-73"><a href="#cb3-73"></a><span class="in">## Plot graphics</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a><span class="in">par(las = 1, mfrow = c(1,3), mai = c(.5, .5, .5, .1))</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a><span class="in">## Plot graphics</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a><span class="in">plot(xx, dnorm(xx, -1),type = "b", lwd = 1, xlab = "", ylab = "",</span></span>
+<span id="cb3-77"><a href="#cb3-77"></a><span class="in">  col = clrs[3], main = "Identically distributed")</span></span>
+<span id="cb3-78"><a href="#cb3-78"></a><span class="in">lines(xx, dnorm(xx, -1), lty = 2, lwd = 3, pch = 18, col = clrs[1])</span></span>
+<span id="cb3-79"><a href="#cb3-79"></a><span class="in">legend("topright",legend = c("A", "B"),</span></span>
+<span id="cb3-80"><a href="#cb3-80"></a><span class="in">  col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
+<span id="cb3-81"><a href="#cb3-81"></a><span class="in">## Plot graphics</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a><span class="in">plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",</span></span>
+<span id="cb3-83"><a href="#cb3-83"></a><span class="in">     col = clrs[3],main="Shift in means")</span></span>
+<span id="cb3-84"><a href="#cb3-84"></a><span class="in">lines(xx,dnorm(xx,1),lty = 2, lwd=3,pch = 18,col= clrs[1])</span></span>
+<span id="cb3-85"><a href="#cb3-85"></a><span class="in">legend("topright", legend = c("A", "B"),</span></span>
+<span id="cb3-86"><a href="#cb3-86"></a><span class="in">       col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
+<span id="cb3-87"><a href="#cb3-87"></a><span class="in">## Plot graphics</span></span>
+<span id="cb3-88"><a href="#cb3-88"></a><span class="in">plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",</span></span>
+<span id="cb3-89"><a href="#cb3-89"></a><span class="in">     col = clrs[3], main = "Different distributions", ylim = c(0, 0.6))</span></span>
+<span id="cb3-90"><a href="#cb3-90"></a><span class="in">lines(xx, dchisq(xx, 2), lwd = 2, col = clrs[1])</span></span>
+<span id="cb3-91"><a href="#cb3-91"></a><span class="in">legend("topright", legend = c("A", "B"),</span></span>
+<span id="cb3-92"><a href="#cb3-92"></a><span class="in">       col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
+<span id="cb3-93"><a href="#cb3-93"></a><span class="in">```</span></span>
+<span id="cb3-94"><a href="#cb3-94"></a></span>
+<span id="cb3-95"><a href="#cb3-95"></a>Two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</span>
+<span id="cb3-96"><a href="#cb3-96"></a></span>
+<span id="cb3-97"><a href="#cb3-97"></a>Let's look at a scenario in R:</span>
+<span id="cb3-98"><a href="#cb3-98"></a></span>
+<span id="cb3-99"><a href="#cb3-99"></a>Let's say a microchip manufacturer records the weekly number of defective microchips (<span class="in">`def_micros`</span>) for each of its 8–hour shifts to evaluate whether the number of complaints (<span class="in">`complaints`</span>) received in a 24 hours has to do with <span class="in">`def_micro`</span>. They also want to know if the number of complaints given <span class="in">`def_micro`</span> is related to the number of devices (<span class="in">`devices`</span>) bought and returned through their online retailer. We would say that the <span class="in">`complaints`</span> and <span class="in">`devices`</span> are conditionally independent if, each variable is clearly associated with<span class="in">`def_micr0`</span>, but their <span class="co">[</span><span class="ot">partial correlation</span><span class="co">](https://en.wikipedia.org/wiki/Partial_correlation)</span> coefficient is close to zero ($\rho = -.021$).</span>
+<span id="cb3-100"><a href="#cb3-100"></a></span>
+<span id="cb3-101"><a href="#cb3-101"></a><span class="in">```{r, eval = TRUE, warning = FALSE, message = FALSE, attr.source= '.numberLines'}</span></span>
+<span id="cb3-102"><a href="#cb3-102"></a><span class="in">#| fig-cap-label: cond_ind</span></span>
+<span id="cb3-103"><a href="#cb3-103"></a><span class="in">#| fig-cap: "Relationship between devices, complaints, and defective microchips"</span></span>
+<span id="cb3-104"><a href="#cb3-104"></a><span class="in">#| lightbox:</span></span>
+<span id="cb3-105"><a href="#cb3-105"></a><span class="in">#| group: r-graph</span></span>
+<span id="cb3-106"><a href="#cb3-106"></a><span class="in">#| column: margin</span></span>
+<span id="cb3-107"><a href="#cb3-107"></a></span>
+<span id="cb3-108"><a href="#cb3-108"></a><span class="in">##---------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-109"><a href="#cb3-109"></a><span class="in">## Generating two random variables that meet the i.i.d assumption</span></span>
+<span id="cb3-110"><a href="#cb3-110"></a><span class="in">## --------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-111"><a href="#cb3-111"></a><span class="in">library(here)</span></span>
+<span id="cb3-112"><a href="#cb3-112"></a><span class="in">library(ppcor)</span></span>
+<span id="cb3-113"><a href="#cb3-113"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb3-114"><a href="#cb3-114"></a><span class="in">library(gridExtra)</span></span>
+<span id="cb3-115"><a href="#cb3-115"></a><span class="in">library(showtext)</span></span>
+<span id="cb3-116"><a href="#cb3-116"></a><span class="in">library(knitr)</span></span>
+<span id="cb3-117"><a href="#cb3-117"></a><span class="in">##------------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-118"><a href="#cb3-118"></a><span class="in">## Generating two conditionally independent random variables</span></span>
+<span id="cb3-119"><a href="#cb3-119"></a><span class="in">## ------------------------------------------------------------------------------------ ##</span></span>
+<span id="cb3-120"><a href="#cb3-120"></a><span class="in">## Creating function to generate random variable with defined correlation to an existing var.</span></span>
+<span id="cb3-121"><a href="#cb3-121"></a><span class="in">complement &lt;- function(y, rho, x) { # corr. coefficient</span></span>
+<span id="cb3-122"><a href="#cb3-122"></a><span class="in">  if (missing(x)) x &lt;- rgamma(length(y), 2, .5) # Optional: supply a default if `x` is not given</span></span>
+<span id="cb3-123"><a href="#cb3-123"></a><span class="in">  y.perp &lt;- residuals(lm(x ~ y))</span></span>
+<span id="cb3-124"><a href="#cb3-124"></a><span class="in">  rho * sd(y.perp) * y + y.perp * sd(y) * sqrt(1 - rho^2)</span></span>
+<span id="cb3-125"><a href="#cb3-125"></a><span class="in">}</span></span>
+<span id="cb3-126"><a href="#cb3-126"></a><span class="in">def_micro &lt;- rpois(1050, 6) # lambda = n*p, p = .006 defective microchips </span></span>
+<span id="cb3-127"><a href="#cb3-127"></a><span class="in">complaints &lt;- complement(def_micro, rho = .273) # no. complaints received on 24 hr period </span></span>
+<span id="cb3-128"><a href="#cb3-128"></a><span class="in">devices &lt;- complement(def_micro, rho = .331) # weekly no. devices processed at online retailer</span></span>
+<span id="cb3-129"><a href="#cb3-129"></a></span>
+<span id="cb3-130"><a href="#cb3-130"></a><span class="in">## Creating function to summarize list of variables</span></span>
+<span id="cb3-131"><a href="#cb3-131"></a><span class="in">group_summary &lt;- function(...) {</span></span>
+<span id="cb3-132"><a href="#cb3-132"></a><span class="in">  summaries &lt;- lapply(list(...), summary)</span></span>
+<span id="cb3-133"><a href="#cb3-133"></a><span class="in">  names(summaries) &lt;- paste0("Summary_", seq_along(summaries))</span></span>
+<span id="cb3-134"><a href="#cb3-134"></a><span class="in">  return(summaries)</span></span>
+<span id="cb3-135"><a href="#cb3-135"></a><span class="in">}</span></span>
+<span id="cb3-136"><a href="#cb3-136"></a></span>
+<span id="cb3-137"><a href="#cb3-137"></a><span class="in">group_summary(def_micro, devices, complaints)</span></span>
+<span id="cb3-138"><a href="#cb3-138"></a><span class="in">## ------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-139"><a href="#cb3-139"></a><span class="in">## Creating function to find Spearman's rho among all variables</span></span>
+<span id="cb3-140"><a href="#cb3-140"></a><span class="in">## ------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-141"><a href="#cb3-141"></a><span class="in">spearman_correlation &lt;- function(...) {</span></span>
+<span id="cb3-142"><a href="#cb3-142"></a><span class="in">  df &lt;- data.frame(...)</span></span>
+<span id="cb3-143"><a href="#cb3-143"></a><span class="in">  correlation_matrix &lt;- round(cor(df, method = "spearman"), 3)</span></span>
+<span id="cb3-144"><a href="#cb3-144"></a><span class="in">  return(correlation_matrix)</span></span>
+<span id="cb3-145"><a href="#cb3-145"></a><span class="in">}</span></span>
+<span id="cb3-146"><a href="#cb3-146"></a><span class="in">spearman &lt;- spearman_correlation(def_micro, devices, complaints)</span></span>
+<span id="cb3-147"><a href="#cb3-147"></a><span class="in">##</span></span>
+<span id="cb3-148"><a href="#cb3-148"></a><span class="in">##              def_micro devices complaints</span></span>
+<span id="cb3-149"><a href="#cb3-149"></a><span class="in">## def_micro      1.000   0.378      0.297</span></span>
+<span id="cb3-150"><a href="#cb3-150"></a><span class="in">## devices        0.378   1.000      0.099</span></span>
+<span id="cb3-151"><a href="#cb3-151"></a><span class="in">## complaints     0.297   0.099      1.000</span></span>
+<span id="cb3-152"><a href="#cb3-152"></a></span>
+<span id="cb3-153"><a href="#cb3-153"></a></span>
+<span id="cb3-154"><a href="#cb3-154"></a><span class="in">## Use ppcor package to calculate partial correlation between complaints and devices</span></span>
+<span id="cb3-155"><a href="#cb3-155"></a><span class="in">part_cor &lt;- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman")</span></span>
+<span id="cb3-156"><a href="#cb3-156"></a><span class="in">##      estimate  p.value  statistic  n gp   Method</span></span>
+<span id="cb3-157"><a href="#cb3-157"></a><span class="in">##  -0.02075897 0.501827 -0.6718506 1050  1 spearman</span></span>
+<span id="cb3-158"><a href="#cb3-158"></a><span class="in">## Relationship between devices and complaints is technically non-existent.</span></span>
+<span id="cb3-159"><a href="#cb3-159"></a><span class="in">## We can say they're conditionally independent.</span></span>
+<span id="cb3-160"><a href="#cb3-160"></a><span class="in">## -------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-161"><a href="#cb3-161"></a><span class="in">## Creating scatterplots to visualize relationship between variables</span></span>
+<span id="cb3-162"><a href="#cb3-162"></a><span class="in">## -------------------------------------------------------------------------------- ##</span></span>
+<span id="cb3-163"><a href="#cb3-163"></a><span class="in"># Custom ggplot theme to make nicer plots</span></span>
+<span id="cb3-164"><a href="#cb3-164"></a><span class="in"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
+<span id="cb3-165"><a href="#cb3-165"></a><span class="in">font_add_google("Fira Sans")</span></span>
+<span id="cb3-166"><a href="#cb3-166"></a><span class="in">showtext_auto()</span></span>
+<span id="cb3-167"><a href="#cb3-167"></a><span class="in">theme_nice &lt;- function() {</span></span>
+<span id="cb3-168"><a href="#cb3-168"></a><span class="in">  theme_minimal(base_family = "Fira Sans") +</span></span>
+<span id="cb3-169"><a href="#cb3-169"></a><span class="in">    theme(</span></span>
+<span id="cb3-170"><a href="#cb3-170"></a><span class="in">      panel.grid.minor = element_blank(),</span></span>
+<span id="cb3-171"><a href="#cb3-171"></a><span class="in">      plot.title = element_text(</span></span>
+<span id="cb3-172"><a href="#cb3-172"></a><span class="in">        family = "Fira Sans Bold",</span></span>
+<span id="cb3-173"><a href="#cb3-173"></a><span class="in">        face = "plain",</span></span>
+<span id="cb3-174"><a href="#cb3-174"></a><span class="in">        size = rel(1.35)</span></span>
+<span id="cb3-175"><a href="#cb3-175"></a><span class="in">      ),</span></span>
+<span id="cb3-176"><a href="#cb3-176"></a><span class="in">      plot.subtitle = element_text(</span></span>
+<span id="cb3-177"><a href="#cb3-177"></a><span class="in">        family = "Fira Sans Medium",</span></span>
+<span id="cb3-178"><a href="#cb3-178"></a><span class="in">        face = "plain",</span></span>
+<span id="cb3-179"><a href="#cb3-179"></a><span class="in">        size = rel(1.2)</span></span>
+<span id="cb3-180"><a href="#cb3-180"></a><span class="in">      ),</span></span>
+<span id="cb3-181"><a href="#cb3-181"></a><span class="in">      axis.title = element_text(</span></span>
+<span id="cb3-182"><a href="#cb3-182"></a><span class="in">        family = "Fira Sans SemiBold",</span></span>
+<span id="cb3-183"><a href="#cb3-183"></a><span class="in">        face = "plain",</span></span>
+<span id="cb3-184"><a href="#cb3-184"></a><span class="in">        size = rel(1)</span></span>
+<span id="cb3-185"><a href="#cb3-185"></a><span class="in">      ),</span></span>
+<span id="cb3-186"><a href="#cb3-186"></a><span class="in">      axis.title.x = element_text(hjust = 0.5),</span></span>
+<span id="cb3-187"><a href="#cb3-187"></a><span class="in">      axis.title.y = element_text(hjust = 0.5),</span></span>
+<span id="cb3-188"><a href="#cb3-188"></a><span class="in">      axis.text = element_text(</span></span>
+<span id="cb3-189"><a href="#cb3-189"></a><span class="in">        family = "Fira Sans Light",</span></span>
+<span id="cb3-190"><a href="#cb3-190"></a><span class="in">        face = "plain",</span></span>
+<span id="cb3-191"><a href="#cb3-191"></a><span class="in">        size = rel(0.8)</span></span>
+<span id="cb3-192"><a href="#cb3-192"></a><span class="in">      ),</span></span>
+<span id="cb3-193"><a href="#cb3-193"></a><span class="in">      strip.text = element_text(</span></span>
+<span id="cb3-194"><a href="#cb3-194"></a><span class="in">        family = "Fira Sans",</span></span>
+<span id="cb3-195"><a href="#cb3-195"></a><span class="in">        face = "bold",</span></span>
+<span id="cb3-196"><a href="#cb3-196"></a><span class="in">        size = rel(1),</span></span>
+<span id="cb3-197"><a href="#cb3-197"></a><span class="in">        hjust = 0</span></span>
+<span id="cb3-198"><a href="#cb3-198"></a><span class="in">      ),</span></span>
+<span id="cb3-199"><a href="#cb3-199"></a><span class="in">      strip.background = element_rect(fill = "grey95", color = NA)</span></span>
+<span id="cb3-200"><a href="#cb3-200"></a><span class="in">    )</span></span>
+<span id="cb3-201"><a href="#cb3-201"></a><span class="in">}</span></span>
+<span id="cb3-202"><a href="#cb3-202"></a></span>
+<span id="cb3-203"><a href="#cb3-203"></a><span class="in">theme_nice_dist &lt;- function() {</span></span>
+<span id="cb3-204"><a href="#cb3-204"></a><span class="in">  theme_nice() +</span></span>
+<span id="cb3-205"><a href="#cb3-205"></a><span class="in">    theme(</span></span>
+<span id="cb3-206"><a href="#cb3-206"></a><span class="in">      panel.grid = element_blank(),</span></span>
+<span id="cb3-207"><a href="#cb3-207"></a><span class="in">      panel.spacing.x = unit(10, units = "pt"),</span></span>
+<span id="cb3-208"><a href="#cb3-208"></a><span class="in">      axis.ticks.x = element_line(linewidth = 0.25),</span></span>
+<span id="cb3-209"><a href="#cb3-209"></a><span class="in">      axis.text.y = element_blank()</span></span>
+<span id="cb3-210"><a href="#cb3-210"></a><span class="in">    )</span></span>
+<span id="cb3-211"><a href="#cb3-211"></a><span class="in">}</span></span>
+<span id="cb3-212"><a href="#cb3-212"></a></span>
+<span id="cb3-213"><a href="#cb3-213"></a><span class="in">theme_set(theme_nice())</span></span>
+<span id="cb3-214"><a href="#cb3-214"></a><span class="in"># Updating defaults to chosen font</span></span>
+<span id="cb3-215"><a href="#cb3-215"></a><span class="in">ggplot2::update_geom_defaults("label",list(family = "Fira Sans SemiBold", fontface = "plain"))</span></span>
+<span id="cb3-216"><a href="#cb3-216"></a><span class="in">ggplot2::update_geom_defaults("text",list(family = "Fira Sans", fontface = "plain"))</span></span>
+<span id="cb3-217"><a href="#cb3-217"></a></span>
+<span id="cb3-218"><a href="#cb3-218"></a><span class="in"># Making df with previously created variables</span></span>
+<span id="cb3-219"><a href="#cb3-219"></a><span class="in">df1 &lt;- data.frame(def_micro, devices, complaints)</span></span>
+<span id="cb3-220"><a href="#cb3-220"></a><span class="in"># Making plot to show correlation between devices v. complaints.</span></span>
+<span id="cb3-221"><a href="#cb3-221"></a><span class="in">dev_comp_plot &lt;- ggplot2::ggplot(df1, aes(devices, complaints)) +</span></span>
+<span id="cb3-222"><a href="#cb3-222"></a><span class="in">  geom_point(color = clrs[2]) +</span></span>
+<span id="cb3-223"><a href="#cb3-223"></a><span class="in">  geom_smooth(method = "glm", # Use either glm or gam models</span></span>
+<span id="cb3-224"><a href="#cb3-224"></a><span class="in">    se = FALSE,</span></span>
+<span id="cb3-225"><a href="#cb3-225"></a><span class="in">    color = clrs[5],</span></span>
+<span id="cb3-226"><a href="#cb3-226"></a><span class="in">    linewidth = 1) +</span></span>
+<span id="cb3-227"><a href="#cb3-227"></a><span class="in">  labs(</span></span>
+<span id="cb3-228"><a href="#cb3-228"></a><span class="in">    x = "devices",</span></span>
+<span id="cb3-229"><a href="#cb3-229"></a><span class="in">    y = "complaints") +</span></span>
+<span id="cb3-230"><a href="#cb3-230"></a><span class="in">  theme_nice_dist() # Apply a custom theme</span></span>
+<span id="cb3-231"><a href="#cb3-231"></a><span class="in"># Making plot to show correlation between devices v. microchips</span></span>
+<span id="cb3-232"><a href="#cb3-232"></a><span class="in">dev_micro_plot &lt;- ggplot2::ggplot(df1, aes(devices, def_micro)) +</span></span>
+<span id="cb3-233"><a href="#cb3-233"></a><span class="in">  geom_point(color = clrs[3]) +</span></span>
+<span id="cb3-234"><a href="#cb3-234"></a><span class="in">  geom_smooth(method = "lm",</span></span>
+<span id="cb3-235"><a href="#cb3-235"></a><span class="in">    se = FALSE,</span></span>
+<span id="cb3-236"><a href="#cb3-236"></a><span class="in">    color = clrs[5],</span></span>
+<span id="cb3-237"><a href="#cb3-237"></a><span class="in">    linewidth = 1) +</span></span>
+<span id="cb3-238"><a href="#cb3-238"></a><span class="in">  labs(</span></span>
+<span id="cb3-239"><a href="#cb3-239"></a><span class="in">    x = "devices",</span></span>
+<span id="cb3-240"><a href="#cb3-240"></a><span class="in">    y = "microchips") +</span></span>
+<span id="cb3-241"><a href="#cb3-241"></a><span class="in">  theme_nice_dist() # Apply a classic theme</span></span>
+<span id="cb3-242"><a href="#cb3-242"></a><span class="in"># Making plot to show correlation between complaints v. microchips</span></span>
+<span id="cb3-243"><a href="#cb3-243"></a><span class="in">comp_micro_plot &lt;- ggplot2::ggplot(df1, aes(complaints, def_micro)) +</span></span>
+<span id="cb3-244"><a href="#cb3-244"></a><span class="in">  geom_point(color = clrs[6]) +</span></span>
+<span id="cb3-245"><a href="#cb3-245"></a><span class="in">  geom_smooth(method = "lm",</span></span>
+<span id="cb3-246"><a href="#cb3-246"></a><span class="in">    se = FALSE,</span></span>
+<span id="cb3-247"><a href="#cb3-247"></a><span class="in">    color = clrs[5],</span></span>
+<span id="cb3-248"><a href="#cb3-248"></a><span class="in">    linewidth = 1) +</span></span>
+<span id="cb3-249"><a href="#cb3-249"></a><span class="in">  labs(</span></span>
+<span id="cb3-250"><a href="#cb3-250"></a><span class="in">    x = "complaints",</span></span>
+<span id="cb3-251"><a href="#cb3-251"></a><span class="in">    y = "microchips") +</span></span>
+<span id="cb3-252"><a href="#cb3-252"></a><span class="in">  theme_nice_dist() # Apply a custom theme</span></span>
+<span id="cb3-253"><a href="#cb3-253"></a><span class="in"># Creating grid panel displaying all three plots vertically. </span></span>
+<span id="cb3-254"><a href="#cb3-254"></a><span class="in"># I prefer the vertical plots rather than the horizontal ones</span></span>
+<span id="cb3-255"><a href="#cb3-255"></a><span class="in">arranged_plots &lt;- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, nrow = 1) </span></span>
+<span id="cb3-256"><a href="#cb3-256"></a></span>
+<span id="cb3-257"><a href="#cb3-257"></a><span class="in">```</span></span>
+<span id="cb3-258"><a href="#cb3-258"></a></span>
+<span id="cb3-259"><a href="#cb3-259"></a><span class="fu">### Additive processes</span></span>
+<span id="cb3-260"><a href="#cb3-260"></a></span>
+<span id="cb3-261"><a href="#cb3-261"></a>A process $Y$ is considered additive when the value of each observation is determined by adding a variable quantity to the value of a previous observation. The process is characterized by an initial value $Y(0)$ and the increments $Y_{i} - Y_{h}$ with $i &gt; h \geq 0$, where $Y_{i}$ represents the value of an observation at a certain point and $Y_{h}$, the value of the subsequent observation. This additive process typically consists of three components.</span>
+<span id="cb3-262"><a href="#cb3-262"></a></span>
+<span id="cb3-263"><a href="#cb3-263"></a><span class="ss">-   </span>An initial value $Y_{0}$ that serves as the starting point of the process.</span>
+<span id="cb3-264"><a href="#cb3-264"></a></span>
+<span id="cb3-265"><a href="#cb3-265"></a><span class="ss">-   </span>A random, slow, and gradual change component $Y_{1}$ around the central tendency represents the continuous evolution of the process over time.</span>
+<span id="cb3-266"><a href="#cb3-266"></a></span>
+<span id="cb3-267"><a href="#cb3-267"></a><span class="ss">-   </span>A third random component $Y_{2}$​ represents sudden jumps or changes in the process, which may occur unpredictably at certain time points.</span>
+<span id="cb3-268"><a href="#cb3-268"></a></span>
+<span id="cb3-269"><a href="#cb3-269"></a>Together, these components contribute to the behavior of the $Y$​ process and its evolution across time through a combination of unexpected slow changes and sudden jumps.</span>
+<span id="cb3-270"><a href="#cb3-270"></a></span>
+<span id="cb3-271"><a href="#cb3-271"></a>An example of such a random process in epidemiology is the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.</span>
+<span id="cb3-272"><a href="#cb3-272"></a></span>
+<span id="cb3-273"><a href="#cb3-273"></a><span class="ss">-   </span>How we use CLT</span>
+<span id="cb3-274"><a href="#cb3-274"></a></span>
+<span id="cb3-275"><a href="#cb3-275"></a><span class="ss">-   </span>How to know when empirical distribution converges to normal distribution?</span>
+<span id="cb3-276"><a href="#cb3-276"></a></span>
+<span id="cb3-277"><a href="#cb3-277"></a>    ### what's the deal with $n \geq 30$?</span>
+<span id="cb3-278"><a href="#cb3-278"></a></span>
+<span id="cb3-279"><a href="#cb3-279"></a><span class="ss">    -   </span>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</span>
+<span id="cb3-280"><a href="#cb3-280"></a></span>
+<span id="cb3-281"><a href="#cb3-281"></a><span class="at">        &gt; It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</span></span>
+<span id="cb3-282"><a href="#cb3-282"></a></span>
+<span id="cb3-283"><a href="#cb3-283"></a><span class="ss">        -   </span>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</span>
+<span id="cb3-284"><a href="#cb3-284"></a></span>
+<span id="cb3-285"><a href="#cb3-285"></a>            t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))</span>
+<span id="cb3-286"><a href="#cb3-286"></a></span>
+<span id="cb3-287"><a href="#cb3-287"></a><span class="ss">        -   </span>Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</span>
+<span id="cb3-288"><a href="#cb3-288"></a></span>
+<span id="cb3-289"><a href="#cb3-289"></a><span class="ss">        -   </span>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</span>
+<span id="cb3-290"><a href="#cb3-290"></a></span>
+<span id="cb3-291"><a href="#cb3-291"></a>    ## Solution</span>
+<span id="cb3-292"><a href="#cb3-292"></a></span>
+<span id="cb3-293"><a href="#cb3-293"></a><span class="in">    -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span></span>
+<span id="cb3-294"><a href="#cb3-294"></a><span class="in">    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -1318,7 +1315,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p><span class="faux-block">Made with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span> <span class="faux-block"><a href="https://github.com/jpmonteagudo28/Portfolio_quarto">View the source at <i class="fa-brands fa-github" aria-label="github"></i> GitHub</a></span></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
