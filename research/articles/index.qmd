@@ -31,7 +31,7 @@ pub-info:
     icon: fa-brands fa-github
   - name: Add to Mendeley
     url: https://www.mendeley.com/search/
-   # icon: ai ai-zotero
+    icon: fa-brands fa-mendeley
 #doi: 10.1111/oik.07621
 haiku: 
  - These brain distortions–

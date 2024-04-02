@@ -2,13 +2,15 @@
   {
     "listing": "/blog/index.html",
     "items": [
-      "/blog/2024/03/here/index.html"
+      "/blog/2024/03/here/index.html",
+      "/blog/2024/02/clt/index.html"
     ]
   },
   {
     "listing": "/atom.html",
     "items": [
-      "/blog/2024/03/here/index.html"
+      "/blog/2024/03/here/index.html",
+      "/blog/2024/02/clt/index.html"
     ]
   },
   {

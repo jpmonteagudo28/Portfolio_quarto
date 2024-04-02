@@ -4,7 +4,6 @@ $theme: "jpm" !default;
 //
 // Color system
 //
-
 $white:    #ffffff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
@@ -40,17 +39,18 @@ $dark:      $black !default;
 
 // $min-contrast-ratio: 2.6 !default;
 
+
 // Fonts
 
 
-$font-family-sans-serif: "Arsenal" !default;
+$font-family-serif: "EB Garamond" !default;
 
-$headings-font-family: "Roboto Serif" !default;
-$headings-font-weight: 300 !default;
+$headings-font-family: "EB Garamond" !default;
+$headings-font-weight: 700 !default;
 
-$navbar-font-family: "Roboto Serif" !default;
-$toc-font-family: "Roboto Serif" !default;
-$footer-font-family: "Roboto Serif" !default;
+$navbar-font-family: "Mate SC" !default;
+$toc-font-family: "EB Garamond" !default;
+$footer-font-family: "EB Garamond" !default;
 
 // $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
 // $font-size-sm: $font-size-base * .875 !default;
@@ -87,7 +87,7 @@ $footer-fg: $gray-300 !default;
 
 /*-- scss:rules --*/
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Mate+SC&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
@@ -95,6 +95,14 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz
 
 body {
     -webkit-font-smoothing: antialiased;
+    font-family: "EB Garamond";
+    font-size: 1.25em;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $gray-900;
+    text-align: justify;
+    hyphens: auto;
+    background-color: $gray-100;
 }
 
 .rtl {
@@ -122,11 +130,18 @@ body {
     #title-block-header {
         margin-block-end: 0;
     }
+//.appendix {                     At the moment, this isn't working
+//  background-color: $gray-100;
+//  padding-top: 1.5em;
+//  margin-top: 2em;
+//  z-index: 998;
+//  font-size: .8em;
+//  }
 }
 
 // Shrink blocks of code
 pre.text, pre.sourceCode, .cell-output pre {
-    font-size: 0.775em;
+    font-size: 0.65em;
 }
 
 .navbar {
@@ -142,6 +157,8 @@ pre.text, pre.sourceCode, .cell-output pre {
     font-family: $toc-font-family;
     padding-bottom: 0.1em;
     font-weight: 300;
+    background-color: $gray-100;
+    margin: 0;
 
     .active {
         font-weight: 400;
@@ -151,6 +168,10 @@ pre.text, pre.sourceCode, .cell-output pre {
         font-weight: 600;
     }
 }
+
+nav.sidebar.sidebar-navigation:not(.rollup) {
+    background-color: $gray-100;
+} 
 
 .sidebar nav[role="doc-toc"]>ul li a {
     padding-top: 0.25rem;
@@ -188,7 +209,6 @@ pre.text, pre.sourceCode, .cell-output pre {
         }
     }
 }
-
 .nav-footer {
     align-items: flex-start;  // Align all flex items to the top
     flex-wrap: wrap;
@@ -206,8 +226,8 @@ pre.text, pre.sourceCode, .cell-output pre {
     }
 
     .fingerprint {
-        font-family: $font-family-sans-serif;
-        font-size: 0.83em;
+        font-family: $font-family-serif;
+        font-size: 0.725em;
     }
 
     // In the default Quarto template, .nav-footer-center has position: absolute 
@@ -292,14 +312,14 @@ pre.text, pre.sourceCode, .cell-output pre {
 
         .title {
             font-weight: 500;
-            font-size: 1.3em;
+            font-size: 1.25em;
             margin-bottom: 0.2em;
             line-height: 1.2;
         }
 
         .description {
             font-weight: 300;
-            font-size: .85em;
+            font-size: .80em;
             margin-bottom: 0.3em;
         }
 

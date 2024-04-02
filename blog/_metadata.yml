@@ -21,6 +21,11 @@ toc: true
 toc-title: Contents
 toc-location: left
 
+# Default fields for citation
+citation: true
+appendix-cite-as: display
+appendix-style: plain
+
 freeze: true
 
 # Default knitr options

@@ -12,6 +12,7 @@ page-layout: full
 toc-title: Year
 toc-location: right
 date-format: "MMMM D, YYYY"
+citation: false
 code-tools: false
 comments: false
 engine: knitr

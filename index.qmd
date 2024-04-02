@@ -1,6 +1,6 @@
 ---
 title: "¡Bienvenido!"
-pagetitle: "JP Monteagudo"
+pagetitle: "jp monteagudo"
 main-photo: /files/profile_2024.png
 main-photo-square: /files/profile_2024.png
 title-block-banner: "#f25050"

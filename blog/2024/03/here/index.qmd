@@ -4,12 +4,8 @@ date: 2024-03-17
 description: "Gentle reminders when using the `here` package for your `RStudio` projects"
 categories:
  - r
- - packages
  - here
- - working dir
  - setwd
- - programming
- - code errors
  - workflow
  - reproducibility
 format:
@@ -89,15 +85,9 @@ here::here()
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project"
   here::here("blog")
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog"
-  here::here("2024")
-# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/2024"
-  here::here("02")
-# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/02"
-  here::here("post")
-# [1] "C:/Users/jpmonteagudo/Desktop/R/Project/post"
   here::here("scripts")
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project/scripts"
-#| I'll point R to the actual document by providing the full relative path
+# I'll point R to the actual document by providing the full relative path
 here::here("blog","post","2024","02","dat3.R")
 # [1] "C:/Users/jpmonteagudo/Desktop/R/Project/blog/post/2024/02/dat3.R"
 ```

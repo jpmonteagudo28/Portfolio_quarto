@@ -1,78 +1,96 @@
-##---------------------------------------------------------------------------------- ##
+## ---------------------------------------------------------------------------------- ##
 ## Generating two random variables that meet the i.i.d assumption
-## --------------------------------------------------------------------------------- ##
+## ---------------------------------------------------------------------------------- ##
 library(here)
 library(ppcor)
 library(ggplot2)
 library(ggthemes)
-library(paletteer)
 library(gridExtra)
+library(ragg)
+
 ## --------------------------------------------------------------------------------- ##
-##
-xx <- seq(-5,5,by=.01)
+
+xx <- seq(-5, 5, by = .01)
+
+clrs <- c( # Creating custom color palette
+  "#FFBE00", #  yellow
+  "#B92F0A", #  red
+  "#7C225C", #  purple
+  "#792A26", #  brown
+  "#242424", #  dark gray
+  "#394DAA"  #  Blue
+)
 ## Saving plot image
-par(las=1,mfrow=c(3,1),mai=c(.5,.5,.5,.1))
+par(las = 1, mfrow = c(3, 1), mai = c(.5, .5, .5, .1))
 ## Plot graphics
-plot(xx,dnorm(xx,-1),type="b",lwd=1,xlab="",ylab="",
-     col = "darkorchid4", main="Identically distributed")
-lines(xx,dnorm(xx,-1),lty = 2, lwd=3,pch = 18,col="orangered")
-legend("topright", legend = c("A", "B"),
-       col = c("darkorchid4", "orangered"), lty = 1:2, cex = 0.8)
+plot(xx, dnorm(xx, -1),
+  type = "b", lwd = 1, xlab = "", ylab = "",
+  col = clrs[3], main = "Identically distributed"
+)
+lines(xx, dnorm(xx, -1), lty = 2, lwd = 3, pch = 18, col = clrs[1])
+legend("topright",
+  legend = c("A", "B"),
+  col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8
+)
 
-plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",
-     col = "darkorchid4",main="Shift in means")
-lines(xx,dnorm(xx,1),lwd=2,col="orangered")
+plot(xx, dnorm(xx, -1),
+  type = "l", lwd = 2, xlab = "", ylab = "",
+  col = clrs[3], main = "Shift in means"
+)
+lines(xx, dnorm(xx, 1), lwd = 2, col = clrs[1])
 
-plot(xx,dnorm(xx,-1),type="l",lwd=2,xlab="",ylab="",
-     col = "darkorchid4",main="Different distributions",ylim=c(0,0.6))
-lines(xx,dchisq(xx,2),lwd=2,col="orangered")
+plot(xx, dnorm(xx, -1),
+  type = "l", lwd = 2, xlab = "", ylab = "",
+  col = clrs[3], main = "Different distributions", ylim = c(0, 0.6)
+)
+lines(xx, dchisq(xx, 2), lwd = 2, col = clrs[1])
 ## Close graphics device to save plot
-dev.copy(png,"iid.png", width = 800, height = 600)
-dev.off()
-##------------------------------------------------------------------------------------- ##
+## dev.copy(png,"iid.png", width = 800, height = 600)
+## dev.off()
+## ------------------------------------------------------------------------------------- ##
 ## Generating two conditionally independent random variables
 ## ------------------------------------------------------------------------------------ ##
-## 
+##
 ## Creating function to generate random variable with defined correlation to an existing var.
-complement <- function(y, rho, x) { #corr. coefficient
-  if (missing(x)) x <- rgamma(length(y),2,.5) # Optional: supply a default if `x` is not given
+complement <- function(y, rho, x) { # corr. coefficient
+  if (missing(x)) x <- rgamma(length(y), 2, .5) # Optional: supply a default if `x` is not given
   y.perp <- residuals(lm(x ~ y))
   rho * sd(y.perp) * y + y.perp * sd(y) * sqrt(1 - rho^2)
 }
 set.seed(09)
-def_micro <- rpois(1050,6) #lambda = n*p, p = .006 defective microchips manufactured by company in 12 hrs
-complaints <- complement(def_micro,rho =.273) # no. complaints received on 24 hr period for devices using the microchip in question
+def_micro <- rpois(1050, 6) # lambda = n*p, p = .006 defective microchips manufactured by company in 12 hrs
+complaints <- complement(def_micro, rho = .273) # no. complaints received on 24 hr period for devices using the microchip in question
 devices <- complement(def_micro, rho = .331) # weekly no. devices processed at online retailer (+) bought (-)returned
 ##
 ## Creating function to summarize list of variables
-group_summary <- function(...){
+group_summary <- function(...) {
   summaries <- lapply(list(...), summary)
   names(summaries) <- paste0("Summary_", seq_along(summaries))
   return(summaries)
 }
 
-group_summary(def_micro,devices,complaints)
+group_summary(def_micro, devices, complaints)
 ## $Summary_1
-## Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.000   4.000   6.000   6.087   8.000  14.000 
- 
+## Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+## 0.000   4.000   6.000   6.087   8.000  14.000
+
 ## $Summary_2
-## Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -7.066   1.058   4.577   5.922   9.674  64.885 
- 
+## Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+## -7.066   1.058   4.577   5.922   9.674  64.885
+
 ## $Summary_3
-## Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
 ## -7.2494 -0.3377  3.3125  4.5368  7.9785 34.8066
-## ------------------------------------------------------------------------------- ## 
+## ------------------------------------------------------------------------------- ##
 ## Creating function to find Spearman's rho among all variables
 ## ------------------------------------------------------------------------------- ##
 spearman_correlation <- function(...) {
   df <- data.frame(...)
-   correlation_matrix <- round(cor(df, method = "spearman"),3)
-   return(correlation_matrix)
+  correlation_matrix <- round(cor(df, method = "spearman"), 3)
+  return(correlation_matrix)
 }
 
-spearman_correlation(def_micro, devices,complaints)
+spearman <- spearman_correlation(def_micro, devices, complaints)
 ##
 ##              def_micro devices complaints
 ## def_micro      1.000   0.378      0.297
@@ -81,49 +99,125 @@ spearman_correlation(def_micro, devices,complaints)
 ##
 ## Use ppcor package to calculate partial correlation between complaints and devices
 
-ppcor::pcor.test(devices,complaints,def_micro, method = "spearman")
+part_cor <- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman")
 ##      estimate  p.value  statistic    n gp   Method
 ## 1 -0.02075897 0.501827 -0.6718506 1050  1 spearman
 ## relationship between devices and complaints is technically non-existent. We can say they're conditionally independent.
 ## -------------------------------------------------------------------------------- ##
 ## Creating scatterplots to visualize relationship between variables
 ## -------------------------------------------------------------------------------- ##
+#
+# Custom ggplot theme to make nicer plots
+# Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed
+theme_nice <- function() {
+  theme_minimal(base_family = "Fira Sans Condensed") +
+    theme(
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(
+        family = "Fira Sans Condensed Bold",
+        face = "plain",
+        size = rel(1.35)
+      ),
+      plot.subtitle = element_text(
+        family = "Fira Sans Condensed Medium",
+        face = "plain",
+        size = rel(1.2)
+      ),
+      axis.title = element_text(
+        family = "Fira Sans Condensed SemiBold",
+        face = "plain",
+        size = rel(1)
+      ),
+      axis.title.x = element_text(hjust = 0.5),
+      axis.title.y = element_text(hjust = 0.5),
+      axis.text = element_text(
+        family = "Fira Sans Condensed Light",
+        face = "plain",
+        size = rel(0.8)
+      ),
+      strip.text = element_text(
+        family = "Fira Sans Condensed",
+        face = "bold",
+        size = rel(1),
+        hjust = 0
+      ),
+      strip.background = element_rect(fill = "grey95", color = NA)
+    )
+}
 
-df1 <- data.frame(def_micro,devices,complaints)
-dev_comp_plot <- ggplot2::ggplot(df1, aes(devices, complaints))+
-                         geom_point(color = "dodgerblue4") +
-                         geom_smooth(method = "gam", se = FALSE, color = "firebrick", linewidth = 2) +
-                         labs(
-                           x = "No. devices processed",
-                           y = "No. complaints received") +
-                           ggthemes::theme_tufte() +  # Apply a classic theme
-                           theme(plot.title = element_text(hjust = 0.5))  # Center the title
-dev_micro_plot <- ggplot2::ggplot(df1, aes(devices, def_micro))+
-                        geom_point(color = "darkcyan") +
-                        geom_smooth(method = "lm", se = FALSE, color = "firebrick", linewidth = 2) +
-                        labs(
-                           x = "No. devices processed",
-                           y = "No. defective microchips") +
-                        ggthemes::theme_tufte() +  # Apply a classic theme
-                        theme(plot.title = element_text(hjust = 0.5))  # Center the title
-comp_micro_plot <- ggplot2::ggplot(df1, aes(complaints, def_micro))+
-                      geom_point(color = "hotpink3") +
-                      geom_smooth(method = "lm", se = FALSE, color = "firebrick", linewidth = 2) +
-                      labs(
-                          x = "No. complaints recieved",
-                          y = "No. defective microchips") +
-                      ggthemes::theme_tufte() +  # Apply a classic theme
-                      theme(plot.title = element_text(hjust = 0.5))  # Center the title
+theme_nice_dist <- function() {
+  theme_nice() +
+    theme(
+      panel.grid = element_blank(),
+      panel.spacing.x = unit(10, units = "pt"),
+      axis.ticks.x = element_line(linewidth = 0.25),
+      axis.text.y = element_blank()
+    )
+}
 
-## gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, 
-##                        top = "Devices, Defective microships, Complaints",ncol = 1) # I prefer the vertical plots rather than the horizontal ones
-arranged_plots <- gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, comp_micro_plot, 
-                        top = "Devices, Defective microchips, Complaints",nrow = 1)
+theme_set(theme_nice())
+
+ggplot2::update_geom_defaults("label",list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
+ggplot2::update_geom_defaults("text",list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
+
+# Making df with previously created variables
+df1 <- data.frame(def_micro, devices, complaints)
+dev_comp_plot <- ggplot2::ggplot(df1, aes(devices, complaints)) +
+  geom_point(color = clrs[2]) +
+  geom_smooth(
+    method = "glm",
+    se = FALSE,
+    color = clrs[5],
+    linewidth = 1
+  ) +
+  labs(
+    title = "Devices vs. Complaints",
+    x = (NULL),
+    y = (NULL)
+  ) +
+  theme_nice_dist() # Apply a custom theme
+
+dev_micro_plot <- ggplot2::ggplot(df1, aes(devices, def_micro)) +
+  geom_point(color = clrs[3]) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = clrs[5],
+    linewidth = 1
+  ) +
+  labs(
+    title = "Devices vs. Microchips",
+    x = (NULL),
+    y = (NULL)
+  ) +
+  theme_nice_dist() # Apply a classic theme
+
+comp_micro_plot <-
+  ggplot2::ggplot(df1, aes(complaints, def_micro)) +
+  geom_point(color = clrs[6]) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = clrs[5],
+    linewidth = 1
+  ) +
+  labs(
+    title = "Complaints vs. Microchips",
+    x = (NULL),
+    y = (NULL)
+  ) +
+  theme_nice_dist() # Apply a classic theme
+
+arranged_plots <- 
+  gridExtra::grid.arrange(dev_comp_plot, dev_micro_plot, 
+  comp_micro_plot, nrow = 1) ## I prefer the vertical plots rather than the horizontal ones
+
+
 ## Saving plots to img file in blog
-here::here("blog","2024","02","clt","img")
-ggsave("cond_ind.png",arranged_plots, 
-       path = here::here("blog","2024","02","clt","img"),
-                width = 800,
-                height = 600,
-                units = "px",
-                dpi = 72)
+here::here("blog", "2024", "02", "clt", "img")
+ggsave("cond_ind.png", arranged_plots,
+  path = here::here("blog", "2024", "02", "clt", "img"),
+  width = 800,
+  height = 600,
+  units = "px",
+  dpi = 72)

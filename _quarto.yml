@@ -20,15 +20,16 @@ bibliography: files/bib/references.bib
 csl: files/bib/chicago-author-date.csl
 
 # Metadata stuff
-pagetitle: "{{< meta title >}} | JP Monteagudo"
-author-meta: "JP Monteagudo"
+pagetitle: "{{< meta title >}} | jp Monteagudo"
+author-meta: "jp Monteagudo"
 
 website:
-  title: "JP Monteagudo"
+  title: "jp monteagudo"
   description: "JP is an aspiring epidemiologist currently pursuing his degree in epidemiology from Liberty University."
   favicon: "/files/cards/favicon_no_bg.png"
   site-url: "https://www.jpmonteagudo.com"
   repo-url: "https://github.com/jpmonteagudo28/portfolio_quarto"
+  reader-mode: true
   
   google-analytics: "G-SM9D5VRX5P"
 
@@ -45,18 +46,19 @@ website:
   navbar:
     pinned: true
 
+
     left:
-      - text: "About"
+      - text: "about"
         href: "index.qmd"
-      - text: "CV"
+      - text: "cv"
         href: "cv/index.qmd"
-      - text: "Blog"
+      - text: "blog"
         file: blog/index.qmd
-      - text: "Research"
+      - text: "research"
         file: research/index.qmd
-      - text: "Now"
+      - text: "now"
         href: now/index.qmd
-      - text: "Uses"
+      - text: "uses"
         file: uses/index.qmd
     
     right:
@@ -74,10 +76,10 @@ website:
         aria-label: github
         href: https://github.com/jpmonteagudo28
         rel: me
-      - icon: youtube
-        aria-label: youtube
-        href: https://www.youtube.com/@jpmonteagudo2893
-        rel: me
+      #- icon: youtube
+        #aria-label: youtube
+        #href: https://www.youtube.com/@jpmonteagudo2893
+        #rel: me
       - icon: linkedin
         aria-label: linkedin
         href: https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/
@@ -107,3 +109,4 @@ format:
     reference-location: margin
     footnotes-hover: true
     highlight-style: monokai
+  
