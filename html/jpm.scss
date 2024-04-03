@@ -150,6 +150,8 @@ body {
 pre.text, pre.sourceCode, .cell-output pre {
     font-size: 0.65em;
     font-family: $code-font-family;
+    font-weight: 400;
+    font-optical-sizing: auto;
     color: $rose;
     background-color:$code-gray;
     border-radius: 5px;

@@ -346,7 +346,7 @@ window.Quarto = {
 </details>
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/fig_iid-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Simulated identically distributed and non-identically distributed variables."><img src="index_files/figure-html/fig_iid-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Simulated identically distributed and non-identically distributed variables."></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/fig_iid-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Simulated identically distributed and non-identically distributed variables."><img src="index_files/figure-html/fig_iid-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Simulated identically distributed and non-identically distributed variables."></a></p>
 <figcaption>Simulated identically distributed and non-identically distributed variables.</figcaption></figure>
 </div>
 </div></div></div>
@@ -516,7 +516,7 @@ window.Quarto = {
 </details>
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Relationship between devices, complaints, and defective microchips"><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Relationship between devices, complaints, and defective microchips"></a></p>
+<figure class="figure"><p><a href="index_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Relationship between devices, complaints, and defective microchips"><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Relationship between devices, complaints, and defective microchips"></a></p>
 <figcaption>Relationship between devices, complaints, and defective microchips</figcaption></figure>
 </div>
 </div></div></div>
@@ -1026,7 +1026,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-16"><a href="#cb3-16"></a><span class="co">    code-line-numbers: true</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="an">doi:</span><span class="co"> 10.59350/bje88-8r592</span></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#draft: true</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="an">draft:</span><span class="co"> true</span></span>
 <span id="cb3-20"><a href="#cb3-20"></a><span class="co">---</span></span>
 <span id="cb3-21"><a href="#cb3-21"></a></span>
 <span id="cb3-22"><a href="#cb3-22"></a><span class="in">```{r setup, include=FALSE}</span></span>
@@ -1278,30 +1278,36 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-268"><a href="#cb3-268"></a></span>
 <span id="cb3-269"><a href="#cb3-269"></a>Together, these components contribute to the behavior of the $Y$​ process and its evolution across time through a combination of unexpected slow changes and sudden jumps.</span>
 <span id="cb3-270"><a href="#cb3-270"></a></span>
-<span id="cb3-271"><a href="#cb3-271"></a>An example of such a random process in epidemiology is the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.</span>
+<span id="cb3-271"><a href="#cb3-271"></a>An example of such a random process in epidemiology is the total number of infections during the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease and the number of cases fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.</span>
 <span id="cb3-272"><a href="#cb3-272"></a></span>
-<span id="cb3-273"><a href="#cb3-273"></a><span class="ss">-   </span>How we use CLT</span>
+<span id="cb3-273"><a href="#cb3-273"></a><span class="fu">#### Are processes always additive?</span></span>
 <span id="cb3-274"><a href="#cb3-274"></a></span>
-<span id="cb3-275"><a href="#cb3-275"></a><span class="ss">-   </span>How to know when empirical distribution converges to normal distribution?</span>
+<span id="cb3-275"><a href="#cb3-275"></a>Unfortunately for us, not all processes are additive. Multiplicative processes are common in nature and sometimes we mistakenly assume additivity. </span>
 <span id="cb3-276"><a href="#cb3-276"></a></span>
-<span id="cb3-277"><a href="#cb3-277"></a>    ### what's the deal with $n \geq 30$?</span>
+<span id="cb3-277"><a href="#cb3-277"></a></span>
 <span id="cb3-278"><a href="#cb3-278"></a></span>
-<span id="cb3-279"><a href="#cb3-279"></a><span class="ss">    -   </span>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</span>
+<span id="cb3-279"><a href="#cb3-279"></a><span class="ss">-   </span>How we use CLT</span>
 <span id="cb3-280"><a href="#cb3-280"></a></span>
-<span id="cb3-281"><a href="#cb3-281"></a><span class="at">        &gt; It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</span></span>
+<span id="cb3-281"><a href="#cb3-281"></a><span class="ss">-   </span>How to know when empirical distribution converges to normal distribution?</span>
 <span id="cb3-282"><a href="#cb3-282"></a></span>
-<span id="cb3-283"><a href="#cb3-283"></a><span class="ss">        -   </span>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</span>
+<span id="cb3-283"><a href="#cb3-283"></a>    ### what's the deal with $n \geq 30$?</span>
 <span id="cb3-284"><a href="#cb3-284"></a></span>
-<span id="cb3-285"><a href="#cb3-285"></a>            t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))</span>
+<span id="cb3-285"><a href="#cb3-285"></a><span class="ss">    -   </span>Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.</span>
 <span id="cb3-286"><a href="#cb3-286"></a></span>
-<span id="cb3-287"><a href="#cb3-287"></a><span class="ss">        -   </span>Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</span>
+<span id="cb3-287"><a href="#cb3-287"></a><span class="at">        &gt; It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</span></span>
 <span id="cb3-288"><a href="#cb3-288"></a></span>
-<span id="cb3-289"><a href="#cb3-289"></a><span class="ss">        -   </span>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</span>
+<span id="cb3-289"><a href="#cb3-289"></a><span class="ss">        -   </span>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the</span>
 <span id="cb3-290"><a href="#cb3-290"></a></span>
-<span id="cb3-291"><a href="#cb3-291"></a>    ## Solution</span>
+<span id="cb3-291"><a href="#cb3-291"></a>            t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))</span>
 <span id="cb3-292"><a href="#cb3-292"></a></span>
-<span id="cb3-293"><a href="#cb3-293"></a><span class="in">    -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span></span>
-<span id="cb3-294"><a href="#cb3-294"></a><span class="in">    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-293"><a href="#cb3-293"></a><span class="ss">        -   </span>Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</span>
+<span id="cb3-294"><a href="#cb3-294"></a></span>
+<span id="cb3-295"><a href="#cb3-295"></a><span class="ss">        -   </span>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</span>
+<span id="cb3-296"><a href="#cb3-296"></a></span>
+<span id="cb3-297"><a href="#cb3-297"></a>    ## Solution</span>
+<span id="cb3-298"><a href="#cb3-298"></a></span>
+<span id="cb3-299"><a href="#cb3-299"></a><span class="in">    -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span></span>
+<span id="cb3-300"><a href="#cb3-300"></a><span class="in">    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -1315,7 +1321,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p><span class="faux-block">Made with <i class="fa-brands fa-r-project" aria-label="r-project"></i> and <a href="https://quarto.org/">Quarto</a></span> <span class="faux-block"><a href="https://github.com/jpmonteagudo28/Portfolio_quarto">View the source at <i class="fa-brands fa-github" aria-label="github"></i> GitHub</a></span></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

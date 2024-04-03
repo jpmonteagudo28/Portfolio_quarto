@@ -268,7 +268,13 @@ A process $Y$ is considered additive when the value of each observation is deter
 
 Together, these components contribute to the behavior of the $Y$​ process and its evolution across time through a combination of unexpected slow changes and sudden jumps.
 
-An example of such a random process in epidemiology is the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.
+An example of such a random process in epidemiology is the total number of infections during the spread of an infectious disease within a population over time. Initially, there's a small number of infected (*I*) individuals that spread the disease across the susceptible population (*S*), and as the population grows and control measures take place, the evolution of the disease and the number of cases fluctuates. If a new variant of this disease was introduced, a sudden spike in the number of infected individuals would also determine the evolution of the disease.
+
+#### Are processes always additive?
+
+Unfortunately for us, not all processes are additive. Multiplicative processes are common in nature and sometimes we mistakenly assume additivity. 
+
+
 
 -   How we use CLT
 
