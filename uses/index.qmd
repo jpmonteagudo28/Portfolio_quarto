@@ -1,6 +1,6 @@
 ---
 title: What I use
-date: 2024-03-17
+date: 2024-04-03
 description: Some projects, new learning experiences and home-life adventures
 title-block-banner: "#F2AC57"
 published-title: Last updated
@@ -49,7 +49,7 @@ I'm leaving a list of the programs/software I regularly use as a way to track th
 -   I've used [Canva](https://www.canva.com/) for every design in this website and personal documents. I also have free access to [Adobe InDesign](https://www.adobe.com/) but haven't used it much.
 -   I totally recommend [Practical Typography](https://practicaltypography.com/), by Matthew Butterick– a typograhpy primer for the graphic designer and the layperson trying to create beautiful documents.
 -   I use PowerPoint to create simple and stunning presentations. I have free access to Microsoft products, and it's also the best slide editor I've seen.
--   I use [Google Fonts API](https://fonts.google.com/) for font selection. After reading Matthew Butterick's typography book, I'm careful about text composition and formatting. My preferred fonts are Arsenal, ETBembo, Roboto Serif, Charter, and Cooper Hewitt.
+-   I use [Google Fonts API](https://fonts.google.com/) for font selection. After reading Matthew Butterick's typography book, I'm careful about text composition and formatting. My preferred fonts are Arsenal, ETBembo, EB Garamond, Warbler, Livory, Charter, and Cooper Hewitt.
 
 ### Productivity
 
