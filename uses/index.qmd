@@ -9,6 +9,9 @@ toc-location: left
 toc-title: "Contents"
 engine: knitr
 freeze: false
+format:
+  html:
+    css: styles.css
 ---
 
 ```{css, echo=FALSE}

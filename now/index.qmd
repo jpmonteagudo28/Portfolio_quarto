@@ -7,6 +7,9 @@ title-block-banner: "#7C225C"
 toc: false
 engine: knitr
 freeze: false
+format:
+  html:
+    css: styles.css
 ---
 
 ```{css, echo=FALSE}
