@@ -1,0 +1,7 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #112540; /* Replace it with the color you want */
+}
+ul { /*Replace it with the image you want. found at NC State site*/
+  list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg  xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M327.38,207.75,183.63,64l-47.26,48.25L279.14,256,136.37,399.75,183.63,448l192-192Z' fill='%23CC0000'/%3E%3C/svg%3E");
+  list-style-position: outside;
+}

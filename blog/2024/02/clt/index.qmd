@@ -10,6 +10,7 @@ categories:
  - Gaussian
 format:
   html:
+    css: styles.css
     code-fold: true
     code-tools: true
     highlight-style: tango
@@ -165,36 +166,18 @@ part_cor <- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman"
 font_add_google("Fira Sans")
 showtext_auto()
 theme_nice <- function() {
-  theme_minimal(base_family = "Fira Sans") +
+  theme_minimal(base_family = "Fira Sans Condensed") +
     theme(
       panel.grid.minor = element_blank(),
-      plot.title = element_text(
-        family = "Fira Sans Bold",
-        face = "plain",
-        size = rel(1.35)
-      ),
-      plot.subtitle = element_text(
-        family = "Fira Sans Medium",
-        face = "plain",
-        size = rel(1.2)
-      ),
-      axis.title = element_text(
-        family = "Fira Sans SemiBold",
-        face = "plain",
-        size = rel(1)
-      ),
-      axis.title.x = element_text(hjust = 0.5),
-      axis.title.y = element_text(hjust = 0.5),
-      axis.text = element_text(
-        family = "Fira Sans Light",
-        face = "plain",
-        size = rel(0.8)
-      ),
+      plot.title = element_text(family = "Fira Sans Condensed Bold", face = "plain", size = rel(1.35)),
+      plot.subtitle = element_text(family = "Fira Sans Condensed Medium", face = "plain", size = rel(1.2)),
+      axis.title = element_text(family = "Fira Sans Condensed SemiBold", face = "plain", size = rel(1)),
+      axis.title.x = element_text(hjust = 0),
+      axis.title.y = element_text(hjust = 1),
+      axis.text = element_text(family = "Fira Sans Condensed Light", face = "plain", size = rel(0.8)),
       strip.text = element_text(
-        family = "Fira Sans",
-        face = "bold",
-        size = rel(1),
-        hjust = 0
+        family = "Fira Sans Condensed", face = "bold",
+        size = rel(1), hjust = 0
       ),
       strip.background = element_rect(fill = "grey95", color = NA)
     )
@@ -211,9 +194,9 @@ theme_nice_dist <- function() {
 }
 
 theme_set(theme_nice())
-# Updating defaults to chosen font
-ggplot2::update_geom_defaults("label",list(family = "Fira Sans SemiBold", fontface = "plain"))
-ggplot2::update_geom_defaults("text",list(family = "Fira Sans", fontface = "plain"))
+
+ggplot2::update_geom_defaults("label", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
+ggplot2::update_geom_defaults("text", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
 
 # Making df with previously created variables
 df1 <- data.frame(def_micro, devices, complaints)
@@ -238,7 +221,7 @@ dev_micro_plot <- ggplot2::ggplot(df1, aes(devices, def_micro)) +
   labs(
     x = "devices",
     y = "microchips") +
-  theme_nice_dist() # Apply a classic theme
+  theme_nice_dist() # Apply a custom theme
 # Making plot to show correlation between complaints v. microchips
 comp_micro_plot <- ggplot2::ggplot(df1, aes(complaints, def_micro)) +
   geom_point(color = clrs[6]) +
@@ -274,21 +257,19 @@ An example of such a random process in epidemiology is the *total number* of inf
 
 Unfortunately for us, not all processes are additive. Multiplicative processes are common in nature and sometimes we mistakenly assume additivity. Let's clarify the difference between an additive and a multiplicative process.
 
-A random process is considered multiplicative when the value of a variable $Y_{t}$ at each time step *multiplicatively* depends on the previous value $Y_{t-1}$ and a scaling factor $r$. To get to the next observation, $Y_{t-1}$, we have to multiply by $r$ instead of adding this random quantity to our initial value $Y_{0}$. [$Y_{t} = Y_{t-1} \cdot r \, | \, r = \nu(1 + \rho_{t})$, where $\nu \geq 0$ and the random component $\rho_{t} \geq 0$]{.aside}. The scaling factor $r$​ changes with each observation as random variation is introduced.
+A random process is considered multiplicative when the value of a variable $Y_{t}$ at each time step *multiplicatively* depends on the previous value $Y_{t-1}$ by a scaling factor $r$. To get to the next observation, $Y_{t}$, we have to multiply by $r$ instead of adding this random quantity to our initial value $Y_{0}$. [$Y_{t} = Y_{t-1} \cdot r \, | \, r = \nu(1 + \rho_{t})$, where $\nu \geq 0$ and the random component $\rho_{t} \geq 0$]{.aside} The scaling factor $r$​ changes with each observation as random variation is introduced.
 
 -   How we use CLT
 
 -   How to know when empirical distribution converges to normal distribution?
 
-    ### what's the deal with $n \geq 30$?
+    ### What's the deal with $n \geq 30$?
 
     -   Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.
 
         > It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
 
-        -   Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the
-
-            t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
+        -   Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
 
         -   Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
 

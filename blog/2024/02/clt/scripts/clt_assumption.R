@@ -50,7 +50,7 @@ lines(xx, dchisq(xx, 2), lwd = 2, col = clrs[1])
 ## ------------------------------------------------------------------------------------- ##
 ## Generating two conditionally independent random variables
 ## ------------------------------------------------------------------------------------ ##
-##
+
 ## Creating function to generate random variable with defined correlation to an existing var.
 complement <- function(y, rho, x) { # corr. coefficient
   if (missing(x)) x <- rgamma(length(y), 2, .5) # Optional: supply a default if `x` is not given
@@ -84,6 +84,7 @@ group_summary(def_micro, devices, complaints)
 ## ------------------------------------------------------------------------------- ##
 ## Creating function to find Spearman's rho among all variables
 ## ------------------------------------------------------------------------------- ##
+
 spearman_correlation <- function(...) {
   df <- data.frame(...)
   correlation_matrix <- round(cor(df, method = "spearman"), 3)
@@ -106,7 +107,7 @@ part_cor <- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman"
 ## -------------------------------------------------------------------------------- ##
 ## Creating scatterplots to visualize relationship between variables
 ## -------------------------------------------------------------------------------- ##
-#
+
 # Custom ggplot theme to make nicer plots
 # Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed
 theme_nice <- function() {
@@ -151,7 +152,7 @@ theme_nice_dist <- function() {
       panel.grid = element_blank(),
       panel.spacing.x = unit(10, units = "pt"),
       axis.ticks.x = element_line(linewidth = 0.25),
-      axis.text.y = element_blank()
+      axis.ticks.y =element_line(linewidth = 0.25)
     )
 }
 
@@ -221,3 +222,89 @@ ggsave("cond_ind.png", arranged_plots,
   height = 600,
   units = "px",
   dpi = 72)
+
+## ------------------------------------------------------------------------------------- ##
+## Additive v.s Multiplicative random processes                                          ##
+## ------------------------------------------------------------------------------------- ##
+## Multiplicative Process (spread of infectious disease within pop. in 260 time steps)
+## Y_{0} = Y_{t-1}*v(1+e)| t: time, v: deterministic variation, e: random variation
+
+params <- list()
+params <- within(params,{ # storing variables in list for easier manipulation
+  seed <- set.seed(09)
+  t <- 1:260 # no. time steps in 7-day period over 5 yrs time
+  e <- rexp(260,1) # The shape of dist heavily depends on random comp. dist
+  v <- pmax(rnorm(260,.8,1),0) # ratio of infected to infectors R_{t} evolving thru
+                                 # time as a Gaussian process.
+  init_infect <- 6 # no. of hospitalizations and pos. tests 
+})
+
+day_infect <- function(params){ # Using the prev. spec parameters
+  t <- params$t # extracting objects from list for convenience
+  e <- params$e
+  v <- params$v
+  init_infect <- params$init_infect
+  day_infect <- numeric() # empty vector to store daily infected count
+    for(i in seq_along(t)){
+      infect <- init_infect*v[i]*(1+e[i])
+      day_infect <- c(day_infect, infect)
+    }
+  return(day_infect)
+}
+
+daily_infect <- day_infect(params) # creating variable to store daily infect count
+# --------------------------------------------------------------------------------------- #
+# DO NOT USE IN BLOG POST - SOME RANDOM IDEAS
+# --------------------------------------------------------------------------------------- #
+# Does the mean (first moment) become stable over time?
+# If mean approaches rate =1 over time we might have evidence of convergence to exp. val
+# Create function to calculate pairwise mean of observations in infected count
+# calculate_p.means <- function(data) {
+#  mean_pairs <- numeric(length(data) / 2)  # Pre-allocate vector for efficiency
+  
+#  for (i in seq(1, length(data), by = 2)) {
+#    pair <- mean(data[i:(i + 1)])
+#    mean_pairs[(i + 1) / 2] <- pair
+#  }
+  
+#  return(mean_pairs)
+# }
+# pairs <- calculate_p.means(daily_infect)
+# var.infect <- sd(daily_infect) 
+# Weird variability metric between obs. pairs and mean of daily_infect
+# m.dist <- sqrt((mean(daily_infect)- pairs)^2/length(pairs))
+# Another measure of var
+# var_measure <- sqrt((mean(daily_infect)- daily_infect)^2/length(daily_infect))
+# --------------------------------------------------------------------------------------- #
+coeff_var <- sd(daily_infect)/mean(daily_infect)*100 #112% variability
+
+# Checking convergence of daily_infect mean to standard normal dist mean of 0
+param_sim <- list()
+param_sim <- within(param_sim,{
+  seed <- set.seed(9)
+  n.sim <- 100 # no. simulations to run
+  t <- 2600 # no. samples
+  epsilon <- .05
+  e <- rexp(260,1) # The shape of dist heavily depends on random comp. dist
+  v <- pmax(rnorm(260,.8,1),0) # ratio of infected to infectors R_{t} evolving thru
+                                 # time as a Gaussian process.
+  init_infect <- 6 # no. of hospitalizations and pos. tests
+})
+
+day_infect <- function(params_sim){ # Using the prev. spec parameters
+  t <- params$t # extracting objects from list for convenience
+  e <- params$e
+  v <- params$v
+  init_infect <- params$init_infect
+  day_infect <- numeric() # empty vector to store daily infected count
+  for(i in seq_along(t)){
+    infect <- init_infect*v[i]*(1+e[i])
+    day_infect <- c(day_infect, infect)
+  }
+  return(day_infect)
+}
+
+## Creating plots to embed in check.convergence function
+p.converge <- ggplot()
+
+
