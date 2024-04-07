@@ -11,10 +11,7 @@ format:
 ---
 
 ::: grid
-
 ::: {.g-col-12 .g-col-sm-4}
-
-
 ```{=html}
 <div class="grid" style="--bs-columns: 5; row-gap: 0;">
   <div class="g-col-1 g-col-sm-0"></div>
@@ -28,20 +25,13 @@ format:
   <div class="g-col-1 g-col-sm-0"></div>
 </div>
 ```
-
 :::
 
-
 ::: {.g-col-12 .g-col-sm-8}
-
-
 I'm an aspiring epidemiologist currently pursuing post-graduate studies in [Epidemiology](https://www.liberty.edu/residential/health-sciences/masters/public-health/epidemiology/) at [Liberty University](https://www.liberty.edu/residential/). I have previously obtained degrees in [psychology](https://www.liberty.edu/residential/behavioral-sciences/bachelors/psychology/) and [biostatistics](https://www.statistics.com/certificate/biostatistics-certificate-program/) in 2020 and 2023.
 
 I'm interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology and nutritional epidemiology. I absolutely love mathematical applied statistics and the [R programming language](https://www.r-project.org/), one of the best tools for clinical statistics and epidemiological research.
 
 I'm currently taking a deep dive into generalized linear models, causal inference and data visualization. Nowadays, I'm conducting a pilot study to analyze the impact of new hire training on performance in a fast-paced contact center environment for the financial services division of a large university.
-
-
 :::
-
 :::

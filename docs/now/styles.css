@@ -3,16 +3,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 ul {
   /* Replace it with the image you want. found at NC State site */
-  list-style-image: url("data:image/svg+xml;charset=utf8,<svg transform='scale(0.5) translate(0, 10)' transform-origin='center' fill='%23C00' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' stroke='%23C00'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'><path d='M10.296 7.71 14.621 12l-4.325 4.29 1.408 1.42L17.461 12l-5.757-5.71z'></path><path d='M6.704 6.29 5.296 7.71 9.621 12l-4.325 4.29 1.408 1.42L12.461 12z'></path></g></svg>");
+  list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M327.38,207.75,183.63,64l-47.26,48.25L279.14,256,136.37,399.75,183.63,448l192-192Z' fill='%23CC0000'/%3E%3C/svg%3E");
   list-style-position: outside;
 }
 
 ul ul {
-  list-style-image: url("data:image/svg+xml;charset=utf8,<svg transform='scale(0.5) translate(0, 10)' transform-origin='center' fill='%23C00' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' stroke='%23C00'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'><path d='M10.296 7.71 14.621 12l-4.325 4.29 1.408 1.42L17.461 12l-5.757-5.71z'></path><path d='M6.704 6.29 5.296 7.71 9.621 12l-4.325 4.29 1.408 1.42L12.461 12z'></path></g></svg>");
+  list-style-image: url("data:image/svg+xml;charset=utf8,<svg transform='scale(0.5) translate(0, 10)' transform-origin='center' fill='%23C00' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg' stroke='%23C00'><g id='SVGRepo_bgCarrier' stroke-width='2.4'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'><path d='M10.296 7.71 14.621 12l-4.325 4.29 1.408 1.42L17.461 12l-5.757-5.71z'></path><path d='M6.704 6.29 5.296 7.71 9.621 12l-4.325 4.29 1.408 1.42L12.461 12z'></path></g></svg>");
   list-style-position: outside;
 }
 
 ul ul ul {
-  list-style-image: url("data:image/svg+xml;charset=utf8,<svg transform='scale(0.5) translate(0, 10)' transform-origin='center' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23c7254e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevrons-right'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'><polyline points='13 17 18 12 13 7'></polyline><polyline points='6 17 11 12 6 7'></polyline></g></svg>");
+  list-style-image: url("data:image/svg+xml;charset=utf8,<svg transform='scale(0.5) translate(0, 10)' transform-origin='center' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg' fill='%23c00' stroke='%23c7254e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevrons-right'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'><polyline points='13 17 18 12 13 7'></polyline><polyline points='6 17 11 12 6 7'></polyline></g></svg>");
   list-style-position: outside;
 }
