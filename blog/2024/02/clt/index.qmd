@@ -13,7 +13,7 @@ format:
     css: styles.css
     code-fold: true
     code-tools: true
-    highlight-style: tango
+    highlight-style: a11y
     code-line-numbers: true
 doi: 10.59350/bje88-8r592
 citation: true
@@ -263,19 +263,19 @@ A random process is considered multiplicative when the value of a variable $Y_{t
 
 -   How to know when empirical distribution converges to normal distribution?
 
-    ### What's the deal with $n \geq 30$?
+### What's the deal with $n \geq 30$?
 
-    -   Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.
+Jacob Cohen (1991) mentioned that at least 30 observations were needed to use the critical-ratio approach used in t-tables when comparing groups. If the sample size is smaller than 30, then students would be forced to “small” sample statistics.
 
-        > It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
+> It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
 
-        -   Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
+Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
 
-        -   Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
+Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
 
-        -   When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
+When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
 
-    ## Solution
+## Solution
 
-    -   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.
-    -   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume
++ The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.
++ Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume

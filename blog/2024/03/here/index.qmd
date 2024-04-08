@@ -13,7 +13,7 @@ format:
     css: styles.css
     code-fold: false
     code-tools: true
-    highlight-style: tango
+    highlight-style: a11y
 doi: 10.59350/4a9fr-acc34
 citation: true
 draft: false
