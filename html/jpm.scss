@@ -64,9 +64,9 @@ $code-font-family: "Source Code Pro" !default;
 $body-color: $gray-900 !default;
 
 // Links
-$link-color: $red !default;
+$link-color: $rose !default;
 $link-decoration: none !default;
-$link-hover-color: $pink !default;
+$link-hover-color: $blue !default;
 $link-hover-decoration: underline !default;
 
 // Inline code
@@ -103,7 +103,7 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@
 body {
     -webkit-font-smoothing: antialiased;
     font-family: "EB Garamond";
-    font-size: 1.35em;
+    font-size: 1.40em;
     font-weight: 400;
     line-height: 1.5;
     color: $gray-900;

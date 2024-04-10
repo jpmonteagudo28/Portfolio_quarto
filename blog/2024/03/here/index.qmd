@@ -4,8 +4,6 @@ date: 2024-03-17
 description: "Gentle reminders when using the `here` package for your `RStudio` projects"
 categories:
  - r
- - here
- - setwd
  - workflow
  - reproducibility
 format:
@@ -32,7 +30,7 @@ Don't be an absolutist– use relative paths. Use the `here` [package](https://h
 
 ## What's the problem with `setwd()`?
 
-Since I created this website, I've been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally​ :smile:. At first, I kept things pretty organized, but now it's nearly impossible to know where I saved `such_and_such.txt` file without wasting at least 5 minutes of my day.
+Since I created this website, I've been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally. At first, I kept things pretty organized, but now it's nearly impossible to know where I saved `such_and_such.txt` file without wasting at least 5 minutes of my day.
 
 This is what I used to do:
 

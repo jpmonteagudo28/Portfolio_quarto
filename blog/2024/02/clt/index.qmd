@@ -5,7 +5,6 @@ description: "Shining a light on the Central Limit Theorem and the mythical samp
 categories:
  - r
  - clt
- - sample size
  - Lyndeberg-Lévy
  - Gaussian
 format:

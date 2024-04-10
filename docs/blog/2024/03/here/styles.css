@@ -1,6 +1,10 @@
 /*Cannot update headings globably in scss style sheet because it conflicts with code highlight settings*/
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
     color: #112540; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+    font-style: bold;
+    font-weight: 500;
+    font-size: 1.85rem;
+    line-height: 1.5;
 }
 

@@ -4,6 +4,7 @@ date: 2178-09-09
 format:
   html:
     css: styles.css
+    highlight-style: a11y
 author:
   - name: Julian Bashir
     orcid: 0009-0003-6465-6658
@@ -11,7 +12,7 @@ author:
   - name: Elim Garak
     url: https://www.jpmonteagudo.com/
     orcid: 0009-0003-6465-6658
-    affiliation: Liberty University School of Health Sicences
+    affiliation: Starbase Deep Space Nine
 categories: 
   - Cranial Implants
   - Space Travel
