@@ -31,8 +31,8 @@ freeze: true
 # Default knitr options
 execute:
   echo: true
-  message: true
-  warning: true
+  message: false
+  warning: false
 
 # Default author
 author:

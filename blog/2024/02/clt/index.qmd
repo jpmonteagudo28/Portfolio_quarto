@@ -257,7 +257,7 @@ An example of such a random process in epidemiology is the *total number* of inf
 
 Unfortunately for us, not all processes are additive. Multiplicative processes are common in nature and sometimes we mistakenly assume additivity. Let's clarify the difference between an additive and a multiplicative process.
 
-A random process is considered multiplicative when the value of a variable $Y_{t}$ at each time step *multiplicatively* depends on the previous value $Y_{t-1}$ by a scaling factor $r$. To get to the next observation, $Y_{t}$, we have to multiply by $r$ instead of adding this random quantity to our initial value $Y_{0}$. [$Y_{t} = Y_{t-1} \cdot r \, | \, r = \nu(1 + \rho_{t})$, where $\nu \geq 0$ and the random component $\rho_{t} \geq 0$]{.aside} The scaling factor $r$​ changes with each observation as random variation is introduced.
+A random process is considered multiplicative when the value of a variable $Y_{t}$ at each time step *multiplicatively* depends on the previous value $Y_{t-1}$ by a scaling factor $r$. To get to the next observation, $Y_{t}$, we have to multiply by $r$ instead of adding this random quantity to our initial value $Y_{0}$. [$Y_{t} = Y_{t-1} \cdot r \,, \, r = \nu(1 + \rho_{t})$, where $\nu \geq 0$ and the random component $\rho_{t} \geq 0$]{.aside} The scaling factor $r$​ changes with each observation as random variation is introduced.
 
 -   How we use CLT
 

@@ -3,7 +3,7 @@ title: Nowadays
 date: 2024-02-26
 description: Some projects, new learning experiences and home-life adventures
 published-title: Last updated
-title-block-banner: "#7C225C"
+title-block-banner: "#112540"
 toc: false
 engine: knitr
 freeze: false

@@ -233,9 +233,8 @@ params <- list()
 params <- within(params,{ # storing variables in list for easier manipulation
   seed <- set.seed(09)
   t <- 1:260 # no. time steps in 7-day period over 5 yrs time
-  e <- rexp(260,1) # The shape of dist heavily depends on random comp. dist
-  v <- pmax(rnorm(260,.8,1),0) # ratio of infected to infectors R_{t} evolving thru
-                                 # time as a Gaussian process.
+  e <- rexp(260,.5) # 
+  v <- pmax(rnorm(260,1.22,1),0) 
   init_infect <- 6 # no. of hospitalizations and pos. tests 
 })
 
