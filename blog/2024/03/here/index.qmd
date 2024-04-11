@@ -1,5 +1,5 @@
 ---
-title: "Don't be an absolutist. Use the `here` package for reproducible workflows"
+title: "Don't be an absolutist. Use the here package for reproducible workflows"
 date: 2024-03-17
 description: "Gentle reminders when using the `here` package for your `RStudio` projects"
 categories:
@@ -11,7 +11,6 @@ format:
     css: styles.css
     code-fold: false
     code-tools: true
-    highlight-style: a11y
 doi: 10.59350/4a9fr-acc34
 citation: true
 draft: false
@@ -24,7 +23,7 @@ knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
 options(digits = 3, width = 300)
 ```
 
-## TL; DR:
+## TL;DR
 
 Don't be an absolutist– use relative paths. Use the `here` [package](https://here.r-lib.org/) instead of `setwd()` or `getwd()` to increase reproducibility and avoid wasting your and other people's time.
 
@@ -42,7 +41,7 @@ Dat <- readRDS("summaryDat.rds")
 Dat2 <- readRDS("SummaryDat2.rds")
 ```
 
- My directory will be anywhere on my device unless I have previously specified it using `setwd()`, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my `R` scripts to a different folder the original file path won't work anymore.
+My directory will be anywhere on my device unless I have previously specified it using `setwd()`, but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my `R` scripts to a different folder the original file path won't work anymore.
 
 ## `here` is the solution 📁
 
@@ -74,8 +73,6 @@ Suppose my directory is located in the Project folder. The `here` package is goi
 #	   |____ ind.R
 #	   |____ cond.R
 ```
-
-
 
 Here you can see my root directory and how that changes with each iteration of the `here` command.
 
@@ -145,9 +142,9 @@ From this new directory, I can reach files anywhere by using the `here::here()` 
 
 This function has given me a headache. The `here` package is supposed to be a tool that facilitates collaboration and connectivity, but I just couldn't get it to work until now.
 
-Call the `here::i_am()` function at the top of your script in the first chunk of your markdown file. It will accept a relative path and then establish the new project root there. So far, it only works when I point R to a specific file I'd like to work with. If I choose a file path that's not in my project directory, it will just point to the original directory and throw an error. If the current directory is outside of the project where the current script is running, you'll get an error message: `Could not find associated project in working directory or any parent directory`. 
+Call the `here::i_am()` function at the top of your script in the first chunk of your markdown file. It will accept a relative path and then establish the new project root there. So far, it only works when I point R to a specific file I'd like to work with. If I choose a file path that's not in my project directory, it will just point to the original directory and throw an error. If the current directory is outside of the project where the current script is running, you'll get an error message: `Could not find associated project in working directory or any parent directory`.
 
-```         {r, eval =FALSE, echo = TRUE}
+```{r, eval =FALSE, echo = TRUE}
 # You're in the scripts folder working on ind.R but need to access summaryDat2.rds.
 #  Simply include the relative path to the data file at the top of your script:
 library(readr)
@@ -157,6 +154,6 @@ data <- read_csv(here::i_am("data/summaryDat2.rds"))
 
 ### The `dr_here` function
 
- The `here::dr_here()` shows a default message explaining why the current directory was chosen. You probably won't use this function often– unless you're curious and want to understand how the package selects the root directory. However, if you used `here::here("file_path")` and got an unexpected result, go ahead and call `here::dr_here`. It'll most likely ask you to create a `.here` file or set your directory using the `here::i_am()` function. 
+The `here::dr_here()` shows a default message explaining why the current directory was chosen. You probably won't use this function often– unless you're curious and want to understand how the package selects the root directory. However, if you used `here::here("file_path")` and got an unexpected result, go ahead and call `here::dr_here`. It'll most likely ask you to create a `.here` file or set your directory using the `here::i_am()` function.
 
-In the end, the `here` package will make it easy to collaborate and work on your projects on any device by using the `here::i_am()`, `here::here()`, and `here::set_here()` functions. 
+In the end, the `here` package will make it easy to collaborate and work on your projects on any device by using the `here::i_am()`, `here::here()`, and `here::set_here()` functions.

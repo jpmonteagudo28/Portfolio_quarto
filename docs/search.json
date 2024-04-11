@@ -88,7 +88,7 @@
     "href": "blog/index.html#section",
     "title": "Blog",
     "section": "2024",
-    "text": "2024\n\n\n    \n    \n                  \n            March 17, 2024\n        \n        \n            Don't be an absolutist. Use the `here` package for reproducible workflows\n\n            \n            \n                \n                \n                    r\n                \n                \n                \n                    workflow\n                \n                \n                \n                    reproducibility\n                \n                \n            \n            \n\n            Gentle reminders when using the `here` package for your `RStudio` projects\n            \n            \n            10.59350/4a9fr-acc34\n            \n        \n        \n    \n    \n\n\nNo matching items"
+    "text": "2024\n\n\n    \n    \n                  \n            March 17, 2024\n        \n        \n            Don't be an absolutist. Use the here package for reproducible workflows\n\n            \n            \n                \n                \n                    r\n                \n                \n                \n                    workflow\n                \n                \n                \n                    reproducibility\n                \n                \n            \n            \n\n            Gentle reminders when using the `here` package for your `RStudio` projects\n            \n            \n            10.59350/4a9fr-acc34\n            \n        \n        \n    \n    \n\n\nNo matching items"
   },
   {
     "objectID": "blog/2024/03/here/index.html",
@@ -98,8 +98,8 @@
     "text": "Don’t be an absolutist– use relative paths. Use the here package instead of setwd() or getwd() to increase reproducibility and avoid wasting your and other people’s time."
   },
   {
-    "objectID": "blog/2024/03/here/index.html#tl-dr",
-    "href": "blog/2024/03/here/index.html#tl-dr",
+    "objectID": "blog/2024/03/here/index.html#tldr",
+    "href": "blog/2024/03/here/index.html#tldr",
     "title": "Don’t be an absolutist. Use the here package for reproducible workflows",
     "section": "",
     "text": "Don’t be an absolutist– use relative paths. Use the here package instead of setwd() or getwd() to increase reproducibility and avoid wasting your and other people’s time."
@@ -109,7 +109,7 @@
     "href": "blog/2024/03/here/index.html#whats-the-problem-with-setwd",
     "title": "Don’t be an absolutist. Use the here package for reproducible workflows",
     "section": "What’s the problem with setwd()?",
-    "text": "What’s the problem with setwd()?\nSince I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally​ :smile:. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved such_and_such.txt file without wasting at least 5 minutes of my day.\nThis is what I used to do:\n\nurl1 &lt;- \"https://somefile_online_data_source_here.com\"\ndownload.file(url1, destfile = \"./data_file_here.zip\")\nunzip(\"data_file_here.zip\", exdir = getwd())\nDat &lt;- readRDS(\"summaryDat.rds\")\nDat2 &lt;- readRDS(\"SummaryDat2.rds\")\n\nMy directory will be anywhere on my device unless I have previously specified it using setwd(), but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my R scripts to a different folder the original file path won’t work anymore."
+    "text": "What’s the problem with setwd()?\nSince I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved such_and_such.txt file without wasting at least 5 minutes of my day.\nThis is what I used to do:\n\nurl1 &lt;- \"https://somefile_online_data_source_here.com\"\ndownload.file(url1, destfile = \"./data_file_here.zip\")\nunzip(\"data_file_here.zip\", exdir = getwd())\nDat &lt;- readRDS(\"summaryDat.rds\")\nDat2 &lt;- readRDS(\"SummaryDat2.rds\")\n\nMy directory will be anywhere on my device unless I have previously specified it using setwd(), but this strategy will soon be an obstacle to saving new information in an organized and reproducible way. If, later on, I change my R scripts to a different folder the original file path won’t work anymore."
   },
   {
     "objectID": "blog/2024/03/here/index.html#here-is-the-solution",

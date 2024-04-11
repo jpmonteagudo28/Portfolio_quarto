@@ -4,7 +4,6 @@ date: 2178-09-09
 format:
   html:
     css: styles.css
-    highlight-style: a11y
 author:
   - name: Julian Bashir
     orcid: 0009-0003-6465-6658

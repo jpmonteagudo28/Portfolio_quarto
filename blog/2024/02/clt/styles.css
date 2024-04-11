@@ -1,5 +1,14 @@
-h2, h3, h4, h5, h6 {
-    color: #c00000; /* Replace it with the color you want */
+h2 {
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.85rem;
+  line-height: 1.3;
+}
+
+h3, h4, h5, h6 {
+    color: #0a254e; /* Replace it with the color you want */
     font-style: italic;
     font-weight: 300;
     font-size: 1.85rem;
@@ -11,7 +20,7 @@ ul {
   list-style-position: outside;
 }
 
-ul {
+ul ul {
   list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 768 768'%3E%3Cpath d='M491.07,311.63,275.45,96,183.63,192.75,418.71,384,183.63,575.25,275.45,672l288-288Z' fill='%23CC0000'/%3E%3C/svg%3E");
   list-style-position: outside;
 }

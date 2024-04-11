@@ -16,10 +16,10 @@
   <title>Don’t be an absolutist. Use the here package for reproducible workflows</title>
   <dc:creator>JP Monteagudo</dc:creator>
   <link>https://www.jpmonteagudo.com/blog/2024/03/here/</link>
-  <description><![CDATA[ <section id="tl-dr" class="level2"><h2 class="anchored" data-anchor-id="tl-dr">TL; DR:</h2>
+  <description><![CDATA[ <section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <p>Don’t be an absolutist– use relative paths. Use the <code>here</code> <a href="https://here.r-lib.org/">package</a> instead of <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> or <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> to increase reproducibility and avoid wasting your and other people’s time.</p>
 </section><section id="whats-the-problem-with-setwd" class="level2"><h2 class="anchored" data-anchor-id="whats-the-problem-with-setwd">What’s the problem with <code>setwd()</code>?</h2>
-<p>Since I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally​ :smile:. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved <code>such_and_such.txt</code> file without wasting at least 5 minutes of my day.</p>
+<p>Since I created this website, I’ve been coding, writing, and reading a lot more which has unequivocally led to a mountain of new files and the forging of new paths– quite literally. At first, I kept things pretty organized, but now it’s nearly impossible to know where I saved <code>such_and_such.txt</code> file without wasting at least 5 minutes of my day.</p>
 <p>This is what I used to do:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
@@ -470,7 +470,7 @@ font-style: inherit;"># From my script I'm now pointing to a folder containing m
 <!-- -->
 
 </section></section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
-Monteagudo, JP. 2024. <span>“Don’t Be an Absolutist. Use the `Here`
+Monteagudo, JP. 2024. <span>“Don’t Be an Absolutist. Use the Here
 Package for Reproducible Workflows.”</span> March 17, 2024. <a href="https://doi.org/10.59350/4a9fr-acc34">https://doi.org/10.59350/4a9fr-acc34</a>.
 </div></div></section></div> ]]></description>
   <category>r</category>

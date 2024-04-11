@@ -64,9 +64,9 @@ $code-font-family: "Source Code Pro" !default;
 $body-color: $gray-900 !default;
 
 // Links
-$link-color: $rose !default;
+$link-color: $pink !default;
 $link-decoration: none !default;
-$link-hover-color: $blue !default;
+$link-hover-color: shift-color($pink, -45%) !default;
 $link-hover-decoration: underline !default;
 
 // Inline code
@@ -80,7 +80,7 @@ $font-style: normal !default;
 $btn-code-copy-color-active: $rose !default;
 
 // TOC
-$toc-color: $red;
+$toc-color: $pink;
 $toc-font-size: .8em;
 
 // Navbar
@@ -89,8 +89,8 @@ $navbar-fg: $white !default;
 $navbar-hl: $light-orange !default;
 
 // Footer
-$footer-bg: $gray-900 !default;
-$footer-fg: $gray-300 !default;
+$footer-bg: $gray-100 !default;
+$footer-fg: $gray-600 !default;
 
 /*-- scss:rules --*/
 
@@ -225,12 +225,13 @@ nav.sidebar.sidebar-navigation:not(.rollup) {
 .nav-footer {
     align-items: flex-start;  // Align all flex items to the top
     flex-wrap: wrap;
-    border: 0 !important;
+    //border: 1px !important;
     min-height: 3em;
     font-family: $footer-font-family;
+    font-size: 0.725em;
 
     a {
-        color: $light-orange;
+        color: $pink;
     }
 
     .faux-block {
@@ -301,7 +302,7 @@ nav.sidebar.sidebar-navigation:not(.rollup) {
         display: flex;
         flex-direction: row;
         font-family: $headings-font-family;
-        line-height: 1.3;
+        line-height: 1.1;
         margin-bottom: 1.5em;
         column-gap: 1em;
 
@@ -327,7 +328,7 @@ nav.sidebar.sidebar-navigation:not(.rollup) {
             font-weight: 500;
             font-size: 1.25em;
             margin-bottom: 0.2em;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         .description {

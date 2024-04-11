@@ -12,7 +12,6 @@ format:
     css: styles.css
     code-fold: true
     code-tools: true
-    highlight-style: a11y
     code-line-numbers: true
 doi: 10.59350/bje88-8r592
 citation: true
