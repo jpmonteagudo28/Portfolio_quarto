@@ -13,7 +13,7 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: true
-#doi: 
+doi: https://doi.org/10.59350/y9kmp-zqh66
 citation: true
 draft: false
 ---
