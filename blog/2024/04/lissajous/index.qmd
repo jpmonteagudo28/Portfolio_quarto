@@ -1,0 +1,174 @@
+---
+title: "Beautiful movement—the music and beauty of Lissajous(Liss–uh–joo) curves"
+date: 2024-04-15
+description: "Simple graphical and mathematical exploration of Lissajous curves "
+categories:
+ - r
+ - simulation
+ - Lissajous
+format:
+  html:
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: true
+#doi: 
+citation: true
+draft: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE)
+options(digits = 3, width = 300)
+
+```
+
+## Lissajous Curves
+
+Lissajous curves are created by plotting two oscillations on perpendicular axes $x$ and $y$​​​. These oscillations, represented by sinusoidal functions, intersect to create different patterns. When the ratio of these frequencies is equal to $1$— the oscillations are equally phased— the curve is a straight line. When the frequencies on both axes differ, the oscillations are out of phase—one moves faster than the other at a specific angle—and our Lissajous figure will show a curve. Each frequency produces a specific musical note that will intercept and either form a pleasant sound, harmonious consonance or discordance. Consonant notes have a perfect ratio.
+
+## Music & Perfect Ratios
+
+Think of a guitar string vibrating at a base frequency of $329 Hz$—$329$ cycles per second. By altering our position along the string, we change the frequency and thus produce different notes. If we moved from the nut (fret $0$) to between frets $11$ and $12$ and plucked the string, the frequency would now be twice as high—we call this an octave. If we moved $3/4$ down from the nut, our new note would oscillate at three times the frequency of E4($329Hz$). We can produce an infinite amount of notes by moving along the string and altering the speed of the oscillations. *You are creating music with movement!*
+
+### Theory of Just Intonation
+
+However, keeping track of an infinite, unordered sequence of notes is impossible; instead, we use systems that allow us to measure and obtain the frequency of a small number of notes. One such system is called “just intonation” and a commonly seen tuning method is 5-limit tuning. This method allows us to find the exact, pure frequency of other notes by multiplying our base frequency by products of the power of prime numbers $2$, $3$, and $5$ (e.g., $2^{-1} \cdot 3^{1} \cdot 5^{1}$).[^1]
+
+[^1]: In 5–limit tuning we only multiply integers to obtain other musical notes.
+
+We call the sinusoidal movements in intervals of powers of $2$ – octaves, powers of $3$ represent perfect fifths, and powers of $5$ are called major thirds^[octaves: $f_{x} = 2^{k}$; perfect fifths: $3^{k}$, major thirds: $5^{k},k \in \mathbb{Z}$.]. By multiplying our base frequency by different combinations of these powers,[^2] we get sets of harmoniously consonant and discordant notes.
+
+[^2]: Sometimes the resulting note is outside our octave,  and we simply divide it by two and bring it back to our interval.
+
+### The Perfect ratios
+
+So how can we make sure every note is consonant? Thankfully, the ancient Greeks discovered a way to create beautifully sounding and naturally occurring notes using perfect[^3] ratios for octaves, major fifths, and major thirds. These perfect ratios make music blend, flow, and feel “right”. These are the ratios that create all of the Lissajous figures we'll explore today.
+
+[^3]: perfect refers to ratios that produce “just” or “pure” melodic sounds.
+
+```{r, eval = TRUE}
+#| label: perfect_ratios
+#| tbl-cap: Perfect ratios in Just Intonation using 5-limit tuning method
+#| tbl-cap-location: bottom
+#| tbl-colwidths: [50,50]
+
+ratios <- c(1,"9/8", "5/4","4/3","3/2", "5/3","15/8",2,240,270,300,320,360,400,450,480)
+cols <- c("C","D","E","F","G","A","B","C'")
+rows <- c("Perfect Ratios", "Frequency(in Hz)")
+perfect_ratios <- matrix(ratios, ncol = 8, byrow = TRUE)
+colnames(perfect_ratios) <- cols
+rownames(perfect_ratios) <- rows
+perfect_ratios
+knitr::kable(perfect_ratios)
+
+```
+
+## The Code & Animation
+
+We'll create the Lissajous curves using two sinusoidal waves on different phases ^[the curves can also be created with $sin(t)$ and $cos(t)$ functions since $cos(t) = sin(t + \frac{\pi}{2})$, but the phase difference will now be $\frac{a}{b}*\frac{\pi}{2}$.]. The numerator of the perfect ratio will be the coefficient $a$ of the $sin$ function — $sin(t) = sin(at + \delta)$— and the denominator $b$ will go to the $y$ coordinate — $sin(t) = sin(bt)$. We'll define our interval from $0$ to $2\pi$​​. 
+
+::: {.callout-note appearance="simple"}
+
+## Helpful Tip
+
+You can familiarize yourself with Lissajous figures and their sine functions by using this [interactive virtual oscilloscope](https://dood.al/oscilloscope/).
+
+:::
+
+Using the `gganimate` package in `RStudio`, we'll  build a data frame with a set number of times steps between $0$ and $2\pi$​; and the figures with coordinates for each perfect ratio. Then, we'll stitch each plot with the time steps and coordinates to get a final $8 × 8$ animated plot.
+
+```{r, eval = FALSE, echo = TRUE, warning = FALSE, message = FALSE}
+## ------------------------------- ##
+## Creating Lissajous figures      ##
+## ------------------------------- ##
+library(gganimate)# Loading libs   ##
+library(tidyverse)                 ##
+library(here)                      ##
+library(av)                        ##
+## ------------------------------- ##
+
+params <- data.frame(
+  id <- seq(1,500,1), # no. of steps
+  t <- seq(0,2*pi, length.out = 500)  # equally spaced intervals 0-2*pi
+)
+
+figs <- function(t){
+  x1 <- sin(t*1) # We're only using perfect ratios
+  y1 <- sin(t*1)
+  
+  x2 <- sin(t*9)
+  y2 <- sin(t*8)
+  
+  x3 <- sin(t*5)
+  y3 <- sin(t*4)
+  
+  x4 <- sin(t*4)
+  y4 <- sin(t*3)
+  
+  x5 <- sin(t*3)
+  y5 <- sin(t*2)
+  
+  x6 <- sin(t*5)
+  y6 <- sin(t*3)
+  
+  x7 <- sin(t*15)
+  y7 <-  sin(t*8)
+  
+  x8 <- sin(t*2)
+  y8 <- sin(t*1)
+  
+  time <- seq_along(t)
+  
+  data.frame( # Create df with x, y variables accross time
+    time, 
+    x1, x2, x3, x4, x5, x6, x7, x8,
+    y1, y2, y3, y4, y5, y6, y7, y8
+  )
+}
+
+actual_figs <- figs(params$t)
+
+df <- bind_cols(params, actual_figs) |> # bind two dfs
+  select(everything()) |> # make data long
+  pivot_longer(x1:x8, names_to = "x_group", values_to = "x") |>
+  pivot_longer(y1:y8, names_to = "y_group", values_to = "y") |>
+  mutate(x_group = str_remove(x_group, "x"),
+         y_group = str_remove(y_group, "y")) |>
+  unite("group_id", x_group, y_group, remove = FALSE)
+
+plot <- df|>
+  ggplot(aes(x = x, y = y, color = group_id, group = group_id)) +
+  geom_point(size = 3) +
+  geom_path() +
+  facet_grid(x_group ~ y_group) +
+  coord_equal() +
+  guides(color = "none") +
+  theme_void() +
+  transition_reveal(time) +
+  ease_aes("linear")
+
+animate(plot, duration = 30, fps = 24, height = 1080, width = 1080,
+        renderer = av_renderer())
+
+anim_save(filename = "lissajous_figs.mp4",
+          path = here::here("blog","2024","04","lissajous","documents"),
+          height = 1080, width = 1080)
+#| Code adapted from Kieran Healy's blog "Pi Day Circles"
+```
+
+
+
+## The Final Product
+
+Here's the final, animated $8×8$ plot displaying Lissajous figures using only the perfect ratios.
+
+<video autoplay loop muted playsinline controls="true" width = "100%" height="auto">
+
+
+<source src="documents/lissajous_figs.mp4" type="video/mp4">
+
+</video>

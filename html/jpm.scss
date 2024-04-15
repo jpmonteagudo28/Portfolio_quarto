@@ -49,7 +49,7 @@ $dark:      $black !default;
 $font-family-serif: "EB Garamond" !default;
 
 $headings-font-family: "EB Garamond" !default;
-$headings-font-weight: 700 !default;
+$headings-font-weight: 500 !default;
 
 $navbar-font-family: "Mate SC" !default;
 $toc-font-family: "EB Garamond" !default;
@@ -72,7 +72,7 @@ $link-hover-decoration: underline !default;
 // Inline code
 $code-bg: $gray-200 !default;
 $code-color: $in-code !default;
-$code-font-size: .75em !default;
+$code-font-size: .8em !default;
 $font-style: normal !default;
 
 
@@ -106,7 +106,7 @@ body {
     font-size: 1.40em;
     font-weight: 400;
     line-height: 1.5;
-    color: $gray-900;
+    color: $blue;
     text-align: justify;
     hyphens: auto;
     background-color: $gray-100;
@@ -225,8 +225,9 @@ nav.sidebar.sidebar-navigation:not(.rollup) {
 .nav-footer {
     align-items: flex-start;  // Align all flex items to the top
     flex-wrap: wrap;
-    //border: 1px !important;
-    min-height: 3em;
+    //border-top: 1px solid $gray-300 !important;
+    //width: 1500px;
+    min-height: 5em;
     font-family: $footer-font-family;
     font-size: 0.725em;
     line-height: 1;

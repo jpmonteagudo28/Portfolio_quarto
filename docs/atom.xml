@@ -11,7 +11,664 @@
 <description>JP&#39;s blog</description>
 <language>en</language>
 <generator>quarto-1.4.550</generator>
-<lastBuildDate>Sun, 17 Mar 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 15 Apr 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Beautiful movement—the music and beauty of Lissajous(Liss–uh–joo) curves</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/04/lissajous/</link>
+  <description><![CDATA[ <section id="lissajous-curves" class="level2"><h2 class="anchored" data-anchor-id="lissajous-curves">Lissajous Curves</h2>
+<p>Lissajous curves are created by plotting two oscillations on perpendicular axes <img src="https://latex.codecogs.com/png.latex?x"> and <img src="https://latex.codecogs.com/png.latex?y">​​​. These oscillations, represented by sinusoidal functions, intersect to create different patterns. When the ratio of these frequencies is equal to <img src="https://latex.codecogs.com/png.latex?1">— the oscillations are equally phased— the curve is a straight line. When the frequencies on both axes differ, the oscillations are out of phase—one moves faster than the other at a specific angle—and our Lissajous figure will show a curve. Each frequency produces a specific musical note that will intercept and either form a pleasant sound, harmonious consonance or discordance. Consonant notes have a perfect ratio.</p>
+</section><section id="music-perfect-ratios" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="music-perfect-ratios">Music &amp; Perfect Ratios</h2>
+<p>Think of a guitar string vibrating at a base frequency of <img src="https://latex.codecogs.com/png.latex?329%20Hz">—<img src="https://latex.codecogs.com/png.latex?329"> cycles per second. By altering our position along the string, we change the frequency and thus produce different notes. If we moved from the nut (fret <img src="https://latex.codecogs.com/png.latex?0">) to between frets <img src="https://latex.codecogs.com/png.latex?11"> and <img src="https://latex.codecogs.com/png.latex?12"> and plucked the string, the frequency would now be twice as high—we call this an octave. If we moved <img src="https://latex.codecogs.com/png.latex?3/4"> down from the nut, our new note would oscillate at three times the frequency of E4(<img src="https://latex.codecogs.com/png.latex?329Hz">). We can produce an infinite amount of notes by moving along the string and altering the speed of the oscillations. <em>You are creating music with movement!</em></p>
+<section id="theory-of-just-intonation" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="theory-of-just-intonation">Theory of Just Intonation</h3>
+<p>However, keeping track of an infinite, unordered sequence of notes is impossible; instead, we use systems that allow us to measure and obtain the frequency of a small number of notes. One such system is called “just intonation” and a commonly seen tuning method is 5-limit tuning. This method allows us to find the exact, pure frequency of other notes by multiplying our base frequency by products of the power of prime numbers <img src="https://latex.codecogs.com/png.latex?2">, <img src="https://latex.codecogs.com/png.latex?3">, and <img src="https://latex.codecogs.com/png.latex?5"> (e.g., <img src="https://latex.codecogs.com/png.latex?2%5E%7B-1%7D%20%5Ccdot%203%5E%7B1%7D%20%5Ccdot%205%5E%7B1%7D">).<sup>1</sup></p>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;In 5–limit tuning we only multiply integers to obtain other musical notes.</p><p><sup>2</sup>&nbsp;octaves: <img src="https://latex.codecogs.com/png.latex?f_%7Bx%7D%20=%202%5E%7Bk%7D">; perfect fifths: <img src="https://latex.codecogs.com/png.latex?3%5E%7Bk%7D">, major thirds: <img src="https://latex.codecogs.com/png.latex?5%5E%7Bk%7D,k%20%5Cin%20%5Cmathbb%7BZ%7D">.</p><p><sup>3</sup>&nbsp;Sometimes the resulting note is outside our octave, and we simply divide it by two and bring it back to our interval.</p></div><p>We call the sinusoidal movements in intervals of powers of <img src="https://latex.codecogs.com/png.latex?2"> – octaves, powers of <img src="https://latex.codecogs.com/png.latex?3"> represent perfect fifths, and powers of <img src="https://latex.codecogs.com/png.latex?5"> are called major thirds<sup>2</sup>. By multiplying our base frequency by different combinations of these powers,<sup>3</sup> we get sets of harmoniously consonant and discordant notes.</p>
+</section><section id="the-perfect-ratios" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="the-perfect-ratios">The Perfect ratios</h3>
+<p>So how can we make sure every note is consonant? Thankfully, the ancient Greeks discovered a way to create beautifully sounding and naturally occurring notes using perfect<sup>4</sup> ratios for octaves, major fifths, and major thirds. These perfect ratios make music blend, flow, and feel “right”. These are the ratios that create all of the Lissajous figures we’ll explore today.</p>
+<div class="no-row-height column-margin column-container"><p><sup>4</sup>&nbsp;perfect refers to ratios that produce “just” or “pure” melodic sounds.</p></div><div class="cell tbl-cap-location-bottom" data-layout-align="center" data-tbl-colwidths="[50,50]">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1" data-cap-location="bottom" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1">ratios <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"9/8"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5/4"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"4/3"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"3/2"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5/3"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"15/8"</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">240</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">270</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">320</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">360</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">400</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">450</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">480</span>)</span>
+<span id="cb1-2">cols <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"D"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"E"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"F"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"G"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C'"</span>)</span>
+<span id="cb1-3">rows <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Perfect Ratios"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Frequency(in Hz)"</span>)</span>
+<span id="cb1-4">perfect_ratios <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(ratios, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(perfect_ratios) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> cols</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rownames</span>(perfect_ratios) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> rows</span>
+<span id="cb1-7">perfect_ratios</span>
+<span id="cb1-8"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">##                  C     D     E     F     G     A     B      C'   </span></span>
+<span id="cb1-9"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## Perfect Ratios   "1"   "9/8" "5/4" "4/3" "3/2" "5/3" "15/8" "2"  </span></span>
+<span id="cb1-10"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## Frequency(in Hz) "240" "270" "300" "320" "360" "400" "450"  "480"</span></span>
+<span id="cb1-11">knitr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kable</span>(perfect_ratios)</span></code></pre></div>
+</details><div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Perfect ratios in Just Intonation using 5-limit tuning method</caption>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">C</th>
+<th style="text-align: left;">D</th>
+<th style="text-align: left;">E</th>
+<th style="text-align: left;">F</th>
+<th style="text-align: left;">G</th>
+<th style="text-align: left;">A</th>
+<th style="text-align: left;">B</th>
+<th style="text-align: left;">C’</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Perfect Ratios</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">9/8</td>
+<td style="text-align: left;">5/4</td>
+<td style="text-align: left;">4/3</td>
+<td style="text-align: left;">3/2</td>
+<td style="text-align: left;">5/3</td>
+<td style="text-align: left;">15/8</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frequency(in Hz)</td>
+<td style="text-align: left;">240</td>
+<td style="text-align: left;">270</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;">320</td>
+<td style="text-align: left;">360</td>
+<td style="text-align: left;">400</td>
+<td style="text-align: left;">450</td>
+<td style="text-align: left;">480</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section></section><section id="the-code-animation" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="the-code-animation">The Code &amp; Animation</h2>
+<p>We’ll create the Lissajous curves using two sinusoidal waves on different phases <sup>5</sup>. The numerator of the perfect ratio will be the coefficient <img src="https://latex.codecogs.com/png.latex?a"> of the <img src="https://latex.codecogs.com/png.latex?sin"> function — <img src="https://latex.codecogs.com/png.latex?sin(t)%20=%20sin(at%20+%20%5Cdelta)">— and the denominator <img src="https://latex.codecogs.com/png.latex?b"> will go to the <img src="https://latex.codecogs.com/png.latex?y"> coordinate — <img src="https://latex.codecogs.com/png.latex?sin(t)%20=%20sin(bt)">. We’ll define our interval from <img src="https://latex.codecogs.com/png.latex?0"> to <img src="https://latex.codecogs.com/png.latex?2%5Cpi">​​.</p>
+<div class="no-row-height column-margin column-container"><p><sup>5</sup>&nbsp;the curves can also be created with <img src="https://latex.codecogs.com/png.latex?sin(t)"> and <img src="https://latex.codecogs.com/png.latex?cos(t)"> functions since <img src="https://latex.codecogs.com/png.latex?cos(t)%20=%20sin(t%20+%20%5Cfrac%7B%5Cpi%7D%7B2%7D)">, but the phase difference will now be <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba%7D%7Bb%7D*%5Cfrac%7B%5Cpi%7D%7B2%7D">.</p></div><div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Helpful Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can familiarize yourself with Lissajous figures and their sine functions by using this <a href="https://dood.al/oscilloscope/">interactive virtual oscilloscope</a>.</p>
+</div>
+</div>
+<p>Using the <code>gganimate</code> package in <code>RStudio</code>, we’ll build a data frame with a set number of times steps between <img src="https://latex.codecogs.com/png.latex?0"> and <img src="https://latex.codecogs.com/png.latex?2%5Cpi">​; and the figures with coordinates for each perfect ratio. Then, we’ll stitch each plot with the time steps and coordinates to get a final <img src="https://latex.codecogs.com/png.latex?8%20%C3%97%208"> animated plot.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## ------------------------------- ##</span></span>
+<span id="cb2-2"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## Creating Lissajous figures      ##</span></span>
+<span id="cb2-3"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## ------------------------------- ##</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(gganimate)<span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loading libs   ##</span></span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)                 <span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">##</span></span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(here)                      <span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">##</span></span>
+<span id="cb2-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(av)                        <span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">##</span></span>
+<span id="cb2-8"><span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">## ------------------------------- ##</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10">params <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb2-11">  id <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># no. of steps</span></span>
+<span id="cb2-12">  t <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>pi, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">length.out =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># equally spaced intervals 0-2*pi</span></span>
+<span id="cb2-13">)</span>
+<span id="cb2-14"></span>
+<span id="cb2-15">figs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">function</span>(t){</span>
+<span id="cb2-16">  x1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># We're only using perfect ratios</span></span>
+<span id="cb2-17">  y1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-18">  </span>
+<span id="cb2-19">  x2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb2-20">  y2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-21">  </span>
+<span id="cb2-22">  x3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb2-23">  y3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb2-24">  </span>
+<span id="cb2-25">  x4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb2-26">  y4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-27">  </span>
+<span id="cb2-28">  x5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-29">  y5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-30">  </span>
+<span id="cb2-31">  x6 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb2-32">  y6 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-33">  </span>
+<span id="cb2-34">  x7 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>)</span>
+<span id="cb2-35">  y7 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-36">  </span>
+<span id="cb2-37">  x8 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-38">  y8 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-39">  </span>
+<span id="cb2-40">  time <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_along</span>(t)</span>
+<span id="cb2-41">  </span>
+<span id="cb2-42">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>( <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create df with x, y variables accross time</span></span>
+<span id="cb2-43">    time, </span>
+<span id="cb2-44">    x1, x2, x3, x4, x5, x6, x7, x8,</span>
+<span id="cb2-45">    y1, y2, y3, y4, y5, y6, y7, y8</span>
+<span id="cb2-46">  )</span>
+<span id="cb2-47">}</span>
+<span id="cb2-48"></span>
+<span id="cb2-49">actual_figs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">figs</span>(params<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>t)</span>
+<span id="cb2-50"></span>
+<span id="cb2-51">df <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bind_cols</span>(params, actual_figs) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># bind two dfs</span></span>
+<span id="cb2-52">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">everything</span>()) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># make data long</span></span>
+<span id="cb2-53">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_longer</span>(x1<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>x8, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_to =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x_group"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values_to =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-54">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pivot_longer</span>(y1<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>y8, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names_to =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y_group"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">values_to =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-55">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x_group =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove</span>(x_group, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>),</span>
+<span id="cb2-56">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y_group =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove</span>(y_group, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-57">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unite</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"group_id"</span>, x_group, y_group, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">remove =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb2-58"></span>
+<span id="cb2-59">plot <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb2-60">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> group_id, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group =</span> group_id)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-61">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-62">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_path</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-63">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">facet_grid</span>(x_group <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> y_group) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-64">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_equal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-65">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">guides</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-66">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-67">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">transition_reveal</span>(time) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-68">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ease_aes</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"linear"</span>)</span>
+<span id="cb2-69"></span>
+<span id="cb2-70"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">animate</span>(plot, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">duration =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fps =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1080</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1080</span>,</span>
+<span id="cb2-71">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">renderer =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">av_renderer</span>())</span>
+<span id="cb2-72"></span>
+<span id="cb2-73"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">anim_save</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">filename =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lissajous_figs.mp4"</span>,</span>
+<span id="cb2-74">          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">path =</span> here<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">here</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blog"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"04"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lissajous"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"documents"</span>),</span>
+<span id="cb2-75">          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1080</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1080</span>)</span>
+<span id="cb2-76"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#| Code adapted from Kieran Healy's blog "Pi Day Circles"</span></span></code></pre></div>
+</details>
+</div>
+</section><section id="the-final-product" class="level2"><h2 class="anchored" data-anchor-id="the-final-product">The Final Product</h2>
+<p>Here’s the final, animated <img src="https://latex.codecogs.com/png.latex?8%C3%978"> plot displaying Lissajous figures using only the perfect ratios.</p>
+<video autoplay="" loop="" muted="" playsinline="" controls="true" width="100%" height="auto"><source src="documents/lissajous_figs.mp4" type="video/mp4"></video>
+
+<!-- -->
+
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“Beautiful Movement—the Music and Beauty of
+Lissajous(Liss–Uh–Joo) Curves.”</span> April 15, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/04/lissajous">https://www.jpmonteagudo.com/blog/2024/04/lissajous</a>.
+</div></div></section></div> ]]></description>
+  <category>r</category>
+  <category>simulation</category>
+  <category>Lissajous</category>
+  <guid>https://www.jpmonteagudo.com/blog/2024/04/lissajous/</guid>
+  <pubDate>Mon, 15 Apr 2024 04:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Don’t be an absolutist. Use the here package for reproducible workflows</title>
   <dc:creator>JP Monteagudo</dc:creator>
@@ -441,7 +1098,7 @@ font-style: inherit;">data</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">read_csv</span><span class="op" style="color: #5E5E5E;
+font-style: inherit;"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
 background-color: null;
