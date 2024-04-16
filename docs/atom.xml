@@ -655,7 +655,7 @@ font-style: inherit;">#| Code adapted from Kieran Healy's blog "Pi Day Circles"<
 </div>
 </section><section id="the-final-product" class="level2"><h2 class="anchored" data-anchor-id="the-final-product">The Final Product</h2>
 <p>Here’s the final, animated <img src="https://latex.codecogs.com/png.latex?8%C3%978"> plot displaying Lissajous figures using only the perfect ratios.</p>
-<video autoplay="" loop="" muted="" playsinline="" controls="true" width="100%" height="auto"><source src="documents/lissajous_figs.mp4" type="video/mp4"></video>
+<video autoplay="" loop="" muted="" playsinline="" controls="" width="100%" style="display: block; margin:auto;"><source src="documents/lissajous_figs.mp4" type="video/mp4"></video>
 
 <!-- -->
 
