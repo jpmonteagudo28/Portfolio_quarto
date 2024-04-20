@@ -1,0 +1,87 @@
+---
+title: "Better than markdown!? Using Racket & Pollen to create beautiful digital books"
+date: 2024-04-25
+description: "Short guide to using Racket the Pollen markup language"
+categories:
+ - racket
+ - markdown
+ - pollen
+format:
+  html:
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: false
+#doi: 
+citation: true
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE)
+options(digits = 3, width = 300)
+
+```
+
+
+## Isn't markdown enough? 
+
+Markdown, unlike HTML, is easy to read and write in, which is why, in my opinion, it has become a commonly used markup language among non-programmers. We get rid of tags and clutter, substitute those for simple keyboard strokes, and suddenly our text becomes much less chaotic. 
+
+::::: {.multiple}
+
+::: {.columns .column-screen-inset}
+
+::: column
+
+```{.markdown}
+# Use `#` one hashtag for your first–level headings
+Create Separate paragraphs using
+
+line breaks.
+## A second level heading using `##`?
+
+1. Make your text **bold** or *italicized*
+2. Create numbered
+* And unnumbered lists
+3. and add [links](https://www.jpmonteagudo.com), if you want to. 
+#| It looks legible and anybody can do it
+#| You don't have to be a computer scientist, a programmer or a nerd
+```
+
+::: 
+
+::: column
+
+```{.html}
+<h1>Use <code>#</code> one hashtag for your first–level headings</h1>
+<p>Create Separate paragraphs using<br>line breaks.</p>
+<h2>A second level heading using <code>##</code>?</h2>
+<ol>
+  <li>Make your text <strong>bold</strong> or <em>italicized</em></li>
+  <li>Create numbered
+    <ul>
+      <li>And unnumbered lists</li>
+    </ul>
+  </li>
+  <li>and add <a href="https://www.jpmonteagudo.com">links</a>, if you want to.</li>
+</ol>
+
+```
+
+::: 
+
+::::
+
+:::::
+
+The visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages^[Rmarkdown's knitr can execute code in Python, SQL, Bash, Stan, JS, CSS to name a few languages].
+
+## Enter Pollen
+
+Pollen is a publishing system built on top of Scribble and [Racket](https://racket-lang.org/)^[Racket is a programming language based on Lisp]. This markup language is typically used to create digital books, PDFs and other types of files as its output. 
+
+Downloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file. 

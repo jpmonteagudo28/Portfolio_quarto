@@ -51,7 +51,7 @@ $font-family-serif: "EB Garamond" !default;
 $headings-font-family: "EB Garamond" !default;
 $headings-font-weight: 500 !default;
 
-$navbar-font-family: "Mate SC" !default;
+$navbar-font-family: "Spectral SC" !default;
 $toc-font-family: "EB Garamond" !default;
 $footer-font-family: "EB Garamond" !default;
 $code-font-family: "Source Code Pro" !default;
@@ -94,7 +94,7 @@ $footer-fg: $gray-600 !default;
 
 /*-- scss:rules --*/
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Mate+SC&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Spectral+SC:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
@@ -159,6 +159,8 @@ pre.text, pre.sourceCode, .cell-output pre {
 
 .navbar {
     font-family: $navbar-font-family;
+    font-weight: 400;
+    font-size: .865em;
 }
 
 // Put all the icons in a single row in the hamburger menu

@@ -5,8 +5,8 @@
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="jp Monteagudo">
-<meta name="description" content="Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data">
-<title>A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages | JP Monteagudo</title>
+<meta name="description" content="Short guide to using Racket the Pollen markup language">
+<title>Better than markdown!? Using Racket &amp; Pollen to create beautiful digital books | JP Monteagudo</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,15 +111,15 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       }
 </style>
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages | JP Monteagudo">
-<meta property="og:description" content="Using the betareg and RBE3 packages to model ratios and proportions">
+<meta property="og:title" content="Better than markdown!? Using Racket &amp; Pollen to create beautiful digital books | JP Monteagudo">
+<meta property="og:description" content="Short guide to using Racket the Pollen markup language">
 <meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
 <meta property="og:site_name" content="jp monteagudo">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:height" content="357">
 <meta property="og:image:width" content="334">
-<meta name="twitter:title" content="A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages | JP Monteagudo">
-<meta name="twitter:description" content="Using the betareg and RBE3 packages to model ratios and proportions">
+<meta name="twitter:title" content="Better than markdown!? Using Racket &amp; Pollen to create beautiful digital books | JP Monteagudo">
+<meta name="twitter:description" content="Short guide to using Racket the Pollen markup language">
 <meta name="twitter:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
 <meta name="twitter:creator" content="@jpPabl0">
 <meta name="twitter:site" content="@jpPabl0">
@@ -127,7 +127,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <meta name="twitter:image-height" content="357">
 <meta name="twitter:image-width" content="334">
 </head>
-<body class="floating nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
@@ -205,21 +205,16 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Better than markdown!? Using Racket &amp; Pollen to create beautiful digital books</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data
+          Short guide to using Racket the Pollen markup language
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">r</div>
-                <div class="quarto-category">betareg</div>
-                <div class="quarto-category">percentile</div>
-                <div class="quarto-category">regression</div>
-                <div class="quarto-category">beta distribution</div>
-                <div class="quarto-category">COVID-19</div>
-                <div class="quarto-category">GLMs</div>
-                <div class="quarto-category">modeling</div>
+                <div class="quarto-category">racket</div>
+                <div class="quarto-category">markdown</div>
+                <div class="quarto-category">pollen</div>
               </div>
                   </div>
   </div>
@@ -237,19 +232,11 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Monday, February 26, 2024</p>
+        <p class="date">Thursday, April 25, 2024</p>
       </div>
     </div>
     
       
-      <div>
-      <div class="quarto-title-meta-heading">Doi</div>
-      <div class="quarto-title-meta-contents">
-        <p class="doi">
-          <a href="https://doi.org/10.59350/pe5s8-e0f47">10.59350/pe5s8-e0f47</a>
-        </p>
-      </div>
-    </div>
     </div>
     
   
@@ -258,36 +245,58 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-<li><a href="#quantile-beta-regression" id="toc-quantile-beta-regression" class="nav-link active" data-scroll-target="#quantile-beta-regression">Quantile Beta Regression</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
+<li><a href="#isnt-markdown-enough" id="toc-isnt-markdown-enough" class="nav-link active" data-scroll-target="#isnt-markdown-enough">Isn’t markdown enough?</a></li>
+  <li><a href="#enter-pollen" id="toc-enter-pollen" class="nav-link" data-scroll-target="#enter-pollen">Enter Pollen</a></li>
   </ul></nav>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="quantile-beta-regression" class="level2"><h2 class="anchored" data-anchor-id="quantile-beta-regression">Quantile Beta Regression</h2>
-<p>The quantile beta regression model discussed in the 2021 paper by</p>
-</section><section id="running-code" class="level2"><h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="do">## [1] 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="isnt-markdown-enough" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="isnt-markdown-enough">Isn’t markdown enough?</h2>
+<p>Markdown, unlike HTML, is easy to read and write in, which is why, in my opinion, it has become a commonly used markup language. We get rid of tags and clutter, substitute those for simple keyboard strokes, and suddenly our text becomes much less chaotic.</p>
+<div class="multiple page-columns page-full">
+<div class="columns column-screen-inset">
+<div class="column">
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Use `#` one hashtag for your first–level headings</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Create Separate paragraphs using</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>line breaks.</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## A second level heading using `##`?</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Make your text **bold** or *italicized*</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Create numbered</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>And unnumbered lists</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>and add <span class="co">[</span><span class="ot">links</span><span class="co">](https://jpmonteagudo.com)</span>, if you want to. </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>#| It looks legible and anybody can do it</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>#| You don't have to be a computer scientist, a programmer or a nerd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="sourceCode" id="cb2"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Use <span class="dt">&lt;</span><span class="kw">code</span><span class="dt">&gt;</span>#<span class="dt">&lt;/</span><span class="kw">code</span><span class="dt">&gt;</span> one hashtag for your first–level headings<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Create Separate paragraphs using<span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span>line breaks.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>A second level heading using <span class="dt">&lt;</span><span class="kw">code</span><span class="dt">&gt;</span>##<span class="dt">&lt;/</span><span class="kw">code</span><span class="dt">&gt;</span>?<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">ol</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Make your text <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>bold<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> or <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>italicized<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>Create numbered</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>And unnumbered lists<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">li</span><span class="dt">&gt;</span>and add <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://jpmonteagudo.com"</span><span class="dt">&gt;</span>links<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>, if you want to.<span class="dt">&lt;/</span><span class="kw">li</span><span class="dt">&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">ol</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can add options to executable code like this</p>
-<div class="cell" data-layout-align="center">
-<pre><code>## [1] 4</code></pre>
 </div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+</div>
+<p>The visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is also meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;Rmarkdown’s knitr can execute code in Python, SQL, Bash, Stan, JS, CSS just to name a few languages</p></div></section><section id="enter-pollen" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="enter-pollen">Enter Pollen</h2>
+<p>Pollen is a publishing system built on top of Scribble and <a href="https://racket-lang.org/">Racket</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This markup language is typically used to create digital books, PDFs and other types of files as its output.</p>
+<div class="no-row-height column-margin column-container"><p><sup>2</sup>&nbsp;Racket is a programming language based on Lisp</p></div><p>Downloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file.</p>
 
 
 <!-- -->
 
 </section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Monteagudo, JP. 2024. <span>“Parametric Quantile Beta Regression for
-Modeling Case Fatality Rates of COVID-19 in Chile.”</span> April 25,
-2024. <a href="https://doi.org/10.59350/qgdjk-8ph86">https://doi.org/10.59350/qgdjk-8ph86</a>.
+Monteagudo, JP. 2024. <span>“Better Than Markdown!? Using Racket &amp;
+Pollen to Create Beautiful Digital Books.”</span> April 25, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/04/pollen">https://www.jpmonteagudo.com/blog/2024/04/pollen</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -727,35 +736,93 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "Parametric quantile beta regression for modeling case fatality rates of COVID-19 in Chile"</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-04-25</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> "Using the betareg and RBE3 packages to model ratios and proportions"</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="an">categories:</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">  - r</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">  - regression</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">  - beta</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">  - COVID-19</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">  - GLMs</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">  html:</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">    css: styles.css</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">    code-fold: true</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">    code-line-numbers: true</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="an">doi:</span><span class="co"> 10.59350/qgdjk-8ph86</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="an">draft:</span><span class="co"> true</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">---</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="in">options(digits = 3, width = 300)</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="in">```</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Better than markdown!? Using Racket &amp; Pollen to create beautiful digital books"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2024-04-25</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Short guide to using Racket the Pollen markup language"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"> - racket</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"> - markdown</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"> - pollen</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">    code-line-numbers: false</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#doi: </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3, width = 300)</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Isn't markdown enough? </span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>Markdown, unlike HTML, is easy to read and write in, which is why, in my opinion, it has become a commonly used markup language among non-programmers. We get rid of tags and clutter, substitute those for simple keyboard strokes, and suddenly our text becomes much less chaotic. </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>::::: {.multiple}</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>::: {.columns .column-screen-inset}</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>::: column</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{.markdown}</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="in"># Use `#` one hashtag for your first–level headings</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="in">Create Separate paragraphs using</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="in">line breaks.</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="in">## A second level heading using `##`?</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="in">1. Make your text **bold** or *italicized*</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="in">2. Create numbered</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="in">* And unnumbered lists</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="in">3. and add [links](https://www.jpmonteagudo.com), if you want to. </span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="in">#| It looks legible and anybody can do it</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="in">#| You don't have to be a computer scientist, a programmer or a nerd</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>::: column</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{.html}</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;h1&gt;Use &lt;code&gt;#&lt;/code&gt; one hashtag for your first–level headings&lt;/h1&gt;</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;p&gt;Create Separate paragraphs using&lt;br&gt;line breaks.&lt;/p&gt;</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;h2&gt;A second level heading using &lt;code&gt;##&lt;/code&gt;?&lt;/h2&gt;</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;ol&gt;</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;li&gt;Make your text &lt;strong&gt;bold&lt;/strong&gt; or &lt;em&gt;italicized&lt;/em&gt;&lt;/li&gt;</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;li&gt;Create numbered</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="in">    &lt;ul&gt;</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="in">      &lt;li&gt;And unnumbered lists&lt;/li&gt;</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="in">    &lt;/ul&gt;</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;/li&gt;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="in">  &lt;li&gt;and add &lt;a href="https://www.jpmonteagudo.com"&gt;links&lt;/a&gt;, if you want to.&lt;/li&gt;</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/ol&gt;</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>:::::</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>The visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages^<span class="co">[</span><span class="ot">Rmarkdown's knitr can execute code in Python, SQL, Bash, Stan, JS, CSS to name a few languages</span><span class="co">]</span>.</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Enter Pollen</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>Pollen is a publishing system built on top of Scribble and <span class="co">[</span><span class="ot">Racket</span><span class="co">](https://racket-lang.org/)</span>^<span class="co">[</span><span class="ot">Racket is a programming language based on Lisp</span><span class="co">]</span>. This markup language is typically used to create digital books, PDFs and other types of files as its output. </span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>Downloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

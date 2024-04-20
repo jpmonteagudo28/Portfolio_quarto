@@ -369,6 +369,16 @@
       ],
       "Hash": "8ee9ac56ef633d0c7cab8b2ca87d683e"
     },
+    "datasauRus": {
+      "Package": "datasauRus",
+      "Version": "0.1.8",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "e43f7047700f36da541a2d386f921b8c"
+    },
     "dbplyr": {
       "Package": "dbplyr",
       "Version": "2.5.0",

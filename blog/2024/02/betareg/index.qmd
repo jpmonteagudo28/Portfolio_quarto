@@ -1,24 +1,21 @@
 ---
-title: "A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages"
-date: 2024-02-26
-description: "Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data"
+title: "Parametric quantile beta regression for modeling case fatality rates of COVID-19 in Chile"
+date: 2024-04-25
+description: "Using the betareg and RBE3 packages to model ratios and proportions"
 categories:
   - r
-  - betareg
-  - percentile
   - regression
-  - beta distribution
+  - beta
   - COVID-19
   - GLMs
-  - modeling
-#resources:
-  - "_book/**"
-  - "img/*"
-doi: 10.59350/qgdjk-8ph86
 format: 
   html:
+    css: styles.css
     code-fold: true
     code-tools: true
+    code-overflow: wrap
+    code-line-numbers: true
+doi: 10.59350/qgdjk-8ph86
 citation: true
 draft: true
 ---
@@ -30,23 +27,4 @@ knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
 options(digits = 3, width = 300)
 ```
 
-## Quantile Beta Regression
 
-The quantile beta regression model discussed in the 2021 paper by
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).

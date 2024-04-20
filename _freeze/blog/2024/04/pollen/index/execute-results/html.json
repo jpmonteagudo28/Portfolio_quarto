@@ -1,0 +1,15 @@
+{
+  "hash": "d9041893d1184d9a1f198e8cac467fb8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Better than markdown!? Using Racket & Pollen to create beautiful digital books\"\ndate: 2024-04-25\ndescription: \"Short guide to using Racket the Pollen markup language\"\ncategories:\n - racket\n - markdown\n - pollen\nformat:\n  html:\n    css: styles.css\n    code-fold: true\n    code-tools: true\n    code-overflow: wrap\n    code-line-numbers: false\n#doi: \ncitation: true\ndraft: true\n---\n\n\n\n\n\n## Isn't markdown enough? \n\nMarkdown, unlike HTML, is easy to read and write in, which is why, in my opinion, it has become a commonly used markup language. We get rid of tags and clutter, substitute those for simple keyboard strokes, and suddenly our text becomes much less chaotic. \n\n::::: {.multiple}\n\n::: {.columns .column-screen-inset}\n\n::: column\n\n```{.markdown}\n# Use `#` one hashtag for your first–level headings\nCreate Separate paragraphs using\n\nline breaks.\n## A second level heading using `##`?\n\n1. Make your text **bold** or *italicized*\n2. Create numbered\n* And unnumbered lists\n3. and add [links](https://jpmonteagudo.com), if you want to. \n#| It looks legible and anybody can do it\n#| You don't have to be a computer scientist, a programmer or a nerd\n```\n\n::: \n\n::: column\n\n```{.html}\n<h1>Use <code>#</code> one hashtag for your first–level headings</h1>\n<p>Create Separate paragraphs using<br>line breaks.</p>\n<h2>A second level heading using <code>##</code>?</h2>\n<ol>\n  <li>Make your text <strong>bold</strong> or <em>italicized</em></li>\n  <li>Create numbered\n    <ul>\n      <li>And unnumbered lists</li>\n    </ul>\n  </li>\n  <li>and add <a href=\"https://jpmonteagudo.com\">links</a>, if you want to.</li>\n</ol>\n\n```\n\n::: \n\n::::\n\n:::::\n\nThe visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is also meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages^[Rmarkdown's knitr can execute code in Python, SQL, Bash, Stan, JS, CSS just to name a few languages].\n\n## Enter Pollen\n\nPollen is a publishing system built on top of Scribble and [Racket](https://racket-lang.org/)^[Racket is a programming language based on Lisp]. This markup language is typically used to create digital books, PDFs and other types of files as its output. \n\nDownloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file. ",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

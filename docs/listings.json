@@ -2,6 +2,7 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/2024/04/dinosaurs/index.html",
       "/blog/2024/04/lissajous/index.html",
       "/blog/2024/03/here/index.html"
     ]
@@ -9,6 +10,7 @@
   {
     "listing": "/atom.html",
     "items": [
+      "/blog/2024/04/dinosaurs/index.html",
       "/blog/2024/04/lissajous/index.html",
       "/blog/2024/03/here/index.html"
     ]
