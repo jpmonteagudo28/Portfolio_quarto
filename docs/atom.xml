@@ -17,7 +17,8 @@
 </title>
   <dc:creator>JP Monteagudo</dc:creator>
   <link>https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/</link>
-  <description><![CDATA[ <p>The <a href="https://nightingaledvs.com/the-30daychartchallenge-year-three/"><code>#30DayChartChallenge</code></a> is a data visualization community that hosts daily challenges for April. Today’s challenge involves dinosaurs. I used the <code>Datasaurus</code> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties. In these datasets, the mean and the standard deviation of <img src="https://latex.codecogs.com/png.latex?x"> and <img src="https://latex.codecogs.com/png.latex?y"> remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</p>
+  <description><![CDATA[ <section id="visualization-pearsons-correlation-coefficient" class="level2"><h2 class="anchored" data-anchor-id="visualization-pearsons-correlation-coefficient">Visualization &amp; Pearson’s correlation coefficient</h2>
+<p>The <a href="https://nightingaledvs.com/the-30daychartchallenge-year-three/"><code>30DayChartChallenge</code></a> is a data visualization community that hosts daily challenges for April. Today’s challenge involves dinosaurs. I used the <code>Datasaurus</code> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties. In these datasets, the mean and the standard deviation of <img src="https://latex.codecogs.com/png.latex?x"> and <img src="https://latex.codecogs.com/png.latex?y"> remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</p>
 <div class="cell" data-messages="false">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="do" style="color: #5E5E5E;
 background-color: null;
@@ -498,8 +499,10 @@ background-color: null;
 font-style: inherit;">"img"</span>))</span></code></pre></div>
 </details>
 </div>
-<img src="https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"><div class="cell page-columns page-full" data-tbl-colwidths="[50,50]">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2" data-cap-location="margin" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+</section><section id="the-animated-data" class="level2"><h2 class="anchored" data-anchor-id="the-animated-data">The Animated Data</h2>
+<img src="https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"></section><section id="measures-of-central-tendency" class="level2"><h2 class="anchored" data-anchor-id="measures-of-central-tendency">Measures of Central Tendency</h2>
+<div class="cell tbl-cap-location-top" data-tbl-colwidths="[50,50]">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2" data-cap-location="top" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(datasauRus) </span>
 <span id="cb2-2"><span class="fu" style="color: #4758AB;
@@ -532,7 +535,7 @@ font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mean</span>(x),<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>), </span>
+font-style: inherit;">2</span>), </span>
 <span id="cb2-9">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">stdev_x =</span> <span class="fu" style="color: #4758AB;
@@ -541,7 +544,7 @@ font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">sd</span>(x),<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>), </span>
+font-style: inherit;">2</span>), </span>
 <span id="cb2-10">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">avg_y =</span> <span class="fu" style="color: #4758AB;
@@ -550,7 +553,7 @@ font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mean</span>(y),<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>), </span>
+font-style: inherit;">2</span>), </span>
 <span id="cb2-11">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">stdev_y =</span> <span class="fu" style="color: #4758AB;
@@ -559,7 +562,7 @@ font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">sd</span>(y),<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3</span>))</span>
+font-style: inherit;">2</span>))</span>
 <span id="cb2-12">knitr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
@@ -580,9 +583,10 @@ background-color: null;
 font-style: inherit;">'Mean(y)'</span>,<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'SD(y)'</span>))</span></code></pre></div>
-</details><div class="cell-output-display page-columns page-full">
+</details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
-
+<caption>Mean &amp; Standard Deviation of <em>x</em> and <em>y</em>
+</caption>
 <thead><tr class="header">
 <th style="text-align: left;">Data</th>
 <th style="text-align: right;">Mean(x)</th>
@@ -593,108 +597,106 @@ font-style: inherit;">'SD(y)'</span>))</span></code></pre></div>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">away</td>
-<td style="text-align: right;">54.266</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.835</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bullseye</td>
-<td style="text-align: right;">54.269</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.831</td>
-<td style="text-align: right;">26.936</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">circle</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.760</td>
-<td style="text-align: right;">47.838</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.76</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">dino</td>
-<td style="text-align: right;">54.263</td>
-<td style="text-align: right;">16.765</td>
-<td style="text-align: right;">47.832</td>
-<td style="text-align: right;">26.935</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">dots</td>
-<td style="text-align: right;">54.260</td>
-<td style="text-align: right;">16.768</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">h_lines</td>
-<td style="text-align: right;">54.261</td>
-<td style="text-align: right;">16.766</td>
-<td style="text-align: right;">47.830</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">high_lines</td>
-<td style="text-align: right;">54.269</td>
-<td style="text-align: right;">16.767</td>
-<td style="text-align: right;">47.835</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">slant_down</td>
-<td style="text-align: right;">54.268</td>
-<td style="text-align: right;">16.767</td>
-<td style="text-align: right;">47.836</td>
-<td style="text-align: right;">26.936</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">slant_up</td>
-<td style="text-align: right;">54.266</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.831</td>
-<td style="text-align: right;">26.939</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">star</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">v_lines</td>
-<td style="text-align: right;">54.270</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.837</td>
-<td style="text-align: right;">26.938</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">wide_lines</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.832</td>
-<td style="text-align: right;">26.938</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">x_shape</td>
-<td style="text-align: right;">54.260</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 </tbody>
 </table>
-<div class="quarto-table-caption margin-caption">Mean &amp; Standard Deviation of <em>x</em> and <em>y</em>
-</div></div>
+</div>
 </div>
 
 
 <!-- -->
 
-
-<div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
 Monteagudo, JP. 2024. <span>“Animating the Datasaurus Dataset as Part of
-the _30 Day Chart Challenge_.”</span> April 19, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/04/dinosaurs">https://www.jpmonteagudo.com/blog/2024/04/dinosaurs</a>.
+the *30 Day Chart Challenge*.”</span> April 19, 2024. <a href="https://doi.org/10.59350/wx5k1-ajc38">https://doi.org/10.59350/wx5k1-ajc38</a>.
 </div></div></section></div> ]]></description>
   <category>visualization</category>
   <category>ChartChallenge</category>

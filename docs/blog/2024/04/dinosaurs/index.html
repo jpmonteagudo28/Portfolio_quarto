@@ -263,18 +263,33 @@ window.Quarto = {
     </div>
     
       
+      <div>
+      <div class="quarto-title-meta-heading">Doi</div>
+      <div class="quarto-title-meta-contents">
+        <p class="doi">
+          <a href="https://doi.org/10.59350/wx5k1-ajc38">10.59350/wx5k1-ajc38</a>
+        </p>
+      </div>
+    </div>
     </div>
     
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
+   
+  <ul>
+<li><a href="#visualization-pearsons-correlation-coefficient" id="toc-visualization-pearsons-correlation-coefficient" class="nav-link active" data-scroll-target="#visualization-pearsons-correlation-coefficient">Visualization &amp; Pearson’s correlation coefficient</a></li>
+  <li><a href="#the-animated-data" id="toc-the-animated-data" class="nav-link" data-scroll-target="#the-animated-data">The Animated Data</a></li>
+  <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency">Measures of Central Tendency</a></li>
+  </ul></nav>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><p>The <a href="https://nightingaledvs.com/the-30daychartchallenge-year-three/"><code>#30DayChartChallenge</code></a> is a data visualization community that hosts daily challenges for April. Today’s challenge involves dinosaurs. I used the <code>Datasaurus</code> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties. In these datasets, the mean and the standard deviation of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="visualization-pearsons-correlation-coefficient" class="level2"><h2 class="anchored" data-anchor-id="visualization-pearsons-correlation-coefficient">Visualization &amp; Pearson’s correlation coefficient</h2>
+<p>The <a href="https://nightingaledvs.com/the-30daychartchallenge-year-three/"><code>30DayChartChallenge</code></a> is a data visualization community that hosts daily challenges for April. Today’s challenge involves dinosaurs. I used the <code>Datasaurus</code> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties. In these datasets, the mean and the standard deviation of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</p>
 <div class="cell" data-messages="false">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">## -------------------------------------- ##</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="do">## Day 19: Dinosaurs; 30DayChartChallenge ##</span></span>
@@ -353,23 +368,26 @@ window.Quarto = {
 <span id="cb1-75"><a href="#cb1-75"></a>          <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog"</span>,<span class="st">"2024"</span>,<span class="st">"04"</span>,<span class="st">"dinosaurs"</span>,<span class="st">"img"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"><div class="cell page-columns page-full" data-tbl-colwidths="[50,50]">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2" data-cap-location="margin"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(datasauRus) </span>
+</section><section id="the-animated-data" class="level2"><h2 class="anchored" data-anchor-id="the-animated-data">The Animated Data</h2>
+<img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"></section><section id="measures-of-central-tendency" class="level2"><h2 class="anchored" data-anchor-id="measures-of-central-tendency">Measures of Central Tendency</h2>
+<div class="cell tbl-cap-location-top" data-tbl-colwidths="[50,50]">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2" data-cap-location="top"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(datasauRus) </span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-4"><a href="#cb2-4"></a></span>
 <span id="cb2-5"><a href="#cb2-5"></a>datasaurus <span class="ot">&lt;-</span> datasaurus_dozen</span>
 <span id="cb2-6"><a href="#cb2-6"></a>group_datasaurus <span class="ot">&lt;-</span> datasaurus <span class="sc">%&gt;%</span></span>
 <span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">summarize</span>(<span class="at">avg_x =</span> <span class="fu">round</span>(<span class="fu">mean</span>(x),<span class="dv">3</span>), </span>
-<span id="cb2-9"><a href="#cb2-9"></a>            <span class="at">stdev_x =</span> <span class="fu">round</span>(<span class="fu">sd</span>(x),<span class="dv">3</span>), </span>
-<span id="cb2-10"><a href="#cb2-10"></a>            <span class="at">avg_y =</span> <span class="fu">round</span>(<span class="fu">mean</span>(y),<span class="dv">3</span>), </span>
-<span id="cb2-11"><a href="#cb2-11"></a>            <span class="at">stdev_y =</span> <span class="fu">round</span>(<span class="fu">sd</span>(y),<span class="dv">3</span>))</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">summarize</span>(<span class="at">avg_x =</span> <span class="fu">round</span>(<span class="fu">mean</span>(x),<span class="dv">2</span>), </span>
+<span id="cb2-9"><a href="#cb2-9"></a>            <span class="at">stdev_x =</span> <span class="fu">round</span>(<span class="fu">sd</span>(x),<span class="dv">2</span>), </span>
+<span id="cb2-10"><a href="#cb2-10"></a>            <span class="at">avg_y =</span> <span class="fu">round</span>(<span class="fu">mean</span>(y),<span class="dv">2</span>), </span>
+<span id="cb2-11"><a href="#cb2-11"></a>            <span class="at">stdev_y =</span> <span class="fu">round</span>(<span class="fu">sd</span>(y),<span class="dv">2</span>))</span>
 <span id="cb2-12"><a href="#cb2-12"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(group_datasaurus,</span>
 <span id="cb2-13"><a href="#cb2-13"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">'Data'</span>, <span class="st">'Mean(x)'</span>,<span class="st">'SD(x)'</span>,<span class="st">'Mean(y)'</span>,<span class="st">'SD(y)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display page-columns page-full">
+</details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
-
+<caption>Mean &amp; Standard Deviation of <em>x</em> and <em>y</em>
+</caption>
 <thead><tr class="header">
 <th style="text-align: left;">Data</th>
 <th style="text-align: right;">Mean(x)</th>
@@ -380,108 +398,106 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">away</td>
-<td style="text-align: right;">54.266</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.835</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bullseye</td>
-<td style="text-align: right;">54.269</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.831</td>
-<td style="text-align: right;">26.936</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">circle</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.760</td>
-<td style="text-align: right;">47.838</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.76</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">dino</td>
-<td style="text-align: right;">54.263</td>
-<td style="text-align: right;">16.765</td>
-<td style="text-align: right;">47.832</td>
-<td style="text-align: right;">26.935</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">dots</td>
-<td style="text-align: right;">54.260</td>
-<td style="text-align: right;">16.768</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">h_lines</td>
-<td style="text-align: right;">54.261</td>
-<td style="text-align: right;">16.766</td>
-<td style="text-align: right;">47.830</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">high_lines</td>
-<td style="text-align: right;">54.269</td>
-<td style="text-align: right;">16.767</td>
-<td style="text-align: right;">47.835</td>
-<td style="text-align: right;">26.940</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">slant_down</td>
-<td style="text-align: right;">54.268</td>
-<td style="text-align: right;">16.767</td>
-<td style="text-align: right;">47.836</td>
-<td style="text-align: right;">26.936</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">slant_up</td>
-<td style="text-align: right;">54.266</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.831</td>
-<td style="text-align: right;">26.939</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">star</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.769</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">v_lines</td>
-<td style="text-align: right;">54.270</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.837</td>
-<td style="text-align: right;">26.938</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">wide_lines</td>
-<td style="text-align: right;">54.267</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.832</td>
-<td style="text-align: right;">26.938</td>
+<td style="text-align: right;">54.27</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.83</td>
+<td style="text-align: right;">26.94</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">x_shape</td>
-<td style="text-align: right;">54.260</td>
-<td style="text-align: right;">16.770</td>
-<td style="text-align: right;">47.840</td>
-<td style="text-align: right;">26.930</td>
+<td style="text-align: right;">54.26</td>
+<td style="text-align: right;">16.77</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">26.93</td>
 </tr>
 </tbody>
 </table>
-<div class="quarto-table-caption margin-caption">Mean &amp; Standard Deviation of <em>x</em> and <em>y</em>
-</div></div>
+</div>
 </div>
 
 
 <!-- -->
 
-
-<div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Monteagudo, JP. 2024. <span>“Animating the Datasaurus Dataset as Part of
-the _30 Day Chart Challenge_.”</span> April 19, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/04/dinosaurs">https://www.jpmonteagudo.com/blog/2024/04/dinosaurs</a>.
+the *30 Day Chart Challenge*.”</span> April 19, 2024. <a href="https://doi.org/10.59350/wx5k1-ajc38">https://doi.org/10.59350/wx5k1-ajc38</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -922,7 +938,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "Animating the Datasaurus dataset as part of the _30 Day Chart Challenge_"</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "Animating the Datasaurus dataset as part of the *30 Day Chart Challenge*"</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-04-19</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> "Dinosaurs and correlation coefficients"</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a><span class="an">categories:</span></span>
@@ -936,14 +952,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-13"><a href="#cb3-13"></a><span class="co">    code-tools: true</span></span>
 <span id="cb3-14"><a href="#cb3-14"></a><span class="co">    code-overflow: wrap</span></span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="co">    code-line-numbers: true</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#doi: </span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="an">doi:</span><span class="co"> 10.59350/wx5k1-ajc38</span></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="an">citation:</span><span class="co"> true</span></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="an">draft:</span><span class="co"> false</span></span>
 <span id="cb3-19"><a href="#cb3-19"></a><span class="co">---</span></span>
 <span id="cb3-20"><a href="#cb3-20"></a></span>
-<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="fu">## Visualization &amp; Pearson's correlation coefficient</span></span>
 <span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a>The <span class="co">[</span><span class="ot">`#30DayChartChallenge`</span><span class="co">](https://nightingaledvs.com/the-30daychartchallenge-year-three/)</span> is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the <span class="in">`Datasaurus`</span> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes. </span>
+<span id="cb3-23"><a href="#cb3-23"></a>The <span class="co">[</span><span class="ot">`30DayChartChallenge`</span><span class="co">](https://nightingaledvs.com/the-30daychartchallenge-year-three/)</span> is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the <span class="in">`Datasaurus`</span> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes. </span>
 <span id="cb3-24"><a href="#cb3-24"></a></span>
 <span id="cb3-25"><a href="#cb3-25"></a><span class="in">```{r, eval = FALSE, warning = FALSE, messages = FALSE}</span></span>
 <span id="cb3-26"><a href="#cb3-26"></a><span class="in">## -------------------------------------- ##</span></span>
@@ -1023,32 +1039,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-100"><a href="#cb3-100"></a><span class="in">          path = here::here("blog","2024","04","dinosaurs","img"))</span></span>
 <span id="cb3-101"><a href="#cb3-101"></a><span class="in">```</span></span>
 <span id="cb3-102"><a href="#cb3-102"></a></span>
-<span id="cb3-103"><a href="#cb3-103"></a></span>
+<span id="cb3-103"><a href="#cb3-103"></a><span class="fu">## The Animated Data</span></span>
 <span id="cb3-104"><a href="#cb3-104"></a></span>
 <span id="cb3-105"><a href="#cb3-105"></a><span class="in">```{=html}</span></span>
 <span id="cb3-106"><a href="#cb3-106"></a><span class="in">&lt;img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"&gt;</span></span>
 <span id="cb3-107"><a href="#cb3-107"></a></span>
 <span id="cb3-108"><a href="#cb3-108"></a><span class="in">```</span></span>
 <span id="cb3-109"><a href="#cb3-109"></a></span>
-<span id="cb3-110"><a href="#cb3-110"></a><span class="in">````{r eval = TRUE}</span></span>
-<span id="cb3-111"><a href="#cb3-111"></a><span class="in">#| tbl-cap: "Mean &amp; Standard Deviation of *x* and *y*"</span></span>
-<span id="cb3-112"><a href="#cb3-112"></a><span class="in">#| tbl-cap-location: margin</span></span>
-<span id="cb3-113"><a href="#cb3-113"></a><span class="in">#| tbl-colwidths: [50,50]</span></span>
-<span id="cb3-114"><a href="#cb3-114"></a></span>
-<span id="cb3-115"><a href="#cb3-115"></a><span class="in">library(datasauRus) </span></span>
-<span id="cb3-116"><a href="#cb3-116"></a><span class="in">library(knitr)</span></span>
-<span id="cb3-117"><a href="#cb3-117"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb3-118"><a href="#cb3-118"></a></span>
-<span id="cb3-119"><a href="#cb3-119"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
-<span id="cb3-120"><a href="#cb3-120"></a><span class="in">group_datasaurus &lt;- datasaurus %&gt;%</span></span>
-<span id="cb3-121"><a href="#cb3-121"></a><span class="in">  group_by(dataset) %&gt;% </span></span>
-<span id="cb3-122"><a href="#cb3-122"></a><span class="in">  summarize(avg_x = round(mean(x),3), </span></span>
-<span id="cb3-123"><a href="#cb3-123"></a><span class="in">            stdev_x = round(sd(x),3), </span></span>
-<span id="cb3-124"><a href="#cb3-124"></a><span class="in">            avg_y = round(mean(y),3), </span></span>
-<span id="cb3-125"><a href="#cb3-125"></a><span class="in">            stdev_y = round(sd(y),3))</span></span>
-<span id="cb3-126"><a href="#cb3-126"></a><span class="in">knitr::kable(group_datasaurus,</span></span>
-<span id="cb3-127"><a href="#cb3-127"></a><span class="in">             col.names = c('Data', 'Mean(x)','SD(x)','Mean(y)','SD(y)'))</span></span>
-<span id="cb3-128"><a href="#cb3-128"></a><span class="in">````</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-110"><a href="#cb3-110"></a><span class="fu">## Measures of Central Tendency</span></span>
+<span id="cb3-111"><a href="#cb3-111"></a></span>
+<span id="cb3-112"><a href="#cb3-112"></a><span class="in">````{r eval = TRUE}</span></span>
+<span id="cb3-113"><a href="#cb3-113"></a><span class="in">#| tbl-cap: "Mean &amp; Standard Deviation of *x* and *y*"</span></span>
+<span id="cb3-114"><a href="#cb3-114"></a><span class="in">#| tbl-cap-location: top</span></span>
+<span id="cb3-115"><a href="#cb3-115"></a><span class="in">#| tbl-colwidths: [50,50]</span></span>
+<span id="cb3-116"><a href="#cb3-116"></a></span>
+<span id="cb3-117"><a href="#cb3-117"></a><span class="in">library(datasauRus) </span></span>
+<span id="cb3-118"><a href="#cb3-118"></a><span class="in">library(knitr)</span></span>
+<span id="cb3-119"><a href="#cb3-119"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb3-120"><a href="#cb3-120"></a></span>
+<span id="cb3-121"><a href="#cb3-121"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
+<span id="cb3-122"><a href="#cb3-122"></a><span class="in">group_datasaurus &lt;- datasaurus %&gt;%</span></span>
+<span id="cb3-123"><a href="#cb3-123"></a><span class="in">  group_by(dataset) %&gt;% </span></span>
+<span id="cb3-124"><a href="#cb3-124"></a><span class="in">  summarize(avg_x = round(mean(x),2), </span></span>
+<span id="cb3-125"><a href="#cb3-125"></a><span class="in">            stdev_x = round(sd(x),2), </span></span>
+<span id="cb3-126"><a href="#cb3-126"></a><span class="in">            avg_y = round(mean(y),2), </span></span>
+<span id="cb3-127"><a href="#cb3-127"></a><span class="in">            stdev_y = round(sd(y),2))</span></span>
+<span id="cb3-128"><a href="#cb3-128"></a><span class="in">knitr::kable(group_datasaurus,</span></span>
+<span id="cb3-129"><a href="#cb3-129"></a><span class="in">             col.names = c('Data', 'Mean(x)','SD(x)','Mean(y)','SD(y)'))</span></span>
+<span id="cb3-130"><a href="#cb3-130"></a><span class="in">````</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

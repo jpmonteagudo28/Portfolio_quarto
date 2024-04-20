@@ -1,5 +1,5 @@
 ---
-title: "Animating the Datasaurus dataset as part of the _30 Day Chart Challenge_"
+title: "Animating the Datasaurus dataset as part of the *30 Day Chart Challenge*"
 date: 2024-04-19
 description: "Dinosaurs and correlation coefficients"
 categories:
@@ -13,14 +13,14 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: true
-#doi: 
+doi: 10.59350/wx5k1-ajc38
 citation: true
 draft: false
 ---
 
+## Visualization & Pearson's correlation coefficient
 
-
-The [`#30DayChartChallenge`](https://nightingaledvs.com/the-30daychartchallenge-year-three/) is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the `Datasaurus` package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes. 
+The [`30DayChartChallenge`](https://nightingaledvs.com/the-30daychartchallenge-year-three/) is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the `Datasaurus` package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes. 
 
 ```{r, eval = FALSE, warning = FALSE, messages = FALSE}
 ## -------------------------------------- ##
@@ -100,16 +100,18 @@ anim_save(filename = "dino.gif",
           path = here::here("blog","2024","04","dinosaurs","img"))
 ```
 
-
+## The Animated Data
 
 ```{=html}
 <img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024">
 
 ```
 
+## Measures of Central Tendency
+
 ````{r eval = TRUE}
 #| tbl-cap: "Mean & Standard Deviation of *x* and *y*"
-#| tbl-cap-location: margin
+#| tbl-cap-location: top
 #| tbl-colwidths: [50,50]
 
 library(datasauRus) 
@@ -119,10 +121,10 @@ library(tidyverse)
 datasaurus <- datasaurus_dozen
 group_datasaurus <- datasaurus %>%
   group_by(dataset) %>% 
-  summarize(avg_x = round(mean(x),3), 
-            stdev_x = round(sd(x),3), 
-            avg_y = round(mean(y),3), 
-            stdev_y = round(sd(y),3))
+  summarize(avg_x = round(mean(x),2), 
+            stdev_x = round(sd(x),2), 
+            avg_y = round(mean(y),2), 
+            stdev_y = round(sd(y),2))
 knitr::kable(group_datasaurus,
              col.names = c('Data', 'Mean(x)','SD(x)','Mean(y)','SD(y)'))
 ````
