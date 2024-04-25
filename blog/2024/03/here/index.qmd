@@ -2,10 +2,6 @@
 title: "Don't be an absolutist. Use the here package for reproducible workflows"
 date: 2024-03-17
 description: "Gentle reminders when using the `here` package for your `RStudio` projects"
-categories:
- - r
- - workflow
- - reproducibility
 format:
   html:
     css: styles.css

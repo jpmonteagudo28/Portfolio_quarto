@@ -2,12 +2,6 @@
 title: "Parametric quantile beta regression for modeling case fatality rates of COVID-19 in Chile"
 date: 2024-04-25
 description: "Using the betareg and RBE3 packages to model ratios and proportions"
-categories:
-  - r
-  - regression
-  - beta
-  - COVID-19
-  - GLMs
 format: 
   html:
     css: styles.css

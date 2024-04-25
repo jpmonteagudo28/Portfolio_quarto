@@ -12,12 +12,6 @@ author:
     url: https://www.jpmonteagudo.com/
     orcid: 0009-0003-6465-6658
     affiliation: Starbase Deep Space Nine
-categories: 
-  - Cranial Implants
-  - Space Travel
-  - Surgery
-  - Mock-up
-  - Placeholder
 pub-info:
   reference: >-
     <a href="https://www.jpmonteagudo.com"/>Julian Bashir</a> and <strong>Elim Garak</strong>, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” <em>Starbase Deep Nine Archives</em> 130, no. 9 (September 2178): 1425–1439

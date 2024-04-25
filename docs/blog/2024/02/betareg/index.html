@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="jp Monteagudo">
+<meta name="author" content="JP Monteagudo">
 <meta name="description" content="Using the betareg and RBE3 packages to model ratios and proportions using COVID-19 simulated data">
 <title>A parametric quantile beta regression for modeling case fatality rates of COVID-19. Building models using the betareg and RBE3 packages | JP Monteagudo</title>
 <style>
@@ -127,7 +127,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <meta name="twitter:image-height" content="357">
 <meta name="twitter:image-width" content="334">
 </head>
-<body class="floating nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
@@ -255,16 +255,8 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
-   
-  <ul>
-<li><a href="#quantile-beta-regression" id="toc-quantile-beta-regression" class="nav-link active" data-scroll-target="#quantile-beta-regression">Quantile Beta Regression</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
-  </ul></nav>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    </div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="quantile-beta-regression" class="level2"><h2 class="anchored" data-anchor-id="quantile-beta-regression">Quantile Beta Regression</h2>
 <p>The quantile beta regression model discussed in the 2021 paper by</p>
@@ -731,31 +723,25 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "Parametric quantile beta regression for modeling case fatality rates of COVID-19 in Chile"</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-04-25</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> "Using the betareg and RBE3 packages to model ratios and proportions"</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="an">categories:</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">  - r</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">  - regression</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">  - beta</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">  - COVID-19</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">  - GLMs</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">  html:</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">    css: styles.css</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">    code-fold: true</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">    code-line-numbers: true</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="an">doi:</span><span class="co"> 10.59350/qgdjk-8ph86</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="an">draft:</span><span class="co"> true</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">---</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="in">options(digits = 3, width = 300)</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="in">```</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">  html:</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">    css: styles.css</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">    code-fold: true</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">    code-tools: true</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">    code-line-numbers: true</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="an">doi:</span><span class="co"> 10.59350/qgdjk-8ph86</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="an">draft:</span><span class="co"> true</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">---</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="in">options(digits = 3, width = 300)</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="in">```</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

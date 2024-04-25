@@ -17,9 +17,9 @@ format:
       banner-header-class: "blog-post"
 
 # Default for table of contents
-toc: true
-toc-title: Contents
-toc-location: left
+toc: false
+#toc-title: Contents
+#toc-location: left
 
 # Default fields for citation
 citation: true

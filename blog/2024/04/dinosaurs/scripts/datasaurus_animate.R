@@ -55,7 +55,6 @@ datasaurus <- datasaurus_dozen
 summary(datasaurus)
 
 group_datasaurus <- datasaurus %>%
-  group_by(dataset) %>% 
   summarize(avg = mean(x), 
             stdev = sd(x), 
             avg_y = mean(y), 
@@ -68,7 +67,7 @@ dino <- ggplot(datasaurus, aes(x = x, y = y))+
   labs(x = NULL,y = NULL,
        title = "Day 19 of 30 Day Chart Challenge",
        subtitle = "The T-rex",
-       caption = "Always check your data graphically") +
+       caption = "Note: <i>Always check your data graphically</i>") +
   theme_blue() +
   transition_states(states = dataset,
                     transition_length = 2,

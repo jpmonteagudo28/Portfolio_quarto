@@ -2,31 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.jpmonteagudo.com/uses/index.html</loc>
-    <lastmod>2024-04-17T20:51:48.700Z</lastmod>
+    <lastmod>2024-04-25T15:50:29.014Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/research/articles/index.html</loc>
-    <lastmod>2024-04-11T06:11:44.537Z</lastmod>
+    <lastmod>2024-04-25T17:37:23.633Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/index.html</loc>
-    <lastmod>2024-04-11T20:25:10.370Z</lastmod>
+    <lastmod>2024-04-24T21:13:18.546Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/blog/index.html</loc>
-    <lastmod>2024-04-01T17:46:47.802Z</lastmod>
+    <lastmod>2024-04-25T19:24:46.535Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/blog/2024/04/lissajous/index.html</loc>
-    <lastmod>2024-04-16T12:10:15.765Z</lastmod>
+    <lastmod>2024-04-25T17:38:59.754Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
+    <lastmod>2024-04-25T17:38:40.289Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/atom.html</loc>
     <lastmod>2024-03-19T01:30:02.418Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
-    <lastmod>2024-04-11T20:46:33.115Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/index.html</loc>
+    <lastmod>2024-04-25T18:53:59.265Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/cv/index.html</loc>
@@ -38,10 +42,6 @@
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/research/index.html</loc>
-    <lastmod>2024-04-01T04:40:45.508Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/index.html</loc>
-    <lastmod>2024-04-20T05:24:12.350Z</lastmod>
+    <lastmod>2024-04-25T19:12:56.442Z</lastmod>
   </url>
 </urlset>

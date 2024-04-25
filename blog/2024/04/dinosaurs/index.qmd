@@ -1,11 +1,7 @@
 ---
-title: "Animating the Datasaurus dataset as part of the *30 Day Chart Challenge*"
+title: "Animating the Datasaurus dataset as part of the 30 Day Chart Challenge"
 date: 2024-04-19
 description: "Dinosaurs and correlation coefficients"
-categories:
- - visualization
- - ChartChallenge
- - r
 format:
   html:
     css: styles.css
@@ -20,7 +16,31 @@ draft: false
 
 ## Visualization & Pearson's correlation coefficient
 
-The [`30DayChartChallenge`](https://nightingaledvs.com/the-30daychartchallenge-year-three/) is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the `Datasaurus` package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes. 
+The [`30DayChartChallenge`](https://nightingaledvs.com/the-30daychartchallenge-year-three/) is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the `Datasaurus` package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.
+
+## Measures of Central Tendency
+
+````{r eval = TRUE}
+#| tbl-cap: "Mean & Standard Deviation of *x* and *y* remain equal for each dataset"
+#| tbl-cap-location: margin
+#| tbl-colwidths: [50,50]
+
+library(datasauRus) 
+library(knitr)
+library(tidyverse)
+
+datasaurus <- datasaurus_dozen
+group_datasaurus <- datasaurus %>%
+  summarize(avg = mean(x), 
+            stdev = sd(x), 
+            avg_y = mean(y), 
+            stdev_y = sd(y))
+
+knitr::kable(group_datasaurus,
+             col.names = c('Mean(x)','SD(x)','Mean(y)','SD(y)'))
+````
+
+
 
 ```{r, eval = FALSE, warning = FALSE, messages = FALSE}
 ## -------------------------------------- ##
@@ -107,25 +127,4 @@ anim_save(filename = "dino.gif",
 
 ```
 
-## Measures of Central Tendency
-
-````{r eval = TRUE}
-#| tbl-cap: "Mean & Standard Deviation of *x* and *y*"
-#| tbl-cap-location: top
-#| tbl-colwidths: [50,50]
-
-library(datasauRus) 
-library(knitr)
-library(tidyverse)
-
-datasaurus <- datasaurus_dozen
-group_datasaurus <- datasaurus %>%
-  group_by(dataset) %>% 
-  summarize(avg_x = round(mean(x),2), 
-            stdev_x = round(sd(x),2), 
-            avg_y = round(mean(y),2), 
-            stdev_y = round(sd(y),2))
-knitr::kable(group_datasaurus,
-             col.names = c('Data', 'Mean(x)','SD(x)','Mean(y)','SD(y)'))
-````
 

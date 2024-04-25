@@ -7,8 +7,12 @@ listing:
     contents: "2024/**/index.qmd"
     sort: "date desc"
     template: ../html/blog/listing.ejs
-    categories: true
-page-layout: full
+    categories: false
+format:
+  html:
+    grid:
+      body-width: 800px
+      sidebar-width: 250px
 toc-title: Year
 toc-location: right
 date-format: "MMMM D, YYYY"

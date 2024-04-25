@@ -2,10 +2,6 @@
 title: "Beautiful movement—the music and beauty of Lissajous(Liss–uh–joo) curves"
 date: 2024-04-15
 description: "Simple graphical and mathematical exploration of Lissajous curves "
-categories:
- - r
- - simulation
- - Lissajous
 format:
   html:
     css: styles.css
@@ -13,7 +9,7 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: true
-doi: https://doi.org/10.59350/y9kmp-zqh66
+doi: 10.59350/y9kmp-zqh66
 citation: true
 draft: false
 ---

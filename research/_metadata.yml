@@ -5,9 +5,9 @@ date-format: "MMMM YYYY"
 title-block-banner: "#035AA6"
 
 # Default for table of contents
-toc: true
-toc-title: Contents
-toc-location: left
+toc: false
+#toc-title: Contents
+#toc-location: left
 
 # Default knitr options
 execute:
@@ -17,7 +17,10 @@ execute:
 
 include-back-link: true
 
+
 format:
   html:
+    grid:
+      body-width: 800px
     template-partials:
       - ../html/research/title-block.html

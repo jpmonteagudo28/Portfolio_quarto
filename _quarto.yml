@@ -21,7 +21,7 @@ csl: files/bib/chicago-author-date.csl
 
 # Metadata stuff
 pagetitle: "{{< meta title >}} | JP Monteagudo"
-author-meta: "jp Monteagudo"
+author-meta: "JP Monteagudo"
 
 website:
   title: "jp monteagudo"
@@ -97,13 +97,16 @@ website:
       
     right: |
       <!-- <span class="faux-block">{{< fa key >}} [PGP public key]({{< var pgp.key >}}) &emsp; {{< fa fingerprint >}} Fingerprint:</strong><br><span class="fingerprint">{{< var pgp.fingerprint >}}</span></span> -->
-    
+
 format:
   html:
     theme: 
       - html/jpm.scss
     grid: 
-      body-width: 900px
+      body-width: 800px
+      sidebar-width: 250px
+      margin-width: 250px
+      gutter-width: 2.0em
     toc: false
     code-link: true
     anchor-sections: true
