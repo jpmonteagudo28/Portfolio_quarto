@@ -1,0 +1,46 @@
+---
+title: "jp monteagudo"
+subtitle: Aspiring Epidemiologist,<br> L&D Specialist 
+image: /files/profile_2024.png
+about:
+  template: trestles
+  image-width: 14em
+  image-shape: rounded
+  id: hero-heading
+  links:
+      - icon: twitter-x
+        aria-label: twitter
+        href: https://twitter.com/jpPabl0
+        rel: me
+      - icon: github
+        aria-label: github
+        href: https://github.com/jpmonteagudo28
+      - text: "{{< fa brands orcid >}}"
+        href: https://orcid.org/0009-0003-6465-6658
+      - icon: linkedin
+        aria-label: linkedin
+        href: https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/
+        rel: me
+format:
+  html:
+    page-layout: full
+    css: styles.css
+    
+---
+::: {#hero-heading}
+<div class="h1"> Hello there,</div>
+
+Thanks for stopping by!
+
+I'm an aspiring epidemiologist currently pursuing post-graduate studies in [Epidemiology](https://www.liberty.edu/residential/health-sciences/masters/public-health/epidemiology/) at [Liberty University](https://www.liberty.edu/residential/). I'm interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology and nutritional epidemiology.
+
+I love statistics the [R programming language](https://www.r-project.org/). I'm currently taking a deep dive into generalized linear models, causal inference and data visualization.
+
+Nowadays, I work as a Learning & Development Specialist conducting a pilot study analyzing the impact of new hire training on performance in a fast-paced contact center environment.
+
+:::
+
+
+
+
+

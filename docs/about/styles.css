@@ -1,0 +1,60 @@
+/* about area */
+.about-entity {
+  background-color: #e9ecef;
+  padding: 3em 0em 3em 0em !important;
+  margin: 0em 2em 0em 2em;
+  border-radius: 5px;
+}  
+  
+/* social links: block of links */
+.quarto-about-trestles .about-entity .about-link {
+  color: #c7254e;
+  font-size: .85em;
+  padding: .15em .15em !important;
+  text-align: center;
+  column-gap: 0em;
+  border: none !important;
+}
+
+.h1 { /* This applies to id hereo-heading only */
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.85rem;
+  line-height: 1.3;
+}
+
+h1 {
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-family: "Spectral SC";
+  font-weight: 500;
+  font-size: 1.85rem;
+  line-height: 1.1;
+}
+
+h2 {
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.85rem;
+  line-height: 1.3;
+}
+
+h3 {
+    color: #0a254e; /* Replace it with the color you want */
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.70rem;
+    line-height: 1.5;
+}
+
+h4, h5, h6 {
+    color: #0a254e; /* Replace it with the color you want */
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.45rem;
+    line-height: 1.5;
+}

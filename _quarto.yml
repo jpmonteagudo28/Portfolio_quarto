@@ -24,12 +24,13 @@ pagetitle: "{{< meta title >}} | JP Monteagudo"
 author-meta: "JP Monteagudo"
 
 website:
-  title: "jp monteagudo"
+  title: "home"
   description: "JP is an aspiring epidemiologist currently pursuing his degree in epidemiology from Liberty University."
   favicon: "/files/cards/favicon_no_bg.png"
   site-url: "https://www.jpmonteagudo.com"
   repo-url: "https://github.com/jpmonteagudo28/portfolio_quarto"
-  reader-mode: true
+  reader-mode: false
+  page-navigation: true
   
   google-analytics: "G-SM9D5VRX5P"
 
@@ -49,7 +50,7 @@ website:
 
     left:
       - text: "about"
-        href: "index.qmd"
+        href: "about/index.qmd"
       - text: "resume"
         href: "cv/index.qmd"
       - text: "blog"
@@ -107,7 +108,6 @@ format:
       sidebar-width: 250px
       margin-width: 250px
       gutter-width: 2.0em
-    toc: false
     code-link: true
     anchor-sections: true
     fig-cap-location: margin

@@ -1,37 +1,28 @@
 ---
-title: "¡Bienvenido!"
-pagetitle: "jp monteagudo"
-main-photo: /files/profile_2024.png
-main-photo-square: /files/profile_2024.png
+title: "JP Monteagudo"
+pagetitle: "JP Monteagudo"
+subtitle: "Aspiring Epidemiologist,<br> L&D Specialist"
+image: /files/circle.png
 title-block-banner: "#112540"
 format:
   html:
-    quarto-template-params:
-      banner-header-class: "home"
+    page-layout: full
+    css: /html/styles.css
+about:
+  template: solana
+  image-width: 28em
+  id: hero-heading
 ---
 
-::: grid
-::: {.g-col-12 .g-col-sm-4}
-```{=html}
-<div class="grid" style="--bs-columns: 5; row-gap: 0;">
-  <div class="g-col-1 g-col-sm-0"></div>
-  <div class="g-col-3 g-col-sm-5 text-center"> <!-- Added text-center class -->
-    <picture>
-      <source media="(max-width: 576px)" srcset="{{< meta main-photo-square >}}">
-      <source media="(min-width: 576px)" srcset="{{< meta main-photo >}}">
-      <img class="img-fluid mx-auto" src="{{< meta main-photo >}}" alt="{{< meta author-meta >}}">
-    </picture>
-  </div>
-  <div class="g-col-1 g-col-sm-0"></div>
-</div>
-```
-:::
+<br><br>
 
-::: {.g-col-12 .g-col-sm-8}
-I'm an aspiring epidemiologist currently pursuing post-graduate studies in [Epidemiology](https://www.liberty.edu/residential/health-sciences/masters/public-health/epidemiology/) at [Liberty University](https://www.liberty.edu/residential/). I have previously obtained degrees in [psychology](https://www.liberty.edu/residential/behavioral-sciences/bachelors/psychology/) and [biostatistics](https://www.statistics.com/certificate/biostatistics-certificate-program/) in 2020 and 2023.
+::: {#hero-heading}
+<p style="font-weight: 500;">
+<i><span style="font-size:30px;">Hi, my name is JP.</span></i>
+</p>
+<p style="font-weight: 400;">
+I'm passionate about **human health, statistics, code, data and design**. This website is a collection of projects, research, and discussions on topics that I find interesting and meaningful. My goal is to make this site a source of publicly available **data**, **code** and **insights** that can be used by others to **advance** their learning journey. 
+</p>
+[Learn more about me &rarr;](/about){.about-links .subtitle}
 
-I'm interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology and nutritional epidemiology. I love mathematical applied statistics and the [R programming language](https://www.r-project.org/), one of the best tools for clinical statistics and epidemiological research.
-
-I'm currently taking a deep dive into generalized linear models, causal inference and data visualization. Nowadays, I'm conducting a pilot study to analyze the impact of new hire training on performance in a fast-paced contact center environment for the financial services division of a large university.
-:::
 :::

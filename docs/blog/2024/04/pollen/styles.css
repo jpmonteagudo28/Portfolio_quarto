@@ -1,3 +1,12 @@
+h1 {
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.85rem;
+  line-height: 1.3;
+}
+
 h2 {
   border-bottom: none;
   color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
@@ -21,28 +30,6 @@ h4, h5, h6 {
     font-weight: 300;
     font-size: 1.45rem;
     line-height: 1.5;
-}
-
-/* Creating multiple columns side-by-side */
-
-.multiple .column {
-  width: 35%;
-  margin: 5px;
-}
-
-.multiple .columns {
-  display: flex;
-}
-
-@media (max-width: 767px) {
-  .multiple .column {
-    width: auto;
-  }
-
- .multiple .columns {
-   display: flex;
-   flex-direction: column;
-  }
 }
 
 
