@@ -855,6 +855,18 @@
       ],
       "Hash": "ac107251d9d9fd72f0ca8049988f1d7f"
     },
+    "hues": {
+      "Package": "hues",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "colorspace",
+        "methods"
+      ],
+      "Hash": "9d9a3cbcf39a3522f360980528b731fb"
+    },
     "ids": {
       "Package": "ids",
       "Version": "1.0.1",

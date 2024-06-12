@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.41">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="JP Monteagudo">
+<meta name="description" content="Rudimentary solutions using R">
+<title>home – The Iterated Prisoners’ Dilemma | JP Monteagudo</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../..//files/cards/favicon_no_bg.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
+</script><style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #112540;
+      }
+</style>
+<meta name="quarto:status" content="draft">
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="The Iterated Prisoners’ Dilemma | JP Monteagudo">
+<meta property="og:description" content="Rudimentary solutions using R">
+<meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta property="og:site_name" content="home">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="357">
+<meta property="og:image:width" content="334">
+<meta name="twitter:title" content="The Iterated Prisoners’ Dilemma | JP Monteagudo">
+<meta name="twitter:description" content="Rudimentary solutions using R">
+<meta name="twitter:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta name="twitter:creator" content="@jpPabl0">
+<meta name="twitter:site" content="@jpPabl0">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="357">
+<meta name="twitter:image-width" content="334">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">home</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../../../about/index.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../cv/index.html"> 
+<span class="menu-text">resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blog/index.html"> 
+<span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../now/index.html"> 
+<span class="menu-text">now</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../uses/index.html"> 
+<span class="menu-text">uses</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="../../../../atom.xml"> <i class="bi bi-rss" role="img" aria-label="rss">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jpmonteagudo2014@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/jpPabl0" rel="me"> <i class="bi bi-twitter-x" role="img" aria-label="twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jpmonteagudo28" rel="me"> <i class="bi bi-github" role="img" aria-label="github">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/" rel="me"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">The Iterated Prisoners’ Dilemma</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Rudimentary solutions using R
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.jpmonteagudo.com/">JP Monteagudo</a> <a href="https://orcid.org/0009-0003-6465-6658" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Wednesday, June 12, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="not-so-quickly" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="not-so-quickly">Not So Quickly!</h2>
+<p>Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn’t exist yet so we’re stuck with the question of cooperation. <em>Should we always cooperate?</em> Yes…<strong>not so quickly!</strong>.</p>
+<p>As R. Axelrod<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> put it:</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;The Evolution of Cooperation. <em>Basic Books, Inc</em>. New York, 1984</p></div></div><blockquote class="blockquote">
+<p>The Cooperation theory [here] is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole.</p>
+</blockquote>
+<section id="the-prisoners-dilemma" class="level3"><h3 class="anchored" data-anchor-id="the-prisoners-dilemma">The Prisoner’s Dilemma</h3>
+<p>This iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:</p>
+<p>Two bank robbers happen to meet. They decide to pull a job together. The cops nab them, but without enough evidence to convict. They need a confession. And they know both robbers are unlikely to talk, since if neither implicates the other, the cops can keep them in jail for only 30 days.</p>
+<p>So they put the two in separate cells. They go to the first prisoner and say: “If you rat on your partner and he stays mum, we’ll let you go and he’ll do ten years.If you both rat on each other, you’ll both do eight years.” Then they go to the second prisoner and say the same thing.</p>
+<p>The first prisoner thinks it over. “If he rats on me and I don’t rat on him, then I lose big-time. If I rat on him and he doesn’t rat on me, then I win big-time. Either way, the smart move is to rat on him. I’ll just hope he’s a sucker and doesn’t rat on me.” The second prisoner reasons the same way. So they rat on each other, and the cops get their two convictions. If the prisoners had cooperated, both would have gotten off easy. Instead, the rational pursuit of self-interest has put them both in a world of pain.</p>
+<p>To win the game, at least one player must cooperate in the face of betrayal, otherwise both contestants would face unfavorable outcomes.</p>
+</section><section id="the-rules" class="level3"><h3 class="anchored" data-anchor-id="the-rules">The Rules</h3>
+<p>The rules of Axelrod’s iterated prisoner’s dilemma:</p>
+<ol type="1">
+<li>Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random.</li>
+<li>Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.</li>
+</ol>
+<section id="the-path-to-follow" class="level4"><h4 class="anchored" data-anchor-id="the-path-to-follow">The Path to Follow</h4>
+<p>I’ll attempt to provide four solutions to this problem. The first one will never be the first to betray but will copy the opponent’s previous choice; the second solution will betray in response to a cooperation five percent of the time; the third solution will cooperate first and then imitate each of player 1’s choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game The official winning strategy was the following:</p>
+<ul>
+<li>In the first match-up, cooperate.</li>
+<li>In every match-up after that, do what the opponent did in the preceding match-up.</li>
+</ul></section><section id="the-titfortat-solution" class="level4"><h4 class="anchored" data-anchor-id="the-titfortat-solution">The Tit–for–Tat solution</h4>
+<p>I’ll imitate this strategy in the first algorithm and decide on the choices for player 1.</p>
+<p>First, I’ll assign values to the three possible outcomes: Mutual cooperation is represented by the integer <code>3</code>. Mutual betrayal is represented by <code>1</code>, and Unmet cooperation is represented by <code>5</code>. Player’s choices will be represented by betrayal equals <code>1</code> and cooperation equals <code>2</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">outcomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mutual Cooperation"</span>, <span class="st">"Mutual Betrayal"</span>,<span class="st">"Unmet Cooperation"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Betray"</span>, <span class="st">"Cooperate"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#&gt; Player 1 choices (46% prob of betrayal, 24% prob cooperation)</span></span>
+<span><span class="va">p1_choice</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choices</span>,<span class="fl">200</span>,replace <span class="op">=</span> <span class="cn">T</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.459</span>,<span class="fl">.237</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">p1_choice</span><span class="op">)</span></span>
+<span><span class="co">#&gt; p1_choice</span></span>
+<span><span class="co">#&gt;   1   2 </span></span>
+<span><span class="co">#&gt; 132  68</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now I have to create a function for player 2 that chooses to cooperate on the first attempt, and copies player 1’s choice on subsequent ones. To do this, I have to iterate over each of player 1’s choice, and store player 2’s replies in a new vector.</p>
+<p>To determine the choice order, I’ll create a vector of length 2 with player 1’s original choice and subtract 1 from that choice to obtain the alternative. To create the vector of choices of length <code>n</code>, I’ll append player 1’s original choice to a vector of length <code>n-1</code> to make sure the first choice is always in position 1 <code>p1_choice[1]</code>. The resulting vector will be of length <code>n</code>.</p>
+<p>To create the vector or player 2’s choices using the tit–for–tat algorithm, I’ll create a vector of length <code>n</code> equal to <code>p1_choice</code>. The first choice will always be cooperation, and all subsequent choices will be player 1’s previous response <code>p1[ i -1]</code>.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Always remember to initialize vectors and perform operations outside the loop, if possible. Doing this will sometimes make your function much, much faster.</p>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; @rounds: number of rounds or matches in one game</span></span>
+<span><span class="co">#&gt; @prob: probability of betrayal and cooperation</span></span>
+<span><span class="co">#&gt; @choice: first choice to start the game. Choice inversion will be applied if staring choice = 1</span></span>
+<span><span class="co">#&gt; @replace: sampling with replacement based on choice order. A vector of length 2</span></span>
+<span></span>
+<span><span class="va">tit.for.tat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rounds</span>, </span>
+<span>                        <span class="va">prob</span>, </span>
+<span>                        <span class="va">choice</span>,</span>
+<span>                        <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co">#Check arguments</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="op">{</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/integer.html">is.integer</a></span><span class="op">(</span><span class="va">rounds</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/double.html">is.double</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">replace</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">choice_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fl">1</span> <span class="op">-</span> <span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">rounds</span> <span class="op">-</span><span class="fl">1</span></span>
+<span>  <span class="co"># Choice inversion if choice  = 1</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">choice_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">inv.prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">prob</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,<span class="va">prob</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">inv.prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">p2</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p1</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu">tit.for.tat</span><span class="op">(</span><span class="fl">200</span>,prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.459</span>,<span class="fl">.237</span><span class="op">)</span>, choice <span class="op">=</span> <span class="fl">0</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   0   1 </span></span>
+<span><span class="co">#&gt; 124  76</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="the-backstabber-prober" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="the-backstabber-prober">The Backstabber Prober</h3>
+<p>The only difference between Tit–for–Tat and the IBP<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is that we’re adding a random element that will cause player 2 to betray player 1 when faced with a cooperative response. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod</p></div><div id="fn3"><p><sup>3</sup>&nbsp;in theory, this should happen 5% of the time for the uniform distribution</p></div></div><p>To implement the random component needed to defect on 5% of cooperative responses, I will identify each time player 1 chooses to cooperate and then defect when randomly generated number from the uniform distribution is less than or equal to .05<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. If the randomly generated number is greater than my default, I’ll revert back to the tit–for–tat strategy.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; @prob: probability of betrayal and cooperation</span></span>
+<span><span class="co">#&gt; @default: percentage of cooperative responses on which player 2 betrays player 1</span></span>
+<span></span>
+<span><span class="va">prober</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rounds</span>, </span>
+<span>                   <span class="va">prob</span>,</span>
+<span>                   <span class="va">choice</span>,</span>
+<span>                   <span class="va">default</span>,</span>
+<span>                   <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>    <span class="co">#Check arguments</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="op">{</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/integer.html">is.integer</a></span><span class="op">(</span><span class="va">rounds</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/double.html">is.double</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/double.html">is.double</a></span><span class="op">(</span><span class="va">default</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">replace</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">choice_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>, <span class="fl">1</span> <span class="op">-</span> <span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">rounds</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">choice_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">inv.prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">prob</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,<span class="va">prob</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">inv.prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">p2</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  </span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">p1</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">default</span><span class="op">)</span> <span class="op">{</span> <span class="co"># % chance to switch from 1 to 0</span></span>
+<span>      <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p1</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p1</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu">prober</span><span class="op">(</span><span class="fl">200</span>,prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.459</span>,<span class="fl">.237</span><span class="op">)</span>, choice <span class="op">=</span> <span class="fl">0</span>, default <span class="op">=</span> <span class="fl">.05</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   0   1 </span></span>
+<span><span class="co">#&gt; 133  67</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-corteous-cat" class="level3"><h3 class="anchored" data-anchor-id="the-corteous-cat">The Corteous Cat</h3>
+<p>A less glorious but more common solution is to simply imitate each of player 1 moves to a T. Player 2 will never cooperate first unless player 1 chooses to cooperate. This copy cat algorithm is looking at the current round and copying the first player’s moves. It is not concerned with the previous moves.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">copy.cat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rounds</span>, </span>
+<span>                   <span class="va">prob</span>,</span>
+<span>                   <span class="va">choice</span>,</span>
+<span>                   <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>    <span class="co">#Check arguments</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="op">{</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/integer.html">is.integer</a></span><span class="op">(</span><span class="va">rounds</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/double.html">is.double</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">replace</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">choice_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>, <span class="fl">1</span> <span class="op">-</span> <span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">rounds</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">choice_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">inv.prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">prob</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,<span class="va">prob</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">inv.prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">p2</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="va">p1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu">copy.cat</span><span class="op">(</span><span class="fl">200</span>,prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.459</span>,<span class="fl">.237</span><span class="op">)</span>, choice <span class="op">=</span> <span class="fl">0</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   0   1 </span></span>
+<span><span class="co">#&gt; 124  76</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="the-squirrels-revenge" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="the-squirrels-revenge">The Squirrel’s Revenge</h3>
+<p>The last algorithm will not play nice on the first round and will exact revenge on player 1 until the game is over<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. This player is a more revengeful fellow. Let’s see how to implement it.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;A copy of the aggressive Friedman’s algorithm</p></div></div><p>The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a cooperation, player 2 will no longer cooperate. I’ll only add one argument <code>zero_switch</code> to identify when player 1 chooses to defect. This logical vector will automatically switch to true inside the for loop, and will cause player 2 to defect on every move for the remainder of the game.</p>
+<p>Something worthy of attention here is that if the probability of betrayal is higher than cooperation, the revenge algorithm will most likely never cooperate after the first couple of rounds. I’ll make sure to set a higher probability of cooperation to see the algorithm in action.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">exact.revenge</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rounds</span>, </span>
+<span>                   <span class="va">prob</span>,</span>
+<span>                   <span class="va">choice</span>,</span>
+<span>                   <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>    <span class="co">#Check arguments</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="op">{</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/integer.html">is.integer</a></span><span class="op">(</span><span class="va">rounds</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/double.html">is.double</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">replace</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">choice_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>, <span class="fl">1</span> <span class="op">-</span> <span class="va">choice</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">rounds</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">choice_order</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">inv.prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">prob</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,<span class="va">prob</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">inv.prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">choice</span>,<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">choice_order</span>,size <span class="op">=</span> <span class="va">n</span>,replace <span class="op">=</span> <span class="va">replace</span>,prob <span class="op">=</span> <span class="va">prob</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">p2</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  <span class="va">zero_switch</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span>  </span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">p1</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="va">p1</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="va">zero_switch</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">}</span> </span>
+<span>    <span class="va">p2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">zero_switch</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu">exact.revenge</span><span class="op">(</span><span class="fl">200</span>,prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.159</span>,<span class="fl">.437</span><span class="op">)</span>, choice <span class="op">=</span> <span class="fl">1</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   0   1 </span></span>
+<span><span class="co">#&gt; 193   7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="algorithm-perfomance" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="algorithm-perfomance">Algorithm Perfomance</h2>
+<p>Now that all four algorithms are created, I’ll implement a function to evaluate the overall performance in total points after 200 rounds.</p>
+<p>First, I have to create an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over <code>n</code> number of games. To do this, I would have to update choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player’s score in the new list to find the total number of points per game. Lastly, I would have to calculate the average number of total points per game and compare algorithms this way.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; @(...) arguments include:</span></span>
+<span><span class="co">#&gt;              @alg: algorithms to compare</span></span>
+<span><span class="co">#&gt;              @rounds: number of rounds in a game</span></span>
+<span><span class="co">#&gt;              @prob:   probability of betrayal and cooperation.</span></span>
+<span><span class="co">#&gt;              @choice: starting choice.</span></span>
+<span><span class="co">#&gt;              @default: percentage of cooperative responses on which player 2 betrays player 1</span></span>
+<span><span class="co">#&gt; @iter: how many games of `n` rounds should be played.</span></span>
+<span></span>
+<span><span class="va">comp.alg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">alg</span>,</span>
+<span>                     <span class="va">iter</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                     <span class="va">rounds</span>,</span>
+<span>                     <span class="va">prob</span>,</span>
+<span>                     <span class="va">choice</span>,</span>
+<span>                     <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                     <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="co">#Check arguments</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">is.list</a></span><span class="op">(</span><span class="va">alg</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">iter</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">iter</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">}</span><span class="op">)</span>  </span>
+<span>  </span>
+<span>  <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"P1.C"</span>,<span class="st">"P1.B"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"P2.C"</span>,<span class="st">"P2.B"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">play.game</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rounds</span>, </span>
+<span>                        <span class="va">prob</span>,</span>
+<span>                        <span class="va">choice</span>, </span>
+<span>                        <span class="va">default</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                        <span class="va">replace</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">alg</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>rounds <span class="op">=</span> <span class="va">rounds</span>,</span>
+<span>                                prob <span class="op">=</span> <span class="va">prob</span>,</span>
+<span>                                choice <span class="op">=</span> <span class="va">choice</span>,</span>
+<span>                                replace <span class="op">=</span> <span class="va">replace</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">alg</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>rounds <span class="op">=</span> <span class="va">rounds</span>,</span>
+<span>                                prob <span class="op">=</span> <span class="va">prob</span>,</span>
+<span>                                choice <span class="op">=</span> <span class="va">choice</span>,</span>
+<span>                                replace <span class="op">=</span> <span class="va">replace</span><span class="op">)</span><span class="op">)</span></span>
+<span>   </span>
+<span>  <span class="va">do.score</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">P1</span>,<span class="va">P2</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">l1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">P1</span>,<span class="va">P2</span><span class="op">)</span></span>
+<span>    <span class="va">game_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>P1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">P1</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                           P2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">P2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">l1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>      <span class="va">c1</span> <span class="op">&lt;-</span> <span class="va">l1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>      <span class="va">c2</span> <span class="op">&lt;-</span> <span class="va">l1</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>      </span>
+<span>      <span class="va">p1_score</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">[</span><span class="va">c1</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">c2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span></span>
+<span>      <span class="va">p2_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">[</span><span class="va">c1</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">c2</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span></span>
+<span>      </span>
+<span>      <span class="va">game_res</span><span class="op">$</span><span class="va">P1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p1_score</span></span>
+<span>      <span class="va">game_res</span><span class="op">$</span><span class="va">P2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">p2_score</span></span>
+<span>    <span class="op">}</span></span>
+<span>     <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">game_res</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">out_game</span> <span class="op">&lt;-</span> <span class="fu">do.score</span><span class="op">(</span><span class="va">p1</span>,<span class="va">p2</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">out_game</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span>  <span class="va">boot.results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list2DF.html">list2DF</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">iter</span>, <span class="fu">play.game</span><span class="op">(</span>rounds <span class="op">=</span> <span class="va">rounds</span>,</span>
+<span>                                prob <span class="op">=</span> <span class="va">prob</span>,</span>
+<span>                                choice <span class="op">=</span> <span class="va">choice</span>,</span>
+<span>                                replace <span class="op">=</span> <span class="va">replace</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>,<span class="va">boot.results</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co">#Let's test it</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">comp.alg</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">copy.cat</span>, <span class="va">tit.for.tat</span><span class="op">)</span>, </span>
+<span>                 iter <span class="op">=</span> <span class="fl">500</span>, </span>
+<span>                 rounds <span class="op">=</span> <span class="fl">200</span>, </span>
+<span>                 prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.345</span>, <span class="fl">.231</span><span class="op">)</span>, </span>
+<span>                 choice <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    P1  P2</span></span>
+<span><span class="co">#&gt; 1 516 491</span></span>
+<span><span class="co">#&gt; 2 510 465</span></span>
+<span><span class="co">#&gt; 3 460 490</span></span>
+<span><span class="co">#&gt; 4 506 461</span></span>
+<span><span class="co">#&gt; 5 469 479</span></span>
+<span><span class="co">#&gt; 6 482 477</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="code-benchmarking" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="code-benchmarking">Code Benchmarking</h3>
+<p>First, I’ll look at the execution time and memory usage of my <code>comp.alg</code> function for several algorithms<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. I’ll use the <code>bench</code> package to look at these two performance metrics. I’ll wrap my code in a function and measure its performance<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;The <code>comp.alg</code> function is not currently dealing with the <code>default</code> argument of the <code>prober</code> algorithm.I’m thinking of a way to implement it in a naturally efficient way.</p></div><div id="fn6"><p><sup>6</sup>&nbsp;look up the <code><a href="http://bench.r-lib.org/reference/mark.html">bench::mark()</a></code> function to see which metrics are calculated.</p></div></div><p>The second step is to use <code>bench::pres()</code> to supply my wrapper function with a grid of values to use as iterations. Laslty, I’ll visualize the the number of iterations vs.&nbsp;execution time across algorithms.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span> <span class="va">bench.comp.alg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">iter</span><span class="op">)</span><span class="op">{</span></span>
+<span>     <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span></span>
+<span>         <span class="st">"Copy"</span> <span class="op">=</span> <span class="fu">comp.alg</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">copy.cat</span>,<span class="va">exact.revenge</span><span class="op">)</span>,iter <span class="op">=</span> <span class="va">iter</span>, rounds <span class="op">=</span> <span class="fl">200</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>,<span class="fl">.32</span><span class="op">)</span>,choice <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">P1</span>,</span>
+<span>         <span class="st">"Exact"</span> <span class="op">=</span> <span class="fu">comp.alg</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">copy.cat</span>,<span class="va">exact.revenge</span><span class="op">)</span>,iter <span class="op">=</span> <span class="va">iter</span>, rounds <span class="op">=</span> <span class="fl">200</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>,<span class="fl">.32</span><span class="op">)</span>,choice <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">P2</span>,</span>
+<span>         <span class="st">"tft"</span> <span class="op">=</span> <span class="fu">comp.alg</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">tit.for.tat</span>,<span class="va">exact.revenge</span><span class="op">)</span>,iter <span class="op">=</span> <span class="va">iter</span>, rounds <span class="op">=</span> <span class="fl">200</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>,<span class="fl">.32</span><span class="op">)</span>,choice <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">P1</span>,</span>
+<span>         time_unit <span class="op">=</span> <span class="st">"ms"</span>, </span>
+<span>         check <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>     <span class="op">)</span></span>
+<span> <span class="op">}</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/press.html">press</a></span><span class="op">(</span></span>
+<span>     iter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span>,<span class="fl">100</span>,<span class="fl">300</span>,<span class="fl">500</span>,<span class="fl">700</span>,<span class="fl">900</span>,<span class="fl">1000</span><span class="op">)</span>,</span>
+<span>     <span class="fu">bench.comp.alg</span><span class="op">(</span><span class="va">iter</span><span class="op">)</span></span>
+<span> <span class="op">)</span></span>
+<span></span>
+<span><span class="co">#&gt; A tibble: 24 × 14</span></span>
+<span><span class="co">#&gt;   expression  iter    min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory                   time            gc      </span></span>
+<span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;list&gt; &lt;list&gt;                   &lt;list&gt;          &lt;list&gt;  </span></span>
+<span><span class="co">#&gt;  1 Copy          10   31.3   32.6    30.6      6.51MB     40.8     6     8       196. &lt;NULL&gt; &lt;Rprofmem [4,132 × 3]&gt;   &lt;bench_tm [14]&gt; &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  2 Exact         10   29.7   30.8    32.2      6.51MB     32.2     8     8       248. &lt;NULL&gt; &lt;Rprofmem [4,131 × 3]&gt;   &lt;bench_tm [16]&gt; &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  3 tft           10   30.8   32.4    30.8      6.51MB     30.8     7     7       227. &lt;NULL&gt; &lt;Rprofmem [4,131 × 3]&gt;   &lt;bench_tm [14]&gt; &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  4 Copy          50  207.   222.      4.40    32.55MB     14.7     3    10       681. &lt;NULL&gt; &lt;Rprofmem [20,668 × 3]&gt;  &lt;bench_tm [3]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  5 Exact         50  258.   262.      3.82    32.55MB     11.5     2     6       524. &lt;NULL&gt; &lt;Rprofmem [20,806 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span> <span class="co">#&gt; 6 tft           50  205.   266.      4.03    32.55MB     10.8     3     8       744. &lt;NULL&gt; &lt;Rprofmem [20,808 × 3]&gt;  &lt;bench_tm [3]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  7 Copy         100  576.   576.      1.74    65.09MB     12.2     1     7       576. &lt;NULL&gt; &lt;Rprofmem [41,418 × 3]&gt;  &lt;bench_tm [1]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  8 Exact        100  400.   411.      2.43    65.09MB     14.6     2    12       821. &lt;NULL&gt; &lt;Rprofmem [41,400 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt;  9 tft          100  372.   390.      2.57    65.09MB     15.4     2    12       780. &lt;NULL&gt; &lt;Rprofmem [41,461 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co">#&gt; 10 Copy         300 1254.  1254.      0.798  195.27MB     10.4     1    13      1254. &lt;NULL&gt; &lt;Rprofmem [123,916 × 3]&gt; &lt;bench_tm [1]&gt;  &lt;tibble&gt;</span></span>
+<span><span class="co"># ℹ 14 more rows</span></span>
+<span><span class="co"># ℹ Use `print(n = ...)` to see more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s now visualize the performance of each algorithm using <code>ggplot2</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Customize fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Ubuntu"</span>,<span class="st">"ubu"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">text</span> <span class="op">&lt;-</span> <span class="st">"ubu"</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">results</span>,</span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">iter</span>,<span class="va">median</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">expression</span>,<span class="st">"description"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"No. of iterations"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Execution Time (ms)"</span>,</span>
+<span>       colour <span class="op">=</span> <span class="st">"Algorithm"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co">#scale_color_manual(values = iter) +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">text</span>, size <span class="op">=</span> <span class="fl">23</span><span class="op">)</span>,</span>
+<span>        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">text</span>, size <span class="op">=</span> <span class="fl">18</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#f8f9f9"</span>,</span>
+<span>                                       color <span class="op">=</span> <span class="st">"NA"</span><span class="op">)</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">text</span>, size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>                                  hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">text</span>,size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span>,</span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/alg_perf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="354"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="practical-implications" class="level3"><h3 class="anchored" data-anchor-id="practical-implications">Practical Implications</h3>
+<p>Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict.</p>
+<p>Here are the rules for strategic cooperation:</p>
+<ul>
+<li>Avoid unnecessary conflict by cooperating as long as your opponent does.</li>
+<li>If your opponent betrays you without provocation— respond in kind…once.</li>
+<li>Then forgive the betrayal, and cooperate again.</li>
+<li>Be clear and predictable so your opponent knows how you act and can plan accordingly.</li>
+</ul>
+
+
+<!-- -->
+
+</section></section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Monteagudo, JP. 2024. <span>“The Iterated Prisoners’ Dilemma.”</span>
+June 12, 2024. <a href="https://www.jpmonteagudo.com/blog/2024/05/prisoners">https://www.jpmonteagudo.com/blog/2024/05/prisoners</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.jpmonteagudo\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Iterated Prisoners' Dilemma"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> now</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Rudimentary solutions using R"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-line-numbers: false</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#doi: </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="in">library(methods)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(2899)</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "90%", collapse = TRUE, </span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="in">                      cache = TRUE, comment = "#&gt;")</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3, </span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="in">        width = 300)</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="in">options(</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="in">  rlang_trace_top_env = rlang::current_env(),</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="in">  rlang__backtrace_on_error = "none")</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Not So Quickly!</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn't exist yet so we're stuck with the question of cooperation. *Should we always cooperate?* Yes…**not so quickly!**. </span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>As R. Axelrod^<span class="co">[</span><span class="ot">The Evolution of Cooperation. *Basic Books, Inc*. New York, 1984</span><span class="co">]</span> put it: </span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The Cooperation theory </span><span class="co">[</span><span class="ot">here</span><span class="co">]</span><span class="at"> is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole. </span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Prisoner's Dilemma</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>This iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>Two bank robbers happen to meet. They decide to pull a job together.</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>The cops nab them, but without enough evidence to convict. They need a confession. And they know both robbers are unlikely to talk, since if neither implicates the other, the cops can keep them in jail for only 30 days. </span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>So they put the two in separate cells. They go to the first prisoner and say: “If you rat on your partner and he stays mum, we’ll let you go and he’ll do ten years.If you both rat on each other, you’ll both do eight years.” Then they go to the second prisoner and say the same thing. </span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>The first prisoner thinks it over. “If he rats on me and I don’t rat on him, then I lose big-time. If I rat on him and he doesn’t rat on me, then I win big-time. Either way, the smart move is to rat on him. I’ll just hope he’s a sucker and doesn’t rat on me.”   The second prisoner reasons the same way. So they rat on each other, and the cops get their two convictions. If the prisoners had cooperated, both would have gotten off easy. Instead, the rational pursuit of self-interest has put them both in a world of pain.</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>To win the game, at least one player must cooperate in the face of betrayal, otherwise both contestants would face unfavorable outcomes.</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Rules</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>The rules of Axelrod's iterated prisoner's dilemma:</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random. </span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="fu">#### The Path to Follow</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>I'll attempt to provide four solutions to this problem. The first one will never be the first to betray but will copy the opponent's previous choice; the second solution will betray in response to a cooperation five percent of the time; the third solution will cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>The official winning strategy was the following:  </span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>In the first match-up, cooperate.</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>In every match-up after that, do what the opponent did in the preceding match-up.</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="fu">#### The Tit–for–Tat solution</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>I'll imitate this strategy in the first algorithm and decide on the choices for player 1.</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>First, I'll assign values to the three possible outcomes: Mutual cooperation is represented by the integer <span class="in">`3`</span>. Mutual betrayal is represented by <span class="in">`1`</span>, and Unmet cooperation is represented by <span class="in">`5`</span>. Player's choices will be represented by  betrayal equals <span class="in">`1`</span> and cooperation equals <span class="in">`2`</span>.</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r primitive, eval = TRUE}</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="in">outcomes &lt;- factor(c(1,3,5), labels = c("Mutual Cooperation", "Mutual Betrayal","Unmet Cooperation"))</span></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="in">choices &lt;- factor(c(1,2), labels = c("Betray", "Cooperate"))</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; Player 1 choices (46% prob of betrayal, 24% prob cooperation)</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="in">p1_choice &lt;- as.numeric(sample(choices,200,replace = T, prob = c(.459,.237)))</span></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="in">table(p1_choice)</span></span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>Now I have to create a function for player 2 that chooses to cooperate on the first attempt, and copies player 1's choice on subsequent ones. To do this, I have to iterate over each of player 1's choice, and store player 2's replies in a new vector.</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>To determine the choice order, I'll create a vector of length 2 with player 1's original choice and subtract 1 from that choice to obtain the alternative. To create the vector of choices of length <span class="in">`n`</span>, I'll append player 1's original choice to a vector of length <span class="in">`n-1`</span> to make sure the first choice is always in position 1 <span class="in">`p1_choice[1]`</span>. The resulting vector will be of length <span class="in">`n`</span>. </span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>To create the vector or player 2's choices using the tit–for–tat algorithm, I'll create a vector of length <span class="in">`n`</span> equal to <span class="in">`p1_choice`</span>. The first choice will always be cooperation, and all subsequent choices will be player 1's previous response <span class="in">`p1[ i -1]`</span>.</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>:::{.callout-tip appearance="simple"}</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>Always remember to initialize vectors and perform operations outside the loop, if possible. Doing this will sometimes make your function much, much faster.</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r titfortat, eval = TRUE}</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @rounds: number of rounds or matches in one game</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @prob: probability of betrayal and cooperation</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @choice: first choice to start the game. Choice inversion will be applied if staring choice = 1</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @replace: sampling with replacement based on choice order. A vector of length 2</span></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="in">tit.for.tat &lt;- function(rounds, </span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a><span class="in">                        prob, </span></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a><span class="in">                        choice,</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="in">                        replace = TRUE){</span></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="in">  #Check arguments</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot({ </span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="in">  is.integer(rounds)</span></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="in">  is.double(prob)</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(choice)</span></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(replace)})</span></span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="in">  choice_order &lt;- c(choice,1 - choice)</span></span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="in">  n &lt;- rounds -1</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="in">  # Choice inversion if choice  = 1</span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="in">  if(choice_order[1] == 1){</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="in">    inv.prob &lt;- c(prob[2],prob[1])</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="in">  } else{</span></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))</span></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a><span class="in">  p2 &lt;- numeric(length(p1))</span></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a><span class="in">  p2[1] &lt;- 1</span></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a><span class="in">  for(i in 2:length(p1)){</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a><span class="in">    p2[i] &lt;- p1[i -1]</span></span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a><span class="in">  return(p2)</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in">table(tit.for.tat(200,prob = c(.459,.237), choice = 0, replace = T))</span></span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Backstabber Prober</span></span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>The only difference between Tit–for–Tat and the IBP^<span class="co">[</span><span class="ot">This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod</span><span class="co">]</span> is that we're adding a random element that will cause player 2 to betray player 1 when faced with a cooperative response. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.</span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>To implement the random component needed to defect on 5% of cooperative responses, I will identify each time player 1 chooses to cooperate and then defect when randomly generated number from the uniform distribution is less than or equal to .05^<span class="co">[</span><span class="ot">in theory, this should happen 5% of the time for the uniform distribution</span><span class="co">]</span>. If the randomly generated number is greater than my default, I'll revert back to the tit–for–tat strategy.</span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ibp, eval = TRUE}</span></span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @prob: probability of betrayal and cooperation</span></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @default: percentage of cooperative responses on which player 2 betrays player 1</span></span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">prober &lt;- function(rounds, </span></span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a><span class="in">                   prob,</span></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="in">                   choice,</span></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="in">                   default,</span></span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a><span class="in">                   replace = TRUE){</span></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="in">    #Check arguments</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot({ </span></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a><span class="in">  is.integer(rounds)</span></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a><span class="in">  is.double(prob)</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(choice)</span></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">  is.double(default)</span></span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(replace)})</span></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a><span class="in">  choice_order &lt;- c(choice, 1 - choice)</span></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="in">  n &lt;- rounds - 1</span></span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a><span class="in">  if(choice_order[1] == 1){</span></span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a><span class="in">    inv.prob &lt;- c(prob[2],prob[1])</span></span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))</span></span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="in">  } else{</span></span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))</span></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a><span class="in">  p2 &lt;- numeric(length(p1))</span></span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a><span class="in">  p2[1] &lt;- 1</span></span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a><span class="in">for (i in 2:length(p1)) {</span></span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a><span class="in">  if (p1[i - 1] == 1) {</span></span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a><span class="in">    if (runif(1) &lt; default) { # % chance to switch from 1 to 0</span></span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a><span class="in">      p2[i] &lt;- 0</span></span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="in">    } else {</span></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a><span class="in">      p2[i] &lt;- p1[i - 1]</span></span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a><span class="in">  } else {</span></span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a><span class="in">    p2[i] &lt;- p1[i -1]</span></span>
+<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a><span class="in">  return(p2)</span></span>
+<span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a><span class="in">table(prober(200,prob = c(.459,.237), choice = 0, default = .05, replace = T))</span></span>
+<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Corteous Cat</span></span>
+<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>A less glorious but more common solution is to simply imitate each of player 1 moves to a T. Player 2 will never cooperate first unless player 1 chooses to cooperate. This copy cat algorithm is looking at the current round and copying the first player's moves. It is not concerned with the previous moves. </span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r corteous, eval = TRUE}</span></span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a><span class="in">copy.cat &lt;- function(rounds, </span></span>
+<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a><span class="in">                   prob,</span></span>
+<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a><span class="in">                   choice,</span></span>
+<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a><span class="in">                   replace = TRUE){</span></span>
+<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a><span class="in">    #Check arguments</span></span>
+<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot({ </span></span>
+<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a><span class="in">  is.integer(rounds)</span></span>
+<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a><span class="in">  is.double(prob)</span></span>
+<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(choice)</span></span>
+<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(replace)})</span></span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a><span class="in">  choice_order &lt;- c(choice, 1 - choice)</span></span>
+<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a><span class="in">  n &lt;- rounds - 1</span></span>
+<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a><span class="in">  if(choice_order[1] == 1){</span></span>
+<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a><span class="in">    inv.prob &lt;- c(prob[2],prob[1])</span></span>
+<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))</span></span>
+<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a><span class="in">  } else{</span></span>
+<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))</span></span>
+<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a><span class="in">  p2 &lt;- numeric(length(p1))</span></span>
+<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a><span class="in">  p2[1] &lt;- 1</span></span>
+<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a><span class="in">  for(i in 2:length(p1)){</span></span>
+<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a><span class="in">    if(p1[i] == 1){</span></span>
+<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a><span class="in">      p2[i] &lt;- 1</span></span>
+<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a><span class="in">    } else {</span></span>
+<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a><span class="in">      p2[i] &lt;- 0</span></span>
+<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a><span class="in">  return(p2)</span></span>
+<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="in">table(copy.cat(200,prob = c(.459,.237), choice = 0, replace = T))</span></span>
+<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Squirrel's Revenge</span></span>
+<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a>The last algorithm will not play nice on the first round and will exact revenge on player 1 until the game is over^<span class="co">[</span><span class="ot">A copy of the aggressive Friedman's algorithm</span><span class="co">]</span>. This player is a more revengeful fellow. Let's see how to implement it. </span>
+<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a>The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a cooperation, player 2 will no longer cooperate. I'll only add one argument <span class="in">`zero_switch`</span> to identify when player 1 chooses to defect. This logical vector will automatically switch to true inside the for loop, and will cause player 2 to defect on every move for the remainder of the game. </span>
+<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a>Something worthy of attention here is that if the probability of betrayal is higher than cooperation, the revenge algorithm will most likely never cooperate after the first couple of rounds. I'll make sure to set a higher probability of cooperation to see the algorithm in action. </span>
+<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r squirrel, eval = TRUE}</span></span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a><span class="in">exact.revenge &lt;- function(rounds, </span></span>
+<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a><span class="in">                   prob,</span></span>
+<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a><span class="in">                   choice,</span></span>
+<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a><span class="in">                   replace = TRUE){</span></span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a><span class="in">    #Check arguments</span></span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot({ </span></span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a><span class="in">  is.integer(rounds)</span></span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a><span class="in">  is.double(prob)</span></span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(choice)</span></span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a><span class="in">  is.logical(replace)})</span></span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="in">  choice_order &lt;- c(choice, 1 - choice)</span></span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a><span class="in">  n &lt;- rounds - 1</span></span>
+<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a><span class="in">  if(choice_order[1] == 1){</span></span>
+<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a><span class="in">    inv.prob &lt;- c(prob[2],prob[1])</span></span>
+<span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))</span></span>
+<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="in">  } else{</span></span>
+<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))</span></span>
+<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a><span class="in">  p2 &lt;- numeric(length(p1))</span></span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a><span class="in">  p2[1] &lt;- 1</span></span>
+<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a><span class="in">  zero_switch &lt;- FALSE</span></span>
+<span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a><span class="in">  for(i in 2:length(p1)){</span></span>
+<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a><span class="in">    if(p1[i -1] == 0){</span></span>
+<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a><span class="in">      zero_switch &lt;- TRUE</span></span>
+<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a><span class="in">    } </span></span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a><span class="in">    p2[i]&lt;- ifelse(zero_switch,0,1)</span></span>
+<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a><span class="in">  return(p2)</span></span>
+<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-276"><a href="#cb9-276" aria-hidden="true" tabindex="-1"></a><span class="in">table(exact.revenge(200,prob = c(.159,.437), choice = 1, replace = T))</span></span>
+<span id="cb9-277"><a href="#cb9-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-278"><a href="#cb9-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-279"><a href="#cb9-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm Perfomance</span></span>
+<span id="cb9-280"><a href="#cb9-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-281"><a href="#cb9-281" aria-hidden="true" tabindex="-1"></a>Now that all four algorithms are created, I'll implement a function to evaluate the overall performance in total points after 200 rounds. </span>
+<span id="cb9-282"><a href="#cb9-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-283"><a href="#cb9-283" aria-hidden="true" tabindex="-1"></a>First, I have to create an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over <span class="in">`n`</span> number of games. To do this, I would have to update choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player's score in the new list to find the total number of points per game. Lastly, I would have to calculate the average number of total points per game and compare algorithms this way.  </span>
+<span id="cb9-284"><a href="#cb9-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-285"><a href="#cb9-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r performance, eval = TRUE}</span></span>
+<span id="cb9-286"><a href="#cb9-286" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @(...) arguments include:</span></span>
+<span id="cb9-287"><a href="#cb9-287" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;              @alg: algorithms to compare</span></span>
+<span id="cb9-288"><a href="#cb9-288" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;              @rounds: number of rounds in a game</span></span>
+<span id="cb9-289"><a href="#cb9-289" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;              @prob:   probability of betrayal and cooperation.</span></span>
+<span id="cb9-290"><a href="#cb9-290" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;              @choice: starting choice.</span></span>
+<span id="cb9-291"><a href="#cb9-291" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;              @default: percentage of cooperative responses on which player 2 betrays player 1</span></span>
+<span id="cb9-292"><a href="#cb9-292" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; @iter: how many games of `n` rounds should be played.</span></span>
+<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="in">comp.alg &lt;- function(alg,</span></span>
+<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a><span class="in">                     iter = NULL,</span></span>
+<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a><span class="in">                     rounds,</span></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="in">                     prob,</span></span>
+<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a><span class="in">                     choice,</span></span>
+<span id="cb9-299"><a href="#cb9-299" aria-hidden="true" tabindex="-1"></a><span class="in">                     replace = TRUE,</span></span>
+<span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a><span class="in">                     ...){</span></span>
+<span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a><span class="in">  #Check arguments</span></span>
+<span id="cb9-302"><a href="#cb9-302" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot({</span></span>
+<span id="cb9-303"><a href="#cb9-303" aria-hidden="true" tabindex="-1"></a><span class="in">    is.list(alg)</span></span>
+<span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a><span class="in">    is.numeric(iter) &amp;&amp; iter &gt; 0})  </span></span>
+<span id="cb9-305"><a href="#cb9-305" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-306"><a href="#cb9-306" aria-hidden="true" tabindex="-1"></a><span class="in">  out &lt;- matrix(c(3,5,0,1), nrow = 2, byrow = TRUE)</span></span>
+<span id="cb9-307"><a href="#cb9-307" aria-hidden="true" tabindex="-1"></a><span class="in">        rownames(out) &lt;- c("P1.C","P1.B")</span></span>
+<span id="cb9-308"><a href="#cb9-308" aria-hidden="true" tabindex="-1"></a><span class="in">        colnames(out) &lt;- c("P2.C","P2.B")</span></span>
+<span id="cb9-309"><a href="#cb9-309" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-310"><a href="#cb9-310" aria-hidden="true" tabindex="-1"></a><span class="in">  play.game &lt;- function(rounds, </span></span>
+<span id="cb9-311"><a href="#cb9-311" aria-hidden="true" tabindex="-1"></a><span class="in">                        prob,</span></span>
+<span id="cb9-312"><a href="#cb9-312" aria-hidden="true" tabindex="-1"></a><span class="in">                        choice, </span></span>
+<span id="cb9-313"><a href="#cb9-313" aria-hidden="true" tabindex="-1"></a><span class="in">                        default = NULL,</span></span>
+<span id="cb9-314"><a href="#cb9-314" aria-hidden="true" tabindex="-1"></a><span class="in">                        replace = TRUE) {</span></span>
+<span id="cb9-315"><a href="#cb9-315" aria-hidden="true" tabindex="-1"></a><span class="in">    p1 &lt;- do.call(alg[[1]],list(rounds = rounds,</span></span>
+<span id="cb9-316"><a href="#cb9-316" aria-hidden="true" tabindex="-1"></a><span class="in">                                prob = prob,</span></span>
+<span id="cb9-317"><a href="#cb9-317" aria-hidden="true" tabindex="-1"></a><span class="in">                                choice = choice,</span></span>
+<span id="cb9-318"><a href="#cb9-318" aria-hidden="true" tabindex="-1"></a><span class="in">                                replace = replace))</span></span>
+<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a><span class="in">    p2 &lt;- do.call(alg[[2]],list(rounds = rounds,</span></span>
+<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a><span class="in">                                prob = prob,</span></span>
+<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a><span class="in">                                choice = choice,</span></span>
+<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a><span class="in">                                replace = replace))</span></span>
+<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a><span class="in">   </span></span>
+<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a><span class="in">  do.score &lt;- function(P1,P2){</span></span>
+<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a><span class="in">    l1 &lt;- list(P1,P2)</span></span>
+<span id="cb9-326"><a href="#cb9-326" aria-hidden="true" tabindex="-1"></a><span class="in">    game_res &lt;- data.frame(P1 = numeric(length(P1)), </span></span>
+<span id="cb9-327"><a href="#cb9-327" aria-hidden="true" tabindex="-1"></a><span class="in">                           P2 = numeric(length(P2)))</span></span>
+<span id="cb9-328"><a href="#cb9-328" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb9-329"><a href="#cb9-329" aria-hidden="true" tabindex="-1"></a><span class="in">    for(i in seq_along(l1[[1]])){</span></span>
+<span id="cb9-330"><a href="#cb9-330" aria-hidden="true" tabindex="-1"></a><span class="in">      c1 &lt;- l1[[1]][i]</span></span>
+<span id="cb9-331"><a href="#cb9-331" aria-hidden="true" tabindex="-1"></a><span class="in">      c2 &lt;- l1[[2]][i]</span></span>
+<span id="cb9-332"><a href="#cb9-332" aria-hidden="true" tabindex="-1"></a><span class="in">      </span></span>
+<span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a><span class="in">      p1_score &lt;- out[c1 + 1, c2 + 1]</span></span>
+<span id="cb9-334"><a href="#cb9-334" aria-hidden="true" tabindex="-1"></a><span class="in">      p2_score &lt;- t(out)[c1 + 1, c2 + 1]</span></span>
+<span id="cb9-335"><a href="#cb9-335" aria-hidden="true" tabindex="-1"></a><span class="in">      </span></span>
+<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="in">      game_res$P1[i] &lt;- p1_score</span></span>
+<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a><span class="in">      game_res$P2[i] &lt;- p2_score</span></span>
+<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a><span class="in">     return(game_res)</span></span>
+<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a><span class="in">  out_game &lt;- do.score(p1,p2)</span></span>
+<span id="cb9-342"><a href="#cb9-342" aria-hidden="true" tabindex="-1"></a><span class="in">  colSums(out_game)</span></span>
+<span id="cb9-343"><a href="#cb9-343" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb9-344"><a href="#cb9-344" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-345"><a href="#cb9-345" aria-hidden="true" tabindex="-1"></a><span class="in">  boot.results &lt;- list2DF(replicate(iter, play.game(rounds = rounds,</span></span>
+<span id="cb9-346"><a href="#cb9-346" aria-hidden="true" tabindex="-1"></a><span class="in">                                prob = prob,</span></span>
+<span id="cb9-347"><a href="#cb9-347" aria-hidden="true" tabindex="-1"></a><span class="in">                                choice = choice,</span></span>
+<span id="cb9-348"><a href="#cb9-348" aria-hidden="true" tabindex="-1"></a><span class="in">                                replace = replace), simplify = FALSE))</span></span>
+<span id="cb9-349"><a href="#cb9-349" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-350"><a href="#cb9-350" aria-hidden="true" tabindex="-1"></a><span class="in">  results &lt;- as.matrix(do.call(rbind,boot.results))</span></span>
+<span id="cb9-351"><a href="#cb9-351" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-352"><a href="#cb9-352" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb9-353"><a href="#cb9-353" aria-hidden="true" tabindex="-1"></a><span class="in">  return(as.data.frame(results))</span></span>
+<span id="cb9-354"><a href="#cb9-354" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb9-355"><a href="#cb9-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-356"><a href="#cb9-356" aria-hidden="true" tabindex="-1"></a><span class="in">#Let's test it</span></span>
+<span id="cb9-357"><a href="#cb9-357" aria-hidden="true" tabindex="-1"></a><span class="in">test &lt;- comp.alg(c(copy.cat, tit.for.tat), </span></span>
+<span id="cb9-358"><a href="#cb9-358" aria-hidden="true" tabindex="-1"></a><span class="in">                 iter = 500, </span></span>
+<span id="cb9-359"><a href="#cb9-359" aria-hidden="true" tabindex="-1"></a><span class="in">                 rounds = 200, </span></span>
+<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a><span class="in">                 prob = c(.345, .231), </span></span>
+<span id="cb9-361"><a href="#cb9-361" aria-hidden="true" tabindex="-1"></a><span class="in">                 choice = 0)</span></span>
+<span id="cb9-362"><a href="#cb9-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-363"><a href="#cb9-363" aria-hidden="true" tabindex="-1"></a><span class="in">head(test)</span></span>
+<span id="cb9-364"><a href="#cb9-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-365"><a href="#cb9-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-366"><a href="#cb9-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-367"><a href="#cb9-367" aria-hidden="true" tabindex="-1"></a><span class="fu">### Code Benchmarking</span></span>
+<span id="cb9-368"><a href="#cb9-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-369"><a href="#cb9-369" aria-hidden="true" tabindex="-1"></a>First, I'll look at the execution time and memory usage of my <span class="in">`comp.alg`</span> function for several algorithms^<span class="co">[</span><span class="ot">The `comp.alg` function is not currently dealing with the `default` argument of the `prober` algorithm.I'm thinking of a way to implement it in a naturally efficient way.</span><span class="co">]</span>. I'll use the <span class="in">`bench`</span> package to look at these two performance metrics. I'll wrap my code in a function and measure its performance^<span class="co">[</span><span class="ot">look up the `bench::mark()` function to see which metrics are calculated.</span><span class="co">]</span></span>
+<span id="cb9-370"><a href="#cb9-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-371"><a href="#cb9-371" aria-hidden="true" tabindex="-1"></a>The second step is to use <span class="in">`bench::pres()`</span> to supply my wrapper function with a grid of values to use as iterations. Laslty, I'll visualize the the number of iterations vs. execution time across algorithms. </span>
+<span id="cb9-372"><a href="#cb9-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-373"><a href="#cb9-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{r benchit, eval = FALSE}</span></span>
+<span id="cb9-374"><a href="#cb9-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-375"><a href="#cb9-375" aria-hidden="true" tabindex="-1"></a><span class="in"> bench.comp.alg &lt;- function(iter){</span></span>
+<span id="cb9-376"><a href="#cb9-376" aria-hidden="true" tabindex="-1"></a><span class="in">     bench::mark(</span></span>
+<span id="cb9-377"><a href="#cb9-377" aria-hidden="true" tabindex="-1"></a><span class="in">         "Copy" = comp.alg(c(copy.cat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P1,</span></span>
+<span id="cb9-378"><a href="#cb9-378" aria-hidden="true" tabindex="-1"></a><span class="in">         "Exact" = comp.alg(c(copy.cat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P2,</span></span>
+<span id="cb9-379"><a href="#cb9-379" aria-hidden="true" tabindex="-1"></a><span class="in">         "tft" = comp.alg(c(tit.for.tat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P1,</span></span>
+<span id="cb9-380"><a href="#cb9-380" aria-hidden="true" tabindex="-1"></a><span class="in">         time_unit = "ms", </span></span>
+<span id="cb9-381"><a href="#cb9-381" aria-hidden="true" tabindex="-1"></a><span class="in">         check = FALSE</span></span>
+<span id="cb9-382"><a href="#cb9-382" aria-hidden="true" tabindex="-1"></a><span class="in">     )</span></span>
+<span id="cb9-383"><a href="#cb9-383" aria-hidden="true" tabindex="-1"></a><span class="in"> }</span></span>
+<span id="cb9-384"><a href="#cb9-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-385"><a href="#cb9-385" aria-hidden="true" tabindex="-1"></a><span class="in">results &lt;- bench::press(</span></span>
+<span id="cb9-386"><a href="#cb9-386" aria-hidden="true" tabindex="-1"></a><span class="in">     iter = c(10,50,100,300,500,700,900,1000),</span></span>
+<span id="cb9-387"><a href="#cb9-387" aria-hidden="true" tabindex="-1"></a><span class="in">     bench.comp.alg(iter)</span></span>
+<span id="cb9-388"><a href="#cb9-388" aria-hidden="true" tabindex="-1"></a><span class="in"> )</span></span>
+<span id="cb9-389"><a href="#cb9-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-390"><a href="#cb9-390" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; A tibble: 24 × 14</span></span>
+<span id="cb9-391"><a href="#cb9-391" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;   expression  iter    min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory                   time            gc      </span></span>
+<span id="cb9-392"><a href="#cb9-392" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;list&gt; &lt;list&gt;                   &lt;list&gt;          &lt;list&gt;  </span></span>
+<span id="cb9-393"><a href="#cb9-393" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  1 Copy          10   31.3   32.6    30.6      6.51MB     40.8     6     8       196. &lt;NULL&gt; &lt;Rprofmem [4,132 × 3]&gt;   &lt;bench_tm [14]&gt; &lt;tibble&gt;</span></span>
+<span id="cb9-394"><a href="#cb9-394" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  2 Exact         10   29.7   30.8    32.2      6.51MB     32.2     8     8       248. &lt;NULL&gt; &lt;Rprofmem [4,131 × 3]&gt;   &lt;bench_tm [16]&gt; &lt;tibble&gt;</span></span>
+<span id="cb9-395"><a href="#cb9-395" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  3 tft           10   30.8   32.4    30.8      6.51MB     30.8     7     7       227. &lt;NULL&gt; &lt;Rprofmem [4,131 × 3]&gt;   &lt;bench_tm [14]&gt; &lt;tibble&gt;</span></span>
+<span id="cb9-396"><a href="#cb9-396" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  4 Copy          50  207.   222.      4.40    32.55MB     14.7     3    10       681. &lt;NULL&gt; &lt;Rprofmem [20,668 × 3]&gt;  &lt;bench_tm [3]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-397"><a href="#cb9-397" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  5 Exact         50  258.   262.      3.82    32.55MB     11.5     2     6       524. &lt;NULL&gt; &lt;Rprofmem [20,806 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-398"><a href="#cb9-398" aria-hidden="true" tabindex="-1"></a><span class="in"> #&gt; 6 tft           50  205.   266.      4.03    32.55MB     10.8     3     8       744. &lt;NULL&gt; &lt;Rprofmem [20,808 × 3]&gt;  &lt;bench_tm [3]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-399"><a href="#cb9-399" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  7 Copy         100  576.   576.      1.74    65.09MB     12.2     1     7       576. &lt;NULL&gt; &lt;Rprofmem [41,418 × 3]&gt;  &lt;bench_tm [1]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-400"><a href="#cb9-400" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  8 Exact        100  400.   411.      2.43    65.09MB     14.6     2    12       821. &lt;NULL&gt; &lt;Rprofmem [41,400 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-401"><a href="#cb9-401" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt;  9 tft          100  372.   390.      2.57    65.09MB     15.4     2    12       780. &lt;NULL&gt; &lt;Rprofmem [41,461 × 3]&gt;  &lt;bench_tm [2]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-402"><a href="#cb9-402" aria-hidden="true" tabindex="-1"></a><span class="in">#&gt; 10 Copy         300 1254.  1254.      0.798  195.27MB     10.4     1    13      1254. &lt;NULL&gt; &lt;Rprofmem [123,916 × 3]&gt; &lt;bench_tm [1]&gt;  &lt;tibble&gt;</span></span>
+<span id="cb9-403"><a href="#cb9-403" aria-hidden="true" tabindex="-1"></a><span class="in"># ℹ 14 more rows</span></span>
+<span id="cb9-404"><a href="#cb9-404" aria-hidden="true" tabindex="-1"></a><span class="in"># ℹ Use `print(n = ...)` to see more rows</span></span>
+<span id="cb9-405"><a href="#cb9-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-406"><a href="#cb9-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-407"><a href="#cb9-407" aria-hidden="true" tabindex="-1"></a>Let's now visualize the performance of each algorithm using <span class="in">`ggplot2`</span>.</span>
+<span id="cb9-408"><a href="#cb9-408" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plotit, eval = FALSE}</span></span>
+<span id="cb9-409"><a href="#cb9-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-410"><a href="#cb9-410" aria-hidden="true" tabindex="-1"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb9-411"><a href="#cb9-411" aria-hidden="true" tabindex="-1"></a><span class="in">library(showtext)</span></span>
+<span id="cb9-412"><a href="#cb9-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-413"><a href="#cb9-413" aria-hidden="true" tabindex="-1"></a><span class="in"># Customize fonts</span></span>
+<span id="cb9-414"><a href="#cb9-414" aria-hidden="true" tabindex="-1"></a><span class="in">font_add_google("Ubuntu","ubu")</span></span>
+<span id="cb9-415"><a href="#cb9-415" aria-hidden="true" tabindex="-1"></a><span class="in">showtext_auto()</span></span>
+<span id="cb9-416"><a href="#cb9-416" aria-hidden="true" tabindex="-1"></a><span class="in">text &lt;- "ubu"</span></span>
+<span id="cb9-417"><a href="#cb9-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-418"><a href="#cb9-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-419"><a href="#cb9-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-420"><a href="#cb9-420" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(results,</span></span>
+<span id="cb9-421"><a href="#cb9-421" aria-hidden="true" tabindex="-1"></a><span class="in">       aes(iter,median, col = attr(expression,"description"))) +</span></span>
+<span id="cb9-422"><a href="#cb9-422" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size = 4) +</span></span>
+<span id="cb9-423"><a href="#cb9-423" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_smooth(se = FALSE) +</span></span>
+<span id="cb9-424"><a href="#cb9-424" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "No. of iterations",</span></span>
+<span id="cb9-425"><a href="#cb9-425" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Execution Time (ms)",</span></span>
+<span id="cb9-426"><a href="#cb9-426" aria-hidden="true" tabindex="-1"></a><span class="in">       colour = "Algorithm") +</span></span>
+<span id="cb9-427"><a href="#cb9-427" aria-hidden="true" tabindex="-1"></a><span class="in">  #scale_color_manual(values = iter) +</span></span>
+<span id="cb9-428"><a href="#cb9-428" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal() +</span></span>
+<span id="cb9-429"><a href="#cb9-429" aria-hidden="true" tabindex="-1"></a><span class="in">  theme(legend.position = "top",</span></span>
+<span id="cb9-430"><a href="#cb9-430" aria-hidden="true" tabindex="-1"></a><span class="in">        legend.title = element_text(family = text, size = 23),</span></span>
+<span id="cb9-431"><a href="#cb9-431" aria-hidden="true" tabindex="-1"></a><span class="in">        legend.text = element_text(family = text, size = 18),</span></span>
+<span id="cb9-432"><a href="#cb9-432" aria-hidden="true" tabindex="-1"></a><span class="in">        plot.background = element_rect(fill = "#f8f9f9",</span></span>
+<span id="cb9-433"><a href="#cb9-433" aria-hidden="true" tabindex="-1"></a><span class="in">                                       color = "NA"),</span></span>
+<span id="cb9-434"><a href="#cb9-434" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.title = element_text(family = text, size = 18,</span></span>
+<span id="cb9-435"><a href="#cb9-435" aria-hidden="true" tabindex="-1"></a><span class="in">                                  hjust = .5),</span></span>
+<span id="cb9-436"><a href="#cb9-436" aria-hidden="true" tabindex="-1"></a><span class="in">        axis.text = element_text(family = text,size = 16),</span></span>
+<span id="cb9-437"><a href="#cb9-437" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid.major = element_blank(),</span></span>
+<span id="cb9-438"><a href="#cb9-438" aria-hidden="true" tabindex="-1"></a><span class="in">        panel.grid.minor = element_blank()</span></span>
+<span id="cb9-439"><a href="#cb9-439" aria-hidden="true" tabindex="-1"></a><span class="in">        )</span></span>
+<span id="cb9-440"><a href="#cb9-440" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-441"><a href="#cb9-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-442"><a href="#cb9-442" aria-hidden="true" tabindex="-1"></a><span class="in">```{r algimg, echo = FALSE,out.width = NULL}</span></span>
+<span id="cb9-443"><a href="#cb9-443" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/alg_perf.png")</span></span>
+<span id="cb9-444"><a href="#cb9-444" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-445"><a href="#cb9-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-446"><a href="#cb9-446" aria-hidden="true" tabindex="-1"></a><span class="fu">### Practical Implications</span></span>
+<span id="cb9-447"><a href="#cb9-447" aria-hidden="true" tabindex="-1"></a>Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict. </span>
+<span id="cb9-448"><a href="#cb9-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-449"><a href="#cb9-449" aria-hidden="true" tabindex="-1"></a>Here are the rules for strategic cooperation:  </span>
+<span id="cb9-450"><a href="#cb9-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-451"><a href="#cb9-451" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Avoid unnecessary conflict by cooperating as long as your opponent does. </span>
+<span id="cb9-452"><a href="#cb9-452" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If your opponent betrays you without provocation— respond in kind…once.</span>
+<span id="cb9-453"><a href="#cb9-453" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Then forgive the betrayal, and cooperate again.</span>
+<span id="cb9-454"><a href="#cb9-454" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Be clear and predictable so your opponent knows how you act and can plan accordingly. </span>
+<span id="cb9-455"><a href="#cb9-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-456"><a href="#cb9-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-457"><a href="#cb9-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-458"><a href="#cb9-458" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023–2024 JP Monteagudo</span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by-sa/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> <i class="fa-brands fa-creative-commons-sa" aria-label="creative-commons-sa"></i> Creative Commons CC BY-SA 4.0</a></span> <!-- <span class="faux-block"> <strong>ORCID</strong> [0009-0003-6465-6658](https://orcid.org/0009-0003-6465-6658)</span> --> <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> --></p>
+</div>
+    <div class="nav-footer-right">
+<!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
+</div>
+  </div>
+</footer>
+
+
+</body></html>

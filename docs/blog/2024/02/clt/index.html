@@ -234,13 +234,7 @@ window.Quarto = {
           Shining a light on the Central Limit Theorem and the mythical sample size requirements for the health and social sciences
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">r</div>
-                <div class="quarto-category">clt</div>
-                <div class="quarto-category">Lyndeberg-Lévy</div>
-                <div class="quarto-category">Gaussian</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   
@@ -284,8 +278,8 @@ window.Quarto = {
 <p>To put it differently, by sampling a finite population an increasing number of times and using the mean of the <span class="math inline">\(n\)</span> samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</p>
 <blockquote class="blockquote">
 <p>If an outcome <span class="math inline">\(p\)</span> has occurred <span class="math inline">\(p\)</span> times out of <span class="math inline">\(p + q = n\)</span> number of trials, what’s the probability of our desired outcome occurring <span class="math inline">\(r\)</span> times in a further <span class="math inline">\(r + q = m\)</span> number of trials?</p>
-</blockquote>
 <p>Let’s now talk about the <strong>conditions</strong> we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</p>
+</blockquote>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>I’ll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation <span class="math inline">\(\mathcal{N}(0,1)\)</span></p>
@@ -331,7 +325,7 @@ window.Quarto = {
 <figcaption>Simulated identically distributed and non-identically distributed variables.</figcaption></figure>
 </div>
 </div></div></div>
-<p>Additionally, two variables <span class="math inline">\(A_{n}\)</span> and <span class="math inline">\(B_{n}\)</span> are identically distributed when their probability distributions match exactly, and their means and variances (<span class="math inline">\(\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2\)</span>​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</p>
+<p>Additionally, two variables <span class="math inline">\(A_{n}\)</span> and <span class="math inline">\(B_{n}\)</span> are identically distributed when their probability distributions match exactly, and their means and variances (<span class="math inline">\(\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2\)</span>​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate.</p>
 <p>Let’s look at a hypothetical example of conditional independence:</p>
 <p>Let’s say a microchip manufacturer records the weekly number of defective microchips (<code>def_micros</code>) for each of its 8–hour shifts to evaluate whether the number of complaints (<code>complaints</code>) received in 24 hours is related to <code>def_micro</code>. They also want to know if the number of complaints given <code>def_micro</code> is related to the number of devices (<code>devices</code>) bought and returned through their online retailer. . To answer this question, we first need to determine that <code>complaints</code> and <code>devices</code> are conditionally independent if, each variable is associated with<code>def_micr0</code>, but their <a href="https://en.wikipedia.org/wiki/Partial_correlation">partial correlation</a> coefficient is close to zero. We then calculate the zero-order correlation and compare it to the first–order correlation given the number of defective microchips. In our example, the zero-order correlation between devices and complaints is <span class="math inline">\(\rho = .099\)</span> and the first–order correlation is technically non-existent <span class="math inline">\(\rho = -.021\)</span>, and we can assume <code>devices</code> and <code>complaints</code> are conditionally independent.</p>
 <div class="cell page-columns page-full" data-layout-align="center" data-fig-cap-label="cond_ind" data-group="r-graph">
@@ -403,20 +397,20 @@ window.Quarto = {
 <span id="cb2-66"><a href="#cb2-66"></a><span class="do">## -------------------------------------------------------------------------------- ##</span></span>
 <span id="cb2-67"><a href="#cb2-67"></a><span class="co"># Custom ggplot theme to make nicer plots</span></span>
 <span id="cb2-68"><a href="#cb2-68"></a><span class="co"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
-<span id="cb2-69"><a href="#cb2-69"></a><span class="fu">font_add_google</span>(<span class="st">"Fira Sans"</span>)</span>
+<span id="cb2-69"><a href="#cb2-69"></a><span class="fu">font_add_google</span>(<span class="st">"Fira Sans Condensed"</span>, <span class="st">"fira"</span>)</span>
 <span id="cb2-70"><a href="#cb2-70"></a><span class="fu">showtext_auto</span>()</span>
 <span id="cb2-71"><a href="#cb2-71"></a>theme_nice <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb2-72"><a href="#cb2-72"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"Fira Sans Condensed"</span>) <span class="sc">+</span></span>
+<span id="cb2-72"><a href="#cb2-72"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"fira"</span>) <span class="sc">+</span></span>
 <span id="cb2-73"><a href="#cb2-73"></a>    <span class="fu">theme</span>(</span>
 <span id="cb2-74"><a href="#cb2-74"></a>      <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-75"><a href="#cb2-75"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed Bold"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.35</span>)),</span>
-<span id="cb2-76"><a href="#cb2-76"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed Medium"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.2</span>)),</span>
-<span id="cb2-77"><a href="#cb2-77"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed SemiBold"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>)),</span>
+<span id="cb2-75"><a href="#cb2-75"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.35</span>)),</span>
+<span id="cb2-76"><a href="#cb2-76"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.2</span>)),</span>
+<span id="cb2-77"><a href="#cb2-77"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>)),</span>
 <span id="cb2-78"><a href="#cb2-78"></a>      <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>),</span>
 <span id="cb2-79"><a href="#cb2-79"></a>      <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb2-80"><a href="#cb2-80"></a>      <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed Light"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.8</span>)),</span>
+<span id="cb2-80"><a href="#cb2-80"></a>      <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.8</span>)),</span>
 <span id="cb2-81"><a href="#cb2-81"></a>      <span class="at">strip.text =</span> <span class="fu">element_text</span>(</span>
-<span id="cb2-82"><a href="#cb2-82"></a>        <span class="at">family =</span> <span class="st">"Fira Sans Condensed"</span>, <span class="at">face =</span> <span class="st">"bold"</span>,</span>
+<span id="cb2-82"><a href="#cb2-82"></a>        <span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">face =</span> <span class="st">"bold"</span>,</span>
 <span id="cb2-83"><a href="#cb2-83"></a>        <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>), <span class="at">hjust =</span> <span class="dv">0</span></span>
 <span id="cb2-84"><a href="#cb2-84"></a>      ),</span>
 <span id="cb2-85"><a href="#cb2-85"></a>      <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>)</span>
@@ -435,8 +429,8 @@ window.Quarto = {
 <span id="cb2-98"><a href="#cb2-98"></a></span>
 <span id="cb2-99"><a href="#cb2-99"></a><span class="fu">theme_set</span>(<span class="fu">theme_nice</span>())</span>
 <span id="cb2-100"><a href="#cb2-100"></a></span>
-<span id="cb2-101"><a href="#cb2-101"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"label"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed SemiBold"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
-<span id="cb2-102"><a href="#cb2-102"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"text"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Fira Sans Condensed SemiBold"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
+<span id="cb2-101"><a href="#cb2-101"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"label"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
+<span id="cb2-102"><a href="#cb2-102"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"text"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"fira"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
 <span id="cb2-103"><a href="#cb2-103"></a></span>
 <span id="cb2-104"><a href="#cb2-104"></a><span class="co"># Making df with previously created variables</span></span>
 <span id="cb2-105"><a href="#cb2-105"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(def_micro, devices, complaints)</span>
@@ -995,8 +989,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-31"><a href="#cb3-31"></a>To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:</span>
 <span id="cb3-32"><a href="#cb3-32"></a></span>
 <span id="cb3-33"><a href="#cb3-33"></a><span class="at">&gt; If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a></span>
-<span id="cb3-35"><a href="#cb3-35"></a>Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</span>
+<span id="cb3-34"><a href="#cb3-34"></a><span class="at">&gt;</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="at">&gt; Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.</span></span>
 <span id="cb3-36"><a href="#cb3-36"></a></span>
 <span id="cb3-37"><a href="#cb3-37"></a>::: column-margin</span>
 <span id="cb3-38"><a href="#cb3-38"></a>I'll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation $\mathcal{N}(0,1)$</span>
@@ -1050,7 +1044,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-86"><a href="#cb3-86"></a><span class="in">       col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)</span></span>
 <span id="cb3-87"><a href="#cb3-87"></a><span class="in">```</span></span>
 <span id="cb3-88"><a href="#cb3-88"></a></span>
-<span id="cb3-89"><a href="#cb3-89"></a>Additionally, two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.</span>
+<span id="cb3-89"><a href="#cb3-89"></a>Additionally, two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate.</span>
 <span id="cb3-90"><a href="#cb3-90"></a></span>
 <span id="cb3-91"><a href="#cb3-91"></a>Let's look at a hypothetical example of conditional independence:</span>
 <span id="cb3-92"><a href="#cb3-92"></a></span>
@@ -1120,20 +1114,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-156"><a href="#cb3-156"></a><span class="in">## -------------------------------------------------------------------------------- ##</span></span>
 <span id="cb3-157"><a href="#cb3-157"></a><span class="in"># Custom ggplot theme to make nicer plots</span></span>
 <span id="cb3-158"><a href="#cb3-158"></a><span class="in"># Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed</span></span>
-<span id="cb3-159"><a href="#cb3-159"></a><span class="in">font_add_google("Fira Sans")</span></span>
+<span id="cb3-159"><a href="#cb3-159"></a><span class="in">font_add_google("Fira Sans Condensed", "fira")</span></span>
 <span id="cb3-160"><a href="#cb3-160"></a><span class="in">showtext_auto()</span></span>
 <span id="cb3-161"><a href="#cb3-161"></a><span class="in">theme_nice &lt;- function() {</span></span>
-<span id="cb3-162"><a href="#cb3-162"></a><span class="in">  theme_minimal(base_family = "Fira Sans Condensed") +</span></span>
+<span id="cb3-162"><a href="#cb3-162"></a><span class="in">  theme_minimal(base_family = "fira") +</span></span>
 <span id="cb3-163"><a href="#cb3-163"></a><span class="in">    theme(</span></span>
 <span id="cb3-164"><a href="#cb3-164"></a><span class="in">      panel.grid.minor = element_blank(),</span></span>
-<span id="cb3-165"><a href="#cb3-165"></a><span class="in">      plot.title = element_text(family = "Fira Sans Condensed Bold", face = "plain", size = rel(1.35)),</span></span>
-<span id="cb3-166"><a href="#cb3-166"></a><span class="in">      plot.subtitle = element_text(family = "Fira Sans Condensed Medium", face = "plain", size = rel(1.2)),</span></span>
-<span id="cb3-167"><a href="#cb3-167"></a><span class="in">      axis.title = element_text(family = "Fira Sans Condensed SemiBold", face = "plain", size = rel(1)),</span></span>
+<span id="cb3-165"><a href="#cb3-165"></a><span class="in">      plot.title = element_text(family = "fira", face = "plain", size = rel(1.35)),</span></span>
+<span id="cb3-166"><a href="#cb3-166"></a><span class="in">      plot.subtitle = element_text(family = "fira", face = "plain", size = rel(1.2)),</span></span>
+<span id="cb3-167"><a href="#cb3-167"></a><span class="in">      axis.title = element_text(family = "fira", face = "plain", size = rel(1)),</span></span>
 <span id="cb3-168"><a href="#cb3-168"></a><span class="in">      axis.title.x = element_text(hjust = 0),</span></span>
 <span id="cb3-169"><a href="#cb3-169"></a><span class="in">      axis.title.y = element_text(hjust = 1),</span></span>
-<span id="cb3-170"><a href="#cb3-170"></a><span class="in">      axis.text = element_text(family = "Fira Sans Condensed Light", face = "plain", size = rel(0.8)),</span></span>
+<span id="cb3-170"><a href="#cb3-170"></a><span class="in">      axis.text = element_text(family = "fira", face = "plain", size = rel(0.8)),</span></span>
 <span id="cb3-171"><a href="#cb3-171"></a><span class="in">      strip.text = element_text(</span></span>
-<span id="cb3-172"><a href="#cb3-172"></a><span class="in">        family = "Fira Sans Condensed", face = "bold",</span></span>
+<span id="cb3-172"><a href="#cb3-172"></a><span class="in">        family = "fira", face = "bold",</span></span>
 <span id="cb3-173"><a href="#cb3-173"></a><span class="in">        size = rel(1), hjust = 0</span></span>
 <span id="cb3-174"><a href="#cb3-174"></a><span class="in">      ),</span></span>
 <span id="cb3-175"><a href="#cb3-175"></a><span class="in">      strip.background = element_rect(fill = "grey95", color = NA)</span></span>
@@ -1152,8 +1146,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-188"><a href="#cb3-188"></a></span>
 <span id="cb3-189"><a href="#cb3-189"></a><span class="in">theme_set(theme_nice())</span></span>
 <span id="cb3-190"><a href="#cb3-190"></a></span>
-<span id="cb3-191"><a href="#cb3-191"></a><span class="in">ggplot2::update_geom_defaults("label", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))</span></span>
-<span id="cb3-192"><a href="#cb3-192"></a><span class="in">ggplot2::update_geom_defaults("text", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))</span></span>
+<span id="cb3-191"><a href="#cb3-191"></a><span class="in">ggplot2::update_geom_defaults("label", list(family = "fira", fontface = "plain"))</span></span>
+<span id="cb3-192"><a href="#cb3-192"></a><span class="in">ggplot2::update_geom_defaults("text", list(family = "fira", fontface = "plain"))</span></span>
 <span id="cb3-193"><a href="#cb3-193"></a></span>
 <span id="cb3-194"><a href="#cb3-194"></a><span class="in"># Making df with previously created variables</span></span>
 <span id="cb3-195"><a href="#cb3-195"></a><span class="in">df1 &lt;- data.frame(def_micro, devices, complaints)</span></span>
@@ -1227,15 +1221,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-263"><a href="#cb3-263"></a><span class="at">&gt; It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.</span></span>
 <span id="cb3-264"><a href="#cb3-264"></a></span>
 <span id="cb3-265"><a href="#cb3-265"></a>Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))</span>
-<span id="cb3-266"><a href="#cb3-266"></a></span>
+<span id="cb3-266"><a href="#cb3-266"></a> </span>
 <span id="cb3-267"><a href="#cb3-267"></a>Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.</span>
 <span id="cb3-268"><a href="#cb3-268"></a></span>
 <span id="cb3-269"><a href="#cb3-269"></a>When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.</span>
 <span id="cb3-270"><a href="#cb3-270"></a></span>
 <span id="cb3-271"><a href="#cb3-271"></a><span class="fu">## Solution</span></span>
 <span id="cb3-272"><a href="#cb3-272"></a></span>
-<span id="cb3-273"><a href="#cb3-273"></a><span class="ss">+ </span>The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span>
-<span id="cb3-274"><a href="#cb3-274"></a><span class="ss">+ </span>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-273"><a href="#cb3-273"></a><span class="ss">-   </span>The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.</span>
+<span id="cb3-274"><a href="#cb3-274"></a><span class="ss">-   </span>Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -1249,7 +1243,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
+</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

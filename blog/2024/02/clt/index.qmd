@@ -31,8 +31,8 @@ The theorem derives its name from the fact that we're using a parameter of *cent
 To put it differently, by sampling a finite population an increasing number of times and using the mean of the $n$ samples as our metric, we will see how our histogram for the population of sampled means will conform to a standard normal curve. By estimating the limiting distribution– the beloved normal distribution– of our independent variables, the theorem helps us answer the question:
 
 > If an outcome $p$ has occurred $p$ times out of $p + q = n$ number of trials, what's the probability of our desired outcome occurring $r$ times in a further $r + q = m$ number of trials?
-
-Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.
+>
+> Let's now talk about the **conditions** we must meet for our distribution to converge or arrive at the standard normal distribution with mean equal to zero and variance equal to 1.
 
 ::: column-margin
 I'll start referring to a standard normal distribution with mean equal to zero and variance equal to 1 by using the following notation $\mathcal{N}(0,1)$
@@ -86,7 +86,7 @@ legend("topright", legend = c("A", "B"),
        col = c(clrs[3], clrs[1]), lty = 1:2, cex = 0.8)
 ```
 
-Additionally, two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate by the variables commonly studied in the life and social sciences.
+Additionally, two variables $A_{n}$ and $B_{n}$ are identically distributed when their probability distributions match exactly, and their means and variances ($\mu_{A} = \mu_{B}, \sigma_{A}^2 = \sigma_{B}^2$​​​) are equal. By now you can already see how this assumption can at best be approximated and almost impossible to demonstrate.
 
 Let's look at a hypothetical example of conditional independence:
 
@@ -156,20 +156,20 @@ part_cor <- ppcor::pcor.test(devices, complaints, def_micro, method = "spearman"
 ## -------------------------------------------------------------------------------- ##
 # Custom ggplot theme to make nicer plots
 # Get the font at https://fonts.google.com/specimen/Fira+Sans+Condensed
-font_add_google("Fira Sans")
+font_add_google("Fira Sans Condensed", "fira")
 showtext_auto()
 theme_nice <- function() {
-  theme_minimal(base_family = "Fira Sans Condensed") +
+  theme_minimal(base_family = "fira") +
     theme(
       panel.grid.minor = element_blank(),
-      plot.title = element_text(family = "Fira Sans Condensed Bold", face = "plain", size = rel(1.35)),
-      plot.subtitle = element_text(family = "Fira Sans Condensed Medium", face = "plain", size = rel(1.2)),
-      axis.title = element_text(family = "Fira Sans Condensed SemiBold", face = "plain", size = rel(1)),
+      plot.title = element_text(family = "fira", face = "plain", size = rel(1.35)),
+      plot.subtitle = element_text(family = "fira", face = "plain", size = rel(1.2)),
+      axis.title = element_text(family = "fira", face = "plain", size = rel(1)),
       axis.title.x = element_text(hjust = 0),
       axis.title.y = element_text(hjust = 1),
-      axis.text = element_text(family = "Fira Sans Condensed Light", face = "plain", size = rel(0.8)),
+      axis.text = element_text(family = "fira", face = "plain", size = rel(0.8)),
       strip.text = element_text(
-        family = "Fira Sans Condensed", face = "bold",
+        family = "fira", face = "bold",
         size = rel(1), hjust = 0
       ),
       strip.background = element_rect(fill = "grey95", color = NA)
@@ -188,8 +188,8 @@ theme_nice_dist <- function() {
 
 theme_set(theme_nice())
 
-ggplot2::update_geom_defaults("label", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
-ggplot2::update_geom_defaults("text", list(family = "Fira Sans Condensed SemiBold", fontface = "plain"))
+ggplot2::update_geom_defaults("label", list(family = "fira", fontface = "plain"))
+ggplot2::update_geom_defaults("text", list(family = "fira", fontface = "plain"))
 
 # Making df with previously created variables
 df1 <- data.frame(def_micro, devices, complaints)
@@ -263,12 +263,12 @@ Jacob Cohen (1991) mentioned that at least 30 observations were needed to use th
 > It wasn't until some years later that I discovered (mind you, not invented) power analysis, one of whose fruits was the revelation that for a two-independent-group-mean comparison with n = 30 per group at the sanctified two-tailed .05 level, the probability that a medium-sized effect would be labeled as significant by the most modern methods (a t-test) was only .47. Thus, it was approximately a coin flip whether one would get a significant result, even though, in reality, the effect size was meaningful.
 
 Simply a rule of thumb that allowed students to use critical t–t-tables. These tables could only span 30 lines to fit in one page. Fisher created the t-table and only went up to n = 30 (Fisher's *Statistical Methods for Research Workers* (1925))
-
+ 
 Sample size at least 30 so that the error variance between t–distribution and theoretical normal distribution is .25 or less from df = 30 up to infinity.
 
 When data is severely skewed neither the t–test nor the permutation test have much power (are not robust) to correctly identify a statistically significance difference in means between too highly skewed distributions. Even if your data contained tens of thousands of observations, the t–test may not recognize a statistically significance difference in means. The distribution of the data and the number of observations need to be considered when deciding whether the t–test is meaningful and accurate, sometimes thousands of observations may be needed.
 
 ## Solution
 
-+ The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.
-+ Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume
+-   The number of observations needed for our distribution to approximate the standard normal curve will ultimately depend on our data, the question we're seeking to answer, and the test we plan to use to arrive at our hypothesis.
+-   Use power analysis to determine the sample size needed to obtain statistically significant results using your desired $\alpha$, $\beta$, and effect size measure. This way, you don't have to assume

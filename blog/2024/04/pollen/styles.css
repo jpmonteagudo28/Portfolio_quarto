@@ -32,6 +32,28 @@ h4, h5, h6 {
     line-height: 1.5;
 }
 
+/* Creating multiple columns side-by-side */
+
+.multiple .column {
+  width: 35%;
+  margin: 5px;
+}
+
+.multiple .columns {
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  .multiple .column {
+    width: auto;
+  }
+
+ .multiple .columns {
+   display: flex;
+   flex-direction: column;
+  }
+}
+
 
 /* Reformatting unordered lists*/ 
 ul {

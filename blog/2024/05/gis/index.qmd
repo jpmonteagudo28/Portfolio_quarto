@@ -1,0 +1,172 @@
+---
+title: "Geographical Information Systems (GIS) and R. An Overview"
+date: 2024-05-06
+description: "Intro to working with GIS data"
+format:
+  html:
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: true
+#doi:
+citation: true
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE)
+options(digits = 3, width = 300)
+
+library(ggplot2) # plots
+library(gridExtra) # combine
+library(showtext) # font
+
+```
+
+## What is a GIS?
+
+A Geographic Information System is a multi–component environment used to create, visualize, analyze, and manage data with a spatial component. GIS allows us to use coordinate planes to plot geographical data by assigning observation pairs– points, to lines, polygons, or rasters.
+
+|		In theory, we can use a GIS environment to plot any dataset that's mapped onto a coordinate system, but our research questions will decide whether it is appropriate to do so. If we would like to know how many dogs there are in New York City's boroughs, we can use a table or a scatterplot to display this information. However, if we're interested in learning whether boroughs with a greater number of dogs are geographically adjacent, we may choose to use a GIS as a simple scatterplot will not provide a clear answer. 
+
+|		What sort of information do we actually need to answer the previous question? Well, we would need the latitude and longitude of each borough to determine its boundaries and their placement on a coordinate system. These measurements are stored in a spatial database, not a `.csv` or `.txt` file. 
+
+## Spatial Analysis
+
+We use GIS for spatial analysis, and this sort of analysis is usually associated with maps but more importantly with the statistical analysis of spatial patterns and underlying processes. By using GIS to perform spatial analysis, we aim to quantify^[The statistical analysis is performed in R not the GIS software] the observed pattern and try to explore its origin or occurrence. 
+
+### Vectors and Rasters
+
+|		Spatial analysis requires our real–world observations to be reshaped as a vector or raster data model. Vectors can be points, lines, and polygons.  **Points** are observation pairs representing a specific location in a coordinate system. Points have no area, but we conveniently represent them using symbols. **Lines** are a sequence of two or more points called vertices that are interconnected. Lines do not possess area and can't be seen, but we symbolize them with shapes and colors. **Polygons**, on the other hand, are composed of at least three line segments with equivalent initial and final points. Polygons possess length, area, and separate their inside and outside features explicitly. Geometric figures are polygons, therefore, it seems intuitive that our polygon vectors also have this feature.  
+
+|		The raster data model uses an array of cells to represent real–world objects such as images, temperatures, and elevations. The structure of a raster is typically rectangular with regularly spaced cells having a value associated with it. These values have a magnitude that is measured at every cell within the grid and represented as a *scalar field* on a coordinate system^[ Surface temperatures are an example of this field view of rasters. We can measure temperature and represent it based on its magnitude.]. 
+
+#### The issue of Scaling
+
+|		Our real–world observations have been reshaped as either a vector or raster, and now we must decide how to represent them on a grid. In GIS, the scale of our map is the ratio of distance on the map to that in the real world. If we want to represent the southern states, a large area, we will use a **small scale** map, but if we're looking to represent the downtown area of a large city in the south, a relatively small area, we use a **large scale**. 
+
+#### Colors as symbols
+
+|		Color should also inform our scaling choices. We should carefully pick colors to represent features in our dataset. Each color is a combination of three dimensions: hue, lightness, and saturation. We use hue, the dimension associated with color names, to represent different categories of data. Lightness describes how much light is reflected off of a surface. We represent ordinal, interval, and ratio using hue and lightness. Saturation is a color's sharpness, and it's commonly used to distinguish^[Use qualitative color schemes for categorical, unordered data. Ordered, interval and continuous data should use sequential or divergent color themes.] map symbols. 
+
+```{r, eval = TRUE, warning = FALSE, message = FALSE}
+#| label: hues-seven
+#| fig-cap: "Hues, lightness and saturation of seven primary and secondary colors"
+#| fig-cap-location: bottom
+#| column: margin
+#| lightbox:
+
+## ---------------------- ##
+## Creating color schemes ##
+## ---------------------- ##
+
+# Using the rgb() function and https://medialab.github.io/iwanthue
+
+rgb.frame <- function(string){ # function to rmv ()and split string
+  rgb <- data.frame(do.call(rbind, strsplit(gsub("rgb\\(|\\)", "", string), ",")))
+colnames(rgb) <- c("r", "g", "b")
+rgb<- sapply(rgb, as.numeric) # Convert columns to matrix
+rgb <- as.data.frame(rgb/255) # Convert o values between [0,1]
+return(rgb)
+}
+# ------------------------------------------------------ #
+# Seven pirmary and secondary colors hues
+rgb_strings <- c("rgb(205,78,51)",
+                    "rgb(190,125,67)",
+                    "rgb(190,171,46)",
+                    "rgb(93,157,81)",
+                    "rgb(113,137,195)",
+                    "rgb(172,91,196)",
+                    "rgb(208,95,133)")
+
+rgb <- rgb.frame(rgb_strings)
+
+# Same colors with higher lightness
+strings <- c("rgb(209,137,95)",
+              "rgb(189,150,109)",
+              "rgb(178,170,97)",
+              "rgb(134,170,129)",
+              "rgb(128,164,190)",
+              "rgb(144,145,212)",
+              "rgb(199,131,151)")
+rgb2 <- rgb.frame(strings)
+
+# Same color with Lower Saturation
+strings3 <- c("rgb(191,105,67)",
+             "rgb(168,126,81)",
+             "rgb(161,151,64)",
+             "rgb(106,153,108)",
+             "rgb(112,144,173)",
+             "rgb(138,120,195)",
+             "rgb(185,106,131)")
+
+rgb3 <- rgb.frame(strings3)
+# ------------------------------------------------------ #
+# Choose fonts, create plots objects and arrange in grid
+
+# Add fonts
+font_add_google("Lora","lora")
+showtext_auto()
+font <- "lora"
+
+# Plot objects
+pal1 <- data.frame(color =rgb(rgb$r, rgb$g, rgb$b))
+pal2 <- data.frame(color = rgb(rgb2$r, rgb2$g, rgb2$b))
+pal3 <- data.frame(color = rgb(rgb3$r, rgb3$g, rgb3$b))
+
+# Create plots for hue,lightness, and saturation
+plot1 <- ggplot(pal1, aes(x = 1, y = seq_along(color), fill = color)) +
+  geom_tile() +
+  scale_fill_identity() +
+  labs(title = "Hue") +
+  theme_void() +
+  theme(
+    plot.title = element_text(family = font, size = 14, face = "bold",
+                              hjust = .5),
+    plot.background = element_rect(fill ="gray98", colour = NA),
+    panel.background = element_blank(),
+    legend.position = "none")
+
+
+plot2 <- ggplot(pal3, aes(x = 1, y = seq_along(color), fill = color)) +
+  geom_tile() +
+  scale_fill_identity() +
+  labs(title = "Lightness") +
+  theme_void() +
+  theme(
+    plot.title = element_text(family = font, size = 14, face = "bold",
+                              hjust = .5),
+    plot.background = element_rect(fill ="gray98", colour = NA),
+    panel.background = element_blank(),
+    legend.position = "none")
+  
+plot3 <- ggplot(pal2, aes(x = 1, y = seq_along(color), fill = color)) +
+  geom_tile() +
+  scale_fill_identity() +
+  labs(title = "Saturation") +
+  theme_void() +
+  theme(
+    plot.title = element_text(family = font, size = 14, face = "bold",
+                              hjust = .5),
+    plot.background = element_rect(fill ="gray98", colour = NA),
+    panel.background = element_blank(),
+    legend.position = "none")
+
+grid.arrange(plot1, plot2, plot3, ncol =3, nrow = 1)
+```
+
+
+
+|	Text goes here
+
+::: {.callout-note appearance="simple"}
+## Helpful  Tip
+
+Use the [color brewer](http://colorbrewer2.org/ ) to pick a set of color swatches to match your data. You can also visit the [iwanthue](https://medialab.github.io/iwanthue/) site to find refined palettes of optimally distinct colors.
+:::	
+
+
+Use Kieran Healy's example of the [`nycdogs`](https://kjhealy.github.io/nycdogs/) package to visualize a table and map using GIS

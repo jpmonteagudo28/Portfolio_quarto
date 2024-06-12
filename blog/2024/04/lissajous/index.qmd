@@ -36,15 +36,18 @@ However, keeping track of an infinite, unordered sequence of notes is impossible
 
 [^1]: In 5–limit tuning we only multiply integers to obtain other musical notes.
 
-We call the sinusoidal movements in intervals of powers of $2$ – octaves, powers of $3$ represent perfect fifths, and powers of $5$ are called major thirds^[octaves: $f_{x} = 2^{k}$; perfect fifths: $3^{k}$, major thirds: $5^{k},k \in \mathbb{Z}$.]. By multiplying our base frequency by different combinations of these powers,[^2] we get sets of harmoniously consonant and discordant notes.
 
-[^2]: Sometimes the resulting note is outside our octave,  and we simply divide it by two and bring it back to our interval.
+|       We call the sinusoidal movements in intervals of powers of $2$ – octaves, powers of $3$ represent perfect fifths, and powers of $5$ are called major thirds[^2]. By multiplying our base frequency by different combinations of these powers,[^3] we get sets of harmoniously consonant and discordant notes.
+
+[^2]: octaves: $f_{x} = 2^{k}$; perfect fifths: $3^{k}$, major thirds: $5^{k},k \in \mathbb{Z}$.
+
+[^3]: Sometimes the resulting note is outside our octave, and we simply divide it by two and bring it back to our interval.
 
 ### The Perfect ratios
 
-So how can we make sure every note is consonant? Thankfully, the ancient Greeks discovered a way to create beautifully sounding and naturally occurring notes using perfect[^3] ratios for octaves, major fifths, and major thirds. These perfect ratios make music blend, flow, and feel “right”. These are the ratios that create all of the Lissajous figures we'll explore today.
+So how can we make sure every note is consonant? Thankfully, the ancient Greeks discovered a way to create beautifully sounding and naturally occurring notes using perfect[^4] ratios for octaves, major fifths, and major thirds. These perfect ratios make music blend, flow, and feel “right”. These are the ratios that create all of the Lissajous figures we'll explore today.
 
-[^3]: perfect refers to ratios that produce “just” or “pure” melodic sounds.
+[^4]: perfect refers to ratios that produce “just” or “pure” melodic sounds.
 
 ```{r, eval = TRUE}
 #| label: perfect_ratios
@@ -65,17 +68,18 @@ knitr::kable(perfect_ratios)
 
 ## The Code & Animation
 
-We'll create the Lissajous curves using two sinusoidal waves on different phases ^[the curves can also be created with $sin(t)$ and $cos(t)$ functions since $cos(t) = sin(t + \frac{\pi}{2})$, but the phase difference will now be $\frac{a}{b}*\frac{\pi}{2}$.]. The numerator of the perfect ratio will be the coefficient $a$ of the $sin$ function — $sin(t) = sin(at + \delta)$— and the denominator $b$ will go to the $y$ coordinate — $sin(t) = sin(bt)$. We'll define our interval from $0$ to $2\pi$​​. 
+We'll create the Lissajous curves using two sinusoidal waves on different phases [^5]. The numerator of the perfect ratio will be the coefficient $a$ of the $sin$ function, $sin(t) = sin(at + \delta)$, and the denominator $b$ will go to the $y$ coordinate $sin(t) = sin(bt)$. We'll define our interval from $0$ to $2\pi$.​​
+
+[^5]: the curves can also be created with $sin(t)$ and $cos(t)$ functions since $cos(t) = sin(t + \frac{\pi}{2})$, but the phase difference will now be $\frac{a}{b}*\frac{\pi}{2}$.
 
 ::: {.callout-note appearance="simple"}
-
 ## Helpful Tip
 
 You can familiarize yourself with Lissajous figures and their sine functions by using this [interactive virtual oscilloscope](https://dood.al/oscilloscope/).
-
 :::
 
-Using the `gganimate` package in `RStudio`, we'll  build a data frame with a set number of times steps between $0$ and $2\pi$​; and the figures with coordinates for each perfect ratio. Then, we'll stitch each plot with the time steps and coordinates to get a final $8 × 8$ animated plot.
+|     Using the `gganimate` package in `RStudio`, we'll build a data frame with a set number of times steps between $0$ and $2\pi$​; and the figures with coordinates for each perfect ratio. Then, we'll stitch each plot with the time steps and coordinates to get a final $8 × 8$ animated plot.
+
 
 ```{r, eval = FALSE, echo = TRUE, warning = FALSE, message = FALSE}
 ## ------------------------------- ##
@@ -155,8 +159,6 @@ anim_save(filename = "lissajous_figs.mp4",
           height = 1080, width = 1080)
 #| Code adapted from Kieran Healy's blog "Pi Day Circles"
 ```
-
-
 
 ## The Final Product
 

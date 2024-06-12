@@ -2,10 +2,6 @@
 title: "Better than markdown!? Using Racket & Pollen to create beautiful digital books"
 date: 2024-04-25
 description: "Short guide to using Racket the Pollen markup language"
-categories:
- - racket
- - markdown
- - pollen
 format:
   html:
     css: styles.css
@@ -50,6 +46,7 @@ line breaks.
 3. and add [links](https://www.jpmonteagudo.com), if you want to. 
 #| It looks legible and anybody can do it
 #| You don't have to be a computer scientist, a programmer or a nerd
+#
 ```
 
 ::: 
@@ -78,10 +75,10 @@ line breaks.
 
 :::::
 
-The visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages^[Rmarkdown's knitr can execute code in Python, SQL, Bash, Stan, JS, CSS to name a few languages].
+|         The visual and aesthetic difference between markdown and HTML is glaringly obvious. HTML is meant to be a text editor and not a programming language, while markdown combines text-based editing with programming languages^[Rmarkdown's knitr can execute code in Python, SQL, Bash, Stan, JS, CSS to name a few languages].
 
 ## Enter Pollen
 
 Pollen is a publishing system built on top of Scribble and [Racket](https://racket-lang.org/)^[Racket is a programming language based on Lisp]. This markup language is typically used to create digital books, PDFs and other types of files as its output. 
 
-Downloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file. 
+|         Downloading and Installing Racket, Setting a new directory to Racket in MacOS, installing pollen, and creating your first pollen file. 
