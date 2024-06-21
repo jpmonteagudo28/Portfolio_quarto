@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.5.41" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-
-<meta name="author" content="JP Monteagudo" />
-<meta name="description" content="Dinosaurs and correlation coefficients" />
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.41">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="JP Monteagudo">
+<meta name="description" content="Dinosaurs and correlation coefficients">
 <title>home – Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo</title>
 <style>
 code{white-space: pre-wrap;}
@@ -60,8 +55,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
-<script id="quarto-search-options" type="application/json">{
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../..//files/cards/favicon_no_bg.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -87,27 +98,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script>
-
-<script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script><script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
-</script>
-<style>
+</script><style>
 
       .quarto-title-block .quarto-title-banner {
         background: #112540;
       }
 </style>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -132,122 +135,97 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
-
-<link rel="stylesheet" href="styles.css" />
+</script><link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo">
+<meta property="og:description" content="dinosaurs &amp; correlation coefficients">
+<meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta property="og:site_name" content="home">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="357">
+<meta property="og:image:width" content="334">
+<meta name="twitter:title" content="Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo">
+<meta name="twitter:description" content="dinosaurs &amp; correlation coefficients">
+<meta name="twitter:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta name="twitter:creator" content="@jpPabl0">
+<meta name="twitter:site" content="@jpPabl0">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="357">
+<meta name="twitter:image-width" content="334">
 </head>
-
-<body>
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="/index.html">
+    <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">home</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-  aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation"
-  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="/about/index.html"> 
+<li class="nav-item">
+    <a class="nav-link" href="../../../../about/index.html"> 
 <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/cv/index.html"> 
+    <a class="nav-link" href="../../../../cv/index.html"> 
 <span class="menu-text">resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/blog/index.html"> 
+    <a class="nav-link" href="../../../../blog/index.html"> 
 <span class="menu-text">blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/research/index.html"> 
+    <a class="nav-link" href="../../../../research/index.html"> 
 <span class="menu-text">research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/now/index.html"> 
+    <a class="nav-link" href="../../../../now/index.html"> 
 <span class="menu-text">now</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/uses/index.html"> 
+    <a class="nav-link" href="../../../../uses/index.html"> 
 <span class="menu-text">uses</span></a>
   </li>  
 </ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="/atom.xml"> <i 
-  class="bi bi-rss" 
-  role="img" 
-  aria-label="rss" 
->
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="../../../../atom.xml"> <i class="bi bi-rss" role="img" aria-label="rss">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="mailto:jpmonteagudo2014@gmail.com"> <i 
-  class="bi bi-envelope" 
-  role="img" 
-  aria-label="email" 
->
+    <a class="nav-link" href="mailto:jpmonteagudo2014@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/jpPabl0" rel="me"> <i 
-  class="bi bi-twitter-x" 
-  role="img" 
-  aria-label="twitter" 
->
+    <a class="nav-link" href="https://twitter.com/jpPabl0" rel="me"> <i class="bi bi-twitter-x" role="img" aria-label="twitter">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/jpmonteagudo28" rel="me"> <i 
-  class="bi bi-github" 
-  role="img" 
-  aria-label="github" 
->
+    <a class="nav-link" href="https://github.com/jpmonteagudo28" rel="me"> <i class="bi bi-github" role="img" aria-label="github">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/" rel="me"> <i 
-  class="bi bi-linkedin" 
-  role="img" 
-  aria-label="linkedin" 
->
+    <a class="nav-link" href="https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/" rel="me"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default blog-post">
-  <div class="quarto-title-banner">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Animating the Datasaurus dataset as part of the 30 Day Chart Challenge</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Animating the Datasaurus dataset as part of the 30 Day Chart Challenge</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                   <div>
         <div class="description">
           Dinosaurs and correlation coefficients
@@ -285,19 +263,17 @@ window.Quarto = {
     </div>
     
   
-  </header>
-
-
-<section id="visualization-pearsons-correlation-coefficient" class="level2">
-<h2>Visualization &amp; Pearson’s correlation coefficient</h2>
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="visualization-pearsons-correlation-coefficient" class="level2"><h2 class="anchored" data-anchor-id="visualization-pearsons-correlation-coefficient">Visualization &amp; Pearson’s correlation coefficient</h2>
 <p>The <a href="https://nightingaledvs.com/the-30daychartchallenge-year-three/"><code>30DayChartChallenge</code></a> is a data visualization community that hosts daily challenges for April. Today’s challenge involves dinosaurs. I used the <code>Datasaurus</code> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties. In these datasets, the mean and the standard deviation of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</p>
-</section>
-<section id="measures-of-central-tendency" class="level2">
-<h2>Measures of Central Tendency</h2>
-<div class="cell" data-tbl-colwidths="[50,50]">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode" id="cb1" data-cap-location="margin"><pre class="sourceCode numberSource r cell-code number-lines"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(datasauRus) </span>
+</section><section id="measures-of-central-tendency" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="measures-of-central-tendency">Measures of Central Tendency</h2>
+<div class="cell page-columns page-full" data-tbl-colwidths="[50,50]">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1" data-cap-location="margin"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(datasauRus) </span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4"></a></span>
@@ -309,40 +285,33 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10"></a>            <span class="at">stdev_y =</span> <span class="fu">sd</span>(y))</span>
 <span id="cb1-11"><a href="#cb1-11"></a></span>
 <span id="cb1-12"><a href="#cb1-12"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(group_datasaurus,</span>
-<span id="cb1-13"><a href="#cb1-13"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;Mean(x)&#39;</span>,<span class="st">&#39;SD(x)&#39;</span>,<span class="st">&#39;Mean(y)&#39;</span>,<span class="st">&#39;SD(y)&#39;</span>))</span></code></pre></div>
-</details>
-<div class="cell-output-display margin-caption">
-<table class="caption-top">
-<caption>Mean &amp; Standard Deviation of <em>x</em> and <em>y</em> remain equal for each dataset</caption>
+<span id="cb1-13"><a href="#cb1-13"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">'Mean(x)'</span>,<span class="st">'SD(x)'</span>,<span class="st">'Mean(y)'</span>,<span class="st">'SD(y)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display page-columns page-full">
+<table class="caption-top table table-sm table-striped small">
+
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;">Mean(x)</th>
 <th style="text-align: right;">SD(x)</th>
 <th style="text-align: right;">Mean(y)</th>
 <th style="text-align: right;">SD(y)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
+</tr></thead>
+<tbody><tr class="odd">
 <td style="text-align: right;">54.2657</td>
 <td style="text-align: right;">16.713</td>
 <td style="text-align: right;">47.8351</td>
 <td style="text-align: right;">26.84777</td>
-</tr>
-</tbody>
+</tr></tbody>
 </table>
-</div>
+<div class="quarto-table-caption margin-caption">Mean &amp; Standard Deviation of <em>x</em> and <em>y</em> remain equal for each dataset</div></div>
 </div>
 <div class="cell" data-messages="false">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r cell-code number-lines"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">## -------------------------------------- ##</span></span>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">## -------------------------------------- ##</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="do">## Day 19: Dinosaurs; 30DayChartChallenge ##</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="do">## -------------------------------------- ##</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="do">## Loading libs                           ##</span></span>
@@ -355,23 +324,23 @@ window.Quarto = {
 <span id="cb2-11"><a href="#cb2-11"></a><span class="co"># Setting custom theme for ggplot2 graphics</span></span>
 <span id="cb2-12"><a href="#cb2-12"></a></span>
 <span id="cb2-13"><a href="#cb2-13"></a>clrs <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="co"># Creating custom color palette</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>  <span class="st">&quot;#e5b858&quot;</span>, <span class="co">#  yellow</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a>  <span class="st">&quot;#B72025&quot;</span>, <span class="co">#  red</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="st">&quot;#7C225C&quot;</span>, <span class="co">#  purple</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>  <span class="st">&quot;#d3d6d9&quot;</span>, <span class="co">#  dark gray</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>  <span class="st">&quot;#f9f9f9&quot;</span>, <span class="co">#  light gray</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>  <span class="st">&quot;#394DAA&quot;</span>) <span class="co">#  blue</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>  <span class="st">"#e5b858"</span>, <span class="co">#  yellow</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="st">"#B72025"</span>, <span class="co">#  red</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="st">"#7C225C"</span>, <span class="co">#  purple</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>  <span class="st">"#d3d6d9"</span>, <span class="co">#  dark gray</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>  <span class="st">"#f9f9f9"</span>, <span class="co">#  light gray</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>  <span class="st">"#394DAA"</span>) <span class="co">#  blue</span></span>
 <span id="cb2-20"><a href="#cb2-20"></a></span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="co"># Import Fonts (google name, R name)</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">font_add_google</span>(<span class="st">&quot;Source Code Pro&quot;</span>,<span class="st">&quot;source_code&quot;</span>)</span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="fu">font_add_google</span>(<span class="st">&quot;Montserrat&quot;</span>,<span class="st">&quot;mont&quot;</span>)</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="fu">font_add_google</span>(<span class="st">"Source Code Pro"</span>,<span class="st">"source_code"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="fu">font_add_google</span>(<span class="st">"Montserrat"</span>,<span class="st">"mont"</span>)</span>
 <span id="cb2-24"><a href="#cb2-24"></a><span class="fu">showtext_auto</span>() <span class="co"># enable showtext font rendering</span></span>
 <span id="cb2-25"><a href="#cb2-25"></a></span>
 <span id="cb2-26"><a href="#cb2-26"></a>theme_blue <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb2-27"><a href="#cb2-27"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">&quot;mont&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"mont"</span>) <span class="sc">+</span></span>
 <span id="cb2-28"><a href="#cb2-28"></a>  <span class="fu">theme</span>(</span>
-<span id="cb2-29"><a href="#cb2-29"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;mont&quot;</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.35</span>)),</span>
-<span id="cb2-30"><a href="#cb2-30"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;mont&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;royalblue&quot;</span>, <span class="at">face =</span> <span class="st">&quot;plain&quot;</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>)),</span>
+<span id="cb2-29"><a href="#cb2-29"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"mont"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.35</span>)),</span>
+<span id="cb2-30"><a href="#cb2-30"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"mont"</span>, <span class="at">colour =</span> <span class="st">"royalblue"</span>, <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">1</span>)),</span>
 <span id="cb2-31"><a href="#cb2-31"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> clrs[<span class="dv">5</span>], <span class="at">colour =</span> clrs[<span class="dv">5</span>]),</span>
 <span id="cb2-32"><a href="#cb2-32"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb2-33"><a href="#cb2-33"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> clrs[<span class="dv">5</span>]),</span>
@@ -380,18 +349,18 @@ window.Quarto = {
 <span id="cb2-36"><a href="#cb2-36"></a>    <span class="at">panel.grid.major.y =</span>  <span class="fu">element_line</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>], <span class="at">linetype =</span> <span class="dv">3</span>, <span class="at">linewidth =</span> .<span class="dv">35</span>),</span>
 <span id="cb2-37"><a href="#cb2-37"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb2-38"><a href="#cb2-38"></a>    <span class="co"># modify text, axis and colour 4) and 5)</span></span>
-<span id="cb2-39"><a href="#cb2-39"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>], <span class="at">face =</span> <span class="st">&quot;plain&quot;</span>, <span class="at">family =</span> <span class="st">&quot;mont&quot;</span>),</span>
-<span id="cb2-40"><a href="#cb2-40"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>], <span class="at">family =</span> <span class="st">&quot;mont&quot;</span>),</span>
+<span id="cb2-39"><a href="#cb2-39"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>], <span class="at">face =</span> <span class="st">"plain"</span>, <span class="at">family =</span> <span class="st">"mont"</span>),</span>
+<span id="cb2-40"><a href="#cb2-40"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>], <span class="at">family =</span> <span class="st">"mont"</span>),</span>
 <span id="cb2-41"><a href="#cb2-41"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> clrs[<span class="dv">6</span>]),</span>
 <span id="cb2-42"><a href="#cb2-42"></a>    <span class="co"># legend at the bottom 6)</span></span>
-<span id="cb2-43"><a href="#cb2-43"></a>    <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span></span>
 <span id="cb2-44"><a href="#cb2-44"></a>  )</span>
 <span id="cb2-45"><a href="#cb2-45"></a>}</span>
 <span id="cb2-46"><a href="#cb2-46"></a></span>
 <span id="cb2-47"><a href="#cb2-47"></a><span class="fu">theme_set</span>(<span class="fu">theme_blue</span>())</span>
 <span id="cb2-48"><a href="#cb2-48"></a></span>
-<span id="cb2-49"><a href="#cb2-49"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">&quot;label&quot;</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;mont&quot;</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>))</span>
-<span id="cb2-50"><a href="#cb2-50"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">&quot;text&quot;</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;mont&quot;</span>, <span class="at">fontface =</span> <span class="st">&quot;plain&quot;</span>))</span>
+<span id="cb2-49"><a href="#cb2-49"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"label"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"mont"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>))</span>
+<span id="cb2-50"><a href="#cb2-50"></a>ggplot2<span class="sc">::</span><span class="fu">update_geom_defaults</span>(<span class="st">"text"</span>, <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"mont"</span>, <span class="at">fontface =</span> <span class="st">"plain"</span>))</span>
 <span id="cb2-51"><a href="#cb2-51"></a></span>
 <span id="cb2-52"><a href="#cb2-52"></a></span>
 <span id="cb2-53"><a href="#cb2-53"></a><span class="co"># Checking min/max for axis transform</span></span>
@@ -402,182 +371,32 @@ window.Quarto = {
 <span id="cb2-58"><a href="#cb2-58"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> .<span class="dv">65</span>, </span>
 <span id="cb2-59"><a href="#cb2-59"></a>             <span class="at">colour =</span> clrs[<span class="dv">3</span>]) <span class="sc">+</span></span>
 <span id="cb2-60"><a href="#cb2-60"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,<span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb2-61"><a href="#cb2-61"></a>       <span class="at">title =</span> <span class="st">&quot;Day 19 of 30 Day Chart Challenge&quot;</span>,</span>
-<span id="cb2-62"><a href="#cb2-62"></a>       <span class="at">subtitle =</span> <span class="st">&quot;The T-rex&quot;</span>,</span>
-<span id="cb2-63"><a href="#cb2-63"></a>       <span class="at">caption =</span> <span class="st">&quot;Always check your data graphically&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-61"><a href="#cb2-61"></a>       <span class="at">title =</span> <span class="st">"Day 19 of 30 Day Chart Challenge"</span>,</span>
+<span id="cb2-62"><a href="#cb2-62"></a>       <span class="at">subtitle =</span> <span class="st">"The T-rex"</span>,</span>
+<span id="cb2-63"><a href="#cb2-63"></a>       <span class="at">caption =</span> <span class="st">"Always check your data graphically"</span>) <span class="sc">+</span></span>
 <span id="cb2-64"><a href="#cb2-64"></a>  <span class="fu">theme_blue</span>() <span class="sc">+</span></span>
 <span id="cb2-65"><a href="#cb2-65"></a>  <span class="fu">transition_states</span>(<span class="at">states =</span> dataset,</span>
 <span id="cb2-66"><a href="#cb2-66"></a>                    <span class="at">transition_length =</span> <span class="dv">2</span>,</span>
 <span id="cb2-67"><a href="#cb2-67"></a>                    <span class="at">state_length =</span> <span class="dv">1</span>,</span>
 <span id="cb2-68"><a href="#cb2-68"></a>                    <span class="at">wrap =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb2-69"><a href="#cb2-69"></a>  <span class="fu">ease_aes</span>(<span class="st">&quot;linear&quot;</span>)</span>
+<span id="cb2-69"><a href="#cb2-69"></a>  <span class="fu">ease_aes</span>(<span class="st">"linear"</span>)</span>
 <span id="cb2-70"><a href="#cb2-70"></a></span>
 <span id="cb2-71"><a href="#cb2-71"></a><span class="fu">animate</span>(dino, <span class="at">duration =</span> <span class="dv">15</span>, <span class="at">fps =</span> <span class="dv">24</span>, <span class="at">height =</span> <span class="dv">680</span>, <span class="at">width =</span> <span class="dv">720</span>,</span>
 <span id="cb2-72"><a href="#cb2-72"></a>        <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
 <span id="cb2-73"><a href="#cb2-73"></a></span>
-<span id="cb2-74"><a href="#cb2-74"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&quot;dino.gif&quot;</span>,</span>
-<span id="cb2-75"><a href="#cb2-75"></a>          <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;blog&quot;</span>,<span class="st">&quot;2024&quot;</span>,<span class="st">&quot;04&quot;</span>,<span class="st">&quot;dinosaurs&quot;</span>,<span class="st">&quot;img&quot;</span>))</span></code></pre></div>
+<span id="cb2-74"><a href="#cb2-74"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">"dino.gif"</span>,</span>
+<span id="cb2-75"><a href="#cb2-75"></a>          <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog"</span>,<span class="st">"2024"</span>,<span class="st">"04"</span>,<span class="st">"dinosaurs"</span>,<span class="st">"img"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="the-animated-data" class="level2">
-<h2>The Animated Data</h2>
+</section><section id="the-animated-data" class="level2"><h2 class="anchored" data-anchor-id="the-animated-data">The Animated Data</h2>
 <img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024">
 
-<div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">home</span> <span class="hidden" data-render-id="quarto-int-navbar-title">home</span> <span class="hidden" data-render-id="quarto-int-navbar:about">about</span> <span class="hidden" data-render-id="quarto-int-navbar:/about/index.html">/about/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:resume">resume</span> <span class="hidden" data-render-id="quarto-int-navbar:/cv/index.html">/cv/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:blog">blog</span> <span class="hidden" data-render-id="quarto-int-navbar:/blog/index.html">/blog/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:research">research</span> <span class="hidden" data-render-id="quarto-int-navbar:/research/index.html">/research/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:now">now</span> <span class="hidden" data-render-id="quarto-int-navbar:/now/index.html">/now/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:uses">uses</span> <span class="hidden" data-render-id="quarto-int-navbar:/uses/index.html">/uses/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:/atom.xml">/atom.xml</span> <span class="hidden" data-render-id="quarto-int-navbar:mailto:jpmonteagudo2014@gmail.com">mailto:jpmonteagudo2014@gmail.com</span> <span class="hidden" data-render-id="quarto-int-navbar:https://twitter.com/jpPabl0">https://twitter.com/jpPabl0</span> <span class="hidden" data-render-id="quarto-int-navbar:https://github.com/jpmonteagudo28">https://github.com/jpmonteagudo28</span> <span class="hidden" data-render-id="quarto-int-navbar:https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/">https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/</span></p>
-<div class="hidden" data-render-id="footer-center">
-<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023–2024 JP Monteagudo</span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by-sa/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> <i class="fa-brands fa-creative-commons-sa" aria-label="creative-commons-sa"></i> Creative Commons CC BY-SA 4.0</a></span> <!-- <span class="faux-block"> <strong>ORCID</strong> [0009-0003-6465-6658](https://orcid.org/0009-0003-6465-6658)</span> --> <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> --></p>
-</div>
-<div class="hidden" data-render-id="footer-right">
-<!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
-</div>
-</div>
-<div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Animating the Datasaurus dataset as part of the 30 Day Chart Challenge | JP Monteagudo</span> <span class="hidden" data-render-id="quarto-metasitename">home</span> <span class="hidden" data-render-id="quarto-twittercarddesc">Dinosaurs and correlation coefficients</span> <span class="hidden" data-render-id="quarto-ogcardddesc">Dinosaurs and correlation coefficients</span></p>
-</div>
 <!-- -->
-<div class="quarto-embedded-source-code">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> &quot;Animating the Datasaurus dataset as part of the 30 Day Chart Challenge&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-04-19</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> &quot;Dinosaurs and correlation coefficients&quot;</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="an">format:</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">  html:</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">    css: styles.css</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">    code-fold: true</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">    code-line-numbers: true</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="an">doi:</span><span class="co"> 10.59350/wx5k1-ajc38</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="an">draft:</span><span class="co"> false</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">---</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="in">knitr::opts_chunk$set(fig.align = &quot;center&quot;, fig.retina = 3,</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="in">                      out.width = &quot;90%&quot;, collapse = TRUE)</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="in">options(digits = 3, width = 300)</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="in">## -------------------------------------- ##</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="in">library(datasauRus)                       ##</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="in">library(tidyverse)                        ##</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="in">library(gganimate)                        ##                                                    </span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="in">library(showtext)                         ##</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a><span class="in">library(knitr)                            ##</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a><span class="in">## -------------------------------------- ##</span></span>
-<span id="cb3-29"><a href="#cb3-29"></a></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="in">```</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="fu">## Visualization &amp; Pearson&#39;s correlation coefficient</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a></span>
-<span id="cb3-34"><a href="#cb3-34"></a>The <span class="co">[</span><span class="ot">`30DayChartChallenge`</span><span class="co">](https://nightingaledvs.com/the-30daychartchallenge-year-three/)</span> is a data visualization community that hosts daily challenges for April. Today&#39;s challenge involves dinosaurs. I used the <span class="in">`Datasaurus`</span> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</span>
-<span id="cb3-35"><a href="#cb3-35"></a></span>
-<span id="cb3-36"><a href="#cb3-36"></a><span class="fu">## Measures of Central Tendency</span></span>
-<span id="cb3-37"><a href="#cb3-37"></a></span>
-<span id="cb3-38"><a href="#cb3-38"></a><span class="in">````{r eval = TRUE}</span></span>
-<span id="cb3-39"><a href="#cb3-39"></a><span class="in">#| tbl-cap: &quot;Mean &amp; Standard Deviation of *x* and *y* remain equal for each dataset&quot;</span></span>
-<span id="cb3-40"><a href="#cb3-40"></a><span class="in">#| tbl-cap-location: margin</span></span>
-<span id="cb3-41"><a href="#cb3-41"></a><span class="in">#| tbl-colwidths: [50,50]</span></span>
-<span id="cb3-42"><a href="#cb3-42"></a></span>
-<span id="cb3-43"><a href="#cb3-43"></a></span>
-<span id="cb3-44"><a href="#cb3-44"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
-<span id="cb3-45"><a href="#cb3-45"></a><span class="in">group_datasaurus &lt;- datasaurus %&gt;%</span></span>
-<span id="cb3-46"><a href="#cb3-46"></a><span class="in">  summarize(avg = mean(x), </span></span>
-<span id="cb3-47"><a href="#cb3-47"></a><span class="in">            stdev = sd(x), </span></span>
-<span id="cb3-48"><a href="#cb3-48"></a><span class="in">            avg_y = mean(y), </span></span>
-<span id="cb3-49"><a href="#cb3-49"></a><span class="in">            stdev_y = sd(y))</span></span>
-<span id="cb3-50"><a href="#cb3-50"></a></span>
-<span id="cb3-51"><a href="#cb3-51"></a><span class="in">knitr::kable(group_datasaurus,</span></span>
-<span id="cb3-52"><a href="#cb3-52"></a><span class="in">             col.names = c(&#39;Mean(x)&#39;,&#39;SD(x)&#39;,&#39;Mean(y)&#39;,&#39;SD(y)&#39;))</span></span>
-<span id="cb3-53"><a href="#cb3-53"></a><span class="in">````</span></span>
-<span id="cb3-54"><a href="#cb3-54"></a></span>
-<span id="cb3-55"><a href="#cb3-55"></a></span>
-<span id="cb3-56"><a href="#cb3-56"></a></span>
-<span id="cb3-57"><a href="#cb3-57"></a><span class="in">```{r, eval = FALSE, warning = FALSE, messages = FALSE}</span></span>
-<span id="cb3-58"><a href="#cb3-58"></a><span class="in">## -------------------------------------- ##</span></span>
-<span id="cb3-59"><a href="#cb3-59"></a><span class="in">## Day 19: Dinosaurs; 30DayChartChallenge ##</span></span>
-<span id="cb3-60"><a href="#cb3-60"></a><span class="in">## -------------------------------------- ##</span></span>
-<span id="cb3-61"><a href="#cb3-61"></a></span>
-<span id="cb3-62"><a href="#cb3-62"></a></span>
-<span id="cb3-63"><a href="#cb3-63"></a><span class="in"># Setting custom theme for ggplot2 graphics</span></span>
-<span id="cb3-64"><a href="#cb3-64"></a><span class="in">clrs &lt;- c( # Creating custom color palette</span></span>
-<span id="cb3-65"><a href="#cb3-65"></a><span class="in">  &quot;#e5b858&quot;, #  yellow</span></span>
-<span id="cb3-66"><a href="#cb3-66"></a><span class="in">  &quot;#B72025&quot;, #  red</span></span>
-<span id="cb3-67"><a href="#cb3-67"></a><span class="in">  &quot;#7C225C&quot;, #  purple</span></span>
-<span id="cb3-68"><a href="#cb3-68"></a><span class="in">  &quot;#d3d6d9&quot;, #  dark gray</span></span>
-<span id="cb3-69"><a href="#cb3-69"></a><span class="in">  &quot;#f9f9f9&quot;, #  light gray</span></span>
-<span id="cb3-70"><a href="#cb3-70"></a><span class="in">  &quot;#394DAA&quot;) #  blue</span></span>
-<span id="cb3-71"><a href="#cb3-71"></a></span>
-<span id="cb3-72"><a href="#cb3-72"></a><span class="in"># Import Fonts (google name, R name)</span></span>
-<span id="cb3-73"><a href="#cb3-73"></a><span class="in">font_add_google(&quot;Source Code Pro&quot;,&quot;source_code&quot;)</span></span>
-<span id="cb3-74"><a href="#cb3-74"></a><span class="in">font_add_google(&quot;Montserrat&quot;,&quot;mont&quot;)</span></span>
-<span id="cb3-75"><a href="#cb3-75"></a><span class="in">showtext_auto() # enable showtext font rendering</span></span>
-<span id="cb3-76"><a href="#cb3-76"></a></span>
-<span id="cb3-77"><a href="#cb3-77"></a><span class="in">theme_blue &lt;- function() {</span></span>
-<span id="cb3-78"><a href="#cb3-78"></a><span class="in">  theme_minimal(base_family = &quot;mont&quot;) +</span></span>
-<span id="cb3-79"><a href="#cb3-79"></a><span class="in">  theme(</span></span>
-<span id="cb3-80"><a href="#cb3-80"></a><span class="in">    plot.title = element_text(family = &quot;mont&quot;, face = &quot;bold&quot;, size = rel(1.35)),</span></span>
-<span id="cb3-81"><a href="#cb3-81"></a><span class="in">    plot.subtitle = element_text(family = &quot;mont&quot;, colour = &quot;royalblue&quot;, face = &quot;plain&quot;, size = rel(1)),</span></span>
-<span id="cb3-82"><a href="#cb3-82"></a><span class="in">    plot.background = element_rect(fill = clrs[5], colour = clrs[5]),</span></span>
-<span id="cb3-83"><a href="#cb3-83"></a><span class="in">    panel.border = element_blank(),</span></span>
-<span id="cb3-84"><a href="#cb3-84"></a><span class="in">    panel.background = element_rect(fill = clrs[5]),</span></span>
-<span id="cb3-85"><a href="#cb3-85"></a><span class="in">    panel.grid.major.x = element_line(colour = clrs[6], linetype = 3, linewidth = .35),</span></span>
-<span id="cb3-86"><a href="#cb3-86"></a><span class="in">    panel.grid.minor.x = element_blank(),</span></span>
-<span id="cb3-87"><a href="#cb3-87"></a><span class="in">    panel.grid.major.y =  element_line(colour = clrs[6], linetype = 3, linewidth = .35),</span></span>
-<span id="cb3-88"><a href="#cb3-88"></a><span class="in">    panel.grid.minor.y = element_blank(),</span></span>
-<span id="cb3-89"><a href="#cb3-89"></a><span class="in">    # modify text, axis and colour 4) and 5)</span></span>
-<span id="cb3-90"><a href="#cb3-90"></a><span class="in">    axis.text = element_text(colour = clrs[6], face = &quot;plain&quot;, family = &quot;mont&quot;),</span></span>
-<span id="cb3-91"><a href="#cb3-91"></a><span class="in">    axis.title = element_text(colour = clrs[6], family = &quot;mont&quot;),</span></span>
-<span id="cb3-92"><a href="#cb3-92"></a><span class="in">    axis.ticks = element_line(colour = clrs[6]),</span></span>
-<span id="cb3-93"><a href="#cb3-93"></a><span class="in">    # legend at the bottom 6)</span></span>
-<span id="cb3-94"><a href="#cb3-94"></a><span class="in">    legend.position = &quot;none&quot;</span></span>
-<span id="cb3-95"><a href="#cb3-95"></a><span class="in">  )</span></span>
-<span id="cb3-96"><a href="#cb3-96"></a><span class="in">}</span></span>
-<span id="cb3-97"><a href="#cb3-97"></a></span>
-<span id="cb3-98"><a href="#cb3-98"></a><span class="in">theme_set(theme_blue())</span></span>
-<span id="cb3-99"><a href="#cb3-99"></a></span>
-<span id="cb3-100"><a href="#cb3-100"></a><span class="in">ggplot2::update_geom_defaults(&quot;label&quot;, list(family = &quot;mont&quot;, fontface = &quot;bold&quot;))</span></span>
-<span id="cb3-101"><a href="#cb3-101"></a><span class="in">ggplot2::update_geom_defaults(&quot;text&quot;, list(family = &quot;mont&quot;, fontface = &quot;plain&quot;))</span></span>
-<span id="cb3-102"><a href="#cb3-102"></a></span>
-<span id="cb3-103"><a href="#cb3-103"></a></span>
-<span id="cb3-104"><a href="#cb3-104"></a><span class="in"># Checking min/max for axis transform</span></span>
-<span id="cb3-105"><a href="#cb3-105"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
-<span id="cb3-106"><a href="#cb3-106"></a><span class="in">summary(datasaurus)</span></span>
-<span id="cb3-107"><a href="#cb3-107"></a></span>
-<span id="cb3-108"><a href="#cb3-108"></a><span class="in">dino &lt;- ggplot(datasaurus, aes(x = x, y = y))+</span></span>
-<span id="cb3-109"><a href="#cb3-109"></a><span class="in">  geom_point(size = 3, alpha = .65, </span></span>
-<span id="cb3-110"><a href="#cb3-110"></a><span class="in">             colour = clrs[3]) +</span></span>
-<span id="cb3-111"><a href="#cb3-111"></a><span class="in">  labs(x = NULL,y = NULL,</span></span>
-<span id="cb3-112"><a href="#cb3-112"></a><span class="in">       title = &quot;Day 19 of 30 Day Chart Challenge&quot;,</span></span>
-<span id="cb3-113"><a href="#cb3-113"></a><span class="in">       subtitle = &quot;The T-rex&quot;,</span></span>
-<span id="cb3-114"><a href="#cb3-114"></a><span class="in">       caption = &quot;Always check your data graphically&quot;) +</span></span>
-<span id="cb3-115"><a href="#cb3-115"></a><span class="in">  theme_blue() +</span></span>
-<span id="cb3-116"><a href="#cb3-116"></a><span class="in">  transition_states(states = dataset,</span></span>
-<span id="cb3-117"><a href="#cb3-117"></a><span class="in">                    transition_length = 2,</span></span>
-<span id="cb3-118"><a href="#cb3-118"></a><span class="in">                    state_length = 1,</span></span>
-<span id="cb3-119"><a href="#cb3-119"></a><span class="in">                    wrap = TRUE) +</span></span>
-<span id="cb3-120"><a href="#cb3-120"></a><span class="in">  ease_aes(&quot;linear&quot;)</span></span>
-<span id="cb3-121"><a href="#cb3-121"></a></span>
-<span id="cb3-122"><a href="#cb3-122"></a><span class="in">animate(dino, duration = 15, fps = 24, height = 680, width = 720,</span></span>
-<span id="cb3-123"><a href="#cb3-123"></a><span class="in">        renderer = gifski_renderer())</span></span>
-<span id="cb3-124"><a href="#cb3-124"></a></span>
-<span id="cb3-125"><a href="#cb3-125"></a><span class="in">anim_save(filename = &quot;dino.gif&quot;,</span></span>
-<span id="cb3-126"><a href="#cb3-126"></a><span class="in">          path = here::here(&quot;blog&quot;,&quot;2024&quot;,&quot;04&quot;,&quot;dinosaurs&quot;,&quot;img&quot;))</span></span>
-<span id="cb3-127"><a href="#cb3-127"></a><span class="in">```</span></span>
-<span id="cb3-128"><a href="#cb3-128"></a></span>
-<span id="cb3-129"><a href="#cb3-129"></a><span class="fu">## The Animated Data</span></span>
-<span id="cb3-130"><a href="#cb3-130"></a></span>
-<span id="cb3-131"><a href="#cb3-131"></a><span class="in">```{=html}</span></span>
-<span id="cb3-132"><a href="#cb3-132"></a><span class="in">&lt;img src=&quot;img/dino.gif&quot; alt=&quot;Datasaurus Day 19 Chart Challenge 2024&quot;&gt;</span></span>
-<span id="cb3-133"><a href="#cb3-133"></a></span>
-<span id="cb3-134"><a href="#cb3-134"></a><span class="in">```</span></span>
-<span id="cb3-135"><a href="#cb3-135"></a></span></code></pre></div>
-</div>
-</section>
 
-</main> <!-- /main -->
-<script id = "quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas" role="listitem">
+Monteagudo, JP. 2024. <span>“Animated Datasaurus—30 Day Chart
+Challenge.”</span> April 19, 2024. <a href="https://doi.org/10.59350/wx5k1-ajc38">https://doi.org/10.59350/wx5k1-ajc38</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1047,43 +866,157 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<script src="https://giscus.app/client.js"
-        data-repo="jpmonteagudo28/Portfolio_quarto"
-        data-repo-id="R_kgDOKnaxdQ"
-        data-category="Blog comments"
-        data-category-id="DIC_kwDOIg6EJc4CSz92"
-        data-mapping="pathname"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="light"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="dark">
+</script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="an">title:</span><span class="co"> "animated datasaurus—30 day chart challenge"</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="an">date:</span><span class="co"> 2024-04-19</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="an">description:</span><span class="co"> "dinosaurs &amp; correlation coefficients"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="an">format:</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">  html:</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">    css: styles.css</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">    code-fold: true</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">    code-tools: true</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">    code-line-numbers: true</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="an">doi:</span><span class="co"> 10.59350/wx5k1-ajc38</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">---</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="in">                      out.width = "90%", collapse = TRUE)</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="in">options(digits = 3, width = 300)</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="in">## -------------------------------------- ##</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="in">library(datasauRus)                       ##</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="in">library(tidyverse)                        ##</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="in">library(gganimate)                        ##                                                    </span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="in">library(showtext)                         ##</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="in">library(knitr)                            ##</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="in">## -------------------------------------- ##</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="in">```</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="fu">## Visualization &amp; Pearson's correlation coefficient</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a></span>
+<span id="cb3-34"><a href="#cb3-34"></a>The <span class="co">[</span><span class="ot">`30DayChartChallenge`</span><span class="co">](https://nightingaledvs.com/the-30daychartchallenge-year-three/)</span> is a data visualization community that hosts daily challenges for April. Today's challenge involves dinosaurs. I used the <span class="in">`Datasaurus`</span> package to create an animated visualization to demonstrate the importance of graphing data, and the effects of outliers on statistical properties.  In these datasets, the mean and the standard deviation of $x$ and $y$ remain almost the same, but the distribution of observation pairs goes through obvious drastic changes.</span>
+<span id="cb3-35"><a href="#cb3-35"></a></span>
+<span id="cb3-36"><a href="#cb3-36"></a><span class="fu">## Measures of Central Tendency</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a></span>
+<span id="cb3-38"><a href="#cb3-38"></a><span class="in">````{r eval = TRUE}</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="in">#| tbl-cap: "Mean &amp; Standard Deviation of *x* and *y* remain equal for each dataset"</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a><span class="in">#| tbl-cap-location: margin</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a><span class="in">#| tbl-colwidths: [50,50]</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a></span>
+<span id="cb3-43"><a href="#cb3-43"></a></span>
+<span id="cb3-44"><a href="#cb3-44"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
+<span id="cb3-45"><a href="#cb3-45"></a><span class="in">group_datasaurus &lt;- datasaurus %&gt;%</span></span>
+<span id="cb3-46"><a href="#cb3-46"></a><span class="in">  summarize(avg = mean(x), </span></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="in">            stdev = sd(x), </span></span>
+<span id="cb3-48"><a href="#cb3-48"></a><span class="in">            avg_y = mean(y), </span></span>
+<span id="cb3-49"><a href="#cb3-49"></a><span class="in">            stdev_y = sd(y))</span></span>
+<span id="cb3-50"><a href="#cb3-50"></a></span>
+<span id="cb3-51"><a href="#cb3-51"></a><span class="in">knitr::kable(group_datasaurus,</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a><span class="in">             col.names = c('Mean(x)','SD(x)','Mean(y)','SD(y)'))</span></span>
+<span id="cb3-53"><a href="#cb3-53"></a><span class="in">````</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a></span>
+<span id="cb3-55"><a href="#cb3-55"></a></span>
+<span id="cb3-56"><a href="#cb3-56"></a></span>
+<span id="cb3-57"><a href="#cb3-57"></a><span class="in">```{r, eval = FALSE, warning = FALSE, messages = FALSE}</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="in">## -------------------------------------- ##</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a><span class="in">## Day 19: Dinosaurs; 30DayChartChallenge ##</span></span>
+<span id="cb3-60"><a href="#cb3-60"></a><span class="in">## -------------------------------------- ##</span></span>
+<span id="cb3-61"><a href="#cb3-61"></a></span>
+<span id="cb3-62"><a href="#cb3-62"></a></span>
+<span id="cb3-63"><a href="#cb3-63"></a><span class="in"># Setting custom theme for ggplot2 graphics</span></span>
+<span id="cb3-64"><a href="#cb3-64"></a><span class="in">clrs &lt;- c( # Creating custom color palette</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a><span class="in">  "#e5b858", #  yellow</span></span>
+<span id="cb3-66"><a href="#cb3-66"></a><span class="in">  "#B72025", #  red</span></span>
+<span id="cb3-67"><a href="#cb3-67"></a><span class="in">  "#7C225C", #  purple</span></span>
+<span id="cb3-68"><a href="#cb3-68"></a><span class="in">  "#d3d6d9", #  dark gray</span></span>
+<span id="cb3-69"><a href="#cb3-69"></a><span class="in">  "#f9f9f9", #  light gray</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a><span class="in">  "#394DAA") #  blue</span></span>
+<span id="cb3-71"><a href="#cb3-71"></a></span>
+<span id="cb3-72"><a href="#cb3-72"></a><span class="in"># Import Fonts (google name, R name)</span></span>
+<span id="cb3-73"><a href="#cb3-73"></a><span class="in">font_add_google("Source Code Pro","source_code")</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a><span class="in">font_add_google("Montserrat","mont")</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a><span class="in">showtext_auto() # enable showtext font rendering</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a></span>
+<span id="cb3-77"><a href="#cb3-77"></a><span class="in">theme_blue &lt;- function() {</span></span>
+<span id="cb3-78"><a href="#cb3-78"></a><span class="in">  theme_minimal(base_family = "mont") +</span></span>
+<span id="cb3-79"><a href="#cb3-79"></a><span class="in">  theme(</span></span>
+<span id="cb3-80"><a href="#cb3-80"></a><span class="in">    plot.title = element_text(family = "mont", face = "bold", size = rel(1.35)),</span></span>
+<span id="cb3-81"><a href="#cb3-81"></a><span class="in">    plot.subtitle = element_text(family = "mont", colour = "royalblue", face = "plain", size = rel(1)),</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a><span class="in">    plot.background = element_rect(fill = clrs[5], colour = clrs[5]),</span></span>
+<span id="cb3-83"><a href="#cb3-83"></a><span class="in">    panel.border = element_blank(),</span></span>
+<span id="cb3-84"><a href="#cb3-84"></a><span class="in">    panel.background = element_rect(fill = clrs[5]),</span></span>
+<span id="cb3-85"><a href="#cb3-85"></a><span class="in">    panel.grid.major.x = element_line(colour = clrs[6], linetype = 3, linewidth = .35),</span></span>
+<span id="cb3-86"><a href="#cb3-86"></a><span class="in">    panel.grid.minor.x = element_blank(),</span></span>
+<span id="cb3-87"><a href="#cb3-87"></a><span class="in">    panel.grid.major.y =  element_line(colour = clrs[6], linetype = 3, linewidth = .35),</span></span>
+<span id="cb3-88"><a href="#cb3-88"></a><span class="in">    panel.grid.minor.y = element_blank(),</span></span>
+<span id="cb3-89"><a href="#cb3-89"></a><span class="in">    # modify text, axis and colour 4) and 5)</span></span>
+<span id="cb3-90"><a href="#cb3-90"></a><span class="in">    axis.text = element_text(colour = clrs[6], face = "plain", family = "mont"),</span></span>
+<span id="cb3-91"><a href="#cb3-91"></a><span class="in">    axis.title = element_text(colour = clrs[6], family = "mont"),</span></span>
+<span id="cb3-92"><a href="#cb3-92"></a><span class="in">    axis.ticks = element_line(colour = clrs[6]),</span></span>
+<span id="cb3-93"><a href="#cb3-93"></a><span class="in">    # legend at the bottom 6)</span></span>
+<span id="cb3-94"><a href="#cb3-94"></a><span class="in">    legend.position = "none"</span></span>
+<span id="cb3-95"><a href="#cb3-95"></a><span class="in">  )</span></span>
+<span id="cb3-96"><a href="#cb3-96"></a><span class="in">}</span></span>
+<span id="cb3-97"><a href="#cb3-97"></a></span>
+<span id="cb3-98"><a href="#cb3-98"></a><span class="in">theme_set(theme_blue())</span></span>
+<span id="cb3-99"><a href="#cb3-99"></a></span>
+<span id="cb3-100"><a href="#cb3-100"></a><span class="in">ggplot2::update_geom_defaults("label", list(family = "mont", fontface = "bold"))</span></span>
+<span id="cb3-101"><a href="#cb3-101"></a><span class="in">ggplot2::update_geom_defaults("text", list(family = "mont", fontface = "plain"))</span></span>
+<span id="cb3-102"><a href="#cb3-102"></a></span>
+<span id="cb3-103"><a href="#cb3-103"></a></span>
+<span id="cb3-104"><a href="#cb3-104"></a><span class="in"># Checking min/max for axis transform</span></span>
+<span id="cb3-105"><a href="#cb3-105"></a><span class="in">datasaurus &lt;- datasaurus_dozen</span></span>
+<span id="cb3-106"><a href="#cb3-106"></a><span class="in">summary(datasaurus)</span></span>
+<span id="cb3-107"><a href="#cb3-107"></a></span>
+<span id="cb3-108"><a href="#cb3-108"></a><span class="in">dino &lt;- ggplot(datasaurus, aes(x = x, y = y))+</span></span>
+<span id="cb3-109"><a href="#cb3-109"></a><span class="in">  geom_point(size = 3, alpha = .65, </span></span>
+<span id="cb3-110"><a href="#cb3-110"></a><span class="in">             colour = clrs[3]) +</span></span>
+<span id="cb3-111"><a href="#cb3-111"></a><span class="in">  labs(x = NULL,y = NULL,</span></span>
+<span id="cb3-112"><a href="#cb3-112"></a><span class="in">       title = "Day 19 of 30 Day Chart Challenge",</span></span>
+<span id="cb3-113"><a href="#cb3-113"></a><span class="in">       subtitle = "The T-rex",</span></span>
+<span id="cb3-114"><a href="#cb3-114"></a><span class="in">       caption = "Always check your data graphically") +</span></span>
+<span id="cb3-115"><a href="#cb3-115"></a><span class="in">  theme_blue() +</span></span>
+<span id="cb3-116"><a href="#cb3-116"></a><span class="in">  transition_states(states = dataset,</span></span>
+<span id="cb3-117"><a href="#cb3-117"></a><span class="in">                    transition_length = 2,</span></span>
+<span id="cb3-118"><a href="#cb3-118"></a><span class="in">                    state_length = 1,</span></span>
+<span id="cb3-119"><a href="#cb3-119"></a><span class="in">                    wrap = TRUE) +</span></span>
+<span id="cb3-120"><a href="#cb3-120"></a><span class="in">  ease_aes("linear")</span></span>
+<span id="cb3-121"><a href="#cb3-121"></a></span>
+<span id="cb3-122"><a href="#cb3-122"></a><span class="in">animate(dino, duration = 15, fps = 24, height = 680, width = 720,</span></span>
+<span id="cb3-123"><a href="#cb3-123"></a><span class="in">        renderer = gifski_renderer())</span></span>
+<span id="cb3-124"><a href="#cb3-124"></a></span>
+<span id="cb3-125"><a href="#cb3-125"></a><span class="in">anim_save(filename = "dino.gif",</span></span>
+<span id="cb3-126"><a href="#cb3-126"></a><span class="in">          path = here::here("blog","2024","04","dinosaurs","img"))</span></span>
+<span id="cb3-127"><a href="#cb3-127"></a><span class="in">```</span></span>
+<span id="cb3-128"><a href="#cb3-128"></a></span>
+<span id="cb3-129"><a href="#cb3-129"></a><span class="fu">## The Animated Data</span></span>
+<span id="cb3-130"><a href="#cb3-130"></a></span>
+<span id="cb3-131"><a href="#cb3-131"></a><span class="in">```{=html}</span></span>
+<span id="cb3-132"><a href="#cb3-132"></a><span class="in">&lt;img src="img/dino.gif" alt="Datasaurus Day 19 Chart Challenge 2024"&gt;</span></span>
+<span id="cb3-133"><a href="#cb3-133"></a></span>
+<span id="cb3-134"><a href="#cb3-134"></a><span class="in">```</span></span>
+<span id="cb3-135"><a href="#cb3-135"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-      <div class='footer-contents'><span class="faux-block"> 2023–2024 JP Monteagudo</span>
-<span class="faux-block">All content licensed under<br>[   Creative Commons CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)</span>
-<!-- <span class="faux-block"> <strong>ORCID</strong> [0009-0003-6465-6658](https://orcid.org/0009-0003-6465-6658)</span> -->
-<!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
-</div>  
-    </div>
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023–2024 JP Monteagudo</span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by-sa/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> <i class="fa-brands fa-creative-commons-sa" aria-label="creative-commons-sa"></i> Creative Commons CC BY-SA 4.0</a></span> <!-- <span class="faux-block"> <strong>ORCID</strong> [0009-0003-6465-6658](https://orcid.org/0009-0003-6465-6658)</span> --> <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> --></p>
+</div>
     <div class="nav-footer-right">
-      <div class='footer-contents'><!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
-</div>  
-    </div>
+<!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
+</div>
   </div>
 </footer>
 
-</body>
 
-</html>
+</body></html>

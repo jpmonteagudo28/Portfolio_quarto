@@ -1,59 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.jpmonteagudo.com/uses/index.html</loc>
-    <lastmod>2024-04-25T15:50:29.014Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/research/articles/index.html</loc>
-    <lastmod>2024-04-25T17:37:23.633Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/index.html</loc>
-    <lastmod>2024-05-06T13:51:32.054Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/blog/index.html</loc>
-    <lastmod>2024-04-26T16:13:19.737Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/04/lissajous/index.html</loc>
-    <lastmod>2024-04-28T22:08:54.725Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
-    <lastmod>2024-04-25T17:38:40.289Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/about/index.html</loc>
-    <lastmod>2024-04-29T12:01:42.370Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.jpmonteagudo.com/atom.html</loc>
-    <lastmod>2024-03-19T01:30:02.418Z</lastmod>
-  </url>
-  <url>
     <loc>https://www.jpmonteagudo.com/blog/2024/04/dinosaurs/index.html</loc>
-    <lastmod>2024-05-03T09:39:10.197Z</lastmod>
+    <lastmod>2024-06-21T20:13:49.978Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/cv/index.html</loc>
     <lastmod>2024-03-19T01:30:02.538Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/now/index.html</loc>
-    <lastmod>2024-04-10T19:06:03.391Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/uses/index.html</loc>
+    <lastmod>2024-04-25T15:50:29.014Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/blog/index.html</loc>
+    <lastmod>2024-04-26T16:13:19.737Z</lastmod>
   </url>
   <url>
     <loc>https://www.jpmonteagudo.com/research/index.html</loc>
     <lastmod>2024-04-25T19:12:56.442Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/05/index.html</loc>
-    <lastmod>2024-05-03T15:17:39.869Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/index.html</loc>
+    <lastmod>2024-05-06T13:51:32.054Z</lastmod>
   </url>
   <url>
-    <loc>https://www.jpmonteagudo.com/blog/2024/05/prisoners/index.html</loc>
-    <lastmod>2024-06-12T20:33:48.894Z</lastmod>
+    <loc>https://www.jpmonteagudo.com/about/index.html</loc>
+    <lastmod>2024-04-29T12:01:42.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/research/articles/index.html</loc>
+    <lastmod>2024-04-25T17:37:23.633Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/atom.html</loc>
+    <lastmod>2024-03-19T01:30:02.418Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/now/index.html</loc>
+    <lastmod>2024-04-10T19:06:03.391Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/blog/2024/04/lissajous/index.html</loc>
+    <lastmod>2024-06-21T20:18:35.486Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.jpmonteagudo.com/blog/2024/03/here/index.html</loc>
+    <lastmod>2024-06-21T20:14:42.395Z</lastmod>
   </url>
 </urlset>

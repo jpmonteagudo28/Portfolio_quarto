@@ -1,7 +1,7 @@
 ---
-title: "Beautiful movement—the music and beauty of Lissajous(Liss–uh–joo) curves"
+title: "beautiful movement—lissajous curves"
 date: 2024-04-15
-description: "Simple graphical and mathematical exploration of Lissajous curves "
+description: "exploration of lissajous curves "
 format:
   html:
     css: styles.css

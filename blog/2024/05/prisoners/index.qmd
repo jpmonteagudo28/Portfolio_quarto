@@ -4,7 +4,7 @@ date: now
 description: "Rudimentary solutions using R"
 format:
   html:
-    css: styles.css
+    css: ../05/styles.css
     code-fold: false
     code-tools: true
     code-overflow: wrap
@@ -32,7 +32,7 @@ options(
 ```
 
 
-## Not So Quickly!
+## not so quickly!
 
 Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn't exist yet so we're stuck with the question of cooperation. *Should we always cooperate?* Yes…**not so quickly!**. 
 
@@ -40,7 +40,7 @@ As R. Axelrod^[The Evolution of Cooperation. *Basic Books, Inc*. New York, 1984]
 
 > The Cooperation theory [here] is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole. 
 
-### The Prisoner's Dilemma
+### the prisoner's dilemma
 
 This iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:
 
@@ -53,14 +53,14 @@ The first prisoner thinks it over. “If he rats on me and I don’t rat on him,
 
 To win the game, at least one player must cooperate in the face of betrayal, otherwise both contestants would face unfavorable outcomes.
 
-### The Rules
+### the rules
 
 The rules of Axelrod's iterated prisoner's dilemma:
 
-1. Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random. 
-2. Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.
+ * Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random. 
+ * Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.
 
-#### The Path to Follow
+#### the path to follow
 
 I'll attempt to provide four solutions to this problem. The first one will never be the first to betray but will copy the opponent's previous choice; the second solution will betray in response to a cooperation five percent of the time; the third solution will cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game
 The official winning strategy was the following:  
@@ -68,7 +68,7 @@ The official winning strategy was the following:
 * In the first match-up, cooperate.
 * In every match-up after that, do what the opponent did in the preceding match-up.
 
-#### The Tit–for–Tat solution
+#### the tit–for–tat solution
 
 I'll imitate this strategy in the first algorithm and decide on the choices for player 1.
 
@@ -133,7 +133,7 @@ tit.for.tat <- function(rounds,
 table(tit.for.tat(200,prob = c(.459,.237), choice = 0, replace = T))
 ```
 
-### The Backstabber Prober
+### the backstabber prober
 
 The only difference between Tit–for–Tat and the IBP^[This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod] is that we're adding a random element that will cause player 2 to betray player 1 when faced with a cooperative response. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.
 
@@ -184,11 +184,10 @@ for (i in 2:length(p1)) {
 }
 
 table(prober(200,prob = c(.459,.237), choice = 0, default = .05, replace = T))
-
 ```
 
 
-### The Corteous Cat
+### the corteous cat
 
 A less glorious but more common solution is to simply imitate each of player 1 moves to a T. Player 2 will never cooperate first unless player 1 chooses to cooperate. This copy cat algorithm is looking at the current round and copying the first player's moves. It is not concerned with the previous moves. 
 
@@ -230,7 +229,7 @@ copy.cat <- function(rounds,
 table(copy.cat(200,prob = c(.459,.237), choice = 0, replace = T))
 ```
 
-### The Squirrel's Revenge
+### the squirrel's revenge
 
 The last algorithm will not play nice on the first round and will exact revenge on player 1 until the game is over^[A copy of the aggressive Friedman's algorithm]. This player is a more revengeful fellow. Let's see how to implement it. 
 
@@ -276,7 +275,7 @@ exact.revenge <- function(rounds,
 table(exact.revenge(200,prob = c(.159,.437), choice = 1, replace = T))
 ```
 
-## Algorithm Perfomance
+## algorithm perfomance
 
 Now that all four algorithms are created, I'll implement a function to evaluate the overall performance in total points after 200 rounds. 
 
@@ -361,10 +360,9 @@ test <- comp.alg(c(copy.cat, tit.for.tat),
                  choice = 0)
 
 head(test)
-
 ```
 
-### Code Benchmarking
+### code benchmarking
 
 First, I'll look at the execution time and memory usage of my `comp.alg` function for several algorithms^[The `comp.alg` function is not currently dealing with the `default` argument of the `prober` algorithm.I'm thinking of a way to implement it in a naturally efficient way.]. I'll use the `bench` package to look at these two performance metrics. I'll wrap my code in a function and measure its performance^[look up the `bench::mark()` function to see which metrics are calculated.]
 
@@ -405,7 +403,10 @@ results <- bench::press(
 ```
 
 Let's now visualize the performance of each algorithm using `ggplot2`.
+
+
 ```{r plotit, eval = FALSE}
+#| code-fold: true
 
 library(ggplot2)
 library(showtext)
@@ -415,19 +416,10 @@ font_add_google("Ubuntu","ubu")
 showtext_auto()
 text <- "ubu"
 
-
-
-ggplot(results,
-       aes(iter,median, col = attr(expression,"description"))) +
-  geom_point(size = 4) +
-  geom_smooth(se = FALSE) +
-  labs(x = "No. of iterations",
-       y = "Execution Time (ms)",
-       colour = "Algorithm") +
-  #scale_color_manual(values = iter) +
+theme_alg <- function(){
   theme_minimal() +
-  theme(legend.position = "top",
-        legend.title = element_text(family = text, size = 23),
+    theme(legend.position = "top",
+        legend.title = element_blank(),
         legend.text = element_text(family = text, size = 18),
         plot.background = element_rect(fill = "#f8f9f9",
                                        color = "NA"),
@@ -437,13 +429,70 @@ ggplot(results,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()
         )
+}
+
+theme_set(theme_alg())
+
+
+ggplot(results,
+       aes(iter,median/1000, col = attr(expression,"description"))) +
+  geom_point(size = 4) +
+  geom_smooth(se = FALSE) +
+  labs(x = "Iterations",
+       y = "Execution Time (s)",
+       colour = "Algorithm") +
+  scale_color_manual(values = iter)
+  
 ```
 
-```{r algimg, echo = FALSE,out.width = NULL}
+```{r algimg, echo = FALSE}
+#| lightbox: true
 knitr::include_graphics("img/alg_perf.png")
 ```
 
-### Practical Implications
+Although all three algorithms show similar execution time, the comparison of the copy.cat algorithm gets significantly demanding after 100 iterations–576 *ms* – compared to 400 and 372 *ms* for the vengeful and the tit–for–tat algorithms. 
+
+```{r normalg, eval = FALSE}
+#| code-fold: true
+mean_df <- data.frame(mean = c(replicate(500,mean(
+                                sample(copy.cat(200,c(.35,.27),0),
+                                       replace = T))),
+                              replicate(500,mean(
+                                sample(prober(200,c(.35,.27),0,.05),
+                                       replace = T))),
+                              replicate(500,mean(
+                                sample(tit.for.tat(200,c(.35,.27),0),
+                                       replace = T))),
+                              replicate(500,mean(
+                                sample(exact.revenge(200,c(.35,.27),0),
+                                       replace = T)))),
+                      kind = factor(rep(
+                        c("Copy.Cat", "Prober", "TFT", "Revenge"), 
+                                    each = 500),
+    levels = c("Copy.Cat", "Prober", "TFT", "Revenge")))
+
+clrs <- c(
+  "#FFBE00",  # MCRN yellow
+  "#B92F0A",  # MCRN red
+  "#7C225C",  # MCRN maroon
+  "#394DAA"   # MCRN Blue
+)
+ggplot(mean_df, aes(x = mean, fill = kind)) +
+     geom_density(alpha = .6) +
+  ylim(0,25) +
+  scale_fill_manual(values = clrs) +
+  labs(colour = "Algorithm")
+```
+
+```{r alfdist, echo = FALSE}
+#| lightbox: true
+knitr::include_graphics("img/alg_dist.png")
+```
+### individual algorithm performance
+
+Let's now compare each algorithm's performance based on total points obtained per game. Again, the logic here is the same: bootstrap the mean number of points per game and compare them using the `comp.alg` function which will take the same algorithm twice
+
+### practical implications
 Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict. 
 
 Here are the rules for strategic cooperation:  

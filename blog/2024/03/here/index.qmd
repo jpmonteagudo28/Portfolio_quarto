@@ -1,7 +1,7 @@
 ---
-title: "Don't be an absolutist. Use the here package for reproducible workflows"
+title: "don't be an absolutist. Use the here package"
 date: 2024-03-17
-description: "Gentle reminders when using the `here` package for your `RStudio` projects"
+description: "the `here` package for your `RStudio` projects"
 format:
   html:
     css: styles.css
