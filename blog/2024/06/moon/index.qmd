@@ -57,10 +57,44 @@ JDE = 2,451,550.09766 + 29.530588861 k \\
 + 0.00000000073 T^{4}
 $$
 
-where an integer value of $k = 0$ gives a new moon[^3], and an increase by .25 gives the next phase, 1st quarter, full moon, and the third or last quarter. Any other value of $k$ is meaningless.
+where an integer value of $k = 0$ gives a new moon[^3], and an increase by .25 gives the next phase, 1st quarter, full moon, and the third or last quarter. Any other value of $k$ is meaningless. I'll create a simple function `modf` that will split an object of type `double` into its integer and decimal parts to figure out the moon phase later down the road. A second function `modr` will reduce any angle to the range between 0–360, and a third function `deg2rad` will convert the degrees to radians if necessary
 
 [^3]: $k = 0$ corresponds to the new moon of Jan 6, 2000, and negative values of $k$ are lunar phases before the year 2000.\
 
+```{r modf, echo = TRUE}
+
+#> Modulus fraction function
+modf <- function(k){
+     stopifnot(is.numeric(k))
+     kint <- trunc(k)
+     kfrac <- abs(k - kint)
+     kround <- c(kint,kfrac)
+     return(kround)
+}
+
+#> Modulus reduce angle function
+modr <- function(angle){
+  stopifnot(is.numeric(angle))
+  reduced <- angle%%360
+  return(reduced)
+}
+
+rad2deg <- function(rad){
+  stopfinot(is.numeric(rad))
+  degrees <- (rad*180)/(pi)
+  return(degrees)
+}
+
+deg2rad <- function(deg){
+  stopifnot(is.numeric(deg))
+  radians <- (deg*pi)/180
+  return(radians)
+}
+
+test_it <- modf(-3.35)
+test <- modr(400)
+print(c(test_it,test))
+```
 ### crux of thought…math
 
 An approximate value for $k \approx (year - 2000) × 12.3685$ and the $year$ variable should be taken with decimals to express the month and day of the year. $T$ is the time in Julian centuries since 2000, and we can calculate it with accuracy using $(\frac{k}{1236.85})$ and a term we haven't seen yet, $E = 1 - 0.002516T - 0.0000074T^{2}$ to describe the eccentricity of Earth's orbit around the sun.
@@ -76,184 +110,148 @@ We will also take into account 14 planetary arguments and specific angle and tim
 ### the code
 
 ::: callout-note
-Almost every function used here except the main function and the `dex.date` functions are taken from Jean Meeus' “Astronomical Algorithms” referred to in the first paragraph.
+Almost every function used here except the main function, `modf`,`modr`,`deg2rad`, `rad2deg`, and the `dex.date` functions are taken from Jean Meeus' “Astronomical Algorithms” referred to in the first paragraph.
 :::
 
-I'll use `R` to create a function that allows me to calculate the date of any lunar phase any number of years into the future until 3268 AD. I'll first create functions to find the mean anomaly, latitude, and longitude. Notice that to find the exact date, I would have to convert the year to a decimal and use it this way.
+I'll use `R` to create a function that allows me to calculate the date of any lunar phase any number of years into the future. I'll first create functions to find the mean anomaly, latitude, and longitude. Notice that to find the exact date, I would have to convert the year to a decimal and use it this way.
 
 ```{r moon_funk, echo = TRUE}
 #> Times of lunar phases in JDE
-JDE <- function(date){
-  stopifnot(is.numeric(date))
-  # lunar phase
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
- jde <- 2451550.09766 + 29.530588861*k + 0.00015437*(t^2) - 0.000000150*(t^3) + 0.00000000073*(t^4)
- jde <- round(jde,digits = 12)
+JDE <- function(k,t){
+ jde <- 2451550.09766 + (29.530588861*k) + 
+   0.00015437*(t^2) - 0.000000150*(t^3) + 
+   0.00000000073*(t^4)
+ jde <- round(jde,digits = 6)
  return(jde)
 }
 #> Calculate E
-E <- function(date){
-  stopifnot(is.numeric(date))
-  # lunar phase
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
-  e <- 1 - 0.002516*t - 0.0000074*(t^2)
-  e <- round(e,digits = 12)
+E <- function(k,t){
+  e <- 1 - (0.002516*t) - 0.0000074*(t^2)
+  e <- round(e,digits = 6)
   return(e)
 }
 
 #> Sun's mean anomaly at time JDE
-M <- function(date){
-  stopifnot(is.numeric(date))
-  # lunar phase
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
-  m <- 2.5534 + 29.10535670*k - 0.0000014*(t^2) - 0.00000011*(t^3)
-  m <- round(m, digits = 12)
+M <- function(k,t){
+  m <- 2.5534 + (29.10535670*k) - 0.0000014*(t^2) - 0.00000011*(t^3)
+  m <- modr(round(m, digits = 6))
+  m <- deg2rad(m)
   return(m)
 }
 #> Moon’s mean anomaly at time JDE
-M.prime <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
-  m_prime <- 201.5643 + 385.81693528*k + 0.0107582*(t^2) + 
+M.prime <- function(k,t){
+  m_prime <- 201.5643 + (385.81693528*k) + 0.0107582*(t^2) + 
     0.00001238*(t^3) - 0.000000058*(t^4)
-  m_prime <- round(m_prime,digits =12)
+  m_prime <- modr(round(m_prime,digits = 6))
+  m_prime <- deg2rad(m_prime)
   return(m_prime)
 }
 #> Moon's argument of latitude
-F <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
-  f <- 160.7108 + 390.67050284*k - 0.0016118*(t^2) - 
+F <- function(k,t){
+  f <- 160.7108 + (390.67050284*k) - 0.0016118*(t^2) - 
     0.00000227*(t^3) + 0.000000011*(t^4)
-  f <- round(f, digits = 12)
+  f <- modr(round(f, digits = 6))
+  f <- deg2rad(f)
   return(f)
 }
 
-omega <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
-  o <- 124.7746 - 1.56375588*k + 0.0020672*(t^2) + 0.00000215*(t^3)
-  o <- round(0, digits = 12)
+omega <- function(k,t){
+  o <- 124.7746 - (1.56375588*k) + 0.0020672*(t^2) + 0.00000215*(t^3)
+  o <- modr(round(0, digits = 6))
+  o <- deg2rad(o)
   return(o)
 }
 ```
 
-Now, I'll focus on creating a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$ that also requires $T$. The output of the planetary arguments are expressed in degrees. The main function does use every planetary argument to predict the lunar phases so it may be better to provide the arguments as vectors and not functions, but this code is just a rough draft of the final function to be created later.
+Now, I'll focus on creating a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$ that also requires $T$. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. The main function does use every planetary argument to predict the lunar phases so it may be better to provide the arguments as vectors and not functions, but this code is just a rough draft of the final function to be created later.
 
 ```{r plargs, echo = TRUE}
 #| code-fold: true
 
-A1 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
-  # Time in Julian centuries since 2000
-  t <- k/1236.85
+A1 <- function(k,t){
   a1 <- 299.77 + 0.107408*k - 0.009173*(t^2)
-  a1 <- round(a1,digits = 12)
+  a1 <- modr(round(a1, digits = 6))
+  a1 <- deg2rad(a1)
   return(a1)
 }
-A2 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A2 <- function(k){
   a2 <- 251.88 + 0.016321*k
-  a2 <- round(a2,digits = 12)
+  a2 <- modr(round(a2,digits = 6))
+  a2 <- deg2rad(a2)
   return(a2)
 }
-A3 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A3 <- function(k){
   a3 <- 251.83 + 26.651886*k
-  a3 <- round(a3,digits = 12)
+  a3 <- modr(round(a3,digits = 6))
+  a3 <- deg2rad(a3)
   return(a3)
 }
 
-A4 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A4 <- function(k){
   a4 <- 349.42 + 36.412478*k
-  a4 <- round(a4,digits = 12)
+  a4 <- modr(round(a4,digits = 6))
+  a4 <- deg2rad(a4)
   return(a4)
 }
-A5 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A5 <- function(k){
   a5 <- 84.66 + 18.206239*k
-  a5 <- round(a5, digits = 12)
+  a5 <- modr(round(a5, digits = 6))
+  a5 <- deg2rad(a5)
   return(a5)
 }
-A6 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A6 <- function(k){
   a6 <- 141.74 + 53.303771*k
-  a6 <- round(a6,digits = 12)
+  a6 <- modr(round(a6,digits = 6))
+  a6 <- deg2rad(a6)
   return(a6)
 }
-A7 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A7 <- function(k){
   a7 <- 207.14 + 2.453732*k
-  a7 <- round(a7, digits = 12)
+  a7 <- modr(round(a7, digits = 6))
+  a7 <- deg2rad(a7)
   return(a7)
 }
-A8 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A8 <- function(k){
   a8 <- 154.84 + 7.306860*k
-  a8 <- round(a8,digits = 12)
+  a8 <- modr(round(a8,digits = 6))
+  a8 <- deg2rad(a8)
   return(a8)
 }
-A9 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A9 <- function(k){
   a9 <- 34.52 + 27.261239*k
-  a9 <- round(a9,digits = 12)
+  a9 <- modr(round(a9,digits = 6))
+  a9 <- deg2rad(a9)
   return(a9)
 }
-A10 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A10 <- function(k){
   a10 <- 207.19 + 0.121824*k
-  a10 <- round(a10, digits = 12)
+  a10 <- modr(round(a10, digits = 6))
+  a10 <- deg2rad(a10)
   return(a10)
 }
-A11 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A11 <- function(k){
   a11 <- 291.34 + 1.844379*k
-  a11 <- round(a11,digits = 12)
+  a11 <- modr(round(a11,digits = 6))
+  a11 <- deg2rad(a11)
   return(a11)
 }
-A12 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A12 <- function(k){
   a12 <- 161.72 + 24.198154*k
-  a12 <- round(a12,digits = 12)
+  a12 <- modr(round(a12,digits = 6))
+  a12 <- deg2rad(a12)
   return(a12)
 }
-A13 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A13 <- function(k){
   a13 <- 239.56 + 25.513099*k
-  a13 <- round(a13,digits = 12)
+  a13 <- modr(round(a13,digits = 6))
+  a13 <- deg2rad(a13)
   return(a13)
 }
-A14 <- function(date){
-  stopifnot(is.numeric(date))
-  k <- 12.3685 * (date - 2000)
+A14 <- function(k){
   a14 <- 331.55 + 3.592518*k
-  a14 <- round(a14, digits = 12)
+  a14 <- modr(round(a14, digits = 6))
+  a14 <- deg2rad(a14)
+  return(a14)
 }
 ```
 
@@ -385,5 +383,181 @@ print(testy)
 ```
 We can use Dates table to test the accuracy of this function. One example that caught my attention and wasn't part of the table is the date 3837-04-10 07:12:00. This particular date returned $3122594.8$ and the `convert.JDE` function was 3837-04-10 07:11:60 EDT, which made me think that it was a day with a leap second, but those are unpredictable and not known so far in advance. 
 
+### the main function
 
+With all the parts in place, we can get back to writing the main function. Ideally, a date will be entered, we will calculate $k$, then $T$ to obtain the JDE date which, by the way, is not accurately representing the date of the chosen lunar phase yet. Our algorithm will them find $E, M, M^\prime, F$, and $\Omega$. The fourteen planetary corrections will be applied next, and additional correction for the selected lunar phase will be calculated. We'll then use these corrections to adjust the JDE date and finally convert it to the Gregorian date using the `convert.JDE` function. We can check the accuracy of our results by using the `greg.convert` function.
+**Here we go**:
 
+```{r mainthang,evall = TRUE}
+calc.MoonPhase <- function(k){
+  stopifnot(is.numeric(k))
+  
+  t <- k / 1236.85
+  
+  # Mean phase JDE
+  jde <- JDE(k, t)
+  
+  # Anomaly, latitude, and longitude of Sun/Moon
+  e <- E(k, t)
+  m <- M(k, t)
+  mpr <- M.prime(k, t)
+  f <- F(k, t)
+  om <- omega(k, t)
+  
+  kfrac <- modf(k)[2]
+  
+  planet_args <- (
+    0.000325 * sin(A1(k, t)) + 
+    0.000165 * sin(A2(k)) + 
+    0.000164 * sin(A3(k)) +
+    0.000126 * sin(A4(k)) + 
+    0.000110 * sin(A5(k)) + 
+    0.000062 * sin(A6(k)) +
+    0.000060 * sin(A7(k)) + 
+    0.000056 * sin(A8(k)) + 
+    0.000047 * sin(A9(k)) +
+    0.000042 * sin(A10(k)) + 
+    0.000040 * sin(A11(k)) + 
+    0.000037 * sin(A12(k)) +
+    0.000035 * sin(A13(k)) + 
+    0.000023 * sin(A14(k))
+  )
+  
+  if (kfrac == 0) {
+    adj <- (
+      -0.40720 * sin(mpr) + 
+      0.17241 * e * sin(m) + 
+      0.01608 * sin(2 * mpr) + 
+      0.01039 * sin(2 * f) + 
+      0.00739 * e * sin(mpr - m) - 
+      0.00514 * e * sin(mpr + m) +
+      0.00208 * (e^2) * sin(2 * m) - 
+      0.00111 * sin(mpr - 2 * f) - 
+      0.00057 * sin(mpr + 2 * f) +
+      0.00056 * e * sin(2 * mpr + m) - 
+      0.00042 * sin(3 * mpr) + 
+      0.00042 * e * sin(m + 2 * f) +
+      0.00038 * e * sin(m - 2 * f) - 
+      0.00024 * e * sin(2 * mpr - m) - 
+      0.00017 * sin(om) -
+      0.00007 * sin(mpr + 2 * m) + 
+      0.00004 * sin(2 * mpr - 2 * f) + 
+      0.00004 * sin(3 * m) +
+      0.00003 * sin(mpr + m - 2 * f) + 
+      0.00003 * sin(2 * mpr + 2 * f) - 
+      0.00003 * sin(mpr + m + 2 * f) +
+      0.00003 * sin(mpr - m + 2 * f) - 
+      0.00002 * sin(mpr - m - 2 * f) - 
+      0.00002 * sin(3 * mpr + m) +
+      0.00002 * sin(4 * mpr)
+      )
+    
+    true_jde <- (jde + adj) + planet_args
+     true_date <- convert.JDE(true_jde)
+  return(true_date)
+    
+  } else if (kfrac == .25 || kfrac == .75) {
+    adj2 <- (
+      -0.62801 * sin(mpr) + 
+      0.17172 * e * sin(m) - 
+      0.01183 * e * sin(mpr + m) + 
+      0.00862 * sin(2 * mpr) + 
+      0.00804 * sin(2 * f) + 
+      0.00454 * e * sin(mpr - m) + 
+      0.00204 * (e^2) * sin(2 * m) - 
+      0.00180 * sin(mpr - 2 * f) - 
+      0.00070 * sin(mpr + 2 * f) -
+      0.00040 * sin(3 * mpr) - 
+      0.00034 * e * sin(2 * mpr - m) + 
+      0.00032 * e * sin(m + 2 * f) + 
+      0.00032 * e * sin(m - 2 * f) - 
+      0.00028 * (e^2) * sin(mpr + 2 * m) + 
+      0.00027 * e * sin(2 * mpr + m) - 
+      0.00017 * sin(om) - 
+      0.00005 * sin(mpr - m - 2 * f) + 
+      0.00004 * sin(2 * mpr + 2 * f) - 
+      0.00004 * sin(mpr + m + 2 * f) + 
+      0.00004 * sin(mpr - 2 * m) + 
+      0.00003 * sin(mpr + m - 2 * f) + 
+      0.00003 * sin(3 * m) + 
+      0.00002 * sin(2 * mpr - 2 * f) + 
+      0.00002 * sin(mpr - m + 2 * f) - 
+      0.00002 * sin(3 * mpr + m)
+      )
+    
+    w <- (
+      0.00306 - 0.00038 * e * cos(m) + 
+      0.00026 * cos(mpr) - 
+      0.00002 * cos(mpr - m) +
+         0.00002 * cos(mpr + m) +
+      0.00002 * cos(2 * f)
+    )
+    
+    if (kfrac == .25) {
+      true_jde <- (jde + adj2) + w + planet_args
+      true_date <- convert.JDE(true_jde)
+  return(true_date)
+      
+    } else {
+      true_jde <- (jde + adj2) - w + planet_args
+      true_date <- convert.JDE(true_jde)
+  return(true_date)
+      
+    }
+  } else if (kfrac == .5) {
+    adj3 <- (
+      -0.40614 * sin(mpr) + 
+      0.17302 * e * sin(m) + 
+      0.01614 * sin(2 * mpr) + 
+            0.01043 * sin(2 * f) + 
+      0.00734 * e * sin(mpr - m) - 
+      0.00514 * e * sin(mpr + m) + 
+            0.00209 * (e^2) * sin(2 * m) - 
+      0.00111 * sin(mpr - 2 * f) - 
+      0.00057 * sin(mpr + 2 * f) + 
+            0.00056 * e * sin(2 * mpr + m) - 
+      0.00042 * sin(3 * mpr) + 
+      0.00042 * e * sin(m + 2 * f) + 
+            0.00038 * e * sin(m - 2 * f) - 
+      0.00024 * e * sin(2 * mpr - m) - 
+      0.00017 * sin(om) - 
+            0.00007 * sin(mpr + 2 * m) + 
+      0.00004 * sin(2 * mpr - 2 * f) + 
+      0.00004 * sin(3 * m) + 
+            0.00003 * sin(mpr + m - 2 * f) + 
+      0.00003 * sin(2 * mpr + 2 * f) - 
+      0.00003 * sin(mpr + m + 2 * f) + 
+            0.00003 * sin(mpr - m + 2 * f) -
+      0.00002 * sin(mpr - m - 2 * f) - 
+            0.00002 * sin(3 * mpr + m) + 
+      0.00002 * sin(4 * mpr)
+      )
+    
+    true_jde <- (jde + adj3) + planet_args
+    true_date <- convert.JDE(true_jde)
+  return(true_date)
+    
+  } else if (kfrac > 0 && kfrac < .25) {
+    return(cat("Moon is in Waxing Crescent Phase. No valid date returned"))
+  } else if (kfrac > .25 && kfrac < .5) {
+    return(cat("Moon is in Waxing Gibbous Phase. No valid date returned"))
+  } else if (kfrac > .5 && kfrac < .75) {
+    return(cat("Moon is in Waning Gibbous Phase. No valid date returned"))
+  } else {
+    return(cat("Moon is in Waning Crescent Phase. No valid date returned"))
+  }
+}
+```
+
+We can test the function using the following examples of past, present and future lunar phases.
+```{r lunarex, echo = FALSE, eval = TRUE}
+lunar <- data.frame(Date = c("1901/01/20 14:36","1910/11/10 05:29",
+                             "1921/08/18 15:28","2024/07/05 15:57",
+                             "2044/01/21 23:48:17"),
+                    Phase = c("New Moon","First Quarter",
+                              "Full Moon","New Moon", 
+                              "First Quarter"))
+
+knitr::kable(lunar, "simple", align = "cl",
+             caption = "Dates for testing the lunar phase function")
+```
