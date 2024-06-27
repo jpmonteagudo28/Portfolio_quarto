@@ -3,3 +3,7 @@ ggplot2
 sysfonts
 showtextdb
 showtext
+tidyr
+lubridate
+ggimage
+magick
