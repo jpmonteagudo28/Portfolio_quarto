@@ -1,0 +1,65 @@
+h2 {
+  border-bottom: none;
+  color: #0a254e; /* Replace it with the color you want for your headings, but make sure to match inline code color */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.05rem;
+  line-height: 1.3;
+}
+
+h3 {
+    color: #0a254e; /* Replace it with the color you want */
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.80rem;
+    line-height: 1.5;
+}
+
+h4, h5, h6 {
+    color: #0a254e; /* Replace it with the color you want */
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.65rem;
+    line-height: 1.5;
+}
+
+/* Creating multiple columns side-by-side */
+
+.multiple .column {
+  width: 35%;
+  margin: 5px;
+}
+
+.multiple .columns {
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  .multiple .column {
+    width: auto;
+  }
+
+ .multiple .columns {
+   display: flex;
+   flex-direction: column;
+  }
+}
+
+
+/* Reformatting unordered lists*/ 
+ul {
+  /* Replace it with the image you want. found at NC State site */
+  list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M327.38,207.75,183.63,64l-47.26,48.25L279.14,256,136.37,399.75,183.63,448l192-192Z' fill='%23CC0000'/%3E%3C/svg%3E");
+  list-style-position: outside;
+}
+
+ul ul {
+  list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 680 680'%3E%3Cpath d='M491.07,311.63,275.45,96,183.63,192.75,418.71,384,183.63,575.25,275.45,672l288-288Z' fill='%23CC0000'/%3E%3C/svg%3E");
+  list-style-position: outside;
+}
+
+ul ul ul {
+  list-style-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 680 680'%3E%3Cpath d='M491.07,311.63,275.45,96,183.63,192.75,418.71,384,183.63,575.25,275.45,672l288-288Z' fill='%23CC0000'/%3E%3C/svg%3E");
+  list-style-position: outside;
+}
+

@@ -9,6 +9,8 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: false
+resources:
+  - "USN_dates.txt"
 #doi: 
 citation: true
 draft: true
@@ -16,6 +18,10 @@ draft: true
 
 ```{r setup, include = FALSE}
 library(methods)
+library(dplyr)
+library(ggplot2)
+library(showtext)
+
 set.seed(2899)
 
 knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
@@ -40,9 +46,11 @@ If you didn't know, the times of the new moon, first quarter, full moon, and las
 
 [^1]: as viewed from the Earth
 
-## quod hodie est, brute?
+### et tu, brute?
 
-Astronomers use Julian Ephemeris Days (JDE), or Dynamical Time (DT), as a measure of time to keep track of celestial bodies, and you probably guessed that its name may be derived from emperor Julius Caesar's reform that created a calendar that remained aligned to the sun without having to be updated, **but that would be incorrect**. It has nothing to do with Brutus's uncle. The first year under this calendar is Jan 1, 4,713 BC, which means that 2024 would represent the year 6737 of the Julian era—a pretty nerdy thing to point out, but nobody is reading this, probably.
+Astronomers use Julian Ephemeris Days (JDE), or Dynamical Time (DT), as a measure of time to keep track of celestial bodies, and you probably guessed that its name may be derived from emperor Julius Caesar's reform that created a calendar that remained aligned to the sun without having to be updated, **but that would be incorrect**. It has nothing to do with Brutus's uncle. 
+
+The first year under this calendar is Jan 1, 4,713 BC, which means that 2024 would represent the year 6737 of the Julian era—a pretty nerdy thing to point out, but nobody is reading this, probably.
 
 To find the JDE for any celestial event, we simply subtract 2,451,550 days from Ephemeris Time[^2], which is the number of days from 4713 BC to 1952…don't quote me on that😅
 
@@ -57,11 +65,25 @@ JDE = 2,451,550.09766 + 29.530588861 k \\
 + 0.00000000073 T^{4}
 $$
 
-where an integer value of $k = 0$ gives a new moon[^3], and an increase by .25 gives the next phase, 1st quarter, full moon, and the third or last quarter. Any other value of $k$ is meaningless. I'll create a simple function `modf` that will split an object of type `double` into its integer and decimal parts to figure out the moon phase later down the road. A second function `modr` will reduce any angle to the range between 0–360, and a third function `deg2rad` will convert the degrees to radians if necessary
+where an integer value of $k = 0$ gives a new moon[^3], and an increase by .25 gives the next phase, 1st quarter, full moon, and the third or last quarter. Any other value of $k$ is meaningless. 
 
 [^3]: $k = 0$ corresponds to the new moon of Jan 6, 2000, and negative values of $k$ are lunar phases before the year 2000.\
 
+### crux of thought…math
+
+An approximate value for $k \approx (year - 2000) × 12.3685$ and the $year$ variable should be taken with decimals to express the month and day of the year. $T$ is the time in Julian centuries since 2000, and we can calculate it with accuracy using $(\frac{k}{1236.85})$ and a term we haven't seen yet, $E = 1 - 0.002516T - 0.0000074T^{2}$ to describe the eccentricity of Earth's orbit around the sun.
+
+The angles for the sun's and the moon's mean anomaly[^4], the moon's latitude and the longitude of the ascending node[^5] of the lunar orbit will be calculated next.
+
+[^4]: distance from the center of the moon/sun measured from the side that is closest to earth assuming movement at a uniform speed in a circular orbit.
+
+[^5]: the moon has an ascending and descending node where it crosses the ecliptic hemisphere from the south or the north, respectively.
+
+We will also take into account 14 planetary arguments and specific angle and time corrections for each phase of the moon to obtain the almost exact date of any phase of the moon within the past, future and current Julian epochs. I'll create a simple function `modf` that will split an object of type `double` into its integer and decimal parts to figure out the moon phase later down the road. A second function `modr` will reduce any angle to the range between 0–360, and a third function `deg2rad` will convert the degrees to radians if necessary.
+
 ```{r modf, echo = TRUE}
+#| code-fold: true
+#| code-summary: "Code for helper functions"
 
 #> Modulus fraction function
 modf <- function(k){
@@ -80,7 +102,7 @@ modr <- function(angle){
 }
 
 rad2deg <- function(rad){
-  stopfinot(is.numeric(rad))
+  stopifnot(is.numeric(rad))
   degrees <- (rad*180)/(pi)
   return(degrees)
 }
@@ -95,17 +117,6 @@ test_it <- modf(-3.35)
 test <- modr(400)
 print(c(test_it,test))
 ```
-### crux of thought…math
-
-An approximate value for $k \approx (year - 2000) × 12.3685$ and the $year$ variable should be taken with decimals to express the month and day of the year. $T$ is the time in Julian centuries since 2000, and we can calculate it with accuracy using $(\frac{k}{1236.85})$ and a term we haven't seen yet, $E = 1 - 0.002516T - 0.0000074T^{2}$ to describe the eccentricity of Earth's orbit around the sun.
-
-The angles for the sun's and the moon's mean anomaly[^4], the moon's latitude and the longitude of the ascending node[^5] of the lunar orbit will be calculated next.
-
-[^4]: distance from the center of the moon/sun measured from the side that is closest to earth assuming movement at a uniform speed in a circular orbit.
-
-[^5]: the moon has an ascending and descending node where it crosses the ecliptic hemisphere from the south or the north, respectively.
-
-We will also take into account 14 planetary arguments and specific angle and time corrections for each phase of the moon to obtain the almost exact date of any phase of the moon within the past, future and current Julian epochs.
 
 ### the code
 
@@ -167,6 +178,7 @@ Now, I'll focus on creating a function fo each planetary argument (14 total). Mo
 
 ```{r plargs, echo = TRUE}
 #| code-fold: true
+#| code-summary: "Planetary Arguments functions"
 
 A1 <- function(k,t){
   a1 <- 299.77 + 0.107408*k - 0.009173*(t^2)
@@ -257,7 +269,7 @@ A14 <- function(k){
 
 I noticed that $k$ is calculated within every planetary argument instead of outside the function in the global environment. I may initiate a function $k$ outside the main unction and just provide $k$'s output to the proceeding algorithm and save time that way.
 
-### the main thing
+#### the main thing
 
 Now, we'll create the main function with the previous code and add conditions for each moon phase so we can accurately implement the time corrections and calculate the exact date and time of a lunar phase.
 
@@ -265,7 +277,7 @@ Something to keep in mind is that the `date` variable will have to be expressed 
 
 The output will be in date format so we'll need to look at R's date manipulation capabilities. The built.in `as.Date` function won't work for us this time because it doesn't handle time (HH:MM:SS), we're left with two choices to handle dates, the `chron` package which handles time but doesn't account for timezones or the built.in `POSIX` classes that do manipulate timezones. I'm going with `POSIXlt` so that I can extract time information without pulling from external libraries.
 
-#### …not the main thing
+#### …a detour
 
 I'll test a simple function to transform a character string in the format `"YYYY/MM/DD"` to a `POSIXlt` date and then return a decimal to represent the number of days completed in any given year.
 
@@ -277,7 +289,7 @@ dex.date <- function(date){
     #> Transform to POSIXlt
   POSIX_date <- as.POSIXlt(date)
 #> if the format is not found by the function, you can provide                                    
-#> your format explicitly by adding the format argument.
+#> your format explicitly.
   }
   year <- POSIX_date$year + 1900 
 #> Pull the year attribute and add 1900, default is to subtract                                   
@@ -299,9 +311,9 @@ test <- dex.date("2027/2/19 23:30:45")
 print(test)
 ```
 
-Alright! The function is accurate up to the fourth significant figure[^6] That's great,but now I have to create a second function to convert from JDE to Gregorian time. I'll use [October 15, 1582](https://en.wikipedia.org/wiki/Gregorian_calendar#:~:text=When%20the%20new%20calendar%20was,of%20weekdays%20was%20not%20affected) as the first day in the Gregorian calendar, which means that the number of Julian days from 4,713 BC to Oct. 15, 1582 is $2299161.05$
+Alright! The function is accurate up to the fourth significant figure[^6] That's great, but now I have to create a second function to convert from JDE to Gregorian time. I'll use [October 15, 1582](https://en.wikipedia.org/wiki/Gregorian_calendar#:~:text=When%20the%20new%20calendar%20was,of%20weekdays%20was%20not%20affected) as the first day in the Gregorian calendar, which means that the number of Julian days from 4,713 BC to Oct. 15, 1582 is $2299161.05$
 
-[^6]: We can test this by using the `decimal_date` in the lubridate package. The decimal date there is 2027.1369
+[^6]: We can test this by using the `decimal_date` function in the lubridate package. We get 2027.1369
 
 ```{r gregorian, echo = TRUE}
 convert.JDE <- function(jde){
@@ -332,7 +344,7 @@ convert.JDE <- function(jde){
   gregorian_date <- as.POSIXlt(sprintf("%04d-%02d-%02d %02d:%02d:%06.3f",
                                        year, month, trunc(day),
                                        trunc(hour), trunc(minute), second),
-                               format = "%Y-%m-%d %H:%M:%OS")
+                               format = "%Y-%m-%d %H:%M:%OS", tz = "UTC")
   return(gregorian_date)
 }
 ```
@@ -378,7 +390,7 @@ greg.convert<- function(date){
   jde <- floor(365.25*(Y_up + 4716)) + floor(30.6001*(M_up +1)) + D + D_dec + B - 1524.5
   return(jde)
 }
-testy <- greg.convert("2027/02/19 23:30:45")
+testy <- greg.convert("2027/02/19 23:30:45, tz = UTC")
 print(testy)
 ```
 We can use Dates table to test the accuracy of this function. One example that caught my attention and wasn't part of the table is the date 3837-04-10 07:12:00. This particular date returned $3122594.8$ and the `convert.JDE` function was 3837-04-10 07:11:60 EDT, which made me think that it was a day with a leap second, but those are unpredictable and not known so far in advance. 
@@ -549,15 +561,185 @@ calc.MoonPhase <- function(k){
 }
 ```
 
-We can test the function using the following examples of past, present and future lunar phases.
-```{r lunarex, echo = FALSE, eval = TRUE}
-lunar <- data.frame(Date = c("1901/01/20 14:36","1910/11/10 05:29",
-                             "1921/08/18 15:28","2024/07/05 15:57",
-                             "2044/01/21 23:48:17"),
-                    Phase = c("New Moon","First Quarter",
-                              "Full Moon","New Moon", 
-                              "First Quarter"))
+We can test the function using a few examples of past, present and future lunar phases. We'll use `dex.date` to convert the year to decimal format before finding $k$. Once we find the value of $k$, we'll round up or down depending on the moon phase^[$k = 0$ for the new moon, $k = .25$ for first quarter, $k = .50$ for full moon and $k = .75$ for the last quarter.] we're trying to estimate. There should be a small discrepancy between actual and predicted lunar phase dates because:
 
-knitr::kable(lunar, "simple", align = "cl",
-             caption = "Dates for testing the lunar phase function")
+* We've ignored several arguments and corrections
+* The U.S Naval Observatory doesn't include seconds in their date and time estimates
+* Lunar phases prior to 2000 A.D were originally calculated in a Dynamical Time (DT) not Universal Time (UTC).
+* There are no high precision records of the orbital positions of the sun and the moon prior to 1609 A.D so our best estimates are typically off track.
+
+However, the lunar phase estimates are not too far off from the observed dates as we'll see in the following table. 
+```{r funtest, echo = TRUE, eval = TRUE}
+#| code-fold: TRUE
+#| code-summary: "Function test using USNavy Data"
+
+lunar <- c("1901/01/20 14:36:00","1910/11/10 05:29:00",
+                             "1921/08/18 15:28:00","2024/07/05 22:57:00",
+                             "2044/01/21 23:47:00")
+dex_lunar <- lapply(lunar, dex.date) |>
+  lapply(function(x) 12.3685*(x - 2000)) |> unlist()
+
+#> Extracted the unadjusted k values and converted to accurate k values for lunar phase occurrence
+k <- c(-1224,-1102.75, -969.50,303,544.75)
+phase_date <- lapply(k,calc.MoonPhase)
+
+est_dates <- do.call(c, phase_date)
+est_dates <- as.POSIXct(est_dates, format="%Y/%m/%d %H:%M:%S", tz="UTC")
+
+actual_dates <- as.POSIXct(c("1901/01/20 14:36:00","1910/11/10 05:29:00",
+                             "1921/08/18 15:28:00","2024/07/05 22:57:00",
+                             "2044/01/21 23:48:17"), 
+                           format="%Y/%m/%d %H:%M:%S", tz="UTC")
+
+  Phase <-  c("New Moon","First Quarter", "Full Moon","New Moon", 
+              "Last Quarter")
+  
+df <- data.frame(
+  Phase = Phase,
+  Estimates = est_dates,
+  Actual = actual_dates
+)
+
+df$diff.mins <- round(as.numeric(difftime(df$Actual, df$Estimates, units = "mins")), digits = 2)
+
+knitr::kable(df, "simple", align = "cc",
+             caption = "Estimates and Actual Lunar Phase Dates based on U.S Naval Observatory Data")
+```
+
+### the very error of the moon
+
+Based on the limited sample of dates we used, the mean error is not significant except for the first quarter moon of Nov. 1910. Let's find out how accurate our function really is by calculating the mean prediction error and maximum error for a bigger set of observations.
+
+In the interest of space, I've hidden the data generation code. You can download a .txt version of it here if you'd like to follow along.
+
+* [{{< fa file-lines >}} `USN Dates`](USN_dates.txt)
+
+```{r rmse, echo = TRUE, eval = FALSE}
+#| code-fold: true
+#| code-summary: "Code for generating test dates for `calc.MoonPhase`"
+USN_dates <- data.frame(Dates = c(
+"1930/01/08 03:11:00",
+"1930/01/14 22:21:00",
+"1930/01/21 16:07:00",
+"1930/01/29 19:07:00",
+"1930/11/28 06:18:00",
+"1930/12/06 00:40:00",
+"1930/12/12 20:07:00",
+"1930/12/20 01:24:00",
+"1701/01/17 09:42:00",
+"1701/01/24 12:52:00",
+"1701/01/31 04:21:00",
+"1701/02/07 22:57:00",
+"1701/11/07 12:03:00",
+"1701/11/15 16:53:00",
+"1701/11/23 06:09:00",
+"1701/11/29 21:53:00",
+"2010/09/15 05:50:00",
+"2010/09/23 09:17:00",
+"2010/10/01 03:52:00",
+"2010/10/07 18:44:00",
+"2010/11/13 16:39:00",
+"2010/11/21 17:27:00",
+"2010/11/28 20:36:00",
+"2010/12/05 17:36:00",
+"2023/04/27 21:20:00",
+"2023/05/05 17:34:00",
+"2023/05/12 14:28:00",
+"2023/05/19 15:53:00",
+"2023/08/24 09:57:00",
+"2023/08/31 01:35:00",
+"2023/09/06 22:21:00",
+"2023/09/15 01:40:00",
+"2072/01/28 10:36:00",
+"2072/02/04 04:56:00",
+"2072/02/10 23:27:00",
+"2072/02/19 02:04:00",
+"2100/01/18 12:35:00",
+"2100/01/26 02:51:00",
+"2100/02/01 21:17:00",
+"2100/02/09 04:56:00",
+"1833/03/28 22:50:00",
+"1833/04/04 14:43:00",
+"1833/04/12 00:09:00",
+"1833/05/19 13:36:00"),
+                        Phases = rep(c(
+"First Quarter", "Full Moon", "Last Quarter", "New Moon"),11)
+)
+file_path <- here::here("blog","2024","06","moon","USN_dates.txt")
+write.table(USN_dates, file = file_path, sep = "\t", col.names = TRUE)
+
+
+```
+```{r rsme_do, echo = TRUE, eval = FALSE}
+alg_rsme <- USN_dates |> mutate(Phases = as.factor(Phases)) |> 
+  group_by(Phases) |> 
+  mutate(Decimal = sapply(Dates,dex.date), 
+                             .before = Phases) |>
+  mutate(k = sapply(Decimal, function(x) 12.3685*(x - 2000)), 
+         .before = Phases) |>
+  mutate(
+    k = case_when(
+      Phases == "First Quarter" ~ floor(k) + 0.25,
+      Phases == "Last Quarter" ~ floor(k) + 0.75,
+      Phases == "New Moon" ~ if_else(k %% 1 > 0.5, ceiling(k), floor(k)),
+      Phases == "Full Moon" ~ floor(k) + 0.50,
+      TRUE ~ k
+    )
+  ) |> 
+  mutate(Estimate = sapply(k,calc.MoonPhase)) |>
+  mutate(Estimate = do.call(c,Estimate)) |>
+  mutate(Estimate = as.POSIXct(Estimate, 
+         format="%Y/%m/%d %H:%M:%S", tz="UTC")) |>
+  mutate(Dates = as.POSIXct(Dates, 
+         format="%Y/%m/%d %H:%M:%S", tz="UTC")) |>
+  mutate(diff.mins = round(as.numeric(difftime(Dates, Estimate, 
+                                               units = "mins")), 
+                                               digits = 2)) |>
+  mutate(error = mean(abs(diff.mins)))
+
+# Customize fonts
+font_add_google("Alegreya Sans","ace")
+font_add_google("Ubuntu","ubu")
+showtext_auto()
+title <- "ace"
+text <- "ubu"
+
+clrs <- c(
+  "#FFBE00",  # MCRN yellow
+  "#B92F0A",  # MCRN red
+  "#7C225C",  # MCRN maroon
+  "#394DAA"   # MCRN Blue
+)
+
+theme_alg <- function(){
+  theme_minimal() +
+    theme(legend.position = "top",
+        legend.title = element_blank(),
+        legend.text = element_text(family = text, size = 11),
+        legend.justification = c("center","top"),
+        plot.background = element_rect(fill = "#f8f9f9",
+                                       color = "NA"),
+        plot.title = element_text(family = title,size = 18,
+                                  hjust = .5),
+        axis.title = element_text(family = title, size = 12,
+                                  hjust = .5),
+        axis.text = element_text(family = text,size = 10),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()
+        )
+}
+
+theme_set(theme_alg())
+
+ggplot(alg_rsme, aes(Estimate, diff.mins, col = Phases)) +
+  geom_point(size = 4) +
+  geom_smooth(se = FALSE) +
+  labs(x = NULL,
+       y = "time diff (in mins)",
+       title = "Algorithm time difference by lunar phase") +
+  scale_color_manual(values = clrs)
+```
+```{r plotit, echo = FALSE}
+#| lightbox: true
+knitr::include_graphics("time_diff.png")
 ```
