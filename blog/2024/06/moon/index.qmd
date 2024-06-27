@@ -11,7 +11,7 @@ format:
     code-line-numbers: false
 resources:
   - "USN_dates.txt"
-#doi: 
+doi: 10.59350/b0na5-5km65
 citation: true
 draft: false
 ---
