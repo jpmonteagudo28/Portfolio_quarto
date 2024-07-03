@@ -1,6 +1,6 @@
 ---
 title: "the iterated prisoners' dilemma"
-date: now
+date: "July 3,2024"
 description: "rudimentary solutions using R"
 format:
   html:
@@ -11,7 +11,7 @@ format:
     code-line-numbers: false
 #doi: 
 citation: true
-draft: true
+draft: false
 ---
 
 ```{r setup, include = FALSE}
@@ -40,17 +40,21 @@ options(
 
 ## not so quickly!
 
-Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn't exist yet so we're stuck with the question of cooperation. *Should we always cooperate?* Yes…**not so quickly!**.
+Recently, I become intrigued by game theory algorithms, not because I absolutely love playing games, but because it offers a quantifiable, systematic way to understand human relationships. I find the certainty of science and systematization reassuring to some degree so when I learned about this game called “the prisoner' dilemma”, I thought it would fun to experiment and figure out the answer to this classic scenario. This game's solution extends beyond hypothetical situations, addressing questions like: What's the best strategy for handling conflict in various contexts—be it a card game, a business deal, or interpersonal relationships? Should we always cooperate and risk betrayal?
 
-As R. Axelrod[^1] put it:
+In his landmark work, R. Axelrod[^1] said:
 
 [^1]: The Evolution of Cooperation. *Basic Books, Inc*. New York, 1984
 
 > The Cooperation theory \[here\] is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole.
 
+I've heard the phrases “Meet in the middle”, “always compromise” or “never split the difference” but they all seem either idealistic or downright selfish. In a high-stakes situation, *should we always cooperate?* **Yes or not so quickly!?**.
+
 ### the prisoner's dilemma
 
-This iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:
+Let the prisoner's dilemma answer these questions for us. 
+
+The iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:
 
 Two bank robbers happen to meet. They decide to pull a job together. The cops nab them, but without enough evidence to convict. They need a confession. And they know both robbers are unlikely to talk, since if neither implicates the other, the cops can keep them in jail for only 30 days.
 
@@ -62,21 +66,23 @@ To win the game, at least one player must cooperate in the face of betrayal, oth
 
 ### the rules
 
-The rules of Axelrod's iterated prisoner's dilemma:
+The rules of the iterated prisoner's dilemma:
 
 -   Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random.
 -   Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.
 
 #### the path to follow
 
-I'll attempt to provide four solutions to this problem. The first algorithm will never be the first to betray and will copy the opponent's previous choice. The second solution will betray in response to a cooperation five percent of the time; the third solution will not cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game. The official winning strategy was the following:
+I'll attempt to provide four solutions to this problem. The first algorithm will never be the first to betray and will copy the opponent's previous choice. The second solution will betray in response to a cooperation five percent of the time; the third solution will not cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game. 
+
+The official winning strategy was the following:
 
 -   In the first match-up, cooperate.
 -   In every match-up after that, do what the opponent did in the preceding match-up.
 
 #### the tit–for–tat solution
 
-I'll imitate this strategy in the first algorithm and decide on the choices for player 1.
+I'll imitate this strategy in the first algorithm.
 
 First,I'll create a function for player 2 that chooses to cooperate on the first attempt, and copies player 1's previous choice on subsequent moves. To do this, I have to iterate over each of player 1's choices, and store player 2's replies in a new vector.
 
@@ -136,13 +142,13 @@ table(tit.for.tat(200,prob = c(.459,.237), choice = 0, replace = T))
 
 ### the backstabber prober (bsp)
 
-The only difference between Tit–for–Tat and the BSP[^2] is that we're adding a random component that will cause player 2 to betray player 1 after a cooperation. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.
+The only difference between Tit–for–Tat and the BSP[^2] is that we're adding a random component that will cause player 2 to betray player 1 after a cooperation. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. I may be wrong, but I think this one will not do as well as Tit–for–Tat.
 
-[^2]: This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod
+[^2]: This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod.
 
 To implement the random component needed to defect on 5% of cooperative responses, I will identify each time player 1 chooses to cooperate and then defect when randomly generated number from the uniform distribution is less than or equal to .05[^3]. If the randomly generated number is greater than my default, I'll revert back to the tit–for–tat strategy.
 
-[^3]: in theory, this should happen 5% of the time for the uniform distribution
+[^3]: Under the uniform distribution, every outcome is equally likely to occur so we should see outcomes less than .05 occur less than 5% of the time.
 
 ```{r ibp, eval = TRUE}
 #> @prob: probability of betrayal and cooperation
@@ -246,9 +252,9 @@ table(copy.cat(200,prob = c(.459,.237), choice = 0, replace = T))
 
 The last algorithm will play nice on the first round but will exact revenge on player 1 until the end of the game[^4].
 
-[^4]: A copy of the aggressive Friedman's algorithm
+[^4]: A copy of the aggressive Friedman's algorithm.
 
-The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a cooperation, player 2 will no longer cooperate. I'll only add one argument `zero_switch` to identify when player 1 chooses to defect. This logical vector will automatically switch to true inside the for loop, and will cause player 2 to defect on every move for the remainder of the game.
+The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a betrayal, player 2 will no longer cooperate. I'll add one argument `zero_switch` to identify when player 1 chooses to defect, causing player 2 to defect on every move for the remainder of the game.
 
 We have to pay careful attention to the choice probability here; if the probability of betrayal is higher than cooperation, the revenge algorithm will most likely never cooperate after the first few rounds. This player is a more revengeful fellow. Let's see how to implement it.
 
@@ -299,7 +305,7 @@ table(exact.revenge(200,prob = c(.159,.437), choice = 1, replace = T))
 
 Now that all four algorithms are created, we need a function to evaluate the overall performance in total points after 200 rounds.
 
-First, we need an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over `n` number of games. To do this, I would have to update choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player's score in the new list to find the total number of points per game. Lastly, I would have to calculate the average number of total points per game and compare the algorithms.
+First, we need an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over `n` number of games. To do this, I will update the choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player's score in the new list to find the total number of points per game. Finally, I would have to calculate the average number of total points per game and compare the algorithms.
 
 However, not every algorithm takes the same list of arguments. The `prober` algorithm requires a default that is not specified anywhere else, and I must implement a comparison function that will take a default probability but only apply it to one of the algorithms no matter its order in the list. To do this, I'll check each argument entered in the function and create two lists, one for the `prober` algorithm and a second for the second algorithm. The first list will contain the default argument and, if there's a value specified, apply it to `prober`, the second will only take a default probability if the algorithm requires a default.
 
@@ -450,7 +456,7 @@ theme_set(theme_alg())
 
 ### individual algorithm performance
 
-Let's now compare each algorithm's performance based on total points obtained per game. Again, the logic here is the same: bootstrap the mean number of points per game and compare them using the `comp.alg` function which takes two algorithms at once and returns a data frame with four columns, one column for each player for both algorithms.
+Let's now compare each algorithm's performance based on total points obtained per game. Again, the logic here is the same: bootstrap the mean number of points per game and compare them using the `comp.alg` function which takes two algorithms at once and returns a data frame with four columns, one column for each player for two algorithms.
 
 #### average cooperative response
 Computing the average cooperative responses by algorithm after playing 500 games of 200 rounds each should help us understand which algorithm tends to play nice and which ones are more selfish. For the sake of reproducibility, we've set a seed and established an equal, fixed probability of defection and cooperation across algorithms.
@@ -495,23 +501,24 @@ p0 <- ggplot(mean_df, aes(x = mean, fill = kind)) +
 #| fig-cap: "Average cooperative responses"
 knitr::include_graphics("img/alg_dist.png")
 ```
-The average cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than any other algorithm except `copy.cat`. 
+The cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than the vengeful and the prober algorithms, but just as much as `copy.cat`^[I used the Wilcoxon rank sum test to compute the difference in medians and check if the algorithm distributions are stochastically equivalent. It's not clear whether the `prober` algorithm is equivalent to `tit.for.tat`, but the test shows a statistically significant difference in the algorithms' average cooperative responses.]. 
 ```{r permutation, echo = TRUE, eval = TRUE}
 #| code-fold: TRUE
 #| fig-cap-location: top
-#| fig-cap: "Difference in medians"
 
 
-wilcox_gt <- mean_df |> filter(kind == c("TFT","Copy.Cat")) |> 
+wilcox_gt <- mean_df |> 
+  filter(kind == c("TFT","Prober")) |> 
   pivot_longer(cols = -kind, names_to = "vars", 
                values_to = "values") |>
-group_by(vars) |> summarize(
+  group_by(vars) |> 
+  summarize(
   Estimate = wilcox.test(values~kind, conf.int = T)$estimate,
   Sig. = wilcox.test(values~kind, conf.int = T)$p.value 
-  ) |> gt() |> 
+  ) |> 
+  gt() |> 
   tab_header(
-    title = md(
-      "*Comparison of Copy.Cat and TFT cooperative responses*")
+    title = md("*Comparison of Tit×Tat and Prober cooperative responses*")
     ) |>
   cols_label(vars = md("**Estimate**"),
              Estimate = md("**Difference in estimate**"),
@@ -530,7 +537,7 @@ wilcox_gt
 ```
 Axelrod believed that, on average, “nice” algorithms would perform better than “ mean and deceitful” ones like `exact.revenge` and `prober`, and we can clearly see that our most vengeful algorithm performs poorly on the cooperative front, with a mean cooperation of .0055 per game, about once per game. 
 
-Based on the algorithm's cooperative response we can then visualize and compute the final score distribution (in total points) for each player after 500 games of 200 rounds each. We'll see that the second player typically scores much higher than player 1 by defecting often and without provocation. However, when player 2 chooses to not betray without provocation or imitate the first's player current choices both players end up with higher and approximately equal scores. Because of this willingness to cooperate, according to Axelrod, the nice algorithms tend to be more conducive to cooperation and less prone to conflict.
+Based on the algorithm's cooperative response we can then visualize and compute the final score distribution (in total points) for each player after 500 games of 200 rounds each. We'll see that, by defecting often and without provocation, the second player typically scores much higher than player 1. However, when player 2 chooses to not betray without provocation or imitate the first's player current choices both players end up with higher and approximately equal scores. Because of this willingness to cooperate, according to Axelrod, the nice algorithms tend to be more conducive to cooperation and less prone to conflict.
 ```{r vsalg, echo = TRUE, eval = TRUE}
 #| code-fold: true
 #| code-summary: Code for data manipulation & plots
@@ -561,7 +568,7 @@ perf_df <- cbind(test,test2) |> pivot_longer(cols = everything(),
   arrange(Algorithm, Player) |>
   group_by(Algorithm, Player)
 
-str(perf_df)
+#> str(perf_df)
 
  p1 <- ggplot(perf_df, aes(Score, fill= Player)) +
   geom_density(alpha = .45) +
@@ -586,7 +593,9 @@ str(perf_df)
 #| lightbox: true
 knitr::include_graphics("img/alg_perf2.png")
 ```
-These two plots show the performance of both players and the four algorithms, and we can see that the most extreme results are obtained using the `exact.revenge` algorithm. The density curves for this algorithm are touching the extremes on the left and right, showing that one player will always under perform while the other one, typically the second one, will outperform its opponent. This algorithms is one of the most unreliable ones because player 1 is not able to confidently predict the next moves. Regardless of his choice, after the first betrayal, player 2 will never cooperate again. To my surprise, the `prober` algorithm returned a more favorable score for player 2 than the `tit.for.tat` or the `copy.cat` algorithm; however, the nice algorithms always favored both players, not just player 2. 
+These two plots show the performance of both players and the four algorithms, and we can see that the most extreme results are obtained using the `exact.revenge` algorithm. The density curves for this algorithm are touching the extremes on the left and right, showing that one player will always under perform while the other one, typically the second one, will outperform his opponent. This algorithm is a “sneaky”  one because player 1 is not able to confidently predict his opponent's moves. Regardless of his choice, after the first betrayal, player 2 will never cooperate again. 
+
+To my surprise, the `prober` algorithm returned a more favorable score for player 2 than the `tit.for.tat` or the `copy.cat` algorithm; however, the nice algorithms always favored both players, not just player 2. 
 ```{r gt, echo = TRUE, eval = TRUE}
 #| code-fold: true
 
@@ -615,7 +624,9 @@ Nevertheless, regardless of which algorithm we used, player 1's score is, on ave
 
 Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict. Our custom algorithms also showed this behavior, both players thrived when cooperation was a priority for one of the players. In our case, the `tit.for.tat` algorithm outperformed others in this regard even if it didn't achieve the maximum number of points like the `exact.revenge` algorithm. 
 
-Here are the rules for strategic cooperation:
+Based on this short experiment, we can conclude that cooperation is better than conflict for all parties involved. We should accept betrayal and quickly forgive to attain a more favorable outcome. We shouldn't be “pushovers” and always cooperate regardless of our opponent's actions. Instead,we should be just and merciful, meting out justice when previously betrayed but extending mercy when our opponent doesn't deserve it.
+
+Here are some rules for strategic cooperation derived from our algorithms:
 
 -   Avoid unnecessary conflict by cooperating as long as your opponent does.
 -   If your opponent betrays you without provocation— respond in kind…once.
