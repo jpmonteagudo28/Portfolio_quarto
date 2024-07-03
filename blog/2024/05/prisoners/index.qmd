@@ -9,7 +9,7 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: false
-#doi: 
+doi: 10.59350/gyxmw-enh88
 citation: true
 draft: false
 ---
