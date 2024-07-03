@@ -401,7 +401,7 @@ Note
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">o</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now it’s time to compe up with a function fo each planetary argument (14 total). Most of these argument take <span class="math inline">\(k\)</span> with one exception <span class="math inline">\(A_{1}\)</span>, which also requires <span class="math inline">\(T\)</span>. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we’ll try something different inside the main function.</p>
+<p>Now it’s time to come up with a function fo each planetary argument (14 total). Most of these argument take <span class="math inline">\(k\)</span> with one exception <span class="math inline">\(A_{1}\)</span>, which also requires <span class="math inline">\(T\)</span>. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we’ll try something different inside the main function.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold"><summary>Planetary Arguments functions</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">A1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">k</span>,<span class="va">t</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">a1</span> <span class="op">&lt;-</span> <span class="fl">299.77</span> <span class="op">+</span> <span class="fl">0.107408</span><span class="op">*</span><span class="va">k</span> <span class="op">-</span> <span class="fl">0.009173</span><span class="op">*</span><span class="op">(</span><span class="va">t</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
@@ -799,8 +799,8 @@ Note
 <div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;<span class="math inline">\(k = 0\)</span> for the new moon, <span class="math inline">\(k = .25\)</span> for first quarter, <span class="math inline">\(k = .50\)</span> for full moon and <span class="math inline">\(k = .75\)</span> for the last quarter.</p></div></div><ul>
 <li>We’ve ignored several arguments and corrections.</li>
 <li>The U.S Naval Observatory doesn’t include seconds in their date and time estimates.</li>
-<li>Lunar phases prior to 2000 A.D were originally calculated in a Dynamical Time (DT) not Universal Time (UTC).</li>
-<li>There are no high precision records of the orbital positions of the sun and the moon prior to 1609 A.D so our best estimates are typically off track.</li>
+<li>Future dates estimates are as accurate as the amazing,but fallible algorithms that predicted them.</li>
+<li>There are no high precision records of the orbital positions of the sun and the moon prior to the invention of the telescope in 1609 A.D.</li>
 </ul></section><section id="the-very-error-of-the-moon" class="level3"><h3 class="anchored" data-anchor-id="the-very-error-of-the-moon">the very error of the moon 🌓</h3>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -949,7 +949,7 @@ Important
 </table>
 </div>
 </div>
-<p>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present.</p>
+<p>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present and loses accuracy as we move away from it.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -2021,8 +2021,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-579"><a href="#cb9-579" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-580"><a href="#cb9-580" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>We've ignored several arguments and corrections.</span>
 <span id="cb9-581"><a href="#cb9-581" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The U.S Naval Observatory doesn't include seconds in their date and time estimates.</span>
-<span id="cb9-582"><a href="#cb9-582" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Lunar phases prior to 2000 A.D were originally calculated in a Dynamical Time (DT) not Universal Time (UTC).</span>
-<span id="cb9-583"><a href="#cb9-583" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There are no high precision records of the orbital positions of the sun and the moon prior to 1609 A.D so our best estimates are typically off track.</span>
+<span id="cb9-582"><a href="#cb9-582" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Future dates estimates are as accurate as the amazing,but fallible algorithms that predicted them.</span>
+<span id="cb9-583"><a href="#cb9-583" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>There are no high precision records of the orbital positions of the sun and the moon prior to the invention of the telescope in 1609 A.D.</span>
 <span id="cb9-584"><a href="#cb9-584" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-585"><a href="#cb9-585" aria-hidden="true" tabindex="-1"></a><span class="in">```{r funtest, echo = FALSE, eval = FALSE}</span></span>
 <span id="cb9-586"><a href="#cb9-586" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: TRUE</span></span>
@@ -2270,7 +2270,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

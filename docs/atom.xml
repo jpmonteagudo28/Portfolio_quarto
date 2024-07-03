@@ -6599,7 +6599,7 @@ font-style: inherit;">)</span></span>
 background-color: null;
 font-style: inherit;">}</span></span></code></pre></div>
 </div>
-<p>Now it’s time to compe up with a function fo each planetary argument (14 total). Most of these argument take <img src="https://latex.codecogs.com/png.latex?k"> with one exception <img src="https://latex.codecogs.com/png.latex?A_%7B1%7D">, which also requires <img src="https://latex.codecogs.com/png.latex?T">. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we’ll try something different inside the main function.</p>
+<p>Now it’s time to come up with a function fo each planetary argument (14 total). Most of these argument take <img src="https://latex.codecogs.com/png.latex?k"> with one exception <img src="https://latex.codecogs.com/png.latex?A_%7B1%7D">, which also requires <img src="https://latex.codecogs.com/png.latex?T">. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we’ll try something different inside the main function.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold"><summary>Planetary Arguments functions</summary><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
@@ -11897,8 +11897,8 @@ font-style: inherit;">}</span></span></code></pre></div>
 <div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;<img src="https://latex.codecogs.com/png.latex?k%20=%200"> for the new moon, <img src="https://latex.codecogs.com/png.latex?k%20=%20.25"> for first quarter, <img src="https://latex.codecogs.com/png.latex?k%20=%20.50"> for full moon and <img src="https://latex.codecogs.com/png.latex?k%20=%20.75"> for the last quarter.</p></div></div><ul>
 <li>We’ve ignored several arguments and corrections.</li>
 <li>The U.S Naval Observatory doesn’t include seconds in their date and time estimates.</li>
-<li>Lunar phases prior to 2000 A.D were originally calculated in a Dynamical Time (DT) not Universal Time (UTC).</li>
-<li>There are no high precision records of the orbital positions of the sun and the moon prior to 1609 A.D so our best estimates are typically off track.</li>
+<li>Future dates estimates are as accurate as the amazing,but fallible algorithms that predicted them.</li>
+<li>There are no high precision records of the orbital positions of the sun and the moon prior to the invention of the telescope in 1609 A.D.</li>
 </ul></section><section id="the-very-error-of-the-moon" class="level3"><h3 class="anchored" data-anchor-id="the-very-error-of-the-moon">the very error of the moon 🌓</h3>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -12197,7 +12197,7 @@ font-style: inherit;">#&gt; write.table(USN_dates, file = file_path, sep = "\t",
 </table>
 </div>
 </div>
-<p>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present.</p>
+<p>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present and loses accuracy as we move away from it.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">

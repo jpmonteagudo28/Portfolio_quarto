@@ -579,8 +579,8 @@ We can test the function using a few examples of past, present and future lunar 
 
 -   We've ignored several arguments and corrections.
 -   The U.S Naval Observatory doesn't include seconds in their date and time estimates.
--   Lunar phases prior to 2000 A.D were originally calculated in a Dynamical Time (DT) not Universal Time (UTC).
--   There are no high precision records of the orbital positions of the sun and the moon prior to 1609 A.D so our best estimates are typically off track.
+-   Future dates estimates are as accurate as the amazing, but fallible algorithms that predicted them.
+-   There are no high precision records of the orbital positions of the sun and the moon prior to the invention of the telescope in 1609 A.D.
 
 ```{r funtest, echo = FALSE, eval = FALSE}
 #| code-fold: TRUE
