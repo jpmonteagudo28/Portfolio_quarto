@@ -1624,7 +1624,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a>Now it's time to compe up with a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$, which also requires $T$. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we'll try something different inside the main function.</span>
+<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a>Now it's time to come up with a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$, which also requires $T$. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we'll try something different inside the main function.</span>
 <span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plargs, echo = TRUE}</span></span>
 <span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
@@ -2243,7 +2243,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-801"><a href="#cb9-801" aria-hidden="true" tabindex="-1"></a><span class="in">             caption = "Mean error of time difference (in mins) between predicted and actual dates")</span></span>
 <span id="cb9-802"><a href="#cb9-802" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-803"><a href="#cb9-803" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-804"><a href="#cb9-804" aria-hidden="true" tabindex="-1"></a>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present.</span>
+<span id="cb9-804"><a href="#cb9-804" aria-hidden="true" tabindex="-1"></a>Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present and loses accuracy as we move away from it. </span>
 <span id="cb9-805"><a href="#cb9-805" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-806"><a href="#cb9-806" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plotit, echo = FALSE}</span></span>
 <span id="cb9-807"><a href="#cb9-807" aria-hidden="true" tabindex="-1"></a><span class="in">#| lightbox: true</span></span>
@@ -2270,7 +2270,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <!-- <span class="faux-block"> [PGP public key](../../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom","selector":".lightbox"});
+</footer><script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

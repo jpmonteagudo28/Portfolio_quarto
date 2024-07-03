@@ -1,10 +1,10 @@
 ---
-title: "The Iterated Prisoners' Dilemma"
+title: "the iterated prisoners' dilemma"
 date: now
-description: "Rudimentary solutions using R"
+description: "rudimentary solutions using R"
 format:
   html:
-    css: ../05/styles.css
+    css:  ../styles.css
     code-fold: false
     code-tools: true
     code-overflow: wrap
@@ -13,13 +13,20 @@ format:
 citation: true
 draft: true
 ---
+
 ```{r setup, include = FALSE}
 library(methods)
+library(dplyr)
+library(patchwork)
+library(tidyr)
+library(ggplot2)
+library(showtext)
+library(gt)
 set.seed(2899)
 
 knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
                       fig.width = 5.5, fig.height = (5.5 * 0.618),
-                      out.width = "90%", collapse = TRUE, 
+                      out.width = "80%", collapse = TRUE, 
                       cache = TRUE, comment = "#>")
 
 
@@ -31,25 +38,25 @@ options(
   rlang__backtrace_on_error = "none")
 ```
 
-
 ## not so quickly!
 
-Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn't exist yet so we're stuck with the question of cooperation. *Should we always cooperate?* Yes…**not so quickly!**. 
+Ideally, all humans would cooperate and live in harmony in a world where evil is not partaken. Unfortunately, that world doesn't exist yet so we're stuck with the question of cooperation. *Should we always cooperate?* Yes…**not so quickly!**.
 
-As R. Axelrod^[The Evolution of Cooperation. *Basic Books, Inc*. New York, 1984] put it: 
+As R. Axelrod[^1] put it:
 
-> The Cooperation theory [here] is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole. 
+[^1]: The Evolution of Cooperation. *Basic Books, Inc*. New York, 1984
+
+> The Cooperation theory \[here\] is based upon an investigation of individuals who pursue their own self–interest wihtout the aid of central authority to force them to cooperate with each other. The reason for assuming self–interest is that it allows an examination of the difficult case when cooperation is not completely based upon a concern for others or upon the welfare of the groups as a whole.
 
 ### the prisoner's dilemma
 
 This iterated version of the dilemma was presented as a hypothetical scenario by R. Axelrod:
 
-Two bank robbers happen to meet. They decide to pull a job together.
-The cops nab them, but without enough evidence to convict. They need a confession. And they know both robbers are unlikely to talk, since if neither implicates the other, the cops can keep them in jail for only 30 days. 
+Two bank robbers happen to meet. They decide to pull a job together. The cops nab them, but without enough evidence to convict. They need a confession. And they know both robbers are unlikely to talk, since if neither implicates the other, the cops can keep them in jail for only 30 days.
 
-So they put the two in separate cells. They go to the first prisoner and say: “If you rat on your partner and he stays mum, we’ll let you go and he’ll do ten years.If you both rat on each other, you’ll both do eight years.” Then they go to the second prisoner and say the same thing. 
- 
-The first prisoner thinks it over. “If he rats on me and I don’t rat on him, then I lose big-time. If I rat on him and he doesn’t rat on me, then I win big-time. Either way, the smart move is to rat on him. I’ll just hope he’s a sucker and doesn’t rat on me.”   The second prisoner reasons the same way. So they rat on each other, and the cops get their two convictions. If the prisoners had cooperated, both would have gotten off easy. Instead, the rational pursuit of self-interest has put them both in a world of pain.
+So they put the two in separate cells. They go to the first prisoner and say: “If you rat on your partner and he stays mum, we’ll let you go and he’ll do ten years.If you both rat on each other, you’ll both do eight years.” Then they go to the second prisoner and say the same thing.
+
+The first prisoner thinks it over. “If he rats on me and I don’t rat on him, then I lose big-time. If I rat on him and he doesn’t rat on me, then I win big-time. Either way, the smart move is to rat on him. I’ll just hope he’s a sucker and doesn’t rat on me.” The second prisoner reasons the same way. So they rat on each other, and the cops get their two convictions. If the prisoners had cooperated, both would have gotten off easy. Instead, the rational pursuit of self-interest has put them both in a world of pain.
 
 To win the game, at least one player must cooperate in the face of betrayal, otherwise both contestants would face unfavorable outcomes.
 
@@ -57,40 +64,27 @@ To win the game, at least one player must cooperate in the face of betrayal, oth
 
 The rules of Axelrod's iterated prisoner's dilemma:
 
- * Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random. 
- * Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.
+-   Two players play 200 matches against each other and against an algorithm that betrayed or cooperated at random.
+-   Players obtain three points for mutual cooperation, one for a mutual betrayal, and five for the player who betrays when the other cooperates.
 
 #### the path to follow
 
-I'll attempt to provide four solutions to this problem. The first one will never be the first to betray but will copy the opponent's previous choice; the second solution will betray in response to a cooperation five percent of the time; the third solution will cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game
-The official winning strategy was the following:  
+I'll attempt to provide four solutions to this problem. The first algorithm will never be the first to betray and will copy the opponent's previous choice. The second solution will betray in response to a cooperation five percent of the time; the third solution will not cooperate first and then imitate each of player 1's choices, and the last one will never betray first, but will retaliate in turn on every remaining move until the end of the game. The official winning strategy was the following:
 
-* In the first match-up, cooperate.
-* In every match-up after that, do what the opponent did in the preceding match-up.
+-   In the first match-up, cooperate.
+-   In every match-up after that, do what the opponent did in the preceding match-up.
 
 #### the tit–for–tat solution
 
 I'll imitate this strategy in the first algorithm and decide on the choices for player 1.
 
-First, I'll assign values to the three possible outcomes: Mutual cooperation is represented by the integer `3`. Mutual betrayal is represented by `1`, and Unmet cooperation is represented by `5`. Player's choices will be represented by  betrayal equals `1` and cooperation equals `2`.
+First,I'll create a function for player 2 that chooses to cooperate on the first attempt, and copies player 1's previous choice on subsequent moves. To do this, I have to iterate over each of player 1's choices, and store player 2's replies in a new vector.
 
+To determine the choice order I'll create a vector of length 2 with player 1's original choice and subtract 1 from that choice to obtain the alternative. To create the vector of choices of length $n$, I'll append player 1's original choice to a vector of length $n-1$ ensuring that the first choice is always in position 1 `p1[1]`. The resulting vector will be of length `n`.
 
-```{r primitive, eval = TRUE}
-outcomes <- factor(c(1,3,5), labels = c("Mutual Cooperation", "Mutual Betrayal","Unmet Cooperation"))
-choices <- factor(c(1,2), labels = c("Betray", "Cooperate"))
+We'll make a vector or player 2's choices of length $n$ equal to `p1`. The first choice will always be cooperation, and all subsequent choices will be player 1's previous response `p1[ i -1]`.
 
-#> Player 1 choices (46% prob of betrayal, 24% prob cooperation)
-p1_choice <- as.numeric(sample(choices,200,replace = T, prob = c(.459,.237)))
-table(p1_choice)
-```
-
-Now I have to create a function for player 2 that chooses to cooperate on the first attempt, and copies player 1's choice on subsequent ones. To do this, I have to iterate over each of player 1's choice, and store player 2's replies in a new vector.
-
-To determine the choice order, I'll create a vector of length 2 with player 1's original choice and subtract 1 from that choice to obtain the alternative. To create the vector of choices of length `n`, I'll append player 1's original choice to a vector of length `n-1` to make sure the first choice is always in position 1 `p1_choice[1]`. The resulting vector will be of length `n`. 
-
-To create the vector or player 2's choices using the tit–for–tat algorithm, I'll create a vector of length `n` equal to `p1_choice`. The first choice will always be cooperation, and all subsequent choices will be player 1's previous response `p1[ i -1]`.
-
-:::{.callout-tip appearance="simple"}
+::: {.callout-tip appearance="simple"}
 Always remember to initialize vectors and perform operations outside the loop, if possible. Doing this will sometimes make your function much, much faster.
 :::
 
@@ -103,41 +97,52 @@ Always remember to initialize vectors and perform operations outside the loop, i
 tit.for.tat <- function(rounds, 
                         prob, 
                         choice,
-                        replace = TRUE){
+                        replace = TRUE,
+                        ...){
   
-  #Check arguments
-  stopifnot({ 
-  is.integer(rounds)
-  is.double(prob)
-  is.logical(choice)
-  is.logical(replace)})
+  # Check arguments
+  stopifnot({
+    is.integer(rounds)
+    is.double(prob)
+    is.logical(choice)
+    is.logical(replace)
+  })
   
-  choice_order <- c(choice,1 - choice)
-  n <- rounds -1
-  # Choice inversion if choice  = 1
-  if(choice_order[1] == 1){
-    inv.prob <- c(prob[2],prob[1])
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))
-  } else{
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))
+  choice_order <- c(choice, 1 - choice)
+  p1 <- logical(rounds)
+  p2 <- logical(rounds)
+  
+  
+  p1[1] <- choice
+  p2[1] <- TRUE  
+  
+  for (i in 2:rounds) {
+    if (choice_order[1] == TRUE) {
+      inv.prob <- c(prob[2], prob[1])
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = inv.prob)
+    } else {
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = prob)
+    }
+    
+    p2[i] <- p1[i - 1]
   }
-  p2 <- numeric(length(p1))
-  p2[1] <- 1
-  
-  for(i in 2:length(p1)){
-    p2[i] <- p1[i -1]
-  }
-  return(p2)
+  result <- list(P1 = as.numeric(p1), 
+                 P2 = as.numeric(p2))
+  return(result)
 }
 
 table(tit.for.tat(200,prob = c(.459,.237), choice = 0, replace = T))
 ```
 
-### the backstabber prober
+### the backstabber prober (bsp)
 
-The only difference between Tit–for–Tat and the IBP^[This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod] is that we're adding a random element that will cause player 2 to betray player 1 when faced with a cooperative response. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.
+The only difference between Tit–for–Tat and the BSP[^2] is that we're adding a random component that will cause player 2 to betray player 1 after a cooperation. Player 2 will always cooperate on the first round, but the algorithm will be less predictable than the previous one. Not to spoil it, but I think this one will not do as well as Tit–for–Tat.
 
-To implement the random component needed to defect on 5% of cooperative responses, I will identify each time player 1 chooses to cooperate and then defect when randomly generated number from the uniform distribution is less than or equal to .05^[in theory, this should happen 5% of the time for the uniform distribution]. If the randomly generated number is greater than my default, I'll revert back to the tit–for–tat strategy.
+[^2]: This strategy follows the Joss strategy featured in the 1984 book by R. Axelrod
+
+To implement the random component needed to defect on 5% of cooperative responses, I will identify each time player 1 chooses to cooperate and then defect when randomly generated number from the uniform distribution is less than or equal to .05[^3]. If the randomly generated number is greater than my default, I'll revert back to the tit–for–tat strategy.
+
+[^3]: in theory, this should happen 5% of the time for the uniform distribution
 
 ```{r ibp, eval = TRUE}
 #> @prob: probability of betrayal and cooperation
@@ -147,83 +152,91 @@ prober <- function(rounds,
                    prob,
                    choice,
                    default,
-                   replace = TRUE){
+                   replace = TRUE,
+                   ...){
   
-    #Check arguments
-  stopifnot({ 
-  is.integer(rounds)
-  is.double(prob)
-  is.logical(choice)
-  is.double(default)
-  is.logical(replace)})
+   # Check arguments
+  stopifnot({
+    is.integer(rounds)
+    is.double(prob)
+    is.logical(choice)
+    is.double(default)
+    is.logical(replace)
+  })
   
   choice_order <- c(choice, 1 - choice)
-  n <- rounds - 1
-  if(choice_order[1] == 1){
-    inv.prob <- c(prob[2],prob[1])
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))
-  } else{
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))
-  }
-  p2 <- numeric(length(p1))
-  p2[1] <- 1
+  p1 <- logical(rounds)
+  p2 <- logical(rounds)
   
-for (i in 2:length(p1)) {
-  if (p1[i - 1] == 1) {
-    if (runif(1) < default) { # % chance to switch from 1 to 0
-      p2[i] <- 0
+  p1[1] <- choice
+  p2[1] <- TRUE  
+  
+  for (i in 2:rounds) {
+    if (choice_order[1] == TRUE) {
+      inv.prob <- c(prob[2], prob[1])
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = inv.prob)
     } else {
-      p2[i] <- p1[i - 1]
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = prob)
     }
-  } else {
     
-    p2[i] <- p1[i -1]
+    if (p1[i - 1] == TRUE) {
+      if (runif(1) < default) { # % chance to betray after cooperation
+        p2[i] <- FALSE
+      } else {
+        p2[i] <- TRUE
+      }
+    } else {
+      p2[i] <- p1[i -1] 
+    }
   }
-}
-  return(p2)
+  result <- list(P1 = as.numeric(p1), 
+                 P2 = as.numeric(p2))
+  return(result)
 }
 
 table(prober(200,prob = c(.459,.237), choice = 0, default = .05, replace = T))
 ```
 
-
 ### the corteous cat
 
-A less glorious but more common solution is to simply imitate each of player 1 moves to a T. Player 2 will never cooperate first unless player 1 chooses to cooperate. This copy cat algorithm is looking at the current round and copying the first player's moves. It is not concerned with the previous moves. 
+A less creative but more common solution is to simply emulate each of player 1 moves. Player 2 will never cooperate first unless player 1 chooses to cooperate. This copy cat algorithm is looking at the current round and not concerned with the previous moves.
 
 ```{r corteous, eval = TRUE}
 
 copy.cat <- function(rounds, 
                    prob,
                    choice,
-                   replace = TRUE){
+                   replace = TRUE,
+                   ...){
   
-    #Check arguments
-  stopifnot({ 
-  is.integer(rounds)
-  is.double(prob)
-  is.logical(choice)
-  is.logical(replace)})
+ # Check arguments
+  stopifnot({
+    is.integer(rounds)
+    is.double(prob)
+    is.logical(choice)
+    is.logical(replace)
+  })
   
   choice_order <- c(choice, 1 - choice)
-  n <- rounds - 1
-  if(choice_order[1] == 1){
-    inv.prob <- c(prob[2],prob[1])
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))
-  } else{
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))
-  }
-  p2 <- numeric(length(p1))
-  p2[1] <- 1
+  p1 <- logical(rounds)
+  p2 <- logical(rounds)
   
-  for(i in 2:length(p1)){
-    if(p1[i] == 1){
-      p2[i] <- 1
+  p1[1] <- choice
+  p2[1] <- FALSE
+  
+  for (i in 2:rounds) {
+    if (choice_order[1] == TRUE) {
+      inv.prob <- c(prob[2], prob[1])
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = inv.prob)
     } else {
-      p2[i] <- 0
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = prob)
     }
+    
+    p2[i] <- p1[i]
   }
-  return(p2)
+  result <- list(P1 = as.numeric(p1),
+                 P2 = as.numeric(p2))
+  return(result)
 }
 
 table(copy.cat(200,prob = c(.459,.237), choice = 0, replace = T))
@@ -231,64 +244,73 @@ table(copy.cat(200,prob = c(.459,.237), choice = 0, replace = T))
 
 ### the squirrel's revenge
 
-The last algorithm will not play nice on the first round and will exact revenge on player 1 until the game is over^[A copy of the aggressive Friedman's algorithm]. This player is a more revengeful fellow. Let's see how to implement it. 
+The last algorithm will play nice on the first round but will exact revenge on player 1 until the end of the game[^4].
 
-The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a cooperation, player 2 will no longer cooperate. I'll only add one argument `zero_switch` to identify when player 1 chooses to defect. This logical vector will automatically switch to true inside the for loop, and will cause player 2 to defect on every move for the remainder of the game. 
+[^4]: A copy of the aggressive Friedman's algorithm
 
-Something worthy of attention here is that if the probability of betrayal is higher than cooperation, the revenge algorithm will most likely never cooperate after the first couple of rounds. I'll make sure to set a higher probability of cooperation to see the algorithm in action. 
+The key to achieve such vengeful results is to track when player 1 switches from betrayals to cooperation. Once we identify a cooperation, player 2 will no longer cooperate. I'll only add one argument `zero_switch` to identify when player 1 chooses to defect. This logical vector will automatically switch to true inside the for loop, and will cause player 2 to defect on every move for the remainder of the game.
+
+We have to pay careful attention to the choice probability here; if the probability of betrayal is higher than cooperation, the revenge algorithm will most likely never cooperate after the first few rounds. This player is a more revengeful fellow. Let's see how to implement it.
 
 ```{r squirrel, eval = TRUE}
 
-exact.revenge <- function(rounds, 
-                   prob,
-                   choice,
-                   replace = TRUE){
-  
-    #Check arguments
-  stopifnot({ 
-  is.integer(rounds)
-  is.double(prob)
-  is.logical(choice)
-  is.logical(replace)})
+exact.revenge <- function(rounds, prob, choice, replace = TRUE,...) {
+  # Check arguments
+  stopifnot({
+    is.integer(rounds)
+    is.double(prob)
+    is.logical(choice)
+    is.logical(replace)
+  })
   
   choice_order <- c(choice, 1 - choice)
-  n <- rounds - 1
-  if(choice_order[1] == 1){
-    inv.prob <- c(prob[2],prob[1])
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = inv.prob))
-  } else{
-    p1 <- c(choice,sample(choice_order,size = n,replace = replace,prob = prob))
-  }
-  p2 <- numeric(length(p1))
-  p2[1] <- 1
+  p1 <- logical(rounds)
+  p2 <- logical(rounds)
+  
+  p1[1] <- choice
+  p2[1] <- TRUE 
+  
   zero_switch <- FALSE
   
-  for(i in 2:length(p1)){
-    if(p1[i -1] == 0){
+  for (i in 2:rounds) {
+    # Generate player 1's move
+    if (choice_order[1] == TRUE) {
+      inv.prob <- c(prob[2], prob[1])
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = inv.prob)
+    } else {
+      p1[i] <- sample(choice_order, size = 1, replace = replace, prob = prob)
+    }
+    
+    # Player 2's response
+    if (p1[i - 1] == FALSE) {
       zero_switch <- TRUE
-    } 
-    p2[i]<- ifelse(zero_switch,0,1)
+    }
+    p2[i] <- ifelse(zero_switch, FALSE, TRUE)
   }
-  return(p2)
+  result <- list(P1 = as.numeric(p1), 
+                 P2 = as.numeric(p2))
+  return(result)
 }
 
 table(exact.revenge(200,prob = c(.159,.437), choice = 1, replace = T))
 ```
 
-## algorithm perfomance
+## algorithm face off
 
-Now that all four algorithms are created, I'll implement a function to evaluate the overall performance in total points after 200 rounds. 
+Now that all four algorithms are created, we need a function to evaluate the overall performance in total points after 200 rounds.
 
-First, I have to create an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over `n` number of games. To do this, I would have to update choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player's score in the new list to find the total number of points per game. Lastly, I would have to calculate the average number of total points per game and compare algorithms this way.  
+First, we need an outcome matrix to store the outcome of each choice combination. Then, I have to create a function that repeatedly compares algorithms over `n` number of games. To do this, I would have to update choice order for each game, if necessary; store total number of choices per game in two vectors, one for each player, create a list and evaluate choice outcome against the outcome matrix, and then sum each player's score in the new list to find the total number of points per game. Lastly, I would have to calculate the average number of total points per game and compare the algorithms.
+
+However, not every algorithm takes the same list of arguments. The `prober` algorithm requires a default that is not specified anywhere else, and I must implement a comparison function that will take a default probability but only apply it to one of the algorithms no matter its order in the list. To do this, I'll check each argument entered in the function and create two lists, one for the `prober` algorithm and a second for the second algorithm. The first list will contain the default argument and, if there's a value specified, apply it to `prober`, the second will only take a default probability if the algorithm requires a default.
 
 ```{r performance, eval = TRUE}
-#> @(...) arguments include:
-#>              @alg: algorithms to compare
-#>              @rounds: number of rounds in a game
-#>              @prob:   probability of betrayal and cooperation.
-#>              @choice: starting choice.
-#>              @default: percentage of cooperative responses on which player 2 betrays player 1
-#> @iter: how many games of `n` rounds should be played.
+#> arguments include:
+#>  @alg: algorithms to compare
+#>  @rounds: number of rounds in a game
+#>  @prob:   probability of betrayal and cooperation.
+#>  @choice: starting choice.
+#>  @default: percentage of cooperative responses on which player 2 betrays player 1
+#>  @iter: how many games of `n` rounds should be played.
 
 comp.alg <- function(alg,
                      iter = NULL,
@@ -296,49 +318,81 @@ comp.alg <- function(alg,
                      prob,
                      choice,
                      replace = TRUE,
-                     ...){
+                     default = NULL){
   #Check arguments
   stopifnot({
     is.list(alg)
-    is.numeric(iter) && iter > 0})  
+    is.numeric(iter) && iter > 0})
   
   out <- matrix(c(3,5,0,1), nrow = 2, byrow = TRUE)
         rownames(out) <- c("P1.C","P1.B")
         colnames(out) <- c("P2.C","P2.B")
+        
+create.args <- function(func,common_args, default){
+  
+  fun_args <- names(formals(func))
+  args <- common_args[names(common_args)%in% fun_args]
+  if("default" %in% fun_args && !is.null(default)){
+    args$default <- default
+  }
+  args
+}
+
+common_args <- list(rounds = rounds, 
+                        prob = prob,
+                        choice = choice,
+                        replace = TRUE)
+
+p1_args <- create.args(alg[[1]], common_args, default)
+p2_args <- create.args(alg[[2]], common_args,default)
   
   play.game <- function(rounds, 
                         prob,
                         choice, 
-                        default = NULL,
+                        default = default,
                         replace = TRUE) {
-    p1 <- do.call(alg[[1]],list(rounds = rounds,
-                                prob = prob,
-                                choice = choice,
-                                replace = replace))
-    p2 <- do.call(alg[[2]],list(rounds = rounds,
-                                prob = prob,
-                                choice = choice,
-                                replace = replace))
-   
-  do.score <- function(P1,P2){
-    l1 <- list(P1,P2)
-    game_res <- data.frame(P1 = numeric(length(P1)), 
-                           P2 = numeric(length(P2)))
     
-    for(i in seq_along(l1[[1]])){
-      c1 <- l1[[1]][i]
-      c2 <- l1[[2]][i]
+    p1 <- do.call(alg[[1]],p1_args)
+    p2 <- do.call(alg[[2]],p2_args)
+
+   
+  do.score <- function(P1,P2){ # function with O(n) complexity with two ind. for loops
+    
+    n1 <- length(unlist(P1[[1]]))
+    n2 <- length(unlist(P2[[1]]))
+    
+    game_res1 <- data.frame(A1P1 = numeric(n1), 
+                           A1P2 = numeric(n1))
+    
+    game_res2 <- data.frame(A2P1 = numeric(n2), 
+                           A2P2 = numeric(n2))
+    
+    for(i in seq_along(P1[[1]])){
+      c1 <- P1[[1]][i]
+      c2 <- P1[[2]][i]
       
       p1_score <- out[c1 + 1, c2 + 1]
       p2_score <- t(out)[c1 + 1, c2 + 1]
       
-      game_res$P1[i] <- p1_score
-      game_res$P2[i] <- p2_score
+      game_res1$A1P1[i] <- p1_score
+      game_res1$A1P2[i] <- p2_score
     }
-     return(game_res)
+    
+    for (i in seq_along(P2[[1]])){
+      c1 <- P2[[1]][i]
+      c2 <- P2[[2]][i]
+      
+      p1_score <- out[c1 + 1, c2 + 1]
+      p2_score <- t(out)[c1 + 1, c2 + 1]
+      
+      game_res2$A2P1[i] <- p1_score
+      game_res2$A2P2[i] <- p2_score
+    }
+     df_res <- data.frame(game_res1,game_res2)
+     results <- colSums(df_res)
   }
   out_game <- do.score(p1,p2)
-  colSums(out_game)
+  
   }
   
   boot.results <- list2DF(replicate(iter, play.game(rounds = rounds,
@@ -357,60 +411,16 @@ test <- comp.alg(c(copy.cat, tit.for.tat),
                  iter = 500, 
                  rounds = 200, 
                  prob = c(.345, .231), 
-                 choice = 0)
+                 choice = 0) |> rename("CC.P1" = "A1P1",
+                                       "CC.P2" = "A1P2",
+                                       "TFT.P1" = "A2P1",
+                                       "TFT.P2" = "A2P2")
 
 head(test)
 ```
 
-### code benchmarking
-
-First, I'll look at the execution time and memory usage of my `comp.alg` function for several algorithms^[The `comp.alg` function is not currently dealing with the `default` argument of the `prober` algorithm.I'm thinking of a way to implement it in a naturally efficient way.]. I'll use the `bench` package to look at these two performance metrics. I'll wrap my code in a function and measure its performance^[look up the `bench::mark()` function to see which metrics are calculated.]
-
-The second step is to use `bench::pres()` to supply my wrapper function with a grid of values to use as iterations. Laslty, I'll visualize the the number of iterations vs. execution time across algorithms. 
-
-```{r benchit, eval = FALSE}
-
- bench.comp.alg <- function(iter){
-     bench::mark(
-         "Copy" = comp.alg(c(copy.cat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P1,
-         "Exact" = comp.alg(c(copy.cat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P2,
-         "tft" = comp.alg(c(tit.for.tat,exact.revenge),iter = iter, rounds = 200, c(.25,.32),choice = 0)$P1,
-         time_unit = "ms", 
-         check = FALSE
-     )
- }
-
-results <- bench::press(
-     iter = c(10,50,100,300,500,700,900,1000),
-     bench.comp.alg(iter)
- )
-
-#> A tibble: 24 × 14
-#>   expression  iter    min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory                   time            gc      
-#>   <bch:expr> <dbl>  <dbl>  <dbl>     <dbl> <bch:byt>    <dbl> <int> <dbl>      <dbl> <list> <list>                   <list>          <list>  
-#>  1 Copy          10   31.3   32.6    30.6      6.51MB     40.8     6     8       196. <NULL> <Rprofmem [4,132 × 3]>   <bench_tm [14]> <tibble>
-#>  2 Exact         10   29.7   30.8    32.2      6.51MB     32.2     8     8       248. <NULL> <Rprofmem [4,131 × 3]>   <bench_tm [16]> <tibble>
-#>  3 tft           10   30.8   32.4    30.8      6.51MB     30.8     7     7       227. <NULL> <Rprofmem [4,131 × 3]>   <bench_tm [14]> <tibble>
-#>  4 Copy          50  207.   222.      4.40    32.55MB     14.7     3    10       681. <NULL> <Rprofmem [20,668 × 3]>  <bench_tm [3]>  <tibble>
-#>  5 Exact         50  258.   262.      3.82    32.55MB     11.5     2     6       524. <NULL> <Rprofmem [20,806 × 3]>  <bench_tm [2]>  <tibble>
- #> 6 tft           50  205.   266.      4.03    32.55MB     10.8     3     8       744. <NULL> <Rprofmem [20,808 × 3]>  <bench_tm [3]>  <tibble>
-#>  7 Copy         100  576.   576.      1.74    65.09MB     12.2     1     7       576. <NULL> <Rprofmem [41,418 × 3]>  <bench_tm [1]>  <tibble>
-#>  8 Exact        100  400.   411.      2.43    65.09MB     14.6     2    12       821. <NULL> <Rprofmem [41,400 × 3]>  <bench_tm [2]>  <tibble>
-#>  9 tft          100  372.   390.      2.57    65.09MB     15.4     2    12       780. <NULL> <Rprofmem [41,461 × 3]>  <bench_tm [2]>  <tibble>
-#> 10 Copy         300 1254.  1254.      0.798  195.27MB     10.4     1    13      1254. <NULL> <Rprofmem [123,916 × 3]> <bench_tm [1]>  <tibble>
-# ℹ 14 more rows
-# ℹ Use `print(n = ...)` to see more rows
-```
-
-Let's now visualize the performance of each algorithm using `ggplot2`.
-
-
-```{r plotit, eval = FALSE}
-#| code-fold: true
-
-library(ggplot2)
-library(showtext)
-
+```{r theme, eval = TRUE, echo = FALSE}
+#|code-fold: true
 # Customize fonts
 font_add_google("Ubuntu","ubu")
 showtext_auto()
@@ -420,51 +430,44 @@ theme_alg <- function(){
   theme_minimal() +
     theme(legend.position = "top",
         legend.title = element_blank(),
-        legend.text = element_text(family = text, size = 18),
+        legend.text = element_text(family = text, size = 15),
         plot.background = element_rect(fill = "#f8f9f9",
                                        color = "NA"),
-        axis.title = element_text(family = text, size = 18,
+        axis.title.x = element_text(family = text, size = 15,
                                   hjust = .5),
-        axis.text = element_text(family = text,size = 16),
+        axis.title.y = element_blank(),
+        axis.text.x = element_text(family = text,size = 13),
+        axis.text.y = element_blank(),
+        plot.title = element_text(family = text, size = 22,
+                                  hjust = .5),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank()
         )
 }
 
 theme_set(theme_alg())
-
-
-ggplot(results,
-       aes(iter,median/1000, col = attr(expression,"description"))) +
-  geom_point(size = 4) +
-  geom_smooth(se = FALSE) +
-  labs(x = "Iterations",
-       y = "Execution Time (s)",
-       colour = "Algorithm") +
-  scale_color_manual(values = iter)
-  
 ```
 
-```{r algimg, echo = FALSE}
-#| lightbox: true
-knitr::include_graphics("img/alg_perf.png")
-```
+### individual algorithm performance
 
-Although all three algorithms show similar execution time, the comparison of the copy.cat algorithm gets significantly demanding after 100 iterations–576 *ms* – compared to 400 and 372 *ms* for the vengeful and the tit–for–tat algorithms. 
+Let's now compare each algorithm's performance based on total points obtained per game. Again, the logic here is the same: bootstrap the mean number of points per game and compare them using the `comp.alg` function which takes two algorithms at once and returns a data frame with four columns, one column for each player for both algorithms.
 
-```{r normalg, eval = FALSE}
+#### average cooperative response
+Computing the average cooperative responses by algorithm after playing 500 games of 200 rounds each should help us understand which algorithm tends to play nice and which ones are more selfish. For the sake of reproducibility, we've set a seed and established an equal, fixed probability of defection and cooperation across algorithms.
+```{r normalg, eval = TRUE}
 #| code-fold: true
-mean_df <- data.frame(mean = c(replicate(500,mean(
-                                sample(copy.cat(200,c(.35,.27),0),
+#| code-summary: Code for algorithm average cooperation
+mean_df <- data.frame(Median = c(replicate(500,median(
+                                sample(copy.cat(200,c(.35,.27),0)$P2,
                                        replace = T))),
-                              replicate(500,mean(
-                                sample(prober(200,c(.35,.27),0,.05),
+                              replicate(500,median(
+                                sample(prober(200,c(.35,.27),0,.05)$P2,
                                        replace = T))),
-                              replicate(500,mean(
-                                sample(tit.for.tat(200,c(.35,.27),0),
+                              replicate(500,median(
+                                sample(tit.for.tat(200,c(.35,.27),0)$P2,
                                        replace = T))),
-                              replicate(500,mean(
-                                sample(exact.revenge(200,c(.35,.27),0),
+                              replicate(500,median(
+                                sample(exact.revenge(200,c(.35,.27),0)$P2,
                                        replace = T)))),
                       kind = factor(rep(
                         c("Copy.Cat", "Prober", "TFT", "Revenge"), 
@@ -477,32 +480,144 @@ clrs <- c(
   "#7C225C",  # MCRN maroon
   "#394DAA"   # MCRN Blue
 )
-ggplot(mean_df, aes(x = mean, fill = kind)) +
-     geom_density(alpha = .6) +
+p0 <- ggplot(mean_df, aes(x = mean, fill = kind)) +
+     geom_density(alpha = .45) +
   ylim(0,25) +
+  labs(x = "Avg. cooperative response") +
   scale_fill_manual(values = clrs) +
   labs(colour = "Algorithm")
 ```
 
 ```{r alfdist, echo = FALSE}
 #| lightbox: true
+#| label: "Average cooperation for 500 games of 200 rounds each"
+#| fig-cap-location: top
+#| fig-cap: "Average cooperative responses"
 knitr::include_graphics("img/alg_dist.png")
 ```
-### individual algorithm performance
+The average cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than any other algorithm except `copy.cat`. 
+```{r permutation, echo = TRUE, eval = TRUE}
+#| code-fold: TRUE
+#| fig-cap-location: top
+#| fig-cap: "Difference in medians"
 
-Let's now compare each algorithm's performance based on total points obtained per game. Again, the logic here is the same: bootstrap the mean number of points per game and compare them using the `comp.alg` function which will take the same algorithm twice
+
+wilcox_gt <- mean_df |> filter(kind == c("TFT","Copy.Cat")) |> 
+  pivot_longer(cols = -kind, names_to = "vars", 
+               values_to = "values") |>
+group_by(vars) |> summarize(
+  Estimate = wilcox.test(values~kind, conf.int = T)$estimate,
+  Sig. = wilcox.test(values~kind, conf.int = T)$p.value 
+  ) |> gt() |> 
+  tab_header(
+    title = md(
+      "*Comparison of Copy.Cat and TFT cooperative responses*")
+    ) |>
+  cols_label(vars = md("**Estimate**"),
+             Estimate = md("**Difference in estimate**"),
+            Sig. = md("**p-value**")) |>
+  cols_align(align = "center") |>
+  opt_table_font(font = google_font("EB Garamond"),
+                 weight = 400,style = "plain", add = TRUE) |>
+  tab_style(style = cell_text(font = google_font("Ubuntu")),
+            locations = cells_body()) |>
+   tab_options(column_labels.font.weight = "bold",
+              row_group.font.weight = "bold") |>
+  data_color(rows = everything(),
+             palette = "#f9f9f9")
+
+wilcox_gt
+```
+Axelrod believed that, on average, “nice” algorithms would perform better than “ mean and deceitful” ones like `exact.revenge` and `prober`, and we can clearly see that our most vengeful algorithm performs poorly on the cooperative front, with a mean cooperation of .0055 per game, about once per game. 
+
+Based on the algorithm's cooperative response we can then visualize and compute the final score distribution (in total points) for each player after 500 games of 200 rounds each. We'll see that the second player typically scores much higher than player 1 by defecting often and without provocation. However, when player 2 chooses to not betray without provocation or imitate the first's player current choices both players end up with higher and approximately equal scores. Because of this willingness to cooperate, according to Axelrod, the nice algorithms tend to be more conducive to cooperation and less prone to conflict.
+```{r vsalg, echo = TRUE, eval = TRUE}
+#| code-fold: true
+#| code-summary: Code for data manipulation & plots
+
+test2 <- comp.alg(c(exact.revenge, prober), 
+                 iter = 500, 
+                 rounds = 200, 
+                 prob = c(.345, .231), 
+                 choice = 0,
+                 default = .10) |> rename("R.P1" = "A1P1",
+                                          "R.P2" = "A1P2",
+                                          "Pr.P1" = "A2P1",
+                                          "Pr.P2" = "A2P2")
+
+perf_df <- cbind(test,test2) |> pivot_longer(cols = everything(), 
+               names_to = c("Algorithm", "Player"),
+               names_pattern = "([^.]+)\\.(P\\d)",
+               values_to = "Score") |>
+  mutate(Algorithm = case_when(
+           Algorithm == "R" ~ "Revenge",
+           Algorithm == "Pr" ~ "Prober",
+           Algorithm == "CC" ~"Copy.Cat",
+           Algorithm == "TFT" ~ "Tit×Tat",
+           TRUE ~Algorithm
+         ),
+         Algorithm = factor(Algorithm),
+         Player = factor(Player)) |>
+  arrange(Algorithm, Player) |>
+  group_by(Algorithm, Player)
+
+str(perf_df)
+
+ p1 <- ggplot(perf_df, aes(Score, fill= Player)) +
+  geom_density(alpha = .45) +
+  labs(title = NULL,
+       x = NULL,
+       y = NULL) + 
+  scale_fill_manual(values = clrs)
+
+ 
+ p2 <- ggplot(perf_df, aes(Score, fill= Algorithm)) +
+  geom_density(alpha = .45) +
+  labs(title = NULL,
+       x = "Score",
+       y = NULL) + 
+  scale_fill_manual(values = clrs) 
+ 
+#> p1/p2
+  
+```
+
+```{r img, echo = FALSE}
+#| lightbox: true
+knitr::include_graphics("img/alg_perf2.png")
+```
+These two plots show the performance of both players and the four algorithms, and we can see that the most extreme results are obtained using the `exact.revenge` algorithm. The density curves for this algorithm are touching the extremes on the left and right, showing that one player will always under perform while the other one, typically the second one, will outperform its opponent. This algorithms is one of the most unreliable ones because player 1 is not able to confidently predict the next moves. Regardless of his choice, after the first betrayal, player 2 will never cooperate again. To my surprise, the `prober` algorithm returned a more favorable score for player 2 than the `tit.for.tat` or the `copy.cat` algorithm; however, the nice algorithms always favored both players, not just player 2. 
+```{r gt, echo = TRUE, eval = TRUE}
+#| code-fold: true
+
+ sumperf_gt <- perf_df |> summarise(Score = mean(Score)) |>
+  arrange(Algorithm) |>
+  as_tibble() |> gt() |> 
+  tab_header(title = md("*Average Player Score by Algorithm*")) |>
+  cols_label(Algorithm = md("**Algorithm**"),
+             Player = md("**Player**"),
+            Score = md("**Score**")) |>
+  opt_table_font(font = google_font("EB Garamond"),
+                 weight = 400,style = "plain", add = TRUE) |>
+  tab_style(style = cell_text(font = google_font("Ubuntu")),
+            locations = cells_body()) |>
+   tab_options(column_labels.font.weight = "bold",
+              row_group.font.weight = "bold") |>
+  data_color(rows = everything(),
+             palette = "#f9f9f9") |>
+  opt_interactive(use_compact_mode = TRUE, use_highlight = TRUE)
+ 
+ sumperf_gt
+```
+Nevertheless, regardless of which algorithm we used, player 1's score is, on average, lower than player 2, even if the nice algorithms tend to equalize the scores and may result in less conflict as Axelrod described. 
 
 ### practical implications
-Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict. 
 
-Here are the rules for strategic cooperation:  
+Among all the algorithms submitted to Axelrod, the top performer was Tit–for–tat because it was “nice”. Algorithms that always betrayed or were “sneaky” were more likely to end up in a state of conflict. Our custom algorithms also showed this behavior, both players thrived when cooperation was a priority for one of the players. In our case, the `tit.for.tat` algorithm outperformed others in this regard even if it didn't achieve the maximum number of points like the `exact.revenge` algorithm. 
 
-* Avoid unnecessary conflict by cooperating as long as your opponent does. 
-* If your opponent betrays you without provocation— respond in kind…once.
-* Then forgive the betrayal, and cooperate again.
-* Be clear and predictable so your opponent knows how you act and can plan accordingly. 
+Here are the rules for strategic cooperation:
 
-
-
-
-
+-   Avoid unnecessary conflict by cooperating as long as your opponent does.
+-   If your opponent betrays you without provocation— respond in kind…once.
+-   Then forgive the betrayal, and cooperate again.
+-   Be clear and predictable so your opponent knows how you act and can plan accordingly.

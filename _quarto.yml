@@ -110,7 +110,7 @@ format:
       gutter-width: 2.0em
     code-link: true
     anchor-sections: true
-    fig-cap-location: margin
+    fig-cap-location: top
     reference-location: margin
     footnotes-hover: true
     highlight-style: a11y

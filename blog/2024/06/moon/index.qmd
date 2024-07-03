@@ -182,7 +182,7 @@ omega <- function(k,t){
 }
 ```
 
-Now it's time to compe up with a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$, which also requires $T$. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we'll try something different inside the main function.
+Now it's time to come up with a function fo each planetary argument (14 total). Most of these argument take $k$ with one exception $A_{1}$, which also requires $T$. The output of the planetary arguments are expressed in degrees and may have to be reduced to 0–360 and converted to radians. Since our main function does use every planetary argument to predict the lunar phases it may be better to provide the arguments as functions instead of vectors. if doing this is too torublesome, we'll try something different inside the main function.
 
 ```{r plargs, echo = TRUE}
 #| code-fold: true
@@ -801,7 +801,7 @@ knitr::kable(err_sum, "simple", align = "cc",
              caption = "Mean error of time difference (in mins) between predicted and actual dates")
 ```
 
-Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present.
+Visualizing it may provide a different perspective on the time discrepancy between the actual and the predicted dates of the lunar phases. We can see how the algorithm is more accurate as we reach the present and loses accuracy as we move away from it. 
 
 ```{r plotit, echo = FALSE}
 #| lightbox: true
