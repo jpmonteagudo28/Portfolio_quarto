@@ -3143,7 +3143,7 @@ font-style: inherit;">#&gt; 6   432   432    485    485</span></span></code></pr
 <section id="average-cooperative-response" class="level4 page-columns page-full"><h4 class="anchored" data-anchor-id="average-cooperative-response">average cooperative response</h4>
 <p>Computing the average cooperative responses by algorithm after playing 500 games of 200 rounds each should help us understand which algorithm tends to play nice and which ones are more selfish. For the sake of reproducibility, we’ve set a seed and established an equal, fixed probability of defection and cooperation across algorithms.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Code for algorithm average cooperation</summary><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
+<details class="code-fold"><summary>Code for algorithm median cooperation</summary><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">mean_df</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -3558,7 +3558,7 @@ font-style: inherit;">)</span></span></code></pre></div>
 </div>
 </div>
 <p>The cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than the vengeful and the prober algorithms, but just as much as <code>copy.cat</code><sup>5</sup>.</p>
-<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;I used the Wilcoxon rank sum test to compute the difference in medians and check if the algorithm distributions are stochastically equivalent. It’s not clear whether the <code>prober</code> algorithm is equivalent to <code>tit.for.tat</code>, but the test shows a statistically significant difference in the algorithms’ average cooperative responses.</p></div></div><div class="cell fig-cap-location-top" data-layout-align="center">
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;I used the Wilcoxon rank sum test to compute the difference in medians and check if the algorithm distributions are stochastically equivalent. It’s not clear whether the <code>prober</code> algorithm is equivalent to <code>tit.for.tat</code>, but the test shows a statistically significant difference in the algorithms’ median cooperative responses.</p></div></div><div class="cell fig-cap-location-top" data-layout-align="center">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb7" data-cap-location="top" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
 <span><span class="va" style="color: #111111;
 background-color: null;

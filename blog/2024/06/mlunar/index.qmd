@@ -1,0 +1,69 @@
+---
+title: "machine learning & lunar phases"
+date: now
+description: "a modern algorithm"
+format:
+  html:
+    css: styles.css
+    code-fold: false
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: false
+resources:
+  - "lunar17_20.txt"
+#doi: 
+citation: true
+draft: true
+---
+```{r setup, include = FALSE}
+library(methods)
+library(here)
+source(here::here("06","mlunar","lunar.R"))
+set.seed(2899)
+
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE, 
+                      cache = TRUE, comment = "#>")
+
+
+options(digits = 9, 
+        width = 300)
+
+options(
+  rlang_trace_top_env = rlang::current_env(),
+  rlang__backtrace_on_error = "none")
+```
+
+
+## using ml to predict lunar phases
+
+https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015GL067342
+https://www.kaggle.com/code/tonivitali/impact-of-the-moon-on-weather-11-22-python/notebook
+
+
+Can we predict any lunar phase using machine learning methods instead of astronomical algorithms?
+Does the Moon influence rainfall or cloud formation?
+Data that we might need:
+
+* Date (the specific date of the observation)
+* Lunar Phase (new moon, first quarter, full moon, last quarter)
+* Synodic Month (the time between successive new moons, approximately 29.53 days)
+* Angular Distance (angle between the Sun and Moon as seen from Earth)
+* Sun and Moon's Right Ascension and Declination (their positions in the sky)
+* Eccentricity of the Moon's orbit
+
+I'll have to use algorithms to calculate most of these parameters
+
+Possible models to use:
+* Time Series Models
+  * ARIMA
+  * SARIMA
+  
+* Classification models
+  * Decision Trees
+  * Random Forests
+  * Neural Networks
+  
+* Regression models
+  * logistic regression

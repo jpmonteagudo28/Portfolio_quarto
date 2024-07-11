@@ -462,7 +462,7 @@ Let's now compare each algorithm's performance based on total points obtained pe
 Computing the average cooperative responses by algorithm after playing 500 games of 200 rounds each should help us understand which algorithm tends to play nice and which ones are more selfish. For the sake of reproducibility, we've set a seed and established an equal, fixed probability of defection and cooperation across algorithms.
 ```{r normalg, eval = TRUE}
 #| code-fold: true
-#| code-summary: Code for algorithm average cooperation
+#| code-summary: Code for algorithm median cooperation
 mean_df <- data.frame(Median = c(replicate(500,median(
                                 sample(copy.cat(200,c(.35,.27),0)$P2,
                                        replace = T))),
@@ -496,12 +496,12 @@ p0 <- ggplot(mean_df, aes(x = mean, fill = kind)) +
 
 ```{r alfdist, echo = FALSE}
 #| lightbox: true
-#| label: "Average cooperation for 500 games of 200 rounds each"
+#| label: "Median cooperation for 500 games of 200 rounds each"
 #| fig-cap-location: top
 #| fig-cap: "Average cooperative responses"
 knitr::include_graphics("img/alg_dist.png")
 ```
-The cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than the vengeful and the prober algorithms, but just as much as `copy.cat`^[I used the Wilcoxon rank sum test to compute the difference in medians and check if the algorithm distributions are stochastically equivalent. It's not clear whether the `prober` algorithm is equivalent to `tit.for.tat`, but the test shows a statistically significant difference in the algorithms' average cooperative responses.]. 
+The cooperative response plot shows that, on average, the tit–for–tat algorithm cooperates more often than the vengeful and the prober algorithms, but just as much as `copy.cat`^[I used the Wilcoxon rank sum test to compute the difference in medians and check if the algorithm distributions are stochastically equivalent. It's not clear whether the `prober` algorithm is equivalent to `tit.for.tat`, but the test shows a statistically significant difference in the algorithms' median cooperative responses.]. 
 ```{r permutation, echo = TRUE, eval = TRUE}
 #| code-fold: TRUE
 #| fig-cap-location: top

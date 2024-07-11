@@ -1,0 +1,15 @@
+{
+  "hash": "a9b3c7963a9642ad14f174c6b101cd29",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"machine learning & lunar phases\"\ndate: now\ndescription: \"a modern algorithm\"\nformat:\n  html:\n    css: styles.css\n    code-fold: false\n    code-tools: true\n    code-overflow: wrap\n    code-line-numbers: false\nresources:\n  - \"lunar17_20.txt\"\n#doi: \ncitation: true\ndraft: true\n---\n\n\n\n\n\n\n\n\n## using ml to predict lunar phases\n\nhttps://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2015GL067342\nhttps://www.kaggle.com/code/tonivitali/impact-of-the-moon-on-weather-11-22-python/notebook\n\n\nCan we predict any lunar phase using machine learning methods instead of astronomical algorithms?\nDoes the Moon influence rainfall or cloud formation?\nData that we might need:\n\n* Date (the specific date of the observation)\n* Lunar Phase (new moon, first quarter, full moon, last quarter)\n* Synodic Month (the time between successive new moons, approximately 29.53 days)\n* Angular Distance (angle between the Sun and Moon as seen from Earth)\n* Sun and Moon's Right Ascension and Declination (their positions in the sky)\n* Eccentricity of the Moon's orbit\n\nI'll have to use algorithms to calculate most of these parameters\n\nPossible models to use:\n* Time Series Models\n  * ARIMA\n  * SARIMA\n  \n* Classification models\n  * Decision Trees\n  * Random Forests\n  * Neural Networks\n  \n* Regression models\n  * logistic regression",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
