@@ -19,6 +19,7 @@ draft: true
 library(methods)
 library(here)
 
+
 set.seed(2899)
 
 knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
@@ -41,10 +42,13 @@ Most of the headings are taken from the verses of Shakespeare's [Sonnet 15](http
 :::
 
 Population pyramids give us a clear picture of the growth and “health” of a country, its states down to its counties. I came across the pyramids in one of my geography classes while living in Cuba. I thought they were pretty cool because I was obsessed with history^[especially Ancient Egypt, the Bible, and the Roman Empire.], thought they were connected to Ancient Egypt, and I could actually see how human movement into and out of existence affected my society and the economy in a very real sense. If the person who sold rice, sugar, flour, meat, or eggs, passed away, well now you have to go without it or find someone else who, taking advantage of the new vacancy, will jack up the prices. My generation saw a considerable decline in the number of children. We just simply didn't have the means to feed and keep multiple kids. Senior citizens, likewise, weren't many because we lacked the resources to effectively deal with naturally-occurring diseases and ailments in the elderly population. Most of my grandparents lived to be 90+, but they were the exception. I could clearly see all of this in the population pyramid of my generation.
-```{r theme, echo = FALSE, eval = TRUE}
+```{r theme, echo = FALSE}
+#| code-fold: true
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(patchwork)
+library(forcats)
 library(scales)
 library(systemfonts)
 library(extrafont)
@@ -63,10 +67,11 @@ loadfonts(device = "win")
 theme_demo <- function(){
   theme_void() +
     theme(
-        plot.background = element_rect(fill = "white",
+        plot.background = element_rect(fill = "#f8f9f9",
                                        color = "NA"),
-        axis.text = element_text(family = "Franklin Gothic ATF Regular",
-                                   size = 12),
+        axis.text.x = element_text(family = "Franklin Gothic Medium",
+                                   size = 13),
+        axis.text.y = element_blank(),
         panel.grid.major.x = element_line(colour = "gray80", 
                                         linewidth = .15, 
                                         linetype = "solid")
@@ -75,9 +80,90 @@ theme_demo <- function(){
 
 theme_set(theme_demo())
 ```
+
+
+
+```{r CU_pyr, echo = TRUE, eval = FALSE}
+#| code-fold: true
+
+cu_path <- here::here("blog/2024/07/pyramids/data/cuba_95.txt")
+cuba_95 <- read.delim(cu_path, sep = "")|>
+  pivot_longer(cols = c(M,F),
+                                      names_to = "gender",
+                                      values_to = "population") |>
+  mutate(gender = case_when(gender == "M" ~ "Male",
+                            gender == "F" ~ "Female"),
+         total = sum(population),
+         percent = population/total,
+         Age = fct_inorder(Age)) |>
+  mutate(percent = if_else(gender == "Female", percent, -percent)) |>
+  group_by(gender)
+
+cu_male95 <- cuba_95 |> filter(gender == "Male") |>
+  ggplot(aes(percent,Age)) +
+  geom_col(fill = va_clrs[1]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = -0.05,
+           y = 17,
+           label = "Men",
+           fill = va_clrs[3],
+           color = "white",
+           label.size = 0,
+           label.padding = unit(0.3,"lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(-0.06,0)
+  )
+
+cu_female95 <- cuba_95 |> filter(gender == "Female") |>
+  ggplot(aes(percent,Age)) +
+  geom_col(fill = va_clrs[3]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = 0.05,
+           y = 17,
+           label = "Women",
+           fill = va_clrs[5],
+           color = "gray30",
+           label.size = 0,
+           label.padding = unit(0.3, "lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(0,0.06)
+  )
+
+age_labels <- tibble( age = c( "0-4","5-9","10-14",
+      "15-19", "20-24","25-29",
+      "30-34","35-39","40-44",
+      "45-49", "50-54", "55-59",
+      "60-64","65-69", "70-74",
+      "75-79","80-84", "85-89",
+      "90+" )) |>
+  mutate(age = fct_inorder(age)) 
+
+age_plot <- age_labels |>
+  ggplot(aes(x = 1,y = age, label = age)) +
+  geom_text(family = "Franklin Gothic Medium", size = 4.5) +
+  theme_void()
+
+cu_male95 +
+  age_plot +
+cu_female95 +
+  plot_layout(widths = c(7.5,1,7.5))
+  
+```
+
+```{r knitit, echo = FALSE}
+#|lightbox: true
+knitr::include_graphics("img/cu95_pop.png")
+```
+
+
 ```{r cuba, echo = TRUE, eval = FALSE}
-path <- here::here("blog","2024","07","pyramids","data",
-                                        "un_cuba.txt")
+#| code-fold: true
+
+path <- here::here("blog/2024/07/pyramids/data/un_cuba.txt")
 cuba_df <- read.delim(path, sep = "") |>
   rename(values = Value) |>
   mutate(values = as.double(format(values, scientific = FALSE)),
@@ -95,23 +181,138 @@ cuba_df <- read.delim(path, sep = "") |>
          -EstimateType,-EstimateMethodId,
          -EstimateMethod)
 ```
+
+
+
+
 ```{r data, echo = TRUE, eval = FALSE}
-base_path <- here::here("blog","2024","07","pyramids","data","Va_pop_demo_data.txt")
+#| code-fold: true
+
+base_path <- here::here("blog/2024/07/pyramids/data/Va_pop_demo_data.txt")
 va_demo_dat <- read.delim(base_path, sep = "\t")
 va_demo_dat <- va_demo_dat |> 
   mutate(age_range = paste(Starting.Age, Ending.Age, 
                             sep = "-")) |>
   mutate(gender = as.factor(Gender))|>
   group_by(Year,gender) |>
-  mutate(percent = Total_Population / sum(Total_Population) * 100) |>
+  mutate(percent = Total_Population / sum(Total_Population)) |>
+  mutate(percent = if_else(gender == "Female", percent, -percent))|>
   select(-Starting.Age, -Ending.Age, -ID_Gender,
          -ID_Geography,-Slug_Geography, -Gender)
 
 glimpse(va_demo_dat)
+
+va_men_2022 <- va_demo_dat |>
+  filter(Year == 2022) |>
+  filter(gender == "Male") |>
+  ggplot(aes(percent,age_range)) +
+  geom_col(fill = va_clrs[3]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = -0.05,
+           y = 17,
+           label = "Men",
+           fill = va_clrs[3],
+           color = "white",
+           label.size = 0,
+           label.padding = unit(0.3,"lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(-0.08,0)
+  )
+  
+
+va_women_2022 <- va_demo_dat |>
+  filter(Year == 2022) |>
+  filter(gender == "Female") |>
+  ggplot(aes(percent,age_range)) +
+  geom_col(fill = va_clrs[5]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = 0.05,
+           y = 17,
+           label = "Women",
+           fill = va_clrs[6],
+           color = "gray30",
+           label.size = 0,
+           label.padding = unit(0.3, "lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(0,0.08)
+  )
+
+va_men_2022 +
+  age_plot +
+  va_women_2022 +
+  plot_layout(widths = c(7.5,1,7.5))
 ```
-```{r plot1, echo = TRUE, eval= FALSE}
-va_dat_2022 <- va_demo_dat |> filter(Year == 2022) |>
-  ggplot(aes(percent,age_range, fill = gender)) +
-  geom_col() +
-  scale_fill_manual(values = va_clrs[c(3,5)])
+
+```{r, knitva, echo = FALSE}
+#| lightbox: true
+knitr::include_graphics("img/va22_pop.png")
+```
+
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-fold: true
+
+cu_22 <- here::here("blog/2024/07/pyramids/data/cuba_22.txt")
+cu_22 <- read.delim(cu_22,sep = "") 
+cuba_22 <- cu_22 |>
+  pivot_longer(cols = c(M,F),
+                                      names_to = "gender",
+                                      values_to = "population") |>
+  mutate(gender = case_when(gender == "M" ~ "Male",
+                            gender == "F" ~ "Female"),
+         total = sum(population),
+         percent = population/total,
+         Age = fct_inorder(Age)) |>
+  mutate(percent = if_else(gender == "Female", percent, -percent)) |>
+  group_by(gender)
+
+cu_male22 <- cuba_22 |> filter(gender == "Male") |>
+  ggplot(aes(percent,Age)) +
+  geom_col(fill = va_clrs[1]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = -0.05,
+           y = 17,
+           label = "Men",
+           fill = va_clrs[3],
+           color = "white",
+           label.size = 0,
+           label.padding = unit(0.3,"lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(-0.06,0)
+  )
+
+cu_female22 <- cuba_22 |> filter(gender == "Female") |>
+  ggplot(aes(percent,Age)) +
+  geom_col(fill = va_clrs[3]) +
+  annotate(geom = "label",
+           family = "Franklin Gothic Medium",
+           x = 0.05,
+           y = 17,
+           label = "Women",
+           fill = va_clrs[5],
+           color = "gray30",
+           label.size = 0,
+           label.padding = unit(0.3, "lines")) +
+  scale_x_continuous(
+    labels = function(x) label_percent(accuracy = 1)(abs(x)),
+    limits = c(0,0.06)
+  )
+
+cu_male22 +
+  age_plot +
+cu_female22 +
+  plot_layout(widths = c(7.5,1,7.5)) 
+```
+
+
+
+```{r knit2, echo = FALSE}
+#| lightbox: true
+knitr::include_graphics("img/cu22_pop.png")
 ```
