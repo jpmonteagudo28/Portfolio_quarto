@@ -2,7 +2,7 @@
 title: "JP Monteagudo"
 pagetitle: "JP Monteagudo"
 subtitle: "Aspiring Epidemiologist,<br> L&D Specialist"
-image: /files/circle.png
+image: /files/combo.png
 title-block-banner: "#112540"
 format:
   html:
