@@ -1,0 +1,15 @@
+{
+  "hash": "ce4eb364d769a59fa9ebcad4f7daa13a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"efficient code with parallel(ly)\"\ndate: now\ndescription: \"parallel processing in r\"\nformat:\n  html:\n    css: styles.css\n    code-fold: false\n    code-tools: true\n    code-overflow: wrap\n    code-line-numbers: false\n#doi: \ncitation: true\ndraft: true\n---\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

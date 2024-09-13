@@ -11,6 +11,9 @@ format:
     code-line-numbers: false
 resources:
   - "VA_pop_demo_data.txt"
+  - "cuba_95.txt"
+  - "cuba_22.txt"
+  - "un_cuba.txt"
 #doi: 
 citation: true
 draft: true
@@ -41,9 +44,9 @@ options(
 Most of the headings are taken from the verses of Shakespeare's [Sonnet 15](https://www.poetryfoundation.org/poems/45086/sonnet-15-when-i-consider-everything-that-grows)
 :::
 
-Population pyramids give us a clear picture of the growth and “health” of a country, its states down to its counties. I came across the pyramids in one of my geography classes while living in Cuba. I thought they were pretty cool because I was obsessed with history^[especially Ancient Egypt, the Bible, and the Roman Empire.], thought they were connected to Ancient Egypt, and I could actually see how human movement into and out of existence affected my society and the economy in a very real sense. If the person who sold rice, sugar, flour, meat, or eggs, passed away, well now you have to go without it or find someone else who, taking advantage of the new vacancy, will jack up the prices. My generation saw a considerable decline in the number of children. We just simply didn't have the means to feed and keep multiple kids. Senior citizens, likewise, weren't many because we lacked the resources to effectively deal with naturally-occurring diseases and ailments in the elderly population. Most of my grandparents lived to be 90+, but they were the exception. I could clearly see all of this in the population pyramid of my generation.
+Population pyramids paint a picture of the growth and “health” of a country, its states down to its counties. I came across the pyramids in one of my geography classes while living in Cuba. I thought they were pretty cool because I was obsessed with history^[especially Ancient Egypt, the Bible, and the Roman Empire.], thought they were connected to Ancient Egypt, and I could actually see how human movement into and out of existence affected my society and the economy in a very real sense. If the person who sold rice, sugar, flour, meat, or eggs, passed away, well now you have to go without it or find someone else who, taking advantage of the new vacancy, will jack up the prices. My generation saw a considerable decline in the number of children. We just simply didn't have the means to feed and keep multiple kids. Senior citizens, likewise, weren't many because we lacked the resources to effectively deal with naturally-occurring diseases and ailments in the elderly population. Most of my grandparents lived to be 90+, but they were the exception. I could clearly see all of this in the population pyramid of my generation.
 ```{r theme, echo = FALSE}
-#| code-fold: true
+
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -83,10 +86,10 @@ theme_set(theme_demo())
 
 
 
-```{r CU_pyr, echo = TRUE, eval = FALSE}
+```{r cu_pyr, echo = TRUE, eval = FALSE}
 #| code-fold: true
 
-cu_path <- here::here("blog/2024/07/pyramids/data/cuba_95.txt")
+cu_path <- here::here("data/cuba_95.txt")
 cuba_95 <- read.delim(cu_path, sep = "")|>
   pivot_longer(cols = c(M,F),
                                       names_to = "gender",
@@ -163,7 +166,7 @@ knitr::include_graphics("img/cu95_pop.png")
 ```{r cuba, echo = TRUE, eval = FALSE}
 #| code-fold: true
 
-path <- here::here("blog/2024/07/pyramids/data/un_cuba.txt")
+path <- here::here("data/un_cuba.txt")
 cuba_df <- read.delim(path, sep = "") |>
   rename(values = Value) |>
   mutate(values = as.double(format(values, scientific = FALSE)),
@@ -188,7 +191,7 @@ cuba_df <- read.delim(path, sep = "") |>
 ```{r data, echo = TRUE, eval = FALSE}
 #| code-fold: true
 
-base_path <- here::here("blog/2024/07/pyramids/data/Va_pop_demo_data.txt")
+base_path <- here::here("data/Va_pop_demo_data.txt")
 va_demo_dat <- read.delim(base_path, sep = "\t")
 va_demo_dat <- va_demo_dat |> 
   mutate(age_range = paste(Starting.Age, Ending.Age, 
@@ -247,7 +250,7 @@ va_men_2022 +
   plot_layout(widths = c(7.5,1,7.5))
 ```
 
-```{r, knitva, echo = FALSE}
+```{r, knit_va, echo = FALSE}
 #| lightbox: true
 knitr::include_graphics("img/va22_pop.png")
 ```
@@ -256,7 +259,7 @@ knitr::include_graphics("img/va22_pop.png")
 ```{r, echo = TRUE, eval = FALSE}
 #| code-fold: true
 
-cu_22 <- here::here("blog/2024/07/pyramids/data/cuba_22.txt")
+cu_22 <- here::here("data/cuba_22.txt")
 cu_22 <- read.delim(cu_22,sep = "") 
 cuba_22 <- cu_22 |>
   pivot_longer(cols = c(M,F),

@@ -61,7 +61,7 @@ deg2min <- function(deg){
   return(format_deg)
 }
 
-#> Conver to gregorian date
+#> Convert to gregorian date
 #> @params: date in julian ephemeris format
 to.gregorian <- function(jde){
   jde <- jde + 0.5
