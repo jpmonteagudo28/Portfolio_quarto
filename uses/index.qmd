@@ -1,6 +1,6 @@
 ---
 title: What I use
-date: 2024-04-03
+date: 2024-09-16
 description: Some projects, new learning experiences and home-life adventures
 title-block-banner: "#A52C60"
 published-title: Last updated

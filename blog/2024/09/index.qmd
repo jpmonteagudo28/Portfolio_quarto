@@ -1,0 +1,203 @@
+---
+title: "bare–bones linear regression"
+date: now
+description: "custom lm implementation"
+format:
+  html:
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: false
+#doi: 
+citation: true
+draft: true
+---
+
+```{r setup, include = FALSE}
+library(methods)
+library(here)
+
+
+set.seed(2899)
+
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE, 
+                      cache = TRUE, comment = "#>",
+                      autodep = TRUE)
+
+
+options(digits = 3,
+        scipen = 999,
+        width = 300)
+
+options(
+  rlang_trace_top_env = rlang::current_env(),
+  rlang__backtrace_on_error = "none")
+```
+
+```{r theme, echo = FALSE}
+library(showtext)
+library(ggplot2)
+#> Set the font, color codes, and plot themes for the chart
+font_add_google("Merriweather Sans","san")
+font_add_google("Montserrat", "monse")
+showtext_auto()
+
+title <- "monse"
+text <- "san"
+
+happy_clrs <- c(
+  "#008FF8",
+  "#B6AA0D", 
+  "#E2C2A2", 
+  "#E23B0E", 
+  "#F2C621", 
+  "#196689"
+)
+
+
+theme_happy <- function(){
+  theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "#f1f2f3",
+                                       color = "NA"),
+        plot.title = element_text(family = title,size = 24,
+                                  hjust = .5),
+        axis.title = element_text(family = title, size = 18,
+                                  hjust = .5),
+      axis.title.y = element_text(margin = margin(r = 15)),
+        axis.text = element_text(family = text,size = 16),
+        panel.grid.major = element_line(colour = "#f1f2f3", 
+                                        linewidth = .15, 
+                                        linetype = "solid"),
+        panel.grid.minor = element_blank()
+        )
+}
+
+theme_set(theme_happy())
+```
+
+## the plan
+
+Implementing a linear regression algorithm from scratch in R is an excellent way to gain a deeper understanding of both the statistical concepts behind regression and the computational methods used to perform it. The goal is to walk through each step required to build a simple linear regression model without relying on any external packages or built-in functions like `lm`😅. We'll look at the mathematical foundations, step-by-step implementation in R, and ways to evaluate the model.
+
+## how to think about glm
+
+#### a matrix
+
+To more easily understand and interpreting regression methods, think of a set of data points with $n$ number of variables as matrices in the following form:
+
+```{r concept-matrix, echo = FALSE}
+#|fig-cap: "Image taken from [here](https://www.tcd.ie/Economics/assets/pdf/SER/2007/Colm_Friel.pdf)"
+#|cap-location: margin
+knitr::include_graphics("img/matrix.png",
+                        dpi = 300)
+```
+
+where matrix $X$ contains $n$ columns for $m$ number of variables, and for each point $(x,y)$ we have one corresponding $\beta$ coefficient and error term $\epsilon$.
+
+#### a vector in 2d space
+
+Additionally, you can think of each column in the data as geometric vector, where each variable is represented by a spatial vector. Its length describes its variability[^1] and the angle[^2] between two vectors–or variables– represents the association between them.
+
+[^1]: squared length of the vector is the sum of squares associated with the variable, $|y|^2 = SS_{y}$
+
+[^2]: $r_{xy} = corr(x_{i},y_{j}) = cos\angle(x_{i},y_{j})$
+
+A linear combination of two variables is then shown by their vector sum. For example, $x_{1} + 2x_{2}$ is represented by:
+
+```{r vector-sum, echo = FALSE, eval = FALSE}
+par(family = "serif")
+
+data(mtcars)
+# Standardize magnitude for horsepower (hp) and weight (wt)
+hp <- mtcars$hp/max(mtcars$hp)
+wt <- mtcars$wt/max(mtcars$wt)
+
+scaled_x2 <- 2*wt
+sum_vector <- hp + scaled_x2
+
+# Create an empty plot
+plot(0, 0, xlim = c(0, 2), ylim = c(0, 2), type = "n", xlab = "", ylab = "",
+     main = expression(paste(hp, " + 2", wt)),
+     bty = "n", axes = TRUE)
+
+grid(col = "#f1f2f3")
+
+arrows(0, 0, hp[1], hp[2], col = happy_clrs[3], lwd = 2)    # vector x1
+text(hp[1], hp[2], expression(hp), pos = 3) 
+
+arrows(0, 0, wt[1], wt[2], col = happy_clrs[6], lwd = 2)  # vector x2
+text(wt[1], wt[2], expression(wt), pos = 3) # label for x2
+
+# Plot the vector sum
+arrows(0, 0, sum_vector[1], sum_vector[2], col = happy_clrs[2], lwd = 2) # vector sum
+text(sum_vector[1], sum_vector[2], expression(x[1] + 2 * x[2]), pos = 3)
+```
+
+The resulting vector will represent the properties of the new variable, its variability and correlation to others.
+
+```{r vectors, echo = TRUE, eval = TRUE}
+#| code-fold: true
+
+data(mtcars)
+
+# Standardize magnitude for horsepower (hp) and weight (wt)
+mtcars$hp_norm <- mtcars$hp/max(mtcars$hp)
+mtcars$wt_norm <- mtcars$wt/max(mtcars$wt)
+
+# Create a data farme with start and end point vectors
+vectors <- data.frame(
+  x1 = mtcars$hp_norm,
+  y1 = mtcars$wt_norm,
+  car = rownames(mtcars)
+)
+
+vector_plot <- ggplot(vectors) +
+  geom_segment(aes(x = 0,y = 0,
+                   xend = x1, yend = y1),
+  arrow = arrow(length = unit(0.15,"cm")),
+  linewidth = .5, color = happy_clrs[6]) +
+  geom_text(aes(x = jitter(x1, amount = 0.1), y = jitter(y1, amount = 0.1), 
+                label = car),
+            hjust = 0.1, vjust = .5,
+            size = 6, color = happy_clrs[4],
+            check_overlap = TRUE) +
+  xlim(0,1.5) +
+  ylim(0,1.5) +
+  coord_fixed() +
+  theme_happy() +
+    labs(title = "Car Horsepower(hp) vs. Weight(wt)",
+       x = NULL,
+       y = NULL)
+
+# ggsave("img/vectors.png", vector_plot, width = 6, height = 4.5)
+
+knitr::include_graphics("img/vectors.png")
+```
+
+## the general linear model
+
+The GLM is a method by which one outcome variable is represented by a combination of variables $X_{n}$. In simple linear regression, the **linear** relationship between the dependent variable $y$ and the independent variable $x$ is modeled as:
+
+$$
+y = \beta_{0} + \beta_{1}x + \epsilon 
+$$
+
+where:\
+$\beta_{0}$ represents the $y$-intercept,\
+$\beta_{1}$ represents the slope of the regression line, and\
+$\epsilon$ is the error term, representing the difference between the observed and predicted values
+
+### multiple linear regression
+
+In multiple linear regression, the model extends to accommodate more than two variables.
+
+$$
+y = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + ...\beta_{n}x_{n} + \epsilon,
+$$
+
+where $n$ is the number of variables.

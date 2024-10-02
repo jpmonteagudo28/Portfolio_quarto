@@ -25,10 +25,14 @@ library(here)
 
 set.seed(2899)
 
-knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
-                      fig.width = 5.5, fig.height = (5.5 * 0.618),
-                      out.width = "90%", collapse = TRUE, 
-                      cache = TRUE, comment = "#>")
+knitr::opts_chunk$set(fig.align = "center", 
+                      fig.retina = 3,
+                      fig.width = 5.5, 
+                      fig.height = (5.5 * 0.618),
+                      out.width = "90%", 
+                      collapse = TRUE, 
+                      cache = TRUE, 
+                      comment = "#|")
 
 
 options(digits = 3,
@@ -46,7 +50,6 @@ Most of the headings are taken from the verses of Shakespeare's [Sonnet 15](http
 
 Population pyramids paint a picture of the growth and “health” of a country, its states down to its counties. I came across the pyramids in one of my geography classes while living in Cuba. I thought they were pretty cool because I was obsessed with history^[especially Ancient Egypt, the Bible, and the Roman Empire.], thought they were connected to Ancient Egypt, and I could actually see how human movement into and out of existence affected my society and the economy in a very real sense. If the person who sold rice, sugar, flour, meat, or eggs, passed away, well now you have to go without it or find someone else who, taking advantage of the new vacancy, will jack up the prices. My generation saw a considerable decline in the number of children. We just simply didn't have the means to feed and keep multiple kids. Senior citizens, likewise, weren't many because we lacked the resources to effectively deal with naturally-occurring diseases and ailments in the elderly population. Most of my grandparents lived to be 90+, but they were the exception. I could clearly see all of this in the population pyramid of my generation.
 ```{r theme, echo = FALSE}
-
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -81,7 +84,7 @@ theme_demo <- function(){
         )
 }
 
-theme_set(theme_demo())
+ggplot2::theme_set(theme_demo())
 ```
 
 
@@ -163,7 +166,7 @@ knitr::include_graphics("img/cu95_pop.png")
 ```
 
 
-```{r cuba, echo = TRUE, eval = FALSE}
+```{r cuba, echo = FALSE, eval = FALSE}
 #| code-fold: true
 
 path <- here::here("data/un_cuba.txt")
@@ -254,6 +257,7 @@ va_men_2022 +
 #| lightbox: true
 knitr::include_graphics("img/va22_pop.png")
 ```
+
 
 
 ```{r, echo = TRUE, eval = FALSE}

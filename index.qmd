@@ -10,7 +10,7 @@ format:
     css: /html/styles.css
 about:
   template: solana
-  image-width: 28em
+  image-width: 24em
   id: hero-heading
 ---
 
