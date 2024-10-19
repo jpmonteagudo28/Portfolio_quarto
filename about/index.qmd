@@ -1,5 +1,5 @@
 ---
-title: "jp monteagudo"
+title: "JP Monteagudo"
 subtitle: Aspiring Epidemiologist,<br> L&D Specialist 
 image: /files/profile_2024.png
 about:
@@ -28,7 +28,7 @@ format:
     
 ---
 ::: {#hero-heading}
-<div class="h1"> Hello there,</div>
+<div class="h1"> hello there,</div>
 
 Thanks for stopping by!
 

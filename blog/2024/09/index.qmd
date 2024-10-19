@@ -125,7 +125,9 @@ plot(0, 0, xlim = c(0, 2), ylim = c(0, 2), type = "n", xlab = "", ylab = "",
      main = expression(paste(hp, " + 2", wt)),
      bty = "n", axes = TRUE)
 
-grid(col = "#f1f2f3")
+grid(col = "gray80")
+axis(1,tcl = -0.01,lwd = 0.5)
+axis(2,tcl = -0.01, lwd = 0.5)
 
 arrows(0, 0, hp[1], hp[2], col = happy_clrs[3], lwd = 2)    # vector x1
 text(hp[1], hp[2], expression(hp), pos = 3) 

@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/atom.html",
+    "listing": "/blog/index.html",
     "items": [
       "/blog/2024/05/prisoners/index.html",
       "/blog/2024/06/moon/index.html",
@@ -16,7 +16,7 @@
     ]
   },
   {
-    "listing": "/blog/index.html",
+    "listing": "/atom.html",
     "items": [
       "/blog/2024/05/prisoners/index.html",
       "/blog/2024/06/moon/index.html",

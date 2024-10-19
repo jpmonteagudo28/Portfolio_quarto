@@ -48,13 +48,13 @@ $dark:      $black !default;
 
 $font-family-serif: "EB Garamond" !default;
 
-$headings-font-family: "Spectral SC" !default;
+$headings-font-family: "Marcellus SC" !default;
 $headings-font-weight: 500 !default;
 
-$navbar-font-family: "Spectral SC" !default;
+$navbar-font-family: "Marcellus SC" !default;
 $toc-font-family: "EB Garamond" !default;
 $footer-font-family: "EB Garamond" !default;
-$code-font-family: "Source Code Pro" !default;
+$code-font-family: "Fira Sans Condensed" !default;
 
 // $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
 // $font-size-sm: $font-size-base * .875 !default;
@@ -94,7 +94,7 @@ $footer-fg: $gray-600 !default;
 
 /*-- scss:rules --*/
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Spectral+SC:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Marcellus+SC&display=swap" !default;
 
 @if $web-font-path {
     @import url($web-font-path);
