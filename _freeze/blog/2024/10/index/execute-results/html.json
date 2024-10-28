@@ -1,0 +1,15 @@
+{
+  "hash": "6fb5138ace33ea50e99902a714b6803c",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"dijkstra's algorithm\"\ndate: now\ndescription: \"google maps shortest routes mechanism\"\nformat:\n  html:\n    css: styles.css\n    code-fold: true\n    code-tools: true\n    code-overflow: wrap\n    code-line-numbers: false\n#doi: \ncitation: true\ndraft: true\n---\n\n\n\n\n\n## Simple reasoning\n\nIf I'm about to drive to work, and I know there's been a traffic jam on my usual route, I'll try to pick an road that will get me to my destination in the shortest amount of time. How do I do that?\n\nFirst, I think of all the possible ways I can drive to work, all the roads regardless of proximity to my destination, and an estimate of how far/ long it would take me to travel through each one of the possible paths. \n\nThis mental exercise happens in the lass than 10 seconds, and my brain–and yours– can hold all this information almost simultaneously. What do I think my mind is doing?\n\n1. Start from your home location or current position\n2. Visualize the known possible paths to your destination.\n3. Remember or compute how long it takes to travel through each path\n4. Pick the path that requires the least amount of time to traverse.\n\nStep 2 and 4 seem the most time-consuming. I would have to create a mental map of all the roads I know, store the time it takes to travel to work on each of these roads, and compare the times to pick the fastest path. Ideally, the roads are picked based on distance and not time, but it is much easier to think in terms of estimated arrival time than distance remaining. \n\n### Visualize the known, possible paths\n\nIt's much easier to visualize paths on a grid than numbers stored in tables; however, it's more convenient to store distances from the current position to every road in table format.\n\nHow are distances calculated? This is a hands-on, thinking cap-on approach. We'll start with a few assumptions.\n\n* Even though the mind can visualize a great number of paths at once, a computer can't. It will instead, see one possible path at a time as long as the origin and this path are connected.\n* The only distance available to the computer is the current path's. All other distances are null - no visible connection from the origin to these roads. \n* It's more efficient to traverse paths selectively and discard those with distances greater than the current  minimum distance than to traverse all possible paths to then find the shortest route. \n* To this end, the computer has to store its current minimum distance and compare it to the most recent distance traveled in order to update or discard the current path.\n* The computer must be able to distinguish between traveled and unexplored paths to avoid recalculation of already traveled distances. ",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

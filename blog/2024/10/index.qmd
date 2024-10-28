@@ -1,0 +1,65 @@
+---
+title: "dijkstra's algorithm"
+date: now
+description: "google maps shortest routes mechanism"
+format:
+  html:
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: false
+#doi: 
+citation: true
+draft: true
+---
+
+```{r setup, include = FALSE}
+library(methods)
+library(here)
+
+
+set.seed(2899)
+
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE, 
+                      cache = TRUE, comment = "#>",
+                      autodep = TRUE)
+
+
+options(digits = 3,
+        scipen = 999,
+        width = 300)
+
+options(
+  rlang_trace_top_env = rlang::current_env(),
+  rlang__backtrace_on_error = "none")
+```
+
+## Simple reasoning
+
+If I'm about to drive to work, and I know there's been a traffic jam on my usual route, I'll try to pick an road that will get me to my destination in the shortest amount of time. How do I do that?
+
+First, I think of all the possible ways I can drive to work, all the roads regardless of proximity to my destination, and an estimate of how far/ long it would take me to travel through each one of the possible paths. 
+
+This mental exercise happens in the lass than 10 seconds, and my brain–and yours– can hold all this information almost simultaneously. What do I think my mind is doing?
+
+1. Start from your home location or current position
+2. Visualize the known possible paths to your destination.
+3. Remember or compute how long it takes to travel through each path
+4. Pick the path that requires the least amount of time to traverse.
+
+Step 2 and 4 seem the most time-consuming. I would have to create a mental map of all the roads I know, store the time it takes to travel to work on each of these roads, and compare the times to pick the fastest path. Ideally, the roads are picked based on distance and not time, but it is much easier to think in terms of estimated arrival time than distance remaining. 
+
+### visualize the known, possible paths
+
+It's much easier to visualize paths on a grid than numbers stored in tables; however, it's more convenient to store distances from the current position to every road in table format.
+
+How are distances calculated? This is a hands-on, thinking cap-on approach. We'll start with a few assumptions.
+
+* Even though the mind can visualize a great number of paths at once, a computer can't. It will instead, see one possible path at a time as long as the origin and this path are connected.
+* The only distance available to the computer is the current path's. All other distances are null - no visible connection from the origin to these roads. 
+* It's more efficient to traverse paths selectively and discard those with distances greater than the current  minimum distance than to traverse all possible paths to then find the shortest route. 
+* To this end, the computer has to store its current minimum distance and compare it to the most recent distance traveled in order to update or discard the current path.
+* The computer must be able to distinguish between traveled and unexplored paths to avoid recalculation of already traveled distances. 

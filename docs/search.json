@@ -98,34 +98,6 @@
     "text": "2024\n\n\n    \n    \n                  \n            Jul 3, 2024\n        \n        \n            the iterated prisoners' dilemma\n\n            \n\n            rudimentary solutions using R\n            \n            \n            10.59350/gyxmw-enh88\n            \n        \n        \n    \n    \n    \n                  \n            Jun 27, 2024\n        \n        \n            swear not by the moon, the fickle moon\n\n            \n\n             a complex prediction algorithm in r\n            \n            \n            10.59350/b0na5-5km65\n            \n        \n        \n    \n    \n    \n                  \n            Apr 19, 2024\n        \n        \n            animated datasaurus—30 day chart challenge\n\n            \n\n            dinosaurs & correlation coefficients\n            \n            \n            10.59350/wx5k1-ajc38\n            \n        \n        \n    \n    \n    \n                  \n            Apr 15, 2024\n        \n        \n            beautiful movement—lissajous curves\n\n            \n\n            exploration of lissajous curves \n            \n            \n            10.59350/y9kmp-zqh66\n            \n        \n        \n    \n    \n    \n                  \n            Mar 17, 2024\n        \n        \n            don't be an absolutist. Use the here package\n\n            \n\n            the `here` package for your `RStudio` projects\n            \n            \n            10.59350/4a9fr-acc34\n            \n        \n        \n    \n    \n\n\nNo matching items"
   },
   {
-    "objectID": "research/index.html",
-    "href": "research/index.html",
-    "title": "Research",
-    "section": "",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  },
-  {
-    "objectID": "research/index.html#journal-articles",
-    "href": "research/index.html#journal-articles",
-    "title": "Research",
-    "section": "Journal articles",
-    "text": "Journal articles\n\n\n\n    \n        \n            \n                Julian Bashir and Elim Garak, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” Starbase Deep Nine Archives 130, no. 9 (September 2178): 1425–1439\n            \n\n            \n\n            \n            \n            \n            \n                These brain distortions–\n            \n                 / horse loose in a hospital.\n            \n                 / Surgery?...Proceed.\n            \n            \n            \n            \n            \n                \n                    \n                        \n                             Full details »\n                        \n                    \n                    \n                        \n                    \n                        \n                        \n                        \n                             Preprint\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Final version\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Code\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Add to Mendeley\n                        \n                    \n                        \n                    \n                \n            \n        \n        \n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "jp monteagudo",
-    "section": "",
-    "text": "Hi, my name is JP.\n\n\nI’m passionate about human health, statistics, code, data and design. This website is a collection of projects, research, and discussions on topics that I find interesting and meaningful. My goal is to make this site a source of publicly available data, code and insights that can be used by others to advance their learning journey.\n\nLearn more about me →"
-  },
-  {
-    "objectID": "about/index.html",
-    "href": "about/index.html",
-    "title": "JP Monteagudo",
-    "section": "",
-    "text": "hello there,\n\nThanks for stopping by!\nI’m an aspiring epidemiologist currently pursuing post-graduate studies in Epidemiology at Liberty University. I’m interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology, geographical information system (GIS) and demography.\nI love statistics and the R programming language. I’m currently taking a deep dive into generalized linear models, Bayesian inference and package development.\nNowadays, I work as a Learning & Development Specialist conducting a pilot study analyzing the impact of new hire training on performance in a fast-paced contact center environment."
-  },
-  {
     "objectID": "research/articles/index.html",
     "href": "research/articles/index.html",
     "title": "On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient",
@@ -159,6 +131,34 @@
     "title": "On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient",
     "section": "Citation",
     "text": "Citation\n\n Add to Mendeley \n\n@article{BashirGarak:2178,\n    Author = {Julian Bashier and Elim Garak},\n    Journal = {Starbase Deep Space Nine},\n    Month = {9},\n    Number = {9},\n    Pages = {1425--1439},\n    Title = {On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient},\n    Volume = {130},\n    Year = {2178}}"
+  },
+  {
+    "objectID": "about/index.html",
+    "href": "about/index.html",
+    "title": "JP Monteagudo",
+    "section": "",
+    "text": "hello there,\n\nThanks for stopping by!\nI’m an aspiring epidemiologist currently pursuing post-graduate studies in Epidemiology at Liberty University. I’m interested in clinical epidemiology, epidemiological research methods, infectious diseases, pharmaco-epidemiology, geographical information system (GIS) and demography.\nI love statistics and the R programming language. I’m currently taking a deep dive into generalized linear models, Bayesian inference and package development.\nNowadays, I work as a Learning & Development Specialist conducting a pilot study analyzing the impact of new hire training on performance in a fast-paced contact center environment."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "jp monteagudo",
+    "section": "",
+    "text": "Hi, my name is JP.\n\n\nI’m passionate about human health, statistics, code, data and design. This website is a collection of projects, research, and discussions on topics that I find interesting and meaningful. My goal is to make this site a source of publicly available data, code and insights that can be used by others to advance their learning journey.\n\nLearn more about me →"
+  },
+  {
+    "objectID": "research/index.html",
+    "href": "research/index.html",
+    "title": "Research",
+    "section": "",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "objectID": "research/index.html#journal-articles",
+    "href": "research/index.html#journal-articles",
+    "title": "Research",
+    "section": "Journal articles",
+    "text": "Journal articles\n\n\n\n    \n        \n            \n                Julian Bashir and Elim Garak, “On the Surgical Removal of Cardassian Cranial Implants: A case study of a Cardassian patient” Starbase Deep Nine Archives 130, no. 9 (September 2178): 1425–1439\n            \n\n            \n\n            \n            \n            \n            \n                These brain distortions–\n            \n                 / horse loose in a hospital.\n            \n                 / Surgery?...Proceed.\n            \n            \n            \n            \n            \n                \n                    \n                        \n                             Full details »\n                        \n                    \n                    \n                        \n                    \n                        \n                        \n                        \n                             Preprint\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Final version\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Code\n                        \n                    \n                        \n                    \n                        \n                        \n                        \n                             Add to Mendeley\n                        \n                    \n                        \n                    \n                \n            \n        \n        \n\n\n\nNo matching items"
   },
   {
     "objectID": "now/index.html",
