@@ -2,6 +2,7 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/2024/11/john/index.html",
       "/blog/2024/05/prisoners/index.html",
       "/blog/2024/06/moon/index.html",
       "/blog/2024/04/dinosaurs/index.html",
@@ -12,6 +13,7 @@
   {
     "listing": "/atom.html",
     "items": [
+      "/blog/2024/11/john/index.html",
       "/blog/2024/05/prisoners/index.html",
       "/blog/2024/06/moon/index.html",
       "/blog/2024/04/dinosaurs/index.html",

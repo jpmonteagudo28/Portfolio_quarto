@@ -11,7 +11,51 @@
 <description>JP&#39;s blog</description>
 <language>en</language>
 <generator>quarto-1.5.41</generator>
-<lastBuildDate>Wed, 03 Jul 2024 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 26 Nov 2024 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>john 1:1 - 18</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2024/11/john/</link>
+  <description><![CDATA[ <section id="memorization" class="level2"><h2 class="anchored" data-anchor-id="memorization">Memorization</h2>
+<p>“The main reason to memorize the Bible is not to accumulate more data in our brains. It’s a way for us to enjoy God” - Andy Naselli</p>
+<p>I’ve started to memorize big chunks of the Bible with a group of men at church, and this has been both, challenging and amazing. Somehow, I feel more ready for the day when I bring scripture to the forefront of my mind. The verses are in front of me; I work through them, and this mental wrestling exercise puts me in the right frame to face the day.</p>
+<p>Here’s John 1: 1 - 18 by memory:</p>
+<p>“In the beginning was the Word, and the Word was with God, and the word was God. He was in the beginning with God. All things were made through him, and without him was not anything made that was made. In him was life, and the life was the light of men. The light shines in the darkness, and the darkness has not overcome it. There was a man sent from God whose name was John. He came as a witness, to bear witness about the light, that all might believe through him. He was not the light, but came to bear witness about the light. The true light, which gives light to everyone, was coming into the world. He was in the world, and the world was made through him, yet the world did not know him. He came to his own, and his own people did not receive him; but to all who did receive him, who believed in His name, he gave the right to become children of God, who were born, not of blood nor of the will of the flesh nor of the will of man, but of God. And the Word became flesh and dwelt among us, and we have seen his glory, glory as of the only Son from the Father, full of grace and truth. John bore witness about him and cried out: “This was he of whom I said: He who comes after me ranks before me, because he was before me”. For from his fullness we have all received, grace upon grace. For the law came through Moses, grace and truth came through Jesus Christ. No one has ever seen God, the only God, who is at the Father’s side, he has made Him known.”</p>
+<p>I’ll do some textual analysis on these verses and other books in the upcoming weeks.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://quanteda.io">quanteda</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/computationalstylistics/stylo">stylo</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</details>
+</div>
+
+
+<!-- -->
+
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2024" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2024. <span>“John 1:1 - 18.”</span> November 26, 2024.
+<a href="https://www.jpmonteagudo.com/blog/2024/11/john">https://www.jpmonteagudo.com/blog/2024/11/john</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://www.jpmonteagudo.com/blog/2024/11/john/</guid>
+  <pubDate>Tue, 26 Nov 2024 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>the iterated prisoners’ dilemma</title>
   <dc:creator>JP Monteagudo</dc:creator>
