@@ -1,0 +1,4 @@
+unnamed-chunk-1	calc_pop_growth	loess_line	x	x_pred	y	y_pred
+unnamed-chunk-2	age_2024	age_2029	census_2024	fake_census_data	survival_rate	survived_population
+unnamed-chunk-3	ages	annual_births	asfr	births_2024	births_2025	births_2026	births_average	fake_birth_data	female_births	projected_birth_females	survived_women	total_births_data	total_projected_births	women
+unnamed-chunk-4	age_2014	age_2024	census_2014	census_2024	expected_population	fake_net_migration	net_migrants	net_migration_rate	survival_rates

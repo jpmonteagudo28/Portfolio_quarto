@@ -1941,6 +1941,17 @@
       ],
       "Hash": "c5f3c201b931cd6474d17d8700ccb1c8"
     },
+    "tinytable": {
+      "Package": "tinytable",
+      "Version": "0.6.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "methods"
+      ],
+      "Hash": "284426416e795014477cf40a556eff76"
+    },
     "tinytex": {
       "Package": "tinytex",
       "Version": "0.52",
