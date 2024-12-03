@@ -104,9 +104,9 @@ format:
     theme: 
       - html/jpm.scss
     grid: 
-      body-width: 800px
-      sidebar-width: 250px
-      margin-width: 250px
+      body-width: 650px
+      sidebar-width: 325px
+      margin-width: 325px
       gutter-width: 2.0em
     code-link: true
     anchor-sections: true

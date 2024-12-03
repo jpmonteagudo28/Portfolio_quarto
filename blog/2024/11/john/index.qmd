@@ -9,7 +9,7 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: false
-#doi: 
+doi: 10.59350/zda1p-9x731
 citation: true
 draft: false
 ---

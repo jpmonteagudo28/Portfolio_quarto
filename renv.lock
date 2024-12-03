@@ -20,6 +20,16 @@
       ],
       "Hash": "065ae649b05f1ff66bb0c793107508f5"
     },
+    "ISOcodes": {
+      "Package": "ISOcodes",
+      "Version": "2024.02.12",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "8882a4410a254e41eab064b0330fea56"
+    },
     "KernSmooth": {
       "Package": "KernSmooth",
       "Version": "2.23-24",
@@ -104,6 +114,13 @@
       ],
       "Hash": "a60168d094ca7e4de5106d60001c3964"
     },
+    "SnowballC": {
+      "Package": "SnowballC",
+      "Version": "0.7.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "46da3912f69e3e6258a033802c4af32e"
+    },
     "V8": {
       "Package": "V8",
       "Version": "4.4.2",
@@ -116,6 +133,25 @@
         "utils"
       ],
       "Hash": "ca98390ad1cef2a5a609597b49d3d042"
+    },
+    "ape": {
+      "Package": "ape",
+      "Version": "5.8",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "digest",
+        "graphics",
+        "lattice",
+        "methods",
+        "nlme",
+        "parallel",
+        "stats",
+        "utils"
+      ],
+      "Hash": "16b5ff4dff0ead9ea955f62f794b1535"
     },
     "askpass": {
       "Package": "askpass",
@@ -338,6 +374,20 @@
         "utils"
       ],
       "Hash": "3f038e5ac7f41d4ac41ce658c85e3042"
+    },
+    "cluster": {
+      "Package": "cluster",
+      "Version": "2.1.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "0aaa05204035dc43ea0004b9c76611dd"
     },
     "colorspace": {
       "Package": "colorspace",
@@ -594,6 +644,16 @@
       "Source": "Repository",
       "Repository": "RSPM",
       "Hash": "aa5e1cd11c2d15497494c5292d7ffcc8"
+    },
+    "fastmatch": {
+      "Package": "fastmatch",
+      "Version": "1.1-4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "8c406b7284bbaef08e01c6687367f195"
     },
     "fontawesome": {
       "Package": "fontawesome",
@@ -1313,6 +1373,18 @@
       ],
       "Hash": "2bcca3848e4734eb3b16103bc9aa4b8e"
     },
+    "pamr": {
+      "Package": "pamr",
+      "Version": "1.57",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "cluster",
+        "survival"
+      ],
+      "Hash": "afb7075c8a13977a7595c7cee4ed9aef"
+    },
     "patchwork": {
       "Package": "patchwork",
       "Version": "1.2.0",
@@ -1454,6 +1526,28 @@
         "vctrs"
       ],
       "Hash": "1cba04a4e9414bdefc9dcaa99649a8dc"
+    },
+    "quanteda": {
+      "Package": "quanteda",
+      "Version": "4.1.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "Rcpp",
+        "SnowballC",
+        "fastmatch",
+        "jsonlite",
+        "lifecycle",
+        "magrittr",
+        "methods",
+        "stopwords",
+        "stringi",
+        "xml2",
+        "yaml"
+      ],
+      "Hash": "f753321fb12652ee189fea44ed9f67fb"
     },
     "ragg": {
       "Package": "ragg",
@@ -1763,6 +1857,17 @@
       ],
       "Hash": "c12e756cf947e58b0f2c2a520521a5a8"
     },
+    "stopwords": {
+      "Package": "stopwords",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "ISOcodes",
+        "R"
+      ],
+      "Hash": "82036936cbed392a250d2e6ee6ef2e53"
+    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.8.4",
@@ -1793,6 +1898,40 @@
       ],
       "Hash": "960e2ae9e09656611e0b8214ad543207"
     },
+    "stylo": {
+      "Package": "stylo",
+      "Version": "0.7.5",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "ape",
+        "class",
+        "e1071",
+        "lattice",
+        "pamr",
+        "tcltk",
+        "tcltk2",
+        "tsne"
+      ],
+      "Hash": "d5d6baa89581ead06830e0356be10637"
+    },
+    "survival": {
+      "Package": "survival",
+      "Version": "3.7-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "graphics",
+        "methods",
+        "splines",
+        "stats",
+        "utils"
+      ],
+      "Hash": "5aaa9cbaf4aba20f8e06fdea1850a398"
+    },
     "sys": {
       "Package": "sys",
       "Version": "3.4.2",
@@ -1818,6 +1957,17 @@
         "lifecycle"
       ],
       "Hash": "213b6b8ed5afbf934843e6c3b090d418"
+    },
+    "tcltk2": {
+      "Package": "tcltk2",
+      "Version": "1.2-11",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "tcltk"
+      ],
+      "Hash": "9b59f9f3b473ae3b081aaf47f9a5b680"
     },
     "textshaping": {
       "Package": "textshaping",
@@ -1976,6 +2126,13 @@
         "vctrs"
       ],
       "Hash": "584eda9966ed571b3adc75e338116147"
+    },
+    "tsne": {
+      "Package": "tsne",
+      "Version": "0.1-3.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "0206adc8749175eb4de55cffa5a7c1f8"
     },
     "tweenr": {
       "Package": "tweenr",
