@@ -1,6 +1,6 @@
 ---
 title: What I use
-date: 2024-09-16
+date: 2025-01-06
 description: Some projects, new learning experiences and home-life adventures
 title-block-banner: "#A52C60"
 published-title: Last updated
@@ -9,9 +9,7 @@ toc: false
 toc-title: "Contents"
 engine: knitr
 freeze: false
-format:
-  html:
-    css: styles.css
+format: html
 ---
 
 ```{css, echo=FALSE}
@@ -28,7 +26,7 @@ I’m leaving a list of the programs/software I regularly use as a way to track 
 
 ### Writing
 
--   I use [Joplin](https://joplinapp.org/)– an open-source note-taking app with a markdown editor and customizable plugins. Another great option is [Obsidian](https://www.marclittlemore.com/beginners-guide-note-taking-obsidian/) which includes knowledge graphs to organize your thoughts.
+-   I no longer use [Joplin](https://joplinapp.org/)– an open-source note-taking app with a markdown editor and customizable plugins. Even after several updates, the plain text files didn't properly render to markdown. Another great option is [Obsidian](https://www.marclittlemore.com/beginners-guide-note-taking-obsidian/) which includes knowledge graphs to organize your thoughts.
 -   I use [Typora](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) to create stand-alone markdown files. Typora also supports [pandoc-flavored markdown](https://pandoc.org/index.html) which makes it easier to transform markdown to other formats like .docx, .pdf, etc.
 -   I use a good ol’ [Mead Five Star Spiral Fat Lil’ Pocket Notebook](https://www.fivestarbuiltstrong.com/p/multipacks/fat-lil-wirebound-notebook-college-ruled-6-pack-38027/) for note-taking (books I read, ideas, summaries, schedules, to-do lists). I’ve tried planners, calendars, apps and none of those things seem to keep me on track as brilliantly as a handwritten note in one of those fat little notebooks.
 -   I use [Mendeley](https://www.mendeley.com/search/) as my bibliography and citation manager. The free plan includes 2GB of storage, which is more than I need. I store my bibliographies in [Bibtex format](https://www.bibtex.org/).
@@ -40,7 +38,7 @@ I’m leaving a list of the programs/software I regularly use as a way to track 
 ### Science and Research
 
 -   I currently use [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/) for my data analysis and graphing needs, and [VSCode](https://code.visualstudio.com/) for everything else.
--   I used [G-Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) and [piface](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) for sample size calculations, but their utility decreased as I began to use more complicated models.
+-   I used [G-Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) and [piface](https://homepage.divms.uiowa.edu/~rlenth/Power/index.html) for sample size calculations, but piface's utility decreased as I began to use more complicated models.
 -   My main statistical programming software was [SPSS](https://studentdiscounts.com/?gad_source=1&gclid=CjwKCAiAivGuBhBEEiwAWiFmYQw5XZfX_CVYuuY1zt8nJZsSbSLOtD9sRVQbcqyBNEUejnnA1-3OVBoCLVgQAvD_BwE) until 2020, but its lackluster versatility left me disappointed. I especially didn’t like all the clicking and the way their syntax, output, and data panels were set up. Unfortunately, that’s the software of choice in many universities in the U.S., including mine.
 -   I also use [Notepad ++](https://notepad-plus-plus.org/), a text editor that supports more than two dozen programming languages (not markdown). I sometimes use it alongside VSCode.
 -   I use [Github](https://github.com/) and [Git Bash](https://git-scm.com/downloads) to store almost everything I write and for version control.
@@ -51,21 +49,21 @@ I’m leaving a list of the programs/software I regularly use as a way to track 
 
 -   I’ve used [Canva](https://www.canva.com/) for every design in this website and personal documents. I also have free access to [Adobe InDesign](https://www.adobe.com/) but haven’t used it much.
 -   I totally recommend [Practical Typography](https://practicaltypography.com/), by Matthew Butterick– a typograhpy primer for the graphic designer and the layperson trying to create beautiful documents.
-- I have been learning [Pollen](https://docs.racket-lang.org/pollen/index.html), a markup language used to create beautiful digital books.
--   I use PowerPoint to create simple and stunning presentations. I have free access to Microsoft products, and it’s also the best slide editor I’ve seen.
--   I use [Google Fonts API](https://fonts.google.com/) for font selection and [David Jonathan Ross](https://djr.com/)’ typefaces. My preferred fonts are Arsenal, ETBembo, EB Garamond, Warbler, Livory, Charter, and Cooper Hewitt.
+- I have been learning [Pollen](https://docs.racket-lang.org/pollen/index.html), a markup language used to create beautiful digital books. PDFs, EPUBs, and HTML files are generated from a single source file.
+-   I use PowerPoint and Google Slides to create simple and stunning presentations. I have free access to Microsoft products, and it’s also the best slide editor I’ve seen.
+-   I use [Google Fonts API](https://fonts.google.com/) for font selection and [David Jonathan Ross](https://djr.com/)’ typefaces. My preferred fonts are Montserrat, Cormorant, EB Garamond, Warbler, Fira Sans, Alegreya, and Libre Franklin.
 
 ### Productivity
 
 -   I use [Dropbox](https://www.dropbox.com/) and [Google One](https://one.google.com/overview/) for file storage and backup. I get Dropbox for free through my school, and I pay for a family Google One subscription. However, both services cost about the same and offer similar storage space (3TB and 2TB respectively).
 -   I use the Windows Clock app focus feature to track my time. I’m not easily distracted if I’m working towards a concrete, timed goal so scheduling times of intense mental activity is a huge help.
 -   I use [Otter.ai](https://otter.ai/home) as my audio recording and automatic transcription service. I record presentations, interviews, talks, etc. and Otter.ai produces a solid transcript that I can then save or use in content creation.
--   I use [Chat GPT](https://chat.openai.com/) to answer all sorts of questions and to guide me in the creative process.
+-   I use [Chat GPT](https://chat.openai.com/), [Claude](https://claude.ai/new), and [Perplexity](https://www.perplexity.ai/) to answer all sorts of questions and to guide me in the creative process.
 
 ## Hardware
 
 -   I use [Yubico](https://www.yubico.com/) and [Keybase](https://keybase.io/) for privacy and security.
--   I use a 2020 15.6″ i5Core Dell, a 2020 13″ MacBook Pro, and an iPhone 13 mini.
+-   I use a 2023 15.6″ 64GB RAM, 1TB Storage i7Core Dell Inspiron, and a 2020 13″ MacBook Pro
 
 ## Guides
 

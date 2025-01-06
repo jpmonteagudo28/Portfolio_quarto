@@ -12,6 +12,7 @@ format:
 #doi: 
 citation: true
 draft: true
+lightbox: true
 ---
 
 ```{r setup, include = FALSE}
@@ -42,11 +43,11 @@ options(
 
 Models are useful in the absence of complete data or in the presence of overwhelming data. If data sources are lacking, the model would fill in the gaps to map out a population trajectory despite the holes. If data is overflowing, models help us make sense of it by simplifying and systematizing a reality that's much too complex and “random” to be properly understood. 
 
-Models are abstract and dim representations of the real world. 
+Models are abstract and approximate (sometimes good) representations of real world phenomena. 
 
 ## Different frameworks
 
-Population projections use certain assumptions that are held constant or may change depending on previous trends to indicate future trends. Population forecasts use previous and current data to estimate growth with a level of confidence. 
+Population projections use certain assumptions that are held constant or may change to indicate future trends. Population forecasts use previous and current data to estimate growth with a level of confidence. 
 
 ## Data to take into account
 
@@ -73,9 +74,9 @@ $$
 
 ## Logistic model
 
-Limited resources and competition are present which leads to the population reaching a peak, its carrying capacity $K$, and stabilizing or decreasing after that point. The rate of change $\frac{dy}{dt}$ is proportional to the product of the current population $P_{t}$ and $K - P_{t}$,
+In the logistic model, limited resources and competition are present which leads to the population reaching a peak, its carrying capacity $K$, and stabilizing or decreasing after that point. The rate of change $\frac{dy}{dt}$ is proportional to the product of the current population $P_{t}$ and $K - P_{t}$, the difference between the carrying capacity and the current population.
 
-The logistic model can be a realistic model only for periods of time of a few decades, but it begins to break down for longer periods of time. 
+The logistic model may be a realistic model only for periods of time of a few decades, but it begins to break down for longer periods of time. 
 
 $$
 \begin{split}
@@ -85,7 +86,7 @@ P_{t} = \frac{K}{1 + N_{0}e^{-rt}}
 \end{split}
 $$
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 
 calc_pop_growth <- function(){
   
@@ -109,33 +110,35 @@ P[1] <- N[1]  # Start with the first element in N
 
 x <- seq(2010,2030, length.out = 20)
 y <- round(calc_pop_growth()/100000, digits = 0)
-loess_line <- loess(y~x)
 
-par(bg = "#fbfffd")
+par(bg = "#f9f9f9", family = "serif")
 plot.new()
 plot.window(xlim = range(x), ylim = range(pretty(y)))
 
-points(x,y,col = "#e7575a", pch = 20, cex = .7)
-
-# Predict values for a smooth line and plot it
-x_pred <- seq(min(x), max(x), length.out = 100)  # More points for smoother line
-y_pred <- predict(loess_line, newdata = x_pred)
-lines(x_pred, y_pred, col = "#121b3c", lwd = 0.5, lty = 2)
+points(x,y,col = "#e7575a", pch = 20, cex = .9)
 
 axis(1, at = seq(x[1],x[length(x)], by = 5), labels = round(seq(x[1],x[length(x)], by = 5)), 
-     cex.axis = 0.7, tcl = 0.35, lwd = 0)
-axis(2, lwd = 0, las = 2, cex.axis = 0.7)
-title("Ficticious population growth", adj = 0, col.main = "#121b3c")
+     cex.axis = 0.87, tcl = 0.05, lwd = 0.5)
+axis(2,lwd = 0.5,tcl = 0.05, las = 2, cex.axis = 0.87)
+title("Ficticious Population Growth \nin Hundreds of Thousands", adj = 0, col.main = "#121b3c")
+text("Logistic growth model showing a \nconstant growth rate and population \nincrease by the year 2030. The model assumes all \npopulations have an unkown carrying capacity \nthat will impact its growth trajectory",x = 2010,y = 440, adj = 0, col = "gray50")
+text("Initial point at which population count \nbegins. Pay attention to the invisible \ncurved line highlihgting the non-linear \ngrowth.", x = 2011, y = 285, adj = 0.25, cex = .75,col = "gray50")
 ```
-
+```{r exp, echo = FALSE}
+#|lightbox: true
+knitr::include_graphics("logistic_growth.png",
+                        dpi = 300)
+```
 ## Cohort-component model
 
-As a projection tool, this method assumes the components of demographic change, mortality, fertility and migration, will remain constant throughout the projection period. As a forecasting tool, the vital statistics can be altered to reflect several population trajectories. 
+As a projection tool, the cohort component method assumes the components of demographic change: mortality, fertility and migration, will remain constant throughout the projection period. As a forecasting tool, the vital statistics can be altered to reflect several population trajectories. 
 
-The cohort-component method has become the primary model of population projection and forecasting; however, within the last two decades demographers have begun to explore
+This method has become the primary model of population projection and forecasting; however, within the last two decades demographers have begun to explore
 alternatives to the standard model, such as the addition of feedbacks, socioeconomic
 and environmental variables, and stochastic inputs (with confidence
 intervals on outputs).
+
+### Challenges
 
 This model faces quite a number of challenges. It assumes fertility, mortality and migration are unaffected by socioeconomic factors. There are no feedbacks from population size and structure of its basic inputs. It is a demographically self-contained projection model; nothing outside its three indicators is able to change it, even in the face of extreme developments. Lastly, it assumes continuity in fertility, mortality and migration patterns - the current rates today will decrease or increase by x year. 
 
@@ -149,7 +152,7 @@ This method requires information from the most recent and previous census. You'l
 
 ### Age a population into the future
 
-Take each age group of the population and ages it over time using survival rates. 
+Take each age group of the population and *age* it over time using survival rates. 
 
 * get the census information distributed by age and sex  
 * multiply base census population of a given age group by survival rates to obtain the
@@ -174,7 +177,7 @@ Then add the net migrations, which can be positive or negative. First, calculate
 
 ## Example
 
-Assume that Social Services wants to develop a plan for a woman's center in a Virginia county. The goal is to project the number of women for the district from 2024 - 2029
+Let's assume that the Virginia Department of Social Services(VADHS)  wants to develop a plan for a woman's center in one of its major counties. The goal is to project the number of women for the district from 2024 - 2029.
 
 ```{r, echo = TRUE}
 #| code-fold: true
@@ -212,11 +215,13 @@ fake_census_data <- data.frame(
                                survival_rate, 
                                survived_population
                                ) |>
-  tt(digits = 2,
+  tt(digits = 3,
      caption = "Projecting the Population of Females for 2029",
      theme = "spacing"
     ) |>
-  style_tt(align = "c")
+  style_tt(align = "c",
+           boostrap_class = "table table-hover")
+
   colnames(fake_census_data) <- c("Age in 2024","Age in 2029",
                                   "Census 2024","Survival Rate",
                                   "Survived Population(c3 * c4)")
@@ -224,9 +229,9 @@ fake_census_data <- data.frame(
 fake_census_data
 ```
 
-The first column shows the births that took place from 2024 - 2029 and the age of the girls in 2029 is found in column 2. The total number of girls by age groups is provided in column 3 and column 4 displays the survival rate for each age group. To find the number of women who survived until 2029 to multiply the survival rate in column 4 by the total number of girls/women in column 3. 
+The first column shows the births that took place from 2024 - 2029 and the age of the girls in 2029 is found in column 2. The total number of girls by age groups is provided in column 3 and column 4 displays the survival rate for each age group. To find the number of women who survived until 2029 we simply *multiply the survival rate in column 4 by the total number of girls/women in column 3*. 
 
-Then we need to add the number of births taking place during this five year period. So we first calculate the age-specific fertility rates using number of births by age for prior years before the last census. And remember, we're only interested in women of reproductive age. 
+Then we need to *add the number of births taking place during this five year period*. So we first calculate the **age-specific fertility rates** using number of births by age for prior years before the last census. And remember, we're only interested in women of reproductive age. 
 
 ```{r, echo = TRUE}
  ages <- c(
@@ -271,11 +276,12 @@ fake_birth_data <- data.frame(
                               survived_women,
                              annual_births
                     ) |> 
-  tt( digits = 2,
+  tt( digits = 3,
       theme = "spacing",
       caption = "Calculating Births"
       ) |>
-  style_tt(aling = "c")
+  style_tt(aling = "c",
+           bootstrap_class = "table table-hover")
                   
                   
   colnames(fake_birth_data) <- c("Ages",
@@ -300,7 +306,7 @@ total_births_data <- data.frame(
   female_births,
   projected_birth_females
 ) |>
-  tt(digits = 2,
+  tt(digits = 3,
      them = "spacing",
      caption = "Estimating births of female over projection period")
 
@@ -310,7 +316,7 @@ colnames(total_births_data) <- c("Expected births","Female Births",
 total_births_data
 ```
 
-Lastly, we need to calculate the net migration rate using survival rates, but first let's define migration as the semi-permanent or permanent movement across political boundaries while net migration is the number of migrants who stayed (immigrants - out-migrants) in the country within the measurement period divided by the possibility of migration.
+Lastly, we need to calculate the net migration rate using survival rates, but first let's define **migration** as the semi-permanent or permanent movement across political boundaries while **net migration** is the number of migrants who stayed (immigrants - out-migrants) in the country within the measurement period divided by the possibility of migration.
 
 $$
 \begin{split}
@@ -320,8 +326,8 @@ $$
 $$
 The process of obtaining migration information typically takes one of two approaches,  
 
-* Direct method using continuous registration systems where people report their change in residence immediately to a local government.  
-* Indirect measures using vital statistics, a residual method or the survival ratio method.   
+* *Direct method*: use continuous registration systems where people report their change in residence immediately to a local government.  
+* *Indirect measures:* use vital statistics, a residual method or the survival ratio method.   
 
 Most planners use indirect measures to come up with migration estimates. 
 
@@ -334,11 +340,11 @@ P_{t+n} = \text{current population} \\ \\
 P_{t}  = \text{the last census}
 \end{split}
 $$
-In most cases, planners use survival ratio methods to estimate net migration rates. The **forward** and **reverse** methods estimate net migration by age and sex.
+Planners typically use survival ratio methods to estimate net migration rates. The **forward** and **reverse** methods estimate net migration by age and sex.
 
 #### Forward method
 
-This method calculates the number of net migrants at the end of the period and assumes that all migration takes place at the end of the measurement period; all deaths occur in the community for which the estimates are being computed; all deaths are non-migrant deaths. These assumptions are obviously naive and may impact the projection estimates. 
+This method calculates the number of net migrants and assumes that all migration takes place at the end of the measurement period. All deaths occur in the community for which the estimates are being computed; and all deaths are non-migrant deaths. These assumptions are obviously naive and may impact the projection estimates. 
 $$
 \begin{split}
 m_{x+t} = p^{t}_{x+t} - s \times p^{0}_{x}, \\ \\
@@ -350,13 +356,7 @@ p^{t}_{x+t} = \text{population at the next census age}_{x+t} \\
 s = \text{surival rate}
 \end{split}
 $$
-The survival rate is multiplied by the prior census population, and the result provides the expcted population expected at the next census period. By subtracting the expected population from the present census period, we obtain a difference assumed to represent migration
-
-#### Reverse method
-
-This method uses a slightly different approach to estimate number of net migrants; however, some strong assumptions are made as well. First, it assumes that deaths occur to people after migrating, and population change not accounted by fertility and mortality is due to migration, an assumption that is also present in the forward method.
-
-To get the net number of migrants we use the previous population counts.The population in the last census, often called *terminal* population, is brought back to the initial census date to estimate the number of persons alive at the earlier date, whatever the date is for the last census. Then, by subtracting the expected population from the prior census data, we obtain the number of migrants. 
+The survival rate is multiplied by the prior census population, and the result provides the expected population at the next census period. By subtracting the expected population from the present census period, we obtain a difference that represents the migration data^[Out-migration is indicated by negative numbers in certain age groups, while in older age groups, they may also signify mortality.].
 
 ```{r, echo = TRUE}
 #| code-fold: true
@@ -407,15 +407,90 @@ fake_net_migration <- data.frame(
   "Census 2024" = census_2024,
   "Net Migrants" = net_migrants,
   "Net Migration Rate" = net_migration_rate
-) |> tt(digits = 2,
+) |> tt(digits = 3,
         theme = "spacing",
   caption = "Estimating Net Migration Rate using the Forward Survival Rate Method"
 ) |>
-  style_tt(align = "c")
+  style_tt(align = "c",
+           bootstrap_class = "table table-hover")
+
+colnames(fake_net_migration) <- c(
+  "Ages 2014", 
+  "Ages 2024", 
+  "Survival Rates", 
+  "Census 2014", 
+  "Expected Population", 
+  "Census 2024", 
+  "Net Migrants", 
+  "Net Migration Rate"
+)
+
+fake_net_migration
 
 ```
 
+#### Reverse method
+
+This method uses a slightly different approach to estimate number of net migrants; however, some strong assumptions are made. First, it assumes that deaths occur to people after migrating, and population change is not accounted for by fertility and mortality is due to migration(an assumption that is also present in the forward method). In reality, population change can be accounted for by several other factors such as errors in the census (under counting,under/over reporting), and boundary changes from one census to the next.
+
+$$
+\begin{split}
+m = \frac{p^{t}_{x+t}}{s} - p^{0}_{x}, \\ \\
+\text{where} \\
+m = \text{net migration of persons age}_{0} \\
+x = \text{an age or age group} \\
+p^{0}_{x} = \text{population age x at the first census} \\
+p^{t}_{x+t} = \text{population at the current census age}_{x+t} \\
+s = \text{surival rate}
+\end{split}
+$$
+
+To get the net number of migrants we use the previous population counts. The population in the last census, often called *terminal* population, is brought back –*revived*– to the initial census date to estimate the number of persons alive at the earlier date, whatever the date is for the last census. In other words, The 2024 population is divided by the survival rate to estimate what the population would have been in 2014 if everyone alive in 2024 had been alive in 2014. Then, by subtracting the new, expected population from the prior census data, we obtain the number of migrants. 
+
+```{r, echo = TRUE}
+# Reverse method: revive population to the earlier date
+revived_population <- census_2024 / survival_rates
+
+# Net migrants using the reverse method
+net_migrants_reverse <- census_2014 - revived_population
+
+# Net migration rate using the reverse method
+net_migration_rate_reverse <- net_migrants_reverse / census_2014
+
+# Create data frame with results
+reverse_net_migration <- data.frame(
+  "Ages 2014" = age_2014,
+  "Ages 2024" = age_2024,
+  "Survival Rates" = survival_rates,
+  "Census 2014" = census_2014,
+  "Revived Population" = round(revived_population, 2),
+  "Census 2024" = census_2024,
+  "Net Migrants (Reverse)" = round(net_migrants_reverse, 2),
+  "Net Migration Rate (Reverse)" = round(net_migration_rate_reverse, 4)
+) |> tt(digits = 3,
+        theme = "spacing",
+  caption = "Estimating Net Migration Rate using the Reverse Survival Rate Method"
+) |>
+  style_tt(align = "c",
+   bootstrap_class = "table table-hover")
+
+colnames(reverse_net_migration) <- c(
+  "Ages 2014", 
+  "Ages 2024", 
+  "Survival Rates", 
+  "Census 2014", 
+  "Revived Population",
+  "Census 2024",
+  "Net Migrants (Reverse)", 
+  "Net Migration Rate (Reverse)"
+)
+
+reverse_net_migration
+
+```
 ### Projecting the number of females for 2029
+
+To project the total population in 2029, we just grab the prior census information, birth rates, and calculate net migration rates from 2024 to 2029
 
 ## Machine Learning Models
 

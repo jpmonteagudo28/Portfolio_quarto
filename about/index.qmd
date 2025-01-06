@@ -28,7 +28,7 @@ format:
     
 ---
 ::: {#hero-heading}
-<div class="h1"> hello there,</div>
+<div class="h2"> hello there,</div>
 
 Thanks for stopping by!
 

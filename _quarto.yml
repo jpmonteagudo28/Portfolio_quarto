@@ -20,11 +20,11 @@ bibliography: files/bib/references.bib
 csl: files/bib/chicago-author-date.csl
 
 # Metadata stuff
-pagetitle: "{{< meta title >}} | JP Monteagudo"
+pagetitle: "{{< meta title >}} | JP Monteagudo believes in you"
 author-meta: "JP Monteagudo"
 
 website:
-  title: "home"
+  title: ""
   description: "JP is an aspiring epidemiologist currently pursuing his degree in epidemiology from Liberty University."
   favicon: "/files/cards/favicon_no_bg.png"
   site-url: "https://www.jpmonteagudo.com"
