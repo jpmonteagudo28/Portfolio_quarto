@@ -4,7 +4,7 @@ date: now
 description: "basics components"
 format:
   html:
-    css: ../../../html/style.css
+    css: styles.css
     code-fold: true
     code-tools: true
     code-overflow: wrap
@@ -39,24 +39,25 @@ options(
   rlang__backtrace_on_error = "none")
 ```
 
-## General Observations regarding population growth models
+## general observations regarding population growth models
 
 Models are useful in the absence of complete data or in the presence of overwhelming data. If data sources are lacking, the model would fill in the gaps to map out a population trajectory despite the holes. If data is overflowing, models help us make sense of it by simplifying and systematizing a reality that's much too complex and “random” to be properly understood. 
 
 Models are abstract and approximate (sometimes good) representations of real world phenomena. 
 
-## Different frameworks
+## different frameworks
 
 Population projections use certain assumptions that are held constant or may change to indicate future trends. Population forecasts use previous and current data to estimate growth with a level of confidence. 
 
-## Data to take into account
+## data to take into account
 
 * These three variables encapsulate the carrying capacity, the rate at which a population increases is proportional to the total space available.   
+
     1. Population density - determines growth rate (density dependency)  
     2. Total population - determines land area occupied  
     3. Land area - allows for density calculation  
     
-## Exponential model
+## exponential model
 
 Assumes unlimited resources (including spatial resources) and no competition among members of the population, therefore, under this model, population projection will increase over time for positive growth rates.
 
@@ -72,7 +73,7 @@ r = P^\frac{1}{t} -1 \\ \\
 $$
 
 
-## Logistic model
+## logistic model
 
 In the logistic model, limited resources and competition are present which leads to the population reaching a peak, its carrying capacity $K$, and stabilizing or decreasing after that point. The rate of change $\frac{dy}{dt}$ is proportional to the product of the current population $P_{t}$ and $K - P_{t}$, the difference between the carrying capacity and the current population.
 
@@ -129,7 +130,7 @@ text("Initial point at which population count \nbegins. Pay attention to the inv
 knitr::include_graphics("logistic_growth.png",
                         dpi = 300)
 ```
-## Cohort-component model
+## cohort-component model
 
 As a projection tool, the cohort component method assumes the components of demographic change: mortality, fertility and migration, will remain constant throughout the projection period. As a forecasting tool, the vital statistics can be altered to reflect several population trajectories. 
 
@@ -138,19 +139,19 @@ alternatives to the standard model, such as the addition of feedbacks, socioecon
 and environmental variables, and stochastic inputs (with confidence
 intervals on outputs).
 
-### Challenges
+### challenges
 
 This model faces quite a number of challenges. It assumes fertility, mortality and migration are unaffected by socioeconomic factors. There are no feedbacks from population size and structure of its basic inputs. It is a demographically self-contained projection model; nothing outside its three indicators is able to change it, even in the face of extreme developments. Lastly, it assumes continuity in fertility, mortality and migration patterns - the current rates today will decrease or increase by x year. 
 
-### Suggestions
+### suggestions
 
 When this method is used for projection, the best route is to conduct two separate projections, each spanning five years instead of one 10 yr projection. The result of the first projection will be used as input for the second projection
 
-### Collect the data
+### collect the data
 
 This method requires information from the most recent and previous census. You'll need the number of births during the past 10 yrs by the age of the mother and thus calculate age-specific fertility rates, which will then be used to predict number of births in the second iteration. When the age of the mother is not available, use general fertility rates. You'll also need survival rates from life tables.
 
-### Age a population into the future
+### age a population into the future
 
 Take each age group of the population and *age* it over time using survival rates. 
 
@@ -159,7 +160,7 @@ Take each age group of the population and *age* it over time using survival rate
     population still alive 5 years later.   
 
 
-### Add births
+### add births
 
 Calculate the number of births taking place during the projection interval. Age-specific fertility rates are used to estimate the number of births. The birth rates are multiplied by the number of women in their **reproductive years**. This multiplication will yield the annual number of expected births. Multiply them by the projection period to obtain the total number of births that take place in the future.
 
@@ -175,7 +176,7 @@ $$
 
 Then add the net migrations, which can be positive or negative. First, calculate the net migration rate, then multiply these rates by the survived population to obtain the number of net migrants.
 
-## Example
+## example
 
 Let's assume that the Virginia Department of Social Services(VADHS)  wants to develop a plan for a woman's center in one of its major counties. The goal is to project the number of women for the district from 2024 - 2029.
 
@@ -342,7 +343,7 @@ P_{t}  = \text{the last census}
 $$
 Planners typically use survival ratio methods to estimate net migration rates. The **forward** and **reverse** methods estimate net migration by age and sex.
 
-#### Forward method
+#### forward method
 
 This method calculates the number of net migrants and assumes that all migration takes place at the end of the measurement period. All deaths occur in the community for which the estimates are being computed; and all deaths are non-migrant deaths. These assumptions are obviously naive and may impact the projection estimates. 
 $$
@@ -429,7 +430,7 @@ fake_net_migration
 
 ```
 
-#### Reverse method
+#### reverse method
 
 This method uses a slightly different approach to estimate number of net migrants; however, some strong assumptions are made. First, it assumes that deaths occur to people after migrating, and population change is not accounted for by fertility and mortality is due to migration(an assumption that is also present in the forward method). In reality, population change can be accounted for by several other factors such as errors in the census (under counting,under/over reporting), and boundary changes from one census to the next.
 
@@ -488,15 +489,15 @@ colnames(reverse_net_migration) <- c(
 reverse_net_migration
 
 ```
-### Projecting the number of females for 2029
+### projecting the number of females for 2029
 
 To project the total population in 2029, we just grab the prior census information, birth rates, and calculate net migration rates from 2024 to 2029
 
-## Machine Learning Models
+## machine learning models
 
 ML models are adaptable and flexible but require high quality data for accurate predictions. On top of this, they can handle complex relationships (non-linear), and can identify intricate patterns by iterating through the data $n$ number of times. 
 
-## Bayesian Hierarchical Models
+## bayesian hierarchical models
 
 R packages available to implement these methods are `bayesLife`, `bayesTFR`, `bayesDems`, and `bayesm`. 
 

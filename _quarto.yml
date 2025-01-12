@@ -104,10 +104,10 @@ format:
     theme: 
       - html/jpm.scss
     grid: 
-      body-width: 650px
-      sidebar-width: 325px
-      margin-width: 325px
-      gutter-width: 2.0em
+      body-width: 750px
+      sidebar-width: 125px
+      margin-width: 425px
+      gutter-width: 3.0em
     code-link: true
     anchor-sections: true
     fig-cap-location: top
