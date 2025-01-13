@@ -9,7 +9,9 @@ toc: false
 toc-title: "Contents"
 engine: knitr
 freeze: false
-format: html
+format:
+  html:
+    css: styles.css
 ---
 
 ```{css, echo=FALSE}
