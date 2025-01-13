@@ -130,6 +130,14 @@ text("Initial point at which population count \nbegins. Pay attention to the inv
 knitr::include_graphics("logistic_growth.png",
                         dpi = 300)
 ```
+## machine learning models
+
+ML models are adaptable and flexible but require high quality data for accurate predictions. On top of this, they can handle complex relationships (non-linear), and can identify intricate patterns by iterating through the data $n$ number of times. 
+
+## bayesian hierarchical models
+
+R packages available to implement these methods are `bayesLife`, `bayesTFR`, `bayesDems`, and `bayesm`. 
+
 ## cohort-component model
 
 As a projection tool, the cohort component method assumes the components of demographic change: mortality, fertility and migration, will remain constant throughout the projection period. As a forecasting tool, the vital statistics can be altered to reflect several population trajectories. 
@@ -491,15 +499,7 @@ reverse_net_migration
 ```
 ### projecting the number of females for 2029
 
-To project the total population in 2029, we just grab the prior census information, birth rates, and calculate net migration rates from 2024 to 2029
-
-## machine learning models
-
-ML models are adaptable and flexible but require high quality data for accurate predictions. On top of this, they can handle complex relationships (non-linear), and can identify intricate patterns by iterating through the data $n$ number of times. 
-
-## bayesian hierarchical models
-
-R packages available to implement these methods are `bayesLife`, `bayesTFR`, `bayesDems`, and `bayesm`. 
+To project the total population in 2029, we just grab the prior census information, birth rates, and calculate net migration rates from 2024 to 2029.
 
 
 
