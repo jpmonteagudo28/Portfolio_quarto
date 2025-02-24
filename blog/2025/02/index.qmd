@@ -1,0 +1,208 @@
+---
+title: "r package development"
+date: 2/24/2025
+description: "improvemnt as a programmer"
+format:
+  html:
+    css: styles.css
+    code-fold: false
+    code-tools: true
+    code-overflow: wrap
+    code-line-numbers: false
+#doi:
+citation: true
+draft: false
+---
+
+```{r setup, include = FALSE}
+library(methods)
+library(tinytable)
+library(here)
+
+
+set.seed(2899)
+
+knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
+                      fig.width = 5.5, fig.height = (5.5 * 0.618),
+                      out.width = "90%", collapse = TRUE, 
+                      cache = TRUE, comment = "#>",
+                      autodep = TRUE)
+
+
+options(digits = 3,
+        scipen = 999,
+        width = 300)
+
+options(
+  rlang_trace_top_env = rlang::current_env(),
+  rlang__backtrace_on_error = "none")
+```
+
+## what are packages?
+
+R packages are collections of code, data, and documentation that extend R's functionality beyond its core features. If you have an idea or notice a gap in the existing ecosystem, you can develop a package, test it, document it, and share it with the broader R community. You can distribute your package through the Comprehensive R Archive Network (CRAN)^[CRAN reviews all submitted packages and distributes them as precompiled binaries] ([CRAN](https://cran.r-project.org/)) or [GitHub](https://github.com/). 
+
+## how to create a package
+
+All you need (assuming you already know some R) is a solid idea or concept that interests you. Take the time to clarify your idea—what problem does your package solve? How will it be useful? Even if it’s just for you, that’s a great start.
+
+Next, break the problem into steps and outline the primary functions you’ll need. Begin by creating a project folder to serve as the foundation of your package. Your functions will likely evolve as you refine them, but starting with a basic structure will help keep your development process organized.
+
+### an intermesso on r projects
+
+Always use [RStudio projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)! This is just my opinion, but a well-founded one. RStudio projects, combined with the [`here`](https://here.r-lib.org/) and [`renv`](https://rstudio.github.io/renv/index.html) packages, will save you countless headaches. Together, they help keep your code reproducible and shareable in a structured environment.
+
+Also, consider disabling the option to save your workspace on exit. It often leads to unnecessary clutter and can slow things down, especially when working with large datasets. ^[How large is "large"? That depends on your RAM.]
+
+## back to creating packages
+
+Your functions will likely evolve, merge, or be rewritten entirely as your package matures. That's okay. Most ideas need refinement through trial and error in an isolated environment—your R session—before they’re ready for the world. Stay flexible and be willing to adjust your approach as you develop your package.
+
+To deepen your understanding of package development, you don’t need a Coursera® certificate. Instead, focus on mastering the fundamentals of R programming and, most importantly, read [R packages](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan. It’s short, informative, and packed with insights that will save you time and frustration.
+
+### documenting your functions
+
+As you build and modify your functions, document them! Make notes on what each function does, its arguments, and any important details. This will form the basis of your formal documentation later.
+
+One of my favorite shortcuts is using ChatGPT® to generate `roxygen2` documentation. I provide a brief explanation of what my function does, a summary of its arguments, and the function code, then ask ChatGPT® to generate the `roxygen2` documentation. This saves time—but be warned: ChatGPT® has a habit of "hallucinating," so always review its output carefully.
+
+### write formal tests
+
+While it’s natural to test functions informally in the console, you should also create automated tests to verify their correctness in various scenarios. While I'm not entirely sure if CRAN requires formal tests for all user-facing functions, I totally recommend using the `testthat` package to create these automated tests.
+
+## regularly check your progress
+
+> If it hurts, do more of it. — Joko Willink
+
+Run `devtools::check()` regularly throughout the development process. It’s much easier to fix a few small issues as they arise than to deal with a mountain of errors all at once. Frequent checks will make your package better, reduce frustration for the [CRAN reviewers](https://cran.r-project.org/CRAN_team.htm), and improve the experience for your future users.
+
+Even if you're only sharing it on GitHub, always check your package. Your goal should be to provide users with a solid, well-tested, and reliable tool free of logical or implementation errors. 
+
+## release it to the world
+
+Once you’ve triple-checked (and quadruple-checked) your package and resolved all warnings and notes^[Some notes are unavoidable—new packages, for example, always receive a maintainer-related note that can’t be resolved.], you’re ready to submit to CRAN.
+
+Be prepared to communicate with CRAN reviewers and check your email regularly. The submission process can involve some back-and-forth, so try to be patient as you work to get your package on CRAN.
+
+## personal experience
+
+What I have described here is based on my personal experience developing R packages. I've released three packages to CRAN, `despair`,`matriz`, and `logos`. 
+
+The [`despair`](https://despair.jpmonteagudo.com/) package was a purely fun and silly desire to create (de)motivational quotes and codenames called `bard.bits` that could be used as code names. 
+
+The [`matriz`](https://matriz.jpmonteagudo.com/index.html) Born out of necessity, this package automates the creation, editing, deletion, and updating of literature matrices and BibTeX references. I built it because my research methods class required us to create literature matrices by hand in Excel®, which was painfully tedious.
+
+The [`logos`](https://logos.jpmonteagudo.com/) package introduces the writings of the Old and New testament in English, Greek and Hebrew to the R community after realizing they were not available on CRAN or GitHub. ^[the Mormon scriptures have been bundled into a package by [Andrew Heiss](https://github.com/andrewheiss/scriptuRs)] I only realized this gap because, in an attempt to do textual analysis on the gospel of John in its original language, I discovered publicly available biblical data was scarce within the R community. 
+
+I’ve also worked on other packages available on my GitHub profile. Some are still works in progress, but if you’re interested in any of them, you can install devtools and download them directly from GitHub.
+
+```{r install-github, echo = TRUE, eval = FALSE}
+devtools::instal_github("jpmonteagudo28/matriz", "jpmonteagudo28/despair","jpmonteagudo28/logos")
+```
+
+Here's how to install the three packages from CRAN:
+
+```{r package-download, echo = TRUE, eval = FALSE}
+
+install.packages(c("logos","matriz","despair"))
+# Downloading packages -------------------------------------------------------
+# - Downloading logos from CRAN ...               OK [3.2 Mb in 0.77s]
+# - Downloading matriz from CRAN ...              OK [378.5 Kb in 0.65s]
+# - Downloading writexl from CRAN ...             OK [198.4 Kb in 0.54s]
+# - Downloading despair from CRAN ...             OK [113.6 Kb in 0.53s]
+# Successfully downloaded 4 packages in 5.7 seconds.
+# 
+# The following package(s) will be installed:
+# - despair [0.1.1]
+# - logos   [0.1.0]
+# - matriz  [1.0.1]
+# - writexl [1.5.1]
+# These packages will be installed into "C:/Users/yourname/folder/".
+# 
+# Do you want to proceed? [Y/n]: y
+# 
+# # Installing packages --------------------------------------------------------
+# - Installing logos ...                          OK [installed binary and cached in 0.92s]
+# - Installing writexl ...                        OK [installed binary and cached in 0.57s]
+# - Installing matriz ...                         OK [installed binary and cached in 0.57s]
+# - Installing despair ...                        OK [installed binary and cached in 0.55s]
+# Successfully installed 4 packages in 2.8 seconds.
+
+```
+
+
+A taste of `despair`:
+
+```{r despair, echo = TRUE, eval = TRUE}
+library(despair)
+
+# set a reproducible character seed
+sad_seed <- set.char.seed("an ugly horse parade")
+
+# let the demotivation rain
+demotivate(cat = "work", seed = sad_seed)
+
+# Let's now boost your ego…perhaps
+motivate(cat = "stoic",seed = sad_seed)
+
+# Now come up with a funny Shakesperean code name for a project
+bard.bits(cat = "dsm_5", seed = sad_seed)
+```
+
+
+Here's the logos package in action:
+
+```{r logos, echo = TRUE, eval = TRUE}
+
+library(logos)
+
+select_passage("Jhn",chapter = 1,verse = 1:6, language = "English",testament = "new")
+
+# now in Greek
+select_passage("Jhn",chapter = 1,verse = 1:6, language = "Greek",testament = "new")
+```
+
+Now the matriz package:
+
+```{r matriz, echo = TRUE, eval = TRUE}
+
+library(matriz)
+lit_matrix <- init_matrix()
+
+# Get matriz structure to guide in creating records
+matriz_names()
+
+# Start filling out individual record with article info
+article <- data.frame(year = 2025,
+                citation = " ",
+                keywords = " ",
+                profession = "underwater basket weaver",
+                electronic = "YES",
+                purpose = "To investigate the depth of the oceans and retireve weaving materials",
+                study_design = "ethnography", 
+                outcome_var = "perceived attitudes towards basket weaving",
+                predictor_var = NA, 
+                sample = "a small school of clown fish", 
+                setting = "Italy",
+                drop_rate = 0.13, 
+                inclusion_criteria = "clow fish in Adriatic Sea", 
+                ehtnicity = "oceanic", 
+                age = "0 - 1 year",
+                sex = "both",
+                income = " ",
+                education = "none",
+                measures = "perceived attitudes",
+                analysis = "qualitative", 
+                results = "no significant differences",
+                limitations = "small sample size", 
+                implications = "clow fish don't like humans taking their homes for their own basket weaving endeavors",
+                ethical_concerns = "no informed consent given to school of clown fish",
+                biases = "clownfish always try to be funny. Lack of seriounness",
+                notes = "more research needed")
+
+# Add the record to the literature matrix
+lit_matrix <- add_record(lit_matrix, article, .before = 1)
+
+# Update record if mistake was made
+lit_matrix <- update_record(lit_matrix, notes, where = year == 2025, set_to = "actually, the clow fish don't want us to come back.")
+```

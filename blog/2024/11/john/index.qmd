@@ -16,7 +16,6 @@ draft: false
 
 ```{r setup, include = FALSE}
 library(methods)
-library(tinytable)
 library(here)
 
 

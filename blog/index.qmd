@@ -8,6 +8,11 @@ listing:
     sort: "date desc"
     template: ../html/blog/listing.ejs
     categories: false
+  - id: posts_2025
+    contents: "2025/**/index.qmd"
+    sort: "date desc"
+    template: ../html/blog/listing.ejs
+    categories: false
 format:
   html:
     grid:
@@ -28,6 +33,11 @@ freeze: false
     display: none;
 }
 ```
+## 2025
+
+:::{#posts_2025}
+:::
+
 
 ## 2024
 

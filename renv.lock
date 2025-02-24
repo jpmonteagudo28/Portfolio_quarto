@@ -1227,6 +1227,17 @@
       ],
       "Hash": "b8552d117e1b808b09a832f589b79035"
     },
+    "logos": {
+      "Package": "logos",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "dplyr"
+      ],
+      "Hash": "e5758ef1be2c30867dee92b36ec5544d"
+    },
     "lpSolve": {
       "Package": "lpSolve",
       "Version": "5.6.20",
@@ -1281,6 +1292,22 @@
         "xfun"
       ],
       "Hash": "074efab766a9d6360865ad39512f2a7e"
+    },
+    "matriz": {
+      "Package": "matriz",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "readr",
+        "readxl",
+        "rlang",
+        "stringr",
+        "writexl"
+      ],
+      "Hash": "e6b506c2a90d5193730f2d749ab5722b"
     },
     "memoise": {
       "Package": "memoise",
@@ -2262,6 +2289,13 @@
         "R"
       ],
       "Hash": "877644b9b942d429f3708e12c98d1a22"
+    },
+    "writexl": {
+      "Package": "writexl",
+      "Version": "1.5.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "3eb948ad9591d7b34987772d44e4be12"
     },
     "xfun": {
       "Package": "xfun",

@@ -11,7 +11,661 @@
 <description>JP&#39;s blog</description>
 <language>en</language>
 <generator>quarto-1.5.41</generator>
-<lastBuildDate>Tue, 26 Nov 2024 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 24 Feb 2025 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>r package development</title>
+  <dc:creator>JP Monteagudo</dc:creator>
+  <link>https://www.jpmonteagudo.com/blog/2025/02/</link>
+  <description><![CDATA[ <section id="what-are-packages" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="what-are-packages">what are packages?</h2>
+<p>R packages are collections of code, data, and documentation that extend R’s functionality beyond its core features. If you have an idea or notice a gap in the existing ecosystem, you can develop a package, test it, document it, and share it with the broader R community. You can distribute your package through the Comprehensive R Archive Network (CRAN)<sup>1</sup> (<a href="https://cran.r-project.org/">CRAN</a>) or <a href="https://github.com/">GitHub</a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;CRAN reviews all submitted packages and distributes them as precompiled binaries</p></div></div></section><section id="how-to-create-a-package" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="how-to-create-a-package">how to create a package</h2>
+<p>All you need (assuming you already know some R) is a solid idea or concept that interests you. Take the time to clarify your idea—what problem does your package solve? How will it be useful? Even if it’s just for you, that’s a great start.</p>
+<p>Next, break the problem into steps and outline the primary functions you’ll need. Begin by creating a project folder to serve as the foundation of your package. Your functions will likely evolve as you refine them, but starting with a basic structure will help keep your development process organized.</p>
+<section id="an-intermesso-on-r-projects" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="an-intermesso-on-r-projects">an intermesso on r projects</h3>
+<p>Always use <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">RStudio projects</a>! This is just my opinion, but a well-founded one. RStudio projects, combined with the <a href="https://here.r-lib.org/"><code>here</code></a> and <a href="https://rstudio.github.io/renv/index.html"><code>renv</code></a> packages, will save you countless headaches. Together, they help keep your code reproducible and shareable in a structured environment.</p>
+<p>Also, consider disabling the option to save your workspace on exit. It often leads to unnecessary clutter and can slow things down, especially when working with large datasets. <sup>2</sup></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;How large is “large”? That depends on your RAM.</p></div></div></section></section><section id="back-to-creating-packages" class="level2"><h2 class="anchored" data-anchor-id="back-to-creating-packages">back to creating packages</h2>
+<p>Your functions will likely evolve, merge, or be rewritten entirely as your package matures. That’s okay. Most ideas need refinement through trial and error in an isolated environment—your R session—before they’re ready for the world. Stay flexible and be willing to adjust your approach as you develop your package.</p>
+<p>To deepen your understanding of package development, you don’t need a Coursera® certificate. Instead, focus on mastering the fundamentals of R programming and, most importantly, read <a href="https://r-pkgs.org/">R packages</a> by Hadley Wickham and Jennifer Bryan. It’s short, informative, and packed with insights that will save you time and frustration.</p>
+<section id="documenting-your-functions" class="level3"><h3 class="anchored" data-anchor-id="documenting-your-functions">documenting your functions</h3>
+<p>As you build and modify your functions, document them! Make notes on what each function does, its arguments, and any important details. This will form the basis of your formal documentation later.</p>
+<p>One of my favorite shortcuts is using ChatGPT® to generate <code>roxygen2</code> documentation. I provide a brief explanation of what my function does, a summary of its arguments, and the function code, then ask ChatGPT® to generate the <code>roxygen2</code> documentation. This saves time—but be warned: ChatGPT® has a habit of “hallucinating,” so always review its output carefully.</p>
+</section><section id="write-formal-tests" class="level3"><h3 class="anchored" data-anchor-id="write-formal-tests">write formal tests</h3>
+<p>While it’s natural to test functions informally in the console, you should also create automated tests to verify their correctness in various scenarios. While I’m not entirely sure if CRAN requires formal tests for all user-facing functions, I totally recommend using the <code>testthat</code> package to create these automated tests.</p>
+</section></section><section id="regularly-check-your-progress" class="level2"><h2 class="anchored" data-anchor-id="regularly-check-your-progress">regularly check your progress</h2>
+<blockquote class="blockquote">
+<p>If it hurts, do more of it. — Joko Willink</p>
+</blockquote>
+<p>Run <code>devtools::check()</code> regularly throughout the development process. It’s much easier to fix a few small issues as they arise than to deal with a mountain of errors all at once. Frequent checks will make your package better, reduce frustration for the <a href="https://cran.r-project.org/CRAN_team.htm">CRAN reviewers</a>, and improve the experience for your future users.</p>
+<p>Even if you’re only sharing it on GitHub, always check your package. Your goal should be to provide users with a solid, well-tested, and reliable tool free of logical or implementation errors.</p>
+</section><section id="release-it-to-the-world" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="release-it-to-the-world">release it to the world</h2>
+<p>Once you’ve triple-checked (and quadruple-checked) your package and resolved all warnings and notes<sup>3</sup>, you’re ready to submit to CRAN.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Some notes are unavoidable—new packages, for example, always receive a maintainer-related note that can’t be resolved.</p></div></div><p>Be prepared to communicate with CRAN reviewers and check your email regularly. The submission process can involve some back-and-forth, so try to be patient as you work to get your package on CRAN.</p>
+</section><section id="personal-experience" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="personal-experience">personal experience</h2>
+<p>What I have described here is based on my personal experience developing R packages. I’ve released three packages to CRAN, <code>despair</code>,<code>matriz</code>, and <code>logos</code>.</p>
+<p>The <a href="https://despair.jpmonteagudo.com/"><code>despair</code></a> package was a purely fun and silly desire to create (de)motivational quotes and codenames called <code>bard.bits</code> that could be used as code names.</p>
+<p>The <a href="https://matriz.jpmonteagudo.com/index.html"><code>matriz</code></a> Born out of necessity, this package automates the creation, editing, deletion, and updating of literature matrices and BibTeX references. I built it because my research methods class required us to create literature matrices by hand in Excel®, which was painfully tedious.</p>
+<p>The <a href="https://logos.jpmonteagudo.com/"><code>logos</code></a> package introduces the writings of the Old and New testament in English, Greek and Hebrew to the R community after realizing they were not available on CRAN or GitHub. <sup>4</sup> I only realized this gap because, in an attempt to do textual analysis on the gospel of John in its original language, I discovered publicly available biblical data was scarce within the R community.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;the Mormon scriptures have been bundled into a package by <a href="https://github.com/andrewheiss/scriptuRs">Andrew Heiss</a></p></div></div><p>I’ve also worked on other packages available on my GitHub profile. Some are still works in progress, but if you’re interested in any of them, you can install devtools and download them directly from GitHub.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">devtools</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">instal_github</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jpmonteagudo28/matriz"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jpmonteagudo28/despair"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jpmonteagudo28/logos"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>Here’s how to install the three packages from CRAN:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"logos"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"matriz"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"despair"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Downloading packages -------------------------------------------------------</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Downloading logos from CRAN ...               OK [3.2 Mb in 0.77s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Downloading matriz from CRAN ...              OK [378.5 Kb in 0.65s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Downloading writexl from CRAN ...             OK [198.4 Kb in 0.54s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Downloading despair from CRAN ...             OK [113.6 Kb in 0.53s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Successfully downloaded 4 packages in 5.7 seconds.</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># </span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The following package(s) will be installed:</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - despair [0.1.1]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - logos   [0.1.0]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - matriz  [1.0.1]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - writexl [1.5.1]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># These packages will be installed into "C:/Users/yourname/folder/".</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># </span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Do you want to proceed? [Y/n]: y</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># </span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># # Installing packages --------------------------------------------------------</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Installing logos ...                          OK [installed binary and cached in 0.92s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Installing writexl ...                        OK [installed binary and cached in 0.57s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Installing matriz ...                         OK [installed binary and cached in 0.57s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># - Installing despair ...                        OK [installed binary and cached in 0.55s]</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Successfully installed 4 packages in 2.8 seconds.</span></span></code></pre></div>
+</div>
+<p>A taste of <code>despair</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/jpmonteagudo28/despair">despair</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># set a reproducible character seed</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sad_seed</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/despair/man/set.char.seed.html">set.char.seed</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"an ugly horse parade"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># let the demotivation rain</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/despair/man/demotivate.html">demotivate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>cat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"work"</span>, seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sad_seed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [1] "Monday is an awful way to spend 1/7th of your life."</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Let's now boost your ego…perhaps</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/despair/man/motivate.html">motivate</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>cat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stoic"</span>,seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sad_seed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [1] "Difficulties strengthen the mind, as labor does the body. - Seneca"</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Now come up with a funny Shakesperean code name for a project</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/despair/man/bard.bits.html">bard.bits</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>cat <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dsm_5"</span>, seed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sad_seed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [1] "critical starling"</span></span></code></pre></div>
+</div>
+<p>Here’s the logos package in action:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/jpmonteagudo28/logos">logos</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/logos/man/select_passage.html">select_passage</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Jhn"</span>,chapter <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,verse <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, language <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"English"</span>,testament <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"new"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [1] "In the beginning was the Word, and the Word was with God, and the Word was God."              "The same was in the beginning with God."                                                      "All things were made through him; and without him was not anything made that hath been made."</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [4] "In him was life; and the life was the light of men."                                          "And the light shineth in the darkness; and the darkness apprehended it not."                  "There came a man, sent from God, whose name was John."</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># now in Greek</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/logos/man/select_passage.html">select_passage</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Jhn"</span>,chapter <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,verse <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, language <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Greek"</span>,testament <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"new"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [1] "Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος. " "οὗτος ἦν ἐν ἀρχῇ πρὸς τὸν θεόν. "                                        "πάντα διʼ αὐτοῦ ἐγένετο, καὶ χωρὶς αὐτοῦ ἐγένετο οὐδὲ ἕν. ὃ γέγονεν "    "ἐν αὐτῷ ζωὴ ἦν, καὶ ἡ ζωὴ ἦν τὸ φῶς τῶν ἀνθρώπων· "                     </span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; [5] "καὶ τὸ φῶς ἐν τῇ σκοτίᾳ φαίνει, καὶ ἡ σκοτία αὐτὸ οὐ κατέλαβεν. "        "Ἐγένετο ἄνθρωπος ἀπεσταλμένος παρὰ θεοῦ, ὄνομα αὐτῷ Ἰωάννης· "</span></span></code></pre></div>
+</div>
+<p>Now the matriz package:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;"><a href="https://github.com/jpmonteagudo28/matriz">matriz</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lit_matrix</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/matriz/man/init_matrix.html">init_matrix</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get matriz structure to guide in creating records</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/matriz/man/matriz_names.html">matriz_names</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt;                        class</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; year                 numeric</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; citation           character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; keywords           character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; profession         character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; electronic           logical</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; purpose            character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; study_design       character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; outcome_var        character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; predictor_var      character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; sample               numeric</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; dropout_rate         numeric</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; setting            character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; inclusion_criteria character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; ethnicity          character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; age                  numeric</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; sex                   factor</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; income                factor</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; education          character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; measures           character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; analysis           character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; results            character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; limitations        character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; implications       character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; ethical_concerns   character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; biases             character</span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; notes              character</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Start filling out individual record with article info</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">article</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>year <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2025</span>,</span>
+<span>                citation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>,</span>
+<span>                keywords <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>,</span>
+<span>                profession <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"underwater basket weaver"</span>,</span>
+<span>                electronic <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"YES"</span>,</span>
+<span>                purpose <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"To investigate the depth of the oceans and retireve weaving materials"</span>,</span>
+<span>                study_design <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ethnography"</span>, </span>
+<span>                outcome_var <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"perceived attitudes towards basket weaving"</span>,</span>
+<span>                predictor_var <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>, </span>
+<span>                sample <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a small school of clown fish"</span>, </span>
+<span>                setting <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Italy"</span>,</span>
+<span>                drop_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.13</span>, </span>
+<span>                inclusion_criteria <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"clow fish in Adriatic Sea"</span>, </span>
+<span>                ehtnicity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"oceanic"</span>, </span>
+<span>                age <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0 - 1 year"</span>,</span>
+<span>                sex <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"both"</span>,</span>
+<span>                income <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>,</span>
+<span>                education <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>,</span>
+<span>                measures <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"perceived attitudes"</span>,</span>
+<span>                analysis <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"qualitative"</span>, </span>
+<span>                results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"no significant differences"</span>,</span>
+<span>                limitations <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"small sample size"</span>, </span>
+<span>                implications <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"clow fish don't like humans taking their homes for their own basket weaving endeavors"</span>,</span>
+<span>                ethical_concerns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"no informed consent given to school of clown fish"</span>,</span>
+<span>                biases <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"clownfish always try to be funny. Lack of seriounness"</span>,</span>
+<span>                notes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"more research needed"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Add the record to the literature matrix</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lit_matrix</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/matriz/man/add_record.html">add_record</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lit_matrix</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">article</span>, .before <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Update record if mistake was made</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lit_matrix</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/pkg/matriz/man/update_record.html">update_record</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lit_matrix</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">notes</span>, where <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">year</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2025</span>, set_to <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"actually, the clow fish don't want us to come back."</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+
+
+<!-- -->
+
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2025" class="csl-entry quarto-appendix-citeas">
+Monteagudo, JP. 2025. <span>“R Package Development.”</span> February 24,
+2025. <a href="https://www.jpmonteagudo.com/blog/2025/02">https://www.jpmonteagudo.com/blog/2025/02</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://www.jpmonteagudo.com/blog/2025/02/</guid>
+  <pubDate>Mon, 24 Feb 2025 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>john 1:1 - 18</title>
   <dc:creator>JP Monteagudo</dc:creator>
@@ -4368,10 +5022,10 @@ font-style: inherit;">wilcox_gt</span></span></code></pre></div>
 </style>
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
-<tr class="gt_heading header">
+<tr class="header gt_heading">
 <th colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border"><em>Comparison of Tit×Tat and Prober cooperative responses</em></th>
 </tr>
-<tr class="gt_col_headings even">
+<tr class="odd gt_col_headings">
 <th id="<strong>Estimate</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Estimate</strong></th>
 <th id="<strong>Difference in estimate</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Difference in estimate</strong></th>
 <th id="<strong>p-value</strong>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>

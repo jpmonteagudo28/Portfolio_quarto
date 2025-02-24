@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.41">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="JP Monteagudo">
+<meta name="description" content="improvemnt as a programmer">
+<title>r package development | JP Monteagudo believes in you</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../..//files/cards/favicon_no_bg.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SM9D5VRX5P"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
+</script><style>
+
+      .quarto-title-block .quarto-title-banner {
+        background: #112540;
+      }
+</style>
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="r package development | JP Monteagudo believes in you">
+<meta property="og:description" content="improvemnt as a programmer">
+<meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:height" content="357">
+<meta property="og:image:width" content="334">
+<meta name="twitter:title" content="r package development | JP Monteagudo believes in you">
+<meta name="twitter:description" content="improvemnt as a programmer">
+<meta name="twitter:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
+<meta name="twitter:creator" content="@jpPabl0">
+<meta name="twitter:site" content="@jpPabl0">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="357">
+<meta name="twitter:image-width" content="334">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../../../about/index.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv/index.html"> 
+<span class="menu-text">resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog/index.html"> 
+<span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../now/index.html"> 
+<span class="menu-text">now</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../uses/index.html"> 
+<span class="menu-text">uses</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="../../../atom.xml"> <i class="bi bi-rss" role="img" aria-label="rss">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jpmonteagudo2014@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/jpPabl0" rel="me"> <i class="bi bi-twitter-x" role="img" aria-label="twitter">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/jpmonteagudo28" rel="me"> <i class="bi bi-github" role="img" aria-label="github">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/juan-pablo-jp-monteagudo-71127bab/" rel="me"> <i class="bi bi-linkedin" role="img" aria-label="linkedin">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">r package development</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          improvemnt as a programmer
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p><a href="https://www.jpmonteagudo.com/">JP Monteagudo</a> <a href="https://orcid.org/0009-0003-6465-6658" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Monday, February 24, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><section id="what-are-packages" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="what-are-packages">what are packages?</h2>
+<p>R packages are collections of code, data, and documentation that extend R’s functionality beyond its core features. If you have an idea or notice a gap in the existing ecosystem, you can develop a package, test it, document it, and share it with the broader R community. You can distribute your package through the Comprehensive R Archive Network (CRAN)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (<a href="https://cran.r-project.org/">CRAN</a>) or <a href="https://github.com/">GitHub</a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;CRAN reviews all submitted packages and distributes them as precompiled binaries</p></div></div></section><section id="how-to-create-a-package" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="how-to-create-a-package">how to create a package</h2>
+<p>All you need (assuming you already know some R) is a solid idea or concept that interests you. Take the time to clarify your idea—what problem does your package solve? How will it be useful? Even if it’s just for you, that’s a great start.</p>
+<p>Next, break the problem into steps and outline the primary functions you’ll need. Begin by creating a project folder to serve as the foundation of your package. Your functions will likely evolve as you refine them, but starting with a basic structure will help keep your development process organized.</p>
+<section id="an-intermesso-on-r-projects" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="an-intermesso-on-r-projects">an intermesso on r projects</h3>
+<p>Always use <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">RStudio projects</a>! This is just my opinion, but a well-founded one. RStudio projects, combined with the <a href="https://here.r-lib.org/"><code>here</code></a> and <a href="https://rstudio.github.io/renv/index.html"><code>renv</code></a> packages, will save you countless headaches. Together, they help keep your code reproducible and shareable in a structured environment.</p>
+<p>Also, consider disabling the option to save your workspace on exit. It often leads to unnecessary clutter and can slow things down, especially when working with large datasets. <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;How large is “large”? That depends on your RAM.</p></div></div></section></section><section id="back-to-creating-packages" class="level2"><h2 class="anchored" data-anchor-id="back-to-creating-packages">back to creating packages</h2>
+<p>Your functions will likely evolve, merge, or be rewritten entirely as your package matures. That’s okay. Most ideas need refinement through trial and error in an isolated environment—your R session—before they’re ready for the world. Stay flexible and be willing to adjust your approach as you develop your package.</p>
+<p>To deepen your understanding of package development, you don’t need a Coursera® certificate. Instead, focus on mastering the fundamentals of R programming and, most importantly, read <a href="https://r-pkgs.org/">R packages</a> by Hadley Wickham and Jennifer Bryan. It’s short, informative, and packed with insights that will save you time and frustration.</p>
+<section id="documenting-your-functions" class="level3"><h3 class="anchored" data-anchor-id="documenting-your-functions">documenting your functions</h3>
+<p>As you build and modify your functions, document them! Make notes on what each function does, its arguments, and any important details. This will form the basis of your formal documentation later.</p>
+<p>One of my favorite shortcuts is using ChatGPT® to generate <code>roxygen2</code> documentation. I provide a brief explanation of what my function does, a summary of its arguments, and the function code, then ask ChatGPT® to generate the <code>roxygen2</code> documentation. This saves time—but be warned: ChatGPT® has a habit of “hallucinating,” so always review its output carefully.</p>
+</section><section id="write-formal-tests" class="level3"><h3 class="anchored" data-anchor-id="write-formal-tests">write formal tests</h3>
+<p>While it’s natural to test functions informally in the console, you should also create automated tests to verify their correctness in various scenarios. While I’m not entirely sure if CRAN requires formal tests for all user-facing functions, I totally recommend using the <code>testthat</code> package to create these automated tests.</p>
+</section></section><section id="regularly-check-your-progress" class="level2"><h2 class="anchored" data-anchor-id="regularly-check-your-progress">regularly check your progress</h2>
+<blockquote class="blockquote">
+<p>If it hurts, do more of it. — Joko Willink</p>
+</blockquote>
+<p>Run <code>devtools::check()</code> regularly throughout the development process. It’s much easier to fix a few small issues as they arise than to deal with a mountain of errors all at once. Frequent checks will make your package better, reduce frustration for the <a href="https://cran.r-project.org/CRAN_team.htm">CRAN reviewers</a>, and improve the experience for your future users.</p>
+<p>Even if you’re only sharing it on GitHub, always check your package. Your goal should be to provide users with a solid, well-tested, and reliable tool free of logical or implementation errors.</p>
+</section><section id="release-it-to-the-world" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="release-it-to-the-world">release it to the world</h2>
+<p>Once you’ve triple-checked (and quadruple-checked) your package and resolved all warnings and notes<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, you’re ready to submit to CRAN.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Some notes are unavoidable—new packages, for example, always receive a maintainer-related note that can’t be resolved.</p></div></div><p>Be prepared to communicate with CRAN reviewers and check your email regularly. The submission process can involve some back-and-forth, so try to be patient as you work to get your package on CRAN.</p>
+</section><section id="personal-experience" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="personal-experience">personal experience</h2>
+<p>What I have described here is based on my personal experience developing R packages. I’ve released three packages to CRAN, <code>despair</code>,<code>matriz</code>, and <code>logos</code>.</p>
+<p>The <a href="https://despair.jpmonteagudo.com/"><code>despair</code></a> package was a purely fun and silly desire to create (de)motivational quotes and codenames called <code>bard.bits</code> that could be used as code names.</p>
+<p>The <a href="https://matriz.jpmonteagudo.com/index.html"><code>matriz</code></a> Born out of necessity, this package automates the creation, editing, deletion, and updating of literature matrices and BibTeX references. I built it because my research methods class required us to create literature matrices by hand in Excel®, which was painfully tedious.</p>
+<p>The <a href="https://logos.jpmonteagudo.com/"><code>logos</code></a> package introduces the writings of the Old and New testament in English, Greek and Hebrew to the R community after realizing they were not available on CRAN or GitHub. <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> I only realized this gap because, in an attempt to do textual analysis on the gospel of John in its original language, I discovered publicly available biblical data was scarce within the R community.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;the Mormon scriptures have been bundled into a package by <a href="https://github.com/andrewheiss/scriptuRs">Andrew Heiss</a></p></div></div><p>I’ve also worked on other packages available on my GitHub profile. Some are still works in progress, but if you’re interested in any of them, you can install devtools and download them directly from GitHub.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">instal_github</span><span class="op">(</span><span class="st">"jpmonteagudo28/matriz"</span>, <span class="st">"jpmonteagudo28/despair"</span>,<span class="st">"jpmonteagudo28/logos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s how to install the three packages from CRAN:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"logos"</span>,<span class="st">"matriz"</span>,<span class="st">"despair"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Downloading packages -------------------------------------------------------</span></span>
+<span><span class="co"># - Downloading logos from CRAN ...               OK [3.2 Mb in 0.77s]</span></span>
+<span><span class="co"># - Downloading matriz from CRAN ...              OK [378.5 Kb in 0.65s]</span></span>
+<span><span class="co"># - Downloading writexl from CRAN ...             OK [198.4 Kb in 0.54s]</span></span>
+<span><span class="co"># - Downloading despair from CRAN ...             OK [113.6 Kb in 0.53s]</span></span>
+<span><span class="co"># Successfully downloaded 4 packages in 5.7 seconds.</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># The following package(s) will be installed:</span></span>
+<span><span class="co"># - despair [0.1.1]</span></span>
+<span><span class="co"># - logos   [0.1.0]</span></span>
+<span><span class="co"># - matriz  [1.0.1]</span></span>
+<span><span class="co"># - writexl [1.5.1]</span></span>
+<span><span class="co"># These packages will be installed into "C:/Users/yourname/folder/".</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># Do you want to proceed? [Y/n]: y</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># # Installing packages --------------------------------------------------------</span></span>
+<span><span class="co"># - Installing logos ...                          OK [installed binary and cached in 0.92s]</span></span>
+<span><span class="co"># - Installing writexl ...                        OK [installed binary and cached in 0.57s]</span></span>
+<span><span class="co"># - Installing matriz ...                         OK [installed binary and cached in 0.57s]</span></span>
+<span><span class="co"># - Installing despair ...                        OK [installed binary and cached in 0.55s]</span></span>
+<span><span class="co"># Successfully installed 4 packages in 2.8 seconds.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A taste of <code>despair</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jpmonteagudo28/despair">despair</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set a reproducible character seed</span></span>
+<span><span class="va">sad_seed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/despair/man/set.char.seed.html">set.char.seed</a></span><span class="op">(</span><span class="st">"an ugly horse parade"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># let the demotivation rain</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/despair/man/demotivate.html">demotivate</a></span><span class="op">(</span>cat <span class="op">=</span> <span class="st">"work"</span>, seed <span class="op">=</span> <span class="va">sad_seed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Monday is an awful way to spend 1/7th of your life."</span></span>
+<span></span>
+<span><span class="co"># Let's now boost your ego…perhaps</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/despair/man/motivate.html">motivate</a></span><span class="op">(</span>cat <span class="op">=</span> <span class="st">"stoic"</span>,seed <span class="op">=</span> <span class="va">sad_seed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Difficulties strengthen the mind, as labor does the body. - Seneca"</span></span>
+<span></span>
+<span><span class="co"># Now come up with a funny Shakesperean code name for a project</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/despair/man/bard.bits.html">bard.bits</a></span><span class="op">(</span>cat <span class="op">=</span> <span class="st">"dsm_5"</span>, seed <span class="op">=</span> <span class="va">sad_seed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "critical starling"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s the logos package in action:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jpmonteagudo28/logos">logos</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/logos/man/select_passage.html">select_passage</a></span><span class="op">(</span><span class="st">"Jhn"</span>,chapter <span class="op">=</span> <span class="fl">1</span>,verse <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, language <span class="op">=</span> <span class="st">"English"</span>,testament <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "In the beginning was the Word, and the Word was with God, and the Word was God."              "The same was in the beginning with God."                                                      "All things were made through him; and without him was not anything made that hath been made."</span></span>
+<span><span class="co">#&gt; [4] "In him was life; and the life was the light of men."                                          "And the light shineth in the darkness; and the darkness apprehended it not."                  "There came a man, sent from God, whose name was John."</span></span>
+<span></span>
+<span><span class="co"># now in Greek</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/logos/man/select_passage.html">select_passage</a></span><span class="op">(</span><span class="st">"Jhn"</span>,chapter <span class="op">=</span> <span class="fl">1</span>,verse <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, language <span class="op">=</span> <span class="st">"Greek"</span>,testament <span class="op">=</span> <span class="st">"new"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος. " "οὗτος ἦν ἐν ἀρχῇ πρὸς τὸν θεόν. "                                        "πάντα διʼ αὐτοῦ ἐγένετο, καὶ χωρὶς αὐτοῦ ἐγένετο οὐδὲ ἕν. ὃ γέγονεν "    "ἐν αὐτῷ ζωὴ ἦν, καὶ ἡ ζωὴ ἦν τὸ φῶς τῶν ἀνθρώπων· "                     </span></span>
+<span><span class="co">#&gt; [5] "καὶ τὸ φῶς ἐν τῇ σκοτίᾳ φαίνει, καὶ ἡ σκοτία αὐτὸ οὐ κατέλαβεν. "        "Ἐγένετο ἄνθρωπος ἀπεσταλμένος παρὰ θεοῦ, ὄνομα αὐτῷ Ἰωάννης· "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now the matriz package:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jpmonteagudo28/matriz">matriz</a></span><span class="op">)</span></span>
+<span><span class="va">lit_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/matriz/man/init_matrix.html">init_matrix</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get matriz structure to guide in creating records</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/matriz/man/matriz_names.html">matriz_names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                        class</span></span>
+<span><span class="co">#&gt; year                 numeric</span></span>
+<span><span class="co">#&gt; citation           character</span></span>
+<span><span class="co">#&gt; keywords           character</span></span>
+<span><span class="co">#&gt; profession         character</span></span>
+<span><span class="co">#&gt; electronic           logical</span></span>
+<span><span class="co">#&gt; purpose            character</span></span>
+<span><span class="co">#&gt; study_design       character</span></span>
+<span><span class="co">#&gt; outcome_var        character</span></span>
+<span><span class="co">#&gt; predictor_var      character</span></span>
+<span><span class="co">#&gt; sample               numeric</span></span>
+<span><span class="co">#&gt; dropout_rate         numeric</span></span>
+<span><span class="co">#&gt; setting            character</span></span>
+<span><span class="co">#&gt; inclusion_criteria character</span></span>
+<span><span class="co">#&gt; ethnicity          character</span></span>
+<span><span class="co">#&gt; age                  numeric</span></span>
+<span><span class="co">#&gt; sex                   factor</span></span>
+<span><span class="co">#&gt; income                factor</span></span>
+<span><span class="co">#&gt; education          character</span></span>
+<span><span class="co">#&gt; measures           character</span></span>
+<span><span class="co">#&gt; analysis           character</span></span>
+<span><span class="co">#&gt; results            character</span></span>
+<span><span class="co">#&gt; limitations        character</span></span>
+<span><span class="co">#&gt; implications       character</span></span>
+<span><span class="co">#&gt; ethical_concerns   character</span></span>
+<span><span class="co">#&gt; biases             character</span></span>
+<span><span class="co">#&gt; notes              character</span></span>
+<span></span>
+<span><span class="co"># Start filling out individual record with article info</span></span>
+<span><span class="va">article</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2025</span>,</span>
+<span>                citation <span class="op">=</span> <span class="st">" "</span>,</span>
+<span>                keywords <span class="op">=</span> <span class="st">" "</span>,</span>
+<span>                profession <span class="op">=</span> <span class="st">"underwater basket weaver"</span>,</span>
+<span>                electronic <span class="op">=</span> <span class="st">"YES"</span>,</span>
+<span>                purpose <span class="op">=</span> <span class="st">"To investigate the depth of the oceans and retireve weaving materials"</span>,</span>
+<span>                study_design <span class="op">=</span> <span class="st">"ethnography"</span>, </span>
+<span>                outcome_var <span class="op">=</span> <span class="st">"perceived attitudes towards basket weaving"</span>,</span>
+<span>                predictor_var <span class="op">=</span> <span class="cn">NA</span>, </span>
+<span>                sample <span class="op">=</span> <span class="st">"a small school of clown fish"</span>, </span>
+<span>                setting <span class="op">=</span> <span class="st">"Italy"</span>,</span>
+<span>                drop_rate <span class="op">=</span> <span class="fl">0.13</span>, </span>
+<span>                inclusion_criteria <span class="op">=</span> <span class="st">"clow fish in Adriatic Sea"</span>, </span>
+<span>                ehtnicity <span class="op">=</span> <span class="st">"oceanic"</span>, </span>
+<span>                age <span class="op">=</span> <span class="st">"0 - 1 year"</span>,</span>
+<span>                sex <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>                income <span class="op">=</span> <span class="st">" "</span>,</span>
+<span>                education <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>                measures <span class="op">=</span> <span class="st">"perceived attitudes"</span>,</span>
+<span>                analysis <span class="op">=</span> <span class="st">"qualitative"</span>, </span>
+<span>                results <span class="op">=</span> <span class="st">"no significant differences"</span>,</span>
+<span>                limitations <span class="op">=</span> <span class="st">"small sample size"</span>, </span>
+<span>                implications <span class="op">=</span> <span class="st">"clow fish don't like humans taking their homes for their own basket weaving endeavors"</span>,</span>
+<span>                ethical_concerns <span class="op">=</span> <span class="st">"no informed consent given to school of clown fish"</span>,</span>
+<span>                biases <span class="op">=</span> <span class="st">"clownfish always try to be funny. Lack of seriounness"</span>,</span>
+<span>                notes <span class="op">=</span> <span class="st">"more research needed"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add the record to the literature matrix</span></span>
+<span><span class="va">lit_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/matriz/man/add_record.html">add_record</a></span><span class="op">(</span><span class="va">lit_matrix</span>, <span class="va">article</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Update record if mistake was made</span></span>
+<span><span class="va">lit_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/matriz/man/update_record.html">update_record</a></span><span class="op">(</span><span class="va">lit_matrix</span>, <span class="va">notes</span>, where <span class="op">=</span> <span class="va">year</span> <span class="op">==</span> <span class="fl">2025</span>, set_to <span class="op">=</span> <span class="st">"actually, the clow fish don't want us to come back."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+<!-- -->
+
+</section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Monteagudo, JP. 2025. <span>“R Package Development.”</span> February 24,
+2025. <a href="https://www.jpmonteagudo.com/blog/2025/02">https://www.jpmonteagudo.com/blog/2025/02</a>.
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.jpmonteagudo\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "r package development"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2/24/2025</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "improvemnt as a programmer"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: false</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-line-numbers: false</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#doi:</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in">library(methods)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="in">library(tinytable)</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(2899)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "90%", collapse = TRUE, </span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="in">                      cache = TRUE, comment = "#&gt;",</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in">                      autodep = TRUE)</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3,</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="in">        scipen = 999,</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="in">        width = 300)</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">options(</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="in">  rlang_trace_top_env = rlang::current_env(),</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="in">  rlang__backtrace_on_error = "none")</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## what are packages?</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>R packages are collections of code, data, and documentation that extend R's functionality beyond its core features. If you have an idea or notice a gap in the existing ecosystem, you can develop a package, test it, document it, and share it with the broader R community. You can distribute your package through the Comprehensive R Archive Network (CRAN)^<span class="co">[</span><span class="ot">CRAN reviews all submitted packages and distributes them as precompiled binaries</span><span class="co">]</span> (<span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/)</span>) or <span class="co">[</span><span class="ot">GitHub</span><span class="co">](https://github.com/)</span>. </span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## how to create a package</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>All you need (assuming you already know some R) is a solid idea or concept that interests you. Take the time to clarify your idea—what problem does your package solve? How will it be useful? Even if it’s just for you, that’s a great start.</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>Next, break the problem into steps and outline the primary functions you’ll need. Begin by creating a project folder to serve as the foundation of your package. Your functions will likely evolve as you refine them, but starting with a basic structure will help keep your development process organized.</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### an intermesso on r projects</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>Always use <span class="co">[</span><span class="ot">RStudio projects</span><span class="co">](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)</span>! This is just my opinion, but a well-founded one. RStudio projects, combined with the <span class="co">[</span><span class="ot">`here`</span><span class="co">](https://here.r-lib.org/)</span> and <span class="co">[</span><span class="ot">`renv`</span><span class="co">](https://rstudio.github.io/renv/index.html)</span> packages, will save you countless headaches. Together, they help keep your code reproducible and shareable in a structured environment.</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>Also, consider disabling the option to save your workspace on exit. It often leads to unnecessary clutter and can slow things down, especially when working with large datasets. ^<span class="co">[</span><span class="ot">How large is "large"? That depends on your RAM.</span><span class="co">]</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## back to creating packages</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>Your functions will likely evolve, merge, or be rewritten entirely as your package matures. That's okay. Most ideas need refinement through trial and error in an isolated environment—your R session—before they’re ready for the world. Stay flexible and be willing to adjust your approach as you develop your package.</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>To deepen your understanding of package development, you don’t need a Coursera® certificate. Instead, focus on mastering the fundamentals of R programming and, most importantly, read <span class="co">[</span><span class="ot">R packages</span><span class="co">](https://r-pkgs.org/)</span> by Hadley Wickham and Jennifer Bryan. It’s short, informative, and packed with insights that will save you time and frustration.</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="fu">### documenting your functions</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>As you build and modify your functions, document them! Make notes on what each function does, its arguments, and any important details. This will form the basis of your formal documentation later.</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>One of my favorite shortcuts is using ChatGPT® to generate <span class="in">`roxygen2`</span> documentation. I provide a brief explanation of what my function does, a summary of its arguments, and the function code, then ask ChatGPT® to generate the <span class="in">`roxygen2`</span> documentation. This saves time—but be warned: ChatGPT® has a habit of "hallucinating," so always review its output carefully.</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### write formal tests</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>While it’s natural to test functions informally in the console, you should also create automated tests to verify their correctness in various scenarios. While I'm not entirely sure if CRAN requires formal tests for all user-facing functions, I totally recommend using the <span class="in">`testthat`</span> package to create these automated tests.</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## regularly check your progress</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; If it hurts, do more of it. — Joko Willink</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>Run <span class="in">`devtools::check()`</span> regularly throughout the development process. It’s much easier to fix a few small issues as they arise than to deal with a mountain of errors all at once. Frequent checks will make your package better, reduce frustration for the <span class="co">[</span><span class="ot">CRAN reviewers</span><span class="co">](https://cran.r-project.org/CRAN_team.htm)</span>, and improve the experience for your future users.</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>Even if you're only sharing it on GitHub, always check your package. Your goal should be to provide users with a solid, well-tested, and reliable tool free of logical or implementation errors. </span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## release it to the world</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>Once you’ve triple-checked (and quadruple-checked) your package and resolved all warnings and notes^<span class="co">[</span><span class="ot">Some notes are unavoidable—new packages, for example, always receive a maintainer-related note that can’t be resolved.</span><span class="co">]</span>, you’re ready to submit to CRAN.</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>Be prepared to communicate with CRAN reviewers and check your email regularly. The submission process can involve some back-and-forth, so try to be patient as you work to get your package on CRAN.</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## personal experience</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>What I have described here is based on my personal experience developing R packages. I've released three packages to CRAN, <span class="in">`despair`</span>,<span class="in">`matriz`</span>, and <span class="in">`logos`</span>. </span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">`despair`</span><span class="co">](https://despair.jpmonteagudo.com/)</span> package was a purely fun and silly desire to create (de)motivational quotes and codenames called <span class="in">`bard.bits`</span> that could be used as code names. </span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">`matriz`</span><span class="co">](https://matriz.jpmonteagudo.com/index.html)</span> Born out of necessity, this package automates the creation, editing, deletion, and updating of literature matrices and BibTeX references. I built it because my research methods class required us to create literature matrices by hand in Excel®, which was painfully tedious.</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>The <span class="co">[</span><span class="ot">`logos`</span><span class="co">](https://logos.jpmonteagudo.com/)</span> package introduces the writings of the Old and New testament in English, Greek and Hebrew to the R community after realizing they were not available on CRAN or GitHub. ^<span class="co">[</span><span class="ot">the Mormon scriptures have been bundled into a package by [Andrew Heiss](https://github.com/andrewheiss/scriptuRs)</span><span class="co">]</span> I only realized this gap because, in an attempt to do textual analysis on the gospel of John in its original language, I discovered publicly available biblical data was scarce within the R community. </span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>I’ve also worked on other packages available on my GitHub profile. Some are still works in progress, but if you’re interested in any of them, you can install devtools and download them directly from GitHub.</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r install-github, echo = TRUE, eval = FALSE}</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="in">devtools::instal_github("jpmonteagudo28/matriz", "jpmonteagudo28/despair","jpmonteagudo28/logos")</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>Here's how to install the three packages from CRAN:</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package-download, echo = TRUE, eval = FALSE}</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a><span class="in">install.packages(c("logos","matriz","despair"))</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a><span class="in"># Downloading packages -------------------------------------------------------</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a><span class="in"># - Downloading logos from CRAN ...               OK [3.2 Mb in 0.77s]</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a><span class="in"># - Downloading matriz from CRAN ...              OK [378.5 Kb in 0.65s]</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="in"># - Downloading writexl from CRAN ...             OK [198.4 Kb in 0.54s]</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="in"># - Downloading despair from CRAN ...             OK [113.6 Kb in 0.53s]</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a><span class="in"># Successfully downloaded 4 packages in 5.7 seconds.</span></span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a><span class="in"># </span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a><span class="in"># The following package(s) will be installed:</span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="in"># - despair [0.1.1]</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a><span class="in"># - logos   [0.1.0]</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a><span class="in"># - matriz  [1.0.1]</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a><span class="in"># - writexl [1.5.1]</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a><span class="in"># These packages will be installed into "C:/Users/yourname/folder/".</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a><span class="in"># </span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a><span class="in"># Do you want to proceed? [Y/n]: y</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a><span class="in"># </span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a><span class="in"># # Installing packages --------------------------------------------------------</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="in"># - Installing logos ...                          OK [installed binary and cached in 0.92s]</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="in"># - Installing writexl ...                        OK [installed binary and cached in 0.57s]</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a><span class="in"># - Installing matriz ...                         OK [installed binary and cached in 0.57s]</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a><span class="in"># - Installing despair ...                        OK [installed binary and cached in 0.55s]</span></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="in"># Successfully installed 4 packages in 2.8 seconds.</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>A taste of <span class="in">`despair`</span>:</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r despair, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="in">library(despair)</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a><span class="in"># set a reproducible character seed</span></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a><span class="in">sad_seed &lt;- set.char.seed("an ugly horse parade")</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="in"># let the demotivation rain</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="in">demotivate(cat = "work", seed = sad_seed)</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="in"># Let's now boost your ego…perhaps</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="in">motivate(cat = "stoic",seed = sad_seed)</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="in"># Now come up with a funny Shakesperean code name for a project</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="in">bard.bits(cat = "dsm_5", seed = sad_seed)</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>Here's the logos package in action:</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r logos, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="in">library(logos)</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="in">select_passage("Jhn",chapter = 1,verse = 1:6, language = "English",testament = "new")</span></span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a><span class="in"># now in Greek</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a><span class="in">select_passage("Jhn",chapter = 1,verse = 1:6, language = "Greek",testament = "new")</span></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>Now the matriz package:</span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r matriz, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a><span class="in">library(matriz)</span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a><span class="in">lit_matrix &lt;- init_matrix()</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a><span class="in"># Get matriz structure to guide in creating records</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="in">matriz_names()</span></span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a><span class="in"># Start filling out individual record with article info</span></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="in">article &lt;- data.frame(year = 2025,</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a><span class="in">                citation = " ",</span></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a><span class="in">                keywords = " ",</span></span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a><span class="in">                profession = "underwater basket weaver",</span></span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="in">                electronic = "YES",</span></span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a><span class="in">                purpose = "To investigate the depth of the oceans and retireve weaving materials",</span></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="in">                study_design = "ethnography", </span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a><span class="in">                outcome_var = "perceived attitudes towards basket weaving",</span></span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a><span class="in">                predictor_var = NA, </span></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a><span class="in">                sample = "a small school of clown fish", </span></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a><span class="in">                setting = "Italy",</span></span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a><span class="in">                drop_rate = 0.13, </span></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a><span class="in">                inclusion_criteria = "clow fish in Adriatic Sea", </span></span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a><span class="in">                ehtnicity = "oceanic", </span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a><span class="in">                age = "0 - 1 year",</span></span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a><span class="in">                sex = "both",</span></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a><span class="in">                income = " ",</span></span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a><span class="in">                education = "none",</span></span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="in">                measures = "perceived attitudes",</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="in">                analysis = "qualitative", </span></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="in">                results = "no significant differences",</span></span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a><span class="in">                limitations = "small sample size", </span></span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a><span class="in">                implications = "clow fish don't like humans taking their homes for their own basket weaving endeavors",</span></span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="in">                ethical_concerns = "no informed consent given to school of clown fish",</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a><span class="in">                biases = "clownfish always try to be funny. Lack of seriounness",</span></span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="in">                notes = "more research needed")</span></span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a><span class="in"># Add the record to the literature matrix</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="in">lit_matrix &lt;- add_record(lit_matrix, article, .before = 1)</span></span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a><span class="in"># Update record if mistake was made</span></span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a><span class="in">lit_matrix &lt;- update_record(lit_matrix, notes, where = year == 2025, set_to = "actually, the clow fish don't want us to come back.")</span></span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><span class="faux-block"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> 2023–2024 JP Monteagudo</span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by-sa/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> <i class="fa-brands fa-creative-commons-sa" aria-label="creative-commons-sa"></i> Creative Commons CC BY-SA 4.0</a></span> <!-- <span class="faux-block"> <strong>ORCID</strong> [0009-0003-6465-6658](https://orcid.org/0009-0003-6465-6658)</span> --> <!-- <span class="faux-block"> [PGP public key](../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> --></p>
+</div>
+    <div class="nav-footer-right">
+<!-- <span class="faux-block"> [PGP public key](../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
+</div>
+  </div>
+</footer>
+
+
+</body></html>

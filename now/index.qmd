@@ -1,6 +1,6 @@
 ---
 title: Nowadays
-date: 2024-09-13
+date: 2025-02-24
 description: Some projects, new learning experiences and home-life adventures
 published-title: Last updated
 title-block-banner: "#112540"
@@ -22,9 +22,8 @@ This year has  a busy one for me:
 
 -   I'm doing my [MSPH in Epidemiology](https://www.liberty.edu/residential/health-sciences/masters/public-health/msph-epidemiology/) and figuring out what research opportunities are available at my university.
 -   After the COVID-19 pandemic, I've been working from home and spent a lot of time with my family.
--   I'm working full-time as a Learning and Development Specialist
-- I've been reading up on some R programming books and have been able to get one package, [`despair`](https://despair.jpmonteagudo.com/),submitted and approved on [CRAN](https://cran.rstudio.com/web/packages/despair/). I'm currently working on two other packages, [`describe`](https://github.com/jpmonteagudo28/describe) and deals with descriptive and missing data, and [`guides`](https://github.com/jpmonteagudo28/guide) which allows the user to move their directory to any folder or file inside or outside an R project. 
--   I'm currently reading [An Introduction to Generalized Linear Models](https://www.amazon.com/Introduction-Generalized-Quantitative-Applications-Sciences/dp/0761920846), [Epidemiology by Design](https://www.amazon.com/Epidemiology-Design-Causal-Approach-Sciences/dp/0190665769/ref=sr_1_1?crid=37D1MFY4ZYRFD&dib=eyJ2IjoiMSJ9.fp2pEVeyeMmyBFLhIW5VSW9CzPu1S0FkGjfJHrJDjZy_ACkSPNsO60-zaCgmnPfrUB8qpRHyk-Q8GgFEpceTXoskJ3GK3OGRB_PdoXfZa5PDt63f2zjg5HU6D577Z97e1bS5EN-98q6bdeNDiLXfIUbR2U-tyCeTSbFgFqmvRzyju5EEMHTaKg2rqAiHEyhPZ1DFveF1_QhrNNpyh8i-lHIaIkWQKhFvgYcSDpd6LeI.DkuBhEE02xpe1FTDbs1fdSJN5tvV3OBf5v6fKVwf6UU&dib_tag=se&keywords=epidemiology+by+design&qid=1726253555&s=books&sprefix=epidemiology+by+desing%2Cstripbooks%2C84&sr=1-1), and [Flexible Imputation of Missing Data](https://stefvanbuuren.name/fimd/) by Stef van Buuren
+-   I'm working as a data analyst for a large private institution. 
+- I've been reading up on some R programming books and have been able to get three packages, [`despair`](https://despair.jpmonteagudo.com/),[`matriz`](https://matriz.jpmonteagudo.com/), and [`logos`](https://logos.jpmonteagudo.com/)submitted and approved on [CRAN](https://cran.rstudio.com/web/packages/despair/). I'm currently working on several packages, [`describe`](https://github.com/jpmonteagudo28/describe) and deals with descriptive and missing data, and [`guides`](https://github.com/jpmonteagudo28/guide) which allows the user to move their directory to any folder or file inside or outside an R project, among others.
+-   I'm currently reading [Epidemiology by Design](https://www.amazon.com/Epidemiology-Design-Causal-Approach-Sciences/dp/0190665769/ref=sr_1_1?crid=37D1MFY4ZYRFD&dib=eyJ2IjoiMSJ9.fp2pEVeyeMmyBFLhIW5VSW9CzPu1S0FkGjfJHrJDjZy_ACkSPNsO60-zaCgmnPfrUB8qpRHyk-Q8GgFEpceTXoskJ3GK3OGRB_PdoXfZa5PDt63f2zjg5HU6D577Z97e1bS5EN-98q6bdeNDiLXfIUbR2U-tyCeTSbFgFqmvRzyju5EEMHTaKg2rqAiHEyhPZ1DFveF1_QhrNNpyh8i-lHIaIkWQKhFvgYcSDpd6LeI.DkuBhEE02xpe1FTDbs1fdSJN5tvV3OBf5v6fKVwf6UU&dib_tag=se&keywords=epidemiology+by+design&qid=1726253555&s=books&sprefix=epidemiology+by+desing%2Cstripbooks%2C84&sr=1-1) and “Union with Christ: The way to know and enjoy God” by Rankin Wilbourne.
 -   I have been obsessed with [kettlebells](https://www.roguefitness.com/conditioning/strength-equipment/kettlebells?gad_source=1&gclid=CjwKCAiArfauBhApEiwAeoB7qGKW1QZiYRoVee6Ak1xK2fM9izidlnV-h8GoWOpbN58oTeEv43dAFxoC_iYQAvD_BwE) for the past three years. I've mastered a few movements but there's still a lot of ground to cover.
 -   Eversince we moved to our new house, I've been working on some house repairs.
--   I've been reading science and religion books for the past three years until recently, when I decided to reread the classics and tell them to my girls who aren't old enough to read those yet.
