@@ -36,7 +36,7 @@ I'm an aspiring epidemiologist currently pursuing post-graduate studies in [Epid
 
 I love statistics and the [R programming language](https://www.r-project.org/). I'm currently taking a deep dive into generalized linear models, Bayesian inference and package development.
 
-Nowadays, I work as a Learning & Development Specialist conducting a pilot study analyzing the impact of new hire training on performance in a fast-paced contact center environment.
+Nowadays, I work as a business data analyst at a large private institution.
 
 :::
 
