@@ -2,7 +2,7 @@
 title: Résumé
 description: "JP Monteagudo's Résumé"
 date: 2024-03-01
-title-block-banner: "#A52C60"
+title-block-banner: "#112540"
 published-title: CV last updated
 engine: knitr
 freeze: false

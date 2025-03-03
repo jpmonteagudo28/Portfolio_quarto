@@ -504,6 +504,16 @@
       ],
       "Hash": "39b2e002522bfd258039ee4e889e0fd1"
     },
+    "despair": {
+      "Package": "despair",
+      "Version": "0.1.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "f7d2a5caace26337bf3f7428b355bb03"
+    },
     "digest": {
       "Package": "digest",
       "Version": "0.6.36",
