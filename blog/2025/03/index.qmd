@@ -1,14 +1,15 @@
 ---
-title: "hierarchical clustering algorithms"
+title: "cluster analysis"
 date: 3/6/2025
 description: "methods and a practical use case"
 format:
   html:
     css: styles.css
-    code-fold: false
+    code-fold: true
     code-tools: true
     code-overflow: wrap
     code-line-numbers: false
+    code-block-border-left: true
 # doi: 
 citation: true
 draft: true
@@ -24,21 +25,81 @@ set.seed(2899)
 
 knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,
                       fig.width = 5.5, fig.height = (5.5 * 0.618),
-                      out.width = "90%", collapse = TRUE, 
+                      out.width = "100%", collapse = TRUE, 
                       cache = TRUE, comment = "#>",
                       autodep = TRUE)
 
 
 options(digits = 3,
         scipen = 999,
-        width = 300)
-
-options(
-  rlang_trace_top_env = rlang::current_env(),
-  rlang__backtrace_on_error = "none")
+        width = 300,
+        rlang_trace_top_env = rlang::current_env(),
+        rlang__backtrace_on_error = "none")
 ```
 
-## clustering analysis 
+## cluster analysis 
+
+The goal of cluster analysis is to find groups in the data. Sometimes groups are naturally present in the data, and sometimes they are artificially created. These groups are called clusters and the analyst tries to discover them using statistical techniques. Cluster analysis establishes the groups to which several data points belong. It does not assign objects to groups that have been defined in advance.
+
+The data are organized in tabular form in one of two ways. The first places each object in a row and each measured attribute in a column. Think of a group of people and their heights, weights, and ages. Each row represents a person, and the columns show their measurements. This is called an *n-by-p* matrix.
+```{r rectangular, echo = FALSE}
+knitr::include_graphics("img/data_matrix.png")
+```
+
+The second places the objects in columns and rows. This is called a *n-by-n* matrix. Think of a group of cities for which we want to compare driving distances. Each city would be assigned a row and a column, and the intersection of the row and column would contain the driving distance between the two cities. 
+
+```{r dissimilarity, echo = FALSE}
+knitr::include_graphics("img/one_mode.png")
+
+```
+
+Before the clusters are identified, the data needs to be transformed to make them suitable for cluster analysis. Why? Because depending on the units of our measurements,the grouping may be different. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.
+```{r example, echo = FALSE, eval = TRUE}
+
+persons_data <- data.frame(
+  Name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),
+  Weight = c(15,49,13,45,85),
+  Height = c(95, 160, 90, 160, 180)
+) 
+
+person_table <- persons_data |>
+  tinytable::tt(digits = 3,
+     caption = "Weight and Height of Five People, expressed in Kilograms and Centimeters",
+     theme = "spacing"
+    ) |>
+  style_tt(align = "lcc",
+           boostrap_class = "table table-hover")
+
+person_table
+```
+
+```{r, echo = FALSE, eval = FALSE}
+
+
+par(family = "serif")
+plot.new()
+plot.window(
+  xlim = range(persons_data$Weight),
+  ylim = range(persons_data$Height)
+            )
+
+points(persons_data$Weight, persons_data$Height, pch = 19, col = "gray50")
+text(persons_data$Weight, persons_data$Height, labels = persons_data$Name, pos = 3, cex = 1.10)
+axis(1, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE)
+axis(2, at = seq(0, 200, 20), tcl = -0.05, labels = TRUE, las=2)
+mtext("Weight (kg)", side = 1, line = 2.5, at = c(80,-10), font = 2, cex = 1.2)
+mtext("Height (cm)", side = 2, line = -6.5, at = c(15,180),las = 2, font = 2, cex = 1.2)
+```
+
+
+```{r, echo = FALSE}
+#|lightbox: true
+knitr::include_graphics("img/plot1.png")
+```
+
+> The programs (together with their sources and the data sets used in
+the book) are available on floppy disks by writing to the authors.
+
 
 ## r packages
 
