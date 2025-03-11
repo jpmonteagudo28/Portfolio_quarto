@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="JP Monteagudo">
 <meta name="description" content="methods and a practical use case">
-<title>hierarchical clustering algorithms | JP Monteagudo believes in you</title>
+<title>cluster analysis | JP Monteagudo believes in you</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,7 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="../../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -111,14 +114,39 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       }
 </style>
 <meta name="quarto:status" content="draft">
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="hierarchical clustering algorithms | JP Monteagudo believes in you">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="cluster analysis | JP Monteagudo believes in you">
 <meta property="og:description" content="methods and a practical use case">
 <meta property="og:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:height" content="357">
 <meta property="og:image:width" content="334">
-<meta name="twitter:title" content="hierarchical clustering algorithms | JP Monteagudo believes in you">
+<meta name="twitter:title" content="cluster analysis | JP Monteagudo believes in you">
 <meta name="twitter:description" content="methods and a practical use case">
 <meta name="twitter:image" content="https://www.jpmonteagudo.com/files/cards/favicon_no_bg.png">
 <meta name="twitter:creator" content="@jpPabl0">
@@ -127,7 +155,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <meta name="twitter:image-height" content="357">
 <meta name="twitter:image-width" content="334">
 </head>
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
@@ -195,7 +223,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default blog-post page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">hierarchical clustering algorithms</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">cluster analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
                   <div>
         <div class="description">
           methods and a practical use case
@@ -228,15 +256,19 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="cluster-analysis" class="level2"><h2 class="anchored" data-anchor-id="cluster-analysis">cluster analysis</h2>
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content"><blockquote class="blockquote">
+<p>The programs (together with their sources and the data sets used in the book) are available on floppy disks by writing to the authors.</p>
+</blockquote>
+<section id="cluster-analysis" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="cluster-analysis">cluster analysis</h2>
 <p>The goal of cluster analysis is to find groups in the data. Sometimes groups are naturally present in the data, and sometimes they are artificially created. These groups are called clusters and the analyst tries to discover them using statistical techniques. Cluster analysis establishes the groups to which several data points belong. It does not assign objects to groups that have been defined in advance.</p>
 <p>The data are organized in tabular form in one of two ways. The first places each object in a row and each measured attribute in a column. Think of a group of people and their heights, weights, and ages. Each row represents a person, and the columns show their measurements. This is called an <em>n-by-p</em> matrix.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/data_matrix.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<figure class="figure"><p><a href="img/data_matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/data_matrix.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
@@ -245,14 +277,30 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/one_mode.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<figure class="figure"><p><a href="img/one_mode.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="img/one_mode.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Before the clusters are identified, the data needs to be transformed to make them suitable for cluster analysis. Why? Because depending on the units of our measurements,the grouping may be different. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
+<p>Before the clusters are identified, the data needs to be transformed<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to make them suitable for cluster analysis. Why? Because depending on the units of our measurements, the grouping may be interpreted differently. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;The aim of transforming the data is to assign equal weights to all variables, thus getting rid of relative weights across the board to achieve an objective comparison. However, some variables will, at times, be more important than other, and this matter should not be disregarded.</p></div></div><div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">persons_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  Name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>, <span class="st">"Diana"</span>, <span class="st">"Eve"</span><span class="op">)</span>,</span>
+<span>  Weight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">49</span>,<span class="fl">13</span>,<span class="fl">45</span>,<span class="fl">85</span><span class="op">)</span>,</span>
+<span>  Height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">95</span>, <span class="fl">160</span>, <span class="fl">90</span>, <span class="fl">160</span>, <span class="fl">180</span><span class="op">)</span></span>
+<span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">person_table</span> <span class="op">&lt;-</span> <span class="va">persons_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html">tt</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>     caption <span class="op">=</span> <span class="st">"Weight and Height of Five People, expressed in Kilograms and Centimeters"</span>,</span>
+<span>     theme <span class="op">=</span> <span class="st">"spacing"</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">style_tt</span><span class="op">(</span>align <span class="op">=</span> <span class="st">"lcc"</span>,</span>
+<span>           boostrap_class <span class="op">=</span> <span class="st">"table table-hover"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">person_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <!-- preamble start -->
 
     <script>
@@ -380,16 +428,928 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"serif"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/frame.html">plot.new</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.window.html">plot.window</a></span><span class="op">(</span></span>
+<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">90</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200</span><span class="op">)</span></span>
+<span>            <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">persons_data</span><span class="op">$</span><span class="va">Weight</span>, <span class="va">persons_data</span><span class="op">$</span><span class="va">Height</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"gray50"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">persons_data</span><span class="op">$</span><span class="va">Weight</span>, <span class="va">persons_data</span><span class="op">$</span><span class="va">Height</span>, labels <span class="op">=</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Name</span>, pos <span class="op">=</span> <span class="fl">3</span>, cex <span class="op">=</span> <span class="fl">1.10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">90</span>, <span class="fl">15</span><span class="op">)</span>, tcl <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>, labels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span>, <span class="fl">20</span><span class="op">)</span>, tcl <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>, labels <span class="op">=</span> <span class="cn">TRUE</span>, las<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Weight (kg)"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2.5</span>, at <span class="op">=</span> <span class="fl">80</span>, font <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Height (cm)"</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="op">-</span><span class="fl">6.5</span>, at <span class="op">=</span> <span class="fl">200</span>,las <span class="op">=</span> <span class="fl">2</span>, font <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pounds</span> <span class="op">&lt;-</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Weight</span> <span class="op">*</span> <span class="fl">2.20462</span></span>
+<span><span class="va">inches</span> <span class="op">&lt;-</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">*</span> <span class="fl">0.393701</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/frame.html">plot.new</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.window.html">plot.window</a></span><span class="op">(</span></span>
+<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">120</span><span class="op">)</span></span>
+<span>            <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">pounds</span>,<span class="va">inches</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"gray50"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">pounds</span>, <span class="va">inches</span>, labels <span class="op">=</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Name</span>, pos <span class="op">=</span> <span class="fl">3</span>, cex <span class="op">=</span> <span class="fl">1.10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span>, <span class="fl">15</span><span class="op">)</span>, tcl <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>, labels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">90</span>, <span class="fl">15</span><span class="op">)</span>, tcl <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span>, labels <span class="op">=</span> <span class="cn">TRUE</span>, las<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Weight (lbs)"</span>, side <span class="op">=</span> <span class="fl">1</span>, line <span class="op">=</span> <span class="fl">2.5</span>, at <span class="op">=</span> <span class="fl">180</span>, font <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Height (in)"</span>, side <span class="op">=</span> <span class="fl">2</span>, line <span class="op">=</span> <span class="op">-</span><span class="fl">6.5</span>, at <span class="op">=</span> <span class="fl">90</span>,las <span class="op">=</span> <span class="fl">2</span>, font <span class="op">=</span> <span class="fl">2</span>, cex <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/plot1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<figure class="figure"><p><a href="img/plot1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="img/plot1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="img/flatter.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="img/flatter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<blockquote class="blockquote">
-<p>The programs (together with their sources and the data sets used in the book) are available on floppy disks by writing to the authors.</p>
-</blockquote>
+<p>Notice in this example that the first plot offers a clearer natural partition of groups than the second plot. We can see that Charlie and Alice are most likely children while Diana, Bob and Eve are adults. The height of a person gives a better indication of adulthood than weight. So when we plot height in inches againts weight in pounds, weight becomes the dominant variable and the distinction between clusters become less clear.</p>
+</section><section id="variable-selection" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="variable-selection">variable selection</h2>
+<p>What variables shall we choose? Should we standardize or use the raw data? To answer the first question, let me say that we should use variables that contain relevant information about each object. Sometimes these decisions will come down to common sense or expert knowledge. For example,using phone numbers, license plates,favorite colors,country flags,a variable where all rows are missing, etc., for each object is useless because none of these variable provide relevant information about the objects they represent.</p>
+<p>The negative side effect of using such variables is that are clusters will fail to form because of the randomness introduced by these “trash” variables. The soultion here is to assign a weight or zero or remove them from our data.</p>
+<p>To answer the standardization question– we should standardize the data prior to calculating disances if we think the units chosen were not appropriate or well thought-out measures and we’d like to assign weights to the variables. Additionally, if, based on prior knowledge, we would like to apply certain weights to each variable, we can standardize or just chnage the measurement units. However, if we’d like to keep the data intact because the measurements are meaningful, don’t standardize.</p>
+<p>In our particular example, we’d like to avoid the dependence on measurement units, wso we standardize the data to convert the original measurements to uniteless variables.</p>
+<p><span class="math display">\[
+\begin{split}
+m_{f} = \frac{1}{n} \sum_{x = 1}^{n}x_{f}   \\
+std_{f} = \sqrt{\frac{1}{n-1} \sum_{x = 1}^{n} (x_{f} - m_{f}^2)} \\
+\end{split}
+\]</span></p>
+<p>However,because the mean and standard deviation are affected by outliers, it is better to use the mean absolute deviation to calculate the standardized values. <span class="math display">\[
+\begin{split}
+s_{f} = \frac{1}{n} \sum_{x = 1}^{n}|x_{f}-m_{f}| \\
+z_{if} = \frac{x_{if} - m_{f}}{s_{f}}
+\end{split}
+\]</span> Now our data have mean of zero and a mean absolute deviation of 1. We can begin using the standardized data instead of the original<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;If every variable is expressed in the same units, there’s no need for standardization.</p></div></div></section><section id="distance-metrics" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="distance-metrics">distance metrics</h2>
+<p>Next, we find the distances between the objects to quantify their degree of dissimilarity. All distance function must satisfy the following requirements:</p>
+<p><span class="math display">\[
+\begin{split}
+d(i,j) \geq 0 \\
+d(i,i) = 0 \\
+d(i,j) = d(j,i)\\
+d(i,j) \leq d(i,h) + d(h,j)\\
+\end{split}
+\]</span> So distances must be nonnegative numbers<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The distance of an object to itself must be zero. The distance between to objects is the same regardless of the order in which they are compared. And lastly, the distance between two objects is always less than or equal to the sum of the distances between the two objects and a third object.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;by the same token, we can only calculate distances for non-missing object pairs. <span class="math inline">\(n\)</span> is the total number of non-missing objects</p></div></div><section id="euclidean-distance" class="level3"><h3 class="anchored" data-anchor-id="euclidean-distance">euclidean distance</h3>
+<p><span class="math display">\[
+\begin{split}
+d(i,j) = \sqrt{\sum_{n=1}^{p} (x_{in} - x_{jn})^2}
+\end{split}
+\]</span></p>
+</section><section id="manhattan-distance" class="level3"><h3 class="anchored" data-anchor-id="manhattan-distance">manhattan distance</h3>
+<p><span class="math display">\[
+\begin{split}
+d(i,j) = \sum_{n =1}^{p} |x_{in}-x_{jn}|
+\end{split}
+\]</span></p>
+</section><section id="minkowski-distance" class="level3"><h3 class="anchored" data-anchor-id="minkowski-distance">minkowski distance</h3>
+<p>This is a generalization of the Euclidean and Manhattan metric, where <span class="math inline">\(q\)</span> is any real number larger than 1. <span class="math display">\[
+\begin{split}
+d(i,j) = {\sum_{n =1}^{p}|x_{in}-x_{jn}|^\frac{1}{q}}
+\end{split}
+\]</span></p>
+</section><section id="weighted-euclidean-distance" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="weighted-euclidean-distance">weighted euclidean distance</h3>
+<p>A slight variation on the Euclidean distance where each variable receives a weight<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> according to its relative importance. <span class="math display">\[
+\begin{split}
+d(i,j) = \sqrt{wn\sum_{n=1}^{p} (x_{in} - x_{jn})^2}
+\end{split}
+\]</span></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;giving a variable a weight of 2 is the same thing as using it twice</p></div></div><p>Here’s the Euclidean and Manhattan distances for our previous example:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">euclidean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">persons_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>                  method <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span>                  diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  upper <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Keep only the lower triangle (excluding diagonal)</span></span>
+<span><span class="va">euclidean</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">euclidean</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span>  <span class="va">euclidean</span> <span class="op">&lt;-</span> <span class="va">euclidean</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>      Alice <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>      Charlie <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      Diana <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>      Bob <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      Eve <span class="op">=</span> <span class="fl">5</span></span>
+<span>    <span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">euclidean</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Name</span></span>
+<span></span>
+<span><span class="va">euclidean_table</span> <span class="op">&lt;-</span> <span class="va">euclidean</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html">tt</a></span><span class="op">(</span></span>
+<span>    digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Euclidean Distance of Unstandardized Weight(kg) and Height(cm) for five people"</span>,</span>
+<span>     theme <span class="op">=</span> <span class="st">"spacing"</span>,</span>
+<span>    rownames <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">style_tt</span><span class="op">(</span>align <span class="op">=</span> <span class="st">"c"</span>,</span>
+<span>           boostrap_class <span class="op">=</span> <span class="st">"table table-hover"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">euclidean_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_x0pl2qgyp7i6yhq14h8y(i, j, css_id) {
+          var table = document.getElementById("tinytable_x0pl2qgyp7i6yhq14h8y");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_x0pl2qgyp7i6yhq14h8y');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_x0pl2qgyp7i6yhq14h8y(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_x0pl2qgyp7i6yhq14h8y");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 4, j: 4 },  ], css_id: 'tinytable_css_xfydc5fcjbh297ht3o00',}, 
+          { positions: [ { i: 5, j: 2 }, { i: 5, j: 0 }, { i: 5, j: 3 }, { i: 5, j: 1 }, { i: 5, j: 4 },  ], css_id: 'tinytable_css_vsppibd9dpbwajpf9l71',}, 
+          { positions: [ { i: 0, j: 5 },  ], css_id: 'tinytable_css_vnqhf1zphmzceip2ifmk',}, 
+          { positions: [ { i: 5, j: 5 },  ], css_id: 'tinytable_css_n4d4mltnidegvqm08zhr',}, 
+          { positions: [ { i: 1, j: 5 }, { i: 2, j: 5 }, { i: 3, j: 5 }, { i: 4, j: 5 },  ], css_id: 'tinytable_css_8oz4asisqrorbtcrf66e',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 3 }, { i: 0, j: 1 }, { i: 0, j: 4 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_49508imbndb5bmdqdoj2',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_x0pl2qgyp7i6yhq14h8y(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_xfydc5fcjbh297ht3o00, .table th.tinytable_css_xfydc5fcjbh297ht3o00 { text-align: center; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_vsppibd9dpbwajpf9l71, .table th.tinytable_css_vsppibd9dpbwajpf9l71 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_vnqhf1zphmzceip2ifmk, .table th.tinytable_css_vnqhf1zphmzceip2ifmk { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_n4d4mltnidegvqm08zhr, .table th.tinytable_css_n4d4mltnidegvqm08zhr { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_8oz4asisqrorbtcrf66e, .table th.tinytable_css_8oz4asisqrorbtcrf66e { text-align: center; padding-bottom: 0.1em; }
+      .table td.tinytable_css_49508imbndb5bmdqdoj2, .table th.tinytable_css_49508imbndb5bmdqdoj2 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_x0pl2qgyp7i6yhq14h8y" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead>
+</thead><caption>Euclidean Distance of Unstandardized Weight(kg) and Height(cm) for five people</caption>
+              <tbody><tr>
+<th scope="col">rowname</th>
+                <th scope="col">Alice</th>
+                <th scope="col">Charlie</th>
+                <th scope="col">Diana</th>
+                <th scope="col">Bob</th>
+                <th scope="col">Eve</th>
+              </tr>
+
+</tbody><tbody>
+<tr>
+<td>Alice  </td>
+                  <td>0    </td>
+                  <td>  </td>
+                  <td>   </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Bob    </td>
+                  <td>73.4 </td>
+                  <td>0 </td>
+                  <td>   </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Charlie</td>
+                  <td>5.4  </td>
+                  <td>79</td>
+                  <td>0  </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Diana  </td>
+                  <td>71.6 </td>
+                  <td>4 </td>
+                  <td>77 </td>
+                  <td>0 </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Eve    </td>
+                  <td>110.1</td>
+                  <td>41</td>
+                  <td>115</td>
+                  <td>45</td>
+                  <td>0</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">manhattan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">persons_data</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
+<span>                  method <span class="op">=</span> <span class="st">"manhattan"</span>,</span>
+<span>                  diag <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  upper <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">manhattan</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">manhattan</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span>  <span class="va">manhattan</span> <span class="op">&lt;-</span> <span class="va">manhattan</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
+<span>      Alice <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>      Charlie <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      Diana <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>      Bob <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      Eve <span class="op">=</span> <span class="fl">5</span></span>
+<span>    <span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">manhattan</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">persons_data</span><span class="op">$</span><span class="va">Name</span></span>
+<span></span>
+<span><span class="va">manhattan_table</span> <span class="op">&lt;-</span> <span class="va">manhattan</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html">tt</a></span><span class="op">(</span></span>
+<span>    digits <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Manhattan Distance of Unstandardized Weight(kg) and Height(cm) for five people"</span>,</span>
+<span>     theme <span class="op">=</span> <span class="st">"spacing"</span>,</span>
+<span>    rownames <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">style_tt</span><span class="op">(</span>align <span class="op">=</span> <span class="st">"c"</span>,</span>
+<span>           boostrap_class <span class="op">=</span> <span class="st">"table table-hover"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">manhattan_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_6isdr35m77g34zp04fwp(i, j, css_id) {
+          var table = document.getElementById("tinytable_6isdr35m77g34zp04fwp");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_6isdr35m77g34zp04fwp');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_6isdr35m77g34zp04fwp(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_6isdr35m77g34zp04fwp");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 }, { i: 4, j: 4 },  ], css_id: 'tinytable_css_xtldxasckmopvzqi2mv7',}, 
+          { positions: [ { i: 0, j: 5 },  ], css_id: 'tinytable_css_vjttmqj1qir5p6iisd4l',}, 
+          { positions: [ { i: 5, j: 2 }, { i: 5, j: 0 }, { i: 5, j: 3 }, { i: 5, j: 1 }, { i: 5, j: 4 },  ], css_id: 'tinytable_css_qps88lep6n9l8y5vsjlh',}, 
+          { positions: [ { i: 5, j: 5 },  ], css_id: 'tinytable_css_mdaqbaz9zp3jflgae2b1',}, 
+          { positions: [ { i: 1, j: 5 }, { i: 2, j: 5 }, { i: 3, j: 5 }, { i: 4, j: 5 },  ], css_id: 'tinytable_css_45jdqest4lkfy3o0q65h',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 3 }, { i: 0, j: 1 }, { i: 0, j: 4 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_0uo32ak4ofa7c6olltnr',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_6isdr35m77g34zp04fwp(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_xtldxasckmopvzqi2mv7, .table th.tinytable_css_xtldxasckmopvzqi2mv7 { text-align: center; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_vjttmqj1qir5p6iisd4l, .table th.tinytable_css_vjttmqj1qir5p6iisd4l { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_qps88lep6n9l8y5vsjlh, .table th.tinytable_css_qps88lep6n9l8y5vsjlh { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_mdaqbaz9zp3jflgae2b1, .table th.tinytable_css_mdaqbaz9zp3jflgae2b1 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_45jdqest4lkfy3o0q65h, .table th.tinytable_css_45jdqest4lkfy3o0q65h { text-align: center; padding-bottom: 0.1em; }
+      .table td.tinytable_css_0uo32ak4ofa7c6olltnr, .table th.tinytable_css_0uo32ak4ofa7c6olltnr { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_6isdr35m77g34zp04fwp" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead>
+</thead><caption>Manhattan Distance of Unstandardized Weight(kg) and Height(cm) for five people</caption>
+              <tbody><tr>
+<th scope="col">rowname</th>
+                <th scope="col">Alice</th>
+                <th scope="col">Charlie</th>
+                <th scope="col">Diana</th>
+                <th scope="col">Bob</th>
+                <th scope="col">Eve</th>
+              </tr>
+
+</tbody><tbody>
+<tr>
+<td>Alice  </td>
+                  <td>0  </td>
+                  <td>   </td>
+                  <td>   </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Bob    </td>
+                  <td>99 </td>
+                  <td>0  </td>
+                  <td>   </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Charlie</td>
+                  <td>7  </td>
+                  <td>106</td>
+                  <td>0  </td>
+                  <td>  </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Diana  </td>
+                  <td>95 </td>
+                  <td>4  </td>
+                  <td>102</td>
+                  <td>0 </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Eve    </td>
+                  <td>155</td>
+                  <td>56 </td>
+                  <td>162</td>
+                  <td>60</td>
+                  <td>0</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Notice that regardless of the distance metric used, the groups are comparably the same. However, this matrix doesn’t clearly show the cluster structure of our data like the bivariate scatterplot. Nevertheless, this is the matrix our clustering algorithm works with.</p>
+</section></section><section id="dissimilarities" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="dissimilarities">dissimilarities</h2>
+<p>We refer to the many possibilities that can function as a distance matrix as <em>dissimilarities</em>. Dissimilarity coefficients must be nonnegative numbers that are small when <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are near to each other and large when they are very different. Dissimilarities can be computed for binary, nominal, ordinal, interval, and continuous variables, or a combination of these.</p>
+<p>One such dissimilarity index is Pearson’s product-moment coefficient<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> or Spearman’s rho. These correlation coefficients can be converted to dissimilarities</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;. Pearson’s <em>r</em> looks for a linear relationship between two variables while Spearman’s rho looks for a monotonic relationship, not a linear one.</p></div></div><p><span class="math display">\[
+\begin{split}
+R(f,g) = \frac{\sum_{i=1}^{n} (x_{if} - m_{f})(X_{ig} - m_{g})}{\sqrt{\sum_{i=1}^{n} (x_{if} - m_{f})^2} \sqrt{\sum_{i=1}^{n} (x_{ig} - m_{g})^2}} \\
+\\
+\\
+d(f,g) = (1 - R(f,g))/2
+\end{split}
+\]</span> Using the previous formula for <span class="math inline">\(d(f,g)\)</span>, we see that variables with a high positive correlation will have a dissimilarity coefficient close to zero while variables with a high negative correlation will be very dissimilar. Another formula that’s available is the following:</p>
+<p><span class="math display">\[
+\begin{split}
+d(f,g) = 1 - |R(f,g)|
+\end{split}
+\]</span></p>
+<p>By adding a third variable, <code>Year</code>, to represent each person’s birth year, we can compute a dissimilarity matrix that shows how different or distant is the birth year from the weight and height of each person. The resulting matrix would help us determine how many groups and which members to include in each group.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">persons_df_with_year</span> <span class="op">&lt;-</span> <span class="va">persons_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    Year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2018</span>,</span>
+<span>             <span class="fl">1999</span>,</span>
+<span>             <span class="fl">2020</span>,</span>
+<span>             <span class="fl">1889</span>,</span>
+<span>             <span class="fl">2003</span><span class="op">)</span>,</span>
+<span>    .before  <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span> </span>
+<span></span>
+<span><span class="va">year_table</span> <span class="op">&lt;-</span> <span class="va">persons_df_with_year</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html">tt</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                caption <span class="op">=</span> <span class="st">"Birth Year, Weight(kg) and Height(cm) of Five People, expressed in Kilograms and Centimeters"</span>,</span>
+<span>                theme <span class="op">=</span> <span class="st">"spacing"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/style_tt.html">style_tt</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"lccc"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">year_table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_3ex5a1spj4v23p8cr0fd(i, j, css_id) {
+          var table = document.getElementById("tinytable_3ex5a1spj4v23p8cr0fd");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_3ex5a1spj4v23p8cr0fd');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_3ex5a1spj4v23p8cr0fd(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_3ex5a1spj4v23p8cr0fd");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 3, j: 2 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 4, j: 2 },  ], css_id: 'tinytable_css_w630rdoyqvp7tcudff1z',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_ug9vbw3i98ixdhqb3mx1',}, 
+          { positions: [ { i: 5, j: 3 },  ], css_id: 'tinytable_css_tw6n5e0rcglirtze5d0d',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_nxzio0qc9usqa15prbkk',}, 
+          { positions: [ { i: 0, j: 3 },  ], css_id: 'tinytable_css_jw50m6frs019r20ry110',}, 
+          { positions: [ { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 4, j: 3 },  ], css_id: 'tinytable_css_dfnohs8dcsy7vb7o9p7c',}, 
+          { positions: [ { i: 5, j: 0 },  ], css_id: 'tinytable_css_1hoi85fq2cpybx7cy2rh',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 },  ], css_id: 'tinytable_css_17si0nlt705n844ny779',}, 
+          { positions: [ { i: 5, j: 1 }, { i: 5, j: 2 },  ], css_id: 'tinytable_css_0xjqfre523ydj79wopwj',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_3ex5a1spj4v23p8cr0fd(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_w630rdoyqvp7tcudff1z, .table th.tinytable_css_w630rdoyqvp7tcudff1z { text-align: center; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_ug9vbw3i98ixdhqb3mx1, .table th.tinytable_css_ug9vbw3i98ixdhqb3mx1 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_tw6n5e0rcglirtze5d0d, .table th.tinytable_css_tw6n5e0rcglirtze5d0d { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_nxzio0qc9usqa15prbkk, .table th.tinytable_css_nxzio0qc9usqa15prbkk { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_jw50m6frs019r20ry110, .table th.tinytable_css_jw50m6frs019r20ry110 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_dfnohs8dcsy7vb7o9p7c, .table th.tinytable_css_dfnohs8dcsy7vb7o9p7c { text-align: center; padding-bottom: 0.1em; }
+      .table td.tinytable_css_1hoi85fq2cpybx7cy2rh, .table th.tinytable_css_1hoi85fq2cpybx7cy2rh { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_17si0nlt705n844ny779, .table th.tinytable_css_17si0nlt705n844ny779 { text-align: left; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_0xjqfre523ydj79wopwj, .table th.tinytable_css_0xjqfre523ydj79wopwj { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_3ex5a1spj4v23p8cr0fd" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead>
+</thead><caption>Birth Year, Weight(kg) and Height(cm) of Five People, expressed in Kilograms and Centimeters</caption>
+              <tbody><tr>
+<th scope="col">Name</th>
+                <th scope="col">Year</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Height</th>
+              </tr>
+
+</tbody><tbody>
+<tr>
+<td>Alice  </td>
+                  <td>2018</td>
+                  <td>15</td>
+                  <td>95 </td>
+                </tr>
+<tr>
+<td>Bob    </td>
+                  <td>1999</td>
+                  <td>49</td>
+                  <td>160</td>
+                </tr>
+<tr>
+<td>Charlie</td>
+                  <td>2020</td>
+                  <td>13</td>
+                  <td>90 </td>
+                </tr>
+<tr>
+<td>Diana  </td>
+                  <td>1889</td>
+                  <td>45</td>
+                  <td>160</td>
+                </tr>
+<tr>
+<td>Eve    </td>
+                  <td>2003</td>
+                  <td>85</td>
+                  <td>180</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Let’s come up with the dissimilarity matrix for these data using the two dissimilarity formulas we’ve looked at.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="va">cluster_dissimilarity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, </span>
+<span>                                  <span class="va">dissimilarity_method</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"halved"</span>,<span class="st">"absolute"</span><span class="op">)</span>,</span>
+<span>                                  <span class="va">correlation</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pearson"</span>,<span class="st">"spearman"</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># Stop if not a matrix or data frame</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">is.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">is.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># If function args don't match these, stop.</span></span>
+<span>  <span class="va">dissimilarity_method</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.arg.html">match.arg</a></span><span class="op">(</span><span class="va">dissimilarity_method</span><span class="op">)</span></span>
+<span>  <span class="va">correlation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.arg.html">match.arg</a></span><span class="op">(</span><span class="va">correlation</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Just in case any columns are strings or factors, </span></span>
+<span>  <span class="co"># convert to numeric to compute correlation</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">cor_coeff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">x</span>,method <span class="op">=</span> <span class="va">correlation</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">dissimilarity_coeff</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html">switch</a></span><span class="op">(</span><span class="va">dissimilarity_method</span>,</span>
+<span>     <span class="st">"halved"</span>  <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">cor_coeff</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,</span>
+<span>     <span class="st">"absolute"</span><span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">cor_coeff</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># remove redundant correlations</span></span>
+<span>  <span class="va">dissimilarity_coeff</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">dissimilarity_coeff</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">dissimilarity_coeff</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">pearsons_dissimilarity</span> <span class="op">&lt;-</span> <span class="fu">cluster_dissimilarity</span><span class="op">(</span><span class="va">persons_df_with_year</span>, </span>
+<span>                              dissimilarity_method <span class="op">=</span> <span class="st">"halved"</span>,</span>
+<span>                              correlation <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Need to convert to df before creating to tinytable</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Add rownames to the data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">pearsons_dissimilarity</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Name"</span>,<span class="st">"Year"</span>,<span class="st">"Weight"</span>,<span class="st">"Height"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">pearsons_table</span> <span class="op">&lt;-</span> <span class="va">pearsons_dissimilarity</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/tt.html">tt</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                caption <span class="op">=</span> <span class="st">"Dissimilarity Coefficients Between Year, Weight(kg) and Height(cm) Using Pearson's r and the Halved Dissimilarity Formula"</span>,</span>
+<span>                theme <span class="op">=</span> <span class="st">"spacing"</span>,</span>
+<span>                rownames <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tinytable</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/tinytable/man/style_tt.html">style_tt</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"lcccc"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="columns" data-gap="4em">
+<div class="column" style="width:60%;">
+<div class="cell" data-layout-align="center">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_03doh3mriog5hgfs9ecz(i, j, css_id) {
+          var table = document.getElementById("tinytable_03doh3mriog5hgfs9ecz");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_03doh3mriog5hgfs9ecz');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_03doh3mriog5hgfs9ecz(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_03doh3mriog5hgfs9ecz");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 },  ], css_id: 'tinytable_css_t8te0c4vpdhuh18uqrui',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_qhqj4dknovfynoemktb5',}, 
+          { positions: [ { i: 0, j: 4 },  ], css_id: 'tinytable_css_m8dkmpr2rbybgqpgdos9',}, 
+          { positions: [ { i: 1, j: 4 }, { i: 2, j: 4 }, { i: 3, j: 4 },  ], css_id: 'tinytable_css_dpfskk8ouzgvvajpvihr',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_c0xjn7mgtp95cl9f4x1v',}, 
+          { positions: [ { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 2, j: 2 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 1, j: 2 }, { i: 1, j: 3 },  ], css_id: 'tinytable_css_9frw99joajalr5ylz3wh',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_6edzjwrpzkx1y7xire17',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 },  ], css_id: 'tinytable_css_69kh46ldxavvnlchew84',}, 
+          { positions: [ { i: 4, j: 4 },  ], css_id: 'tinytable_css_0pj4nvjyofgm580oiad2',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_03doh3mriog5hgfs9ecz(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_t8te0c4vpdhuh18uqrui, .table th.tinytable_css_t8te0c4vpdhuh18uqrui { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_qhqj4dknovfynoemktb5, .table th.tinytable_css_qhqj4dknovfynoemktb5 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_m8dkmpr2rbybgqpgdos9, .table th.tinytable_css_m8dkmpr2rbybgqpgdos9 { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_dpfskk8ouzgvvajpvihr, .table th.tinytable_css_dpfskk8ouzgvvajpvihr { text-align: center; padding-bottom: 0.1em; }
+      .table td.tinytable_css_c0xjn7mgtp95cl9f4x1v, .table th.tinytable_css_c0xjn7mgtp95cl9f4x1v { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_9frw99joajalr5ylz3wh, .table th.tinytable_css_9frw99joajalr5ylz3wh { text-align: center; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_6edzjwrpzkx1y7xire17, .table th.tinytable_css_6edzjwrpzkx1y7xire17 { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_69kh46ldxavvnlchew84, .table th.tinytable_css_69kh46ldxavvnlchew84 { text-align: left; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_0pj4nvjyofgm580oiad2, .table th.tinytable_css_0pj4nvjyofgm580oiad2 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_03doh3mriog5hgfs9ecz" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead>
+</thead><caption>Dissimilarity Coefficients Between Year, Weight(kg) and Height(cm) Using Pearson's r and the Halved Dissimilarity Formula</caption>
+              <tbody><tr>
+<th scope="col">rowname</th>
+                <th scope="col">Name</th>
+                <th scope="col">Year</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Height</th>
+              </tr>
+
+</tbody><tbody>
+<tr>
+<td>Name  </td>
+                  <td>0    </td>
+                  <td>     </td>
+                  <td>      </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Year  </td>
+                  <td>0.702</td>
+                  <td>0    </td>
+                  <td>      </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Weight</td>
+                  <td>0.135</td>
+                  <td>0.602</td>
+                  <td>0     </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>Height</td>
+                  <td>0.176</td>
+                  <td>0.728</td>
+                  <td>0.0321</td>
+                  <td>0</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_lz8yd5sq5r67wymzyeq2(i, j, css_id) {
+          var table = document.getElementById("tinytable_lz8yd5sq5r67wymzyeq2");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_lz8yd5sq5r67wymzyeq2');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_lz8yd5sq5r67wymzyeq2(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_lz8yd5sq5r67wymzyeq2");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 },  ], css_id: 'tinytable_css_wqkz5ke64jfo3tz50ioa',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 },  ], css_id: 'tinytable_css_usqsp4z8lcn28xrsgskt',}, 
+          { positions: [ { i: 0, j: 3 },  ], css_id: 'tinytable_css_ismbfu3p6d7s9pxolazi',}, 
+          { positions: [ { i: 4, j: 3 },  ], css_id: 'tinytable_css_hz4gox78tj2zr7x3tlrw',}, 
+          { positions: [ { i: 4, j: 1 }, { i: 4, j: 2 },  ], css_id: 'tinytable_css_foscn0sj7w6ri9usmlxg',}, 
+          { positions: [ { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 3, j: 3 },  ], css_id: 'tinytable_css_6hsmvb5vduap6e6pooi9',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_46wh7xv7tyme6bopqkm4',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_207gbo5dqa17ijewtbtf',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_1zcaxqz5d9mcen44mh51',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_lz8yd5sq5r67wymzyeq2(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script><style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_wqkz5ke64jfo3tz50ioa, .table th.tinytable_css_wqkz5ke64jfo3tz50ioa { text-align: left; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_usqsp4z8lcn28xrsgskt, .table th.tinytable_css_usqsp4z8lcn28xrsgskt { text-align: center; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_ismbfu3p6d7s9pxolazi, .table th.tinytable_css_ismbfu3p6d7s9pxolazi { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_hz4gox78tj2zr7x3tlrw, .table th.tinytable_css_hz4gox78tj2zr7x3tlrw { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_foscn0sj7w6ri9usmlxg, .table th.tinytable_css_foscn0sj7w6ri9usmlxg { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+      .table td.tinytable_css_6hsmvb5vduap6e6pooi9, .table th.tinytable_css_6hsmvb5vduap6e6pooi9 { text-align: center; padding-bottom: 0.1em; }
+      .table td.tinytable_css_46wh7xv7tyme6bopqkm4, .table th.tinytable_css_46wh7xv7tyme6bopqkm4 { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_207gbo5dqa17ijewtbtf, .table th.tinytable_css_207gbo5dqa17ijewtbtf { text-align: center; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; padding-bottom: 0.1em; }
+      .table td.tinytable_css_1zcaxqz5d9mcen44mh51, .table th.tinytable_css_1zcaxqz5d9mcen44mh51 { text-align: left; border-bottom: solid #d3d8dc 0.1em; padding-right: 0.5em; }
+    </style>
+<div class="container">
+      <table class="table table-borderless" id="tinytable_lz8yd5sq5r67wymzyeq2" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead>
+</thead><caption>Dissimilarity Coefficients Using Pearson's r and the Absolute Dissimilarity Formula</caption>
+              <tbody><tr>
+<th scope="col">Name</th>
+                <th scope="col">Year</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Height</th>
+              </tr>
+
+</tbody><tbody>
+<tr>
+<td>0    </td>
+                  <td>     </td>
+                  <td>      </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>0.597</td>
+                  <td>0    </td>
+                  <td>      </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>0.27 </td>
+                  <td>0.796</td>
+                  <td>0     </td>
+                  <td> </td>
+                </tr>
+<tr>
+<td>0.352</td>
+                  <td>0.545</td>
+                  <td>0.0642</td>
+                  <td>0</td>
+                </tr>
+</tbody>
+</table>
+</div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</div>
 </section><section id="r-packages" class="level2"><h2 class="anchored" data-anchor-id="r-packages">r packages</h2>
 <p><code>cluster</code></p>
 
@@ -397,8 +1357,7 @@ gtag('config', 'G-SM9D5VRX5P', { 'anonymize_ip': true});
 <!-- -->
 
 </section><div id="quarto-appendix"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-monteagudo2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Monteagudo, JP. 2025. <span>“Hierarchical Clustering Algorithms.”</span>
-March 6, 2025. <a href="https://www.jpmonteagudo.com/blog/2025/03">https://www.jpmonteagudo.com/blog/2025/03</a>.
+Monteagudo, JP. 2025. <span>“Cluster Analysis.”</span> March 6, 2025. <a href="https://www.jpmonteagudo.com/blog/2025/03">https://www.jpmonteagudo.com/blog/2025/03</a>.
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -871,110 +1830,395 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><script src="https://giscus.app/client.js" data-repo="jpmonteagudo28/Portfolio_quarto" data-repo-id="R_kgDOKnaxdQ" data-category="Blog comments" data-category-id="DIC_kwDOIg6EJc4CSz92" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "hierarchical clustering algorithms"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 3/6/2025</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "methods and a practical use case"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-line-numbers: false</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-block-border-left: true</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># doi: </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">library(methods)</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="in">library(tinytable)</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(2899)</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "100%", collapse = TRUE, </span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">                      cache = TRUE, comment = "#&gt;",</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">                      autodep = TRUE)</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3,</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="in">        scipen = 999,</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="in">        width = 300,</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="in">        rlang_trace_top_env = rlang::current_env(),</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="in">        rlang__backtrace_on_error = "none")</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## cluster analysis </span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>The goal of cluster analysis is to find groups in the data. Sometimes groups are naturally present in the data, and sometimes they are artificially created. These groups are called clusters and the analyst tries to discover them using statistical techniques. Cluster analysis establishes the groups to which several data points belong. It does not assign objects to groups that have been defined in advance.</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>The data are organized in tabular form in one of two ways. The first places each object in a row and each measured attribute in a column. Think of a group of people and their heights, weights, and ages. Each row represents a person, and the columns show their measurements. This is called an *n-by-p* matrix.</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rectangular, echo = FALSE}</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/data_matrix.png")</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The second places the objects in columns and rows. This is called a *n-by-n* matrix. Think of a group of cities for which we want to compare driving distances. Each city would be assigned a row and a column, and the intersection of the row and column would contain the driving distance between the two cities. </span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dissimilarity, echo = FALSE}</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/one_mode.png")</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>Before the clusters are identified, the data needs to be transformed to make them suitable for cluster analysis. Why? Because depending on the units of our measurements,the grouping may be different. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example, echo = FALSE, eval = TRUE}</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="in">persons_data &lt;- data.frame(</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="in">  Name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="in">  Weight = c(15,49,13,45,85),</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="in">  Height = c(95, 160, 90, 160, 180)</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="in">) </span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="in">person_table &lt;- persons_data |&gt;</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::tt(digits = 3,</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="in">     caption = "Weight and Height of Five People, expressed in Kilograms and Centimeters",</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="in">     theme = "spacing"</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="in">    ) |&gt;</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="in">  style_tt(align = "lcc",</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="in">           boostrap_class = "table table-hover")</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="in">person_table</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE, eval = FALSE}</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="in">par(family = "serif")</span></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="in">plot.new()</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="in">plot.window(</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="in">  xlim = range(persons_data$Weight),</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="in">  ylim = range(persons_data$Height)</span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="in">            )</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="in">points(persons_data$Weight, persons_data$Height, pch = 19, col = "gray50")</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="in">text(persons_data$Weight, persons_data$Height, labels = persons_data$Name, pos = 3, cex = 1.10)</span></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="in">axis(1, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE)</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="in">axis(2, at = seq(0, 200, 20), tcl = -0.05, labels = TRUE, las=2)</span></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Weight (kg)", side = 1, line = 2.5, at = c(80,-10), font = 2, cex = 1.2)</span></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Height (cm)", side = 2, line = -6.5, at = c(15,180),las = 2, font = 2, cex = 1.2)</span></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = FALSE}</span></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="in">#|lightbox: true</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/plot1.png")</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The programs (together with their sources and the data sets used in</span></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="at">the book) are available on floppy disks by writing to the authors.</span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## r packages</span></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="in">`cluster`</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "cluster analysis"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 3/6/2025</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "methods and a practical use case"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-line-numbers: false</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">    lightbox: true</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># doi: </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="an">citation:</span><span class="co"> true</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> true</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include = FALSE}</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="in">library(methods)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="in">library(tinytable)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="in">set.seed(2899)</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(fig.align = "center", fig.retina = 3,</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="in">                      fig.width = 5.5, fig.height = (5.5 * 0.618),</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="in">                      out.width = "100%", collapse = TRUE, </span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="in">                      cache = TRUE, comment = "#&gt;",</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="in">                      autodep = TRUE)</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="in">options(digits = 3,</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="in">        scipen = 999,</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="in">        width = 300,</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="in">        rlang_trace_top_env = rlang::current_env(),</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="in">        rlang__backtrace_on_error = "none")</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The programs (together with their sources and the data sets used in</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="at">the book) are available on floppy disks by writing to the authors.</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## cluster analysis </span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>The goal of cluster analysis is to find groups in the data. Sometimes groups are naturally present in the data, and sometimes they are artificially created. These groups are called clusters and the analyst tries to discover them using statistical techniques. Cluster analysis establishes the groups to which several data points belong. It does not assign objects to groups that have been defined in advance.</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>The data are organized in tabular form in one of two ways. The first places each object in a row and each measured attribute in a column. Think of a group of people and their heights, weights, and ages. Each row represents a person, and the columns show their measurements. This is called an *n-by-p* matrix.</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rectangular, echo = FALSE}</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/data_matrix.png")</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>The second places the objects in columns and rows. This is called a *n-by-n* matrix. Think of a group of cities for which we want to compare driving distances. Each city would be assigned a row and a column, and the intersection of the row and column would contain the driving distance between the two cities. </span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dissimilarity, echo = FALSE}</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("img/one_mode.png")</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>Before the clusters are identified, the data needs to be transformed^<span class="co">[</span><span class="ot">The aim of transforming the data is to assign equal weights to all variables, thus getting rid of relative weights across the board to achieve an objective comparison. However, some variables will, at times, be more important than other, and this matter should not be disregarded.</span><span class="co">]</span> to make them suitable for cluster analysis. Why? Because depending on the units of our measurements, the grouping may be interpreted differently. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="in">persons_data &lt;- data.frame(</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="in">  Name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="in">  Weight = c(15,49,13,45,85),</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="in">  Height = c(95, 160, 90, 160, 180)</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="in">) </span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="in">person_table &lt;- persons_data |&gt;</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::tt(digits = 3,</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="in">     caption = "Weight and Height of Five People, expressed in Kilograms and Centimeters",</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="in">     theme = "spacing"</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="in">    ) |&gt;</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="in">  style_tt(align = "lcc",</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="in">           boostrap_class = "table table-hover")</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="in">person_table</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo = TRUE, eval = FALSE}</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="in">par(family = "serif")</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="in">plot.new()</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="in">plot.window(</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="in">  xlim = c(0,90),</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="in">  ylim = c(0,200)</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">            )</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="in">points(persons_data$Weight, persons_data$Height, pch = 19, col = "gray50")</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="in">text(persons_data$Weight, persons_data$Height, labels = persons_data$Name, pos = 3, cex = 1.10)</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="in">axis(1, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE)</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a><span class="in">axis(2, at = seq(0, 200, 20), tcl = -0.05, labels = TRUE, las=2)</span></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Weight (kg)", side = 1, line = 2.5, at = 80, font = 2, cex = 1.2)</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Height (cm)", side = 2, line = -6.5, at = 200,las = 2, font = 2, cex = 1.2)</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="in">pounds &lt;- persons_data$Weight * 2.20462</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="in">inches &lt;- persons_data$Height * 0.393701</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="in">plot.new()</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="in">plot.window(</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">  xlim = c(0,200),</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="in">  ylim = c(0,120)</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="in">            )</span></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="in">points(pounds,inches, pch = 19, col = "gray50")</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="in">text(pounds, inches, labels = persons_data$Name, pos = 3, cex = 1.10)</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="in">axis(1, at = seq(0, 200, 15), tcl = -0.05, labels = TRUE)</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="in">axis(2, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE, las=2)</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Weight (lbs)", side = 1, line = 2.5, at = 180, font = 2, cex = 1.2)</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a><span class="in">mtext("Height (in)", side = 2, line = -6.5, at = 90,las = 2, font = 2, cex = 1.2)</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.show="hold", out.width="100%", echo = FALSE}</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics(c("img/plot1.png", "img/flatter.png"))</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>Notice in this example that the first plot offers a clearer natural partition of groups than the second plot. We can see that Charlie and Alice are most likely children while Diana, Bob and Eve are adults. The height of a person gives a better indication of adulthood than weight. So when we plot height in inches againts weight in pounds, weight becomes the dominant variable and the distinction between clusters become less clear.</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## variable selection</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>What variables shall we choose? Should we standardize or use the raw data? To answer the first question, let me say that we should use variables that contain relevant information about each object. Sometimes these decisions will come down to common sense or expert knowledge. For example,using phone numbers, license plates,favorite colors,country flags,a variable where all rows are missing, etc., for each object is useless because none of these variable provide relevant information about the objects they represent. </span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>The negative side effect of using such variables is that are clusters will fail to form because of the randomness introduced by these “trash” variables. The soultion here is to assign a weight or zero or remove them from our data. </span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>To answer the standardization question– we should standardize the data prior to calculating disances if we think the units chosen were not appropriate or well thought-out measures and we'd like to assign weights to the variables. Additionally, if, based on prior knowledge, we would like to apply certain weights to each variable, we can standardize or just chnage the measurement units. However, if we'd like to keep the data intact because the measurements are meaningful, don't standardize.</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>In our particular example, we'd like to avoid the dependence on measurement units, wso we standardize the data to convert the original measurements to uniteless variables. </span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>m_{f} = \frac{1}{n} \sum_{x = 1}^{n}x_{f}   <span class="sc">\\</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>std_{f} = \sqrt{\frac{1}{n-1} \sum_{x = 1}^{n} (x_{f} - m_{f}^2)} <span class="sc">\\</span></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>However,because the mean and standard deviation are affected by outliers, it is better to use the mean absolute deviation to calculate the standardized values. </span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>s_{f} = \frac{1}{n} \sum_{x = 1}^{n}|x_{f}-m_{f}| <span class="sc">\\</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>z_{if} = \frac{x_{if} - m_{f}}{s_{f}}</span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>Now our data have mean of zero and a mean absolute deviation of 1. We can begin using the standardized data instead of the original^<span class="co">[</span><span class="ot">If every variable is expressed in the same units, there's no need for standardization.</span><span class="co">]</span>.</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="fu">## distance metrics</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>Next, we find the distances between the objects to quantify their degree of dissimilarity. All distance function must satisfy the following requirements:</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>d(i,j) \geq 0 <span class="sc">\\</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>d(i,i) = 0 <span class="sc">\\</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>d(i,j) = d(j,i)<span class="sc">\\</span></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>d(i,j) \leq d(i,h) + d(h,j)<span class="sc">\\</span></span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>So distances must be nonnegative numbers^<span class="co">[</span><span class="ot">by the same token, we can only calculate distances for non-missing object pairs. $n$ is the total number of non-missing objects</span><span class="co">]</span>. The distance of an object to itself must be zero. The distance between to objects is the same regardless of the order in which they are compared. And lastly, the distance between two objects is always less than or equal to the sum of the distances between the two objects and a third object.</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### euclidean distance</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>d(i,j) = \sqrt{\sum_{n=1}^{p} (x_{in} - x_{jn})^2}</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>$$ </span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### manhattan distance</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>d(i,j) = \sum_{n =1}^{p} |x_{in}-x_{jn}|</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### minkowski distance  </span></span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a>This is a generalization of the Euclidean and Manhattan metric, where $q$ is any real number larger than 1. </span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>d(i,j) = {\sum_{n =1}^{p}|x_{in}-x_{jn}|^\frac{1}{q}}</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### weighted euclidean distance</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a>A slight variation on the Euclidean distance where each variable receives a weight^<span class="co">[</span><span class="ot">giving a variable a weight of 2 is the same thing as using it twice</span><span class="co">]</span> according to its relative importance.</span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a>d(i,j) = \sqrt{wn\sum_{n=1}^{p} (x_{in} - x_{jn})^2}</span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a>Here's the Euclidean and Manhattan distances for our previous example: </span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r euclidean, echo = TRUE,eval = TRUE}</span></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="in">euclidean &lt;- dist(persons_data[,2:3],</span></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a><span class="in">                  method = "euclidean",</span></span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="in">                  diag = FALSE,</span></span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="in">                  upper = FALSE) |&gt;</span></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a><span class="in">  as.matrix() </span></span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a><span class="in"># Keep only the lower triangle (excluding diagonal)</span></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="in">euclidean[upper.tri(euclidean, diag = FALSE)] &lt;- NA</span></span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a><span class="in">  euclidean &lt;- euclidean |&gt;</span></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="in">    as.data.frame() |&gt;</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="in">    dplyr::rename(</span></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="in">      Alice = 1,</span></span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a><span class="in">      Charlie = 2,</span></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="in">      Diana = 3,</span></span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a><span class="in">      Bob = 4,</span></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a><span class="in">      Eve = 5</span></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="in">    ) </span></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a><span class="in">rownames(euclidean) &lt;- persons_data$Name</span></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="in">euclidean_table &lt;- euclidean |&gt;</span></span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::tt(</span></span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="in">    digits = 2,</span></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Euclidean Distance of Unstandardized Weight(kg) and Height(cm) for five people",</span></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="in">     theme = "spacing",</span></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a><span class="in">    rownames = TRUE</span></span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a><span class="in">    ) |&gt;</span></span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a><span class="in">  style_tt(align = "c",</span></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="in">           boostrap_class = "table table-hover")</span></span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="in">euclidean_table</span></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="in">manhattan &lt;- dist(persons_data[,2:3],</span></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="in">                  method = "manhattan",</span></span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a><span class="in">                  diag = FALSE,</span></span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a><span class="in">                  upper = FALSE) |&gt;</span></span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a><span class="in">  as.matrix() </span></span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a><span class="in">manhattan[upper.tri(manhattan, diag = FALSE)] &lt;- NA</span></span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a><span class="in">  manhattan &lt;- manhattan |&gt;</span></span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a><span class="in">    as.data.frame() |&gt;</span></span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="in">    dplyr::rename(</span></span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a><span class="in">      Alice = 1,</span></span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a><span class="in">      Charlie = 2,</span></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a><span class="in">      Diana = 3,</span></span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="in">      Bob = 4,</span></span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="in">      Eve = 5</span></span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="in">    ) </span></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="in">rownames(manhattan) &lt;- persons_data$Name</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a><span class="in">manhattan_table &lt;- manhattan |&gt;</span></span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::tt(</span></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a><span class="in">    digits = 2,</span></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Manhattan Distance of Unstandardized Weight(kg) and Height(cm) for five people",</span></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="in">     theme = "spacing",</span></span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="in">    rownames = TRUE</span></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="in">    ) |&gt;</span></span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="in">  style_tt(align = "c",</span></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="in">           boostrap_class = "table table-hover")</span></span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="in">manhattan_table</span></span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a>Notice that regardless of the distance metric used, the groups are comparably the same. However, this matrix doesn't clearly show the cluster structure of our data like the bivariate scatterplot. Nevertheless, this is the matrix our clustering algorithm works with. </span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## dissimilarities</span></span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a>We refer to the many possibilities that can function as a distance matrix as *dissimilarities*. Dissimilarity coefficients must be nonnegative numbers that are small when $i$ and $j$ are near to each other and large when they are very different. Dissimilarities can be computed for binary, nominal, ordinal, interval, and continuous variables, or a combination of these. </span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>One such dissimilarity index is Pearson's product-moment coefficient^<span class="co">[</span><span class="ot">. Pearson's *r* looks for a linear relationship between two variables while Spearman's rho looks for a monotonic relationship, not a linear one.</span><span class="co">]</span> or Spearman's rho. These correlation coefficients can be converted to dissimilarities</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a>R(f,g) = \frac{\sum_{i=1}^{n} (x_{if} - m_{f})(X_{ig} - m_{g})}{\sqrt{\sum_{i=1}^{n} (x_{if} - m_{f})^2} \sqrt{\sum_{i=1}^{n} (x_{ig} - m_{g})^2}} <span class="sc">\\</span> </span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a><span class="sc">\\</span></span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a><span class="sc">\\</span></span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a>d(f,g) = (1 - R(f,g))/2</span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a>Using the previous formula for $d(f,g)$, we see that variables with a high positive correlation will have a dissimilarity coefficient close to zero while variables with a high negative correlation will be very dissimilar. Another formula that's available is the following:</span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a>\begin{split}</span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a>d(f,g) = 1 - |R(f,g)|</span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>\end{split}</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a>By adding a third variable, <span class="in">`Year`</span>, to represent each person's birth year, we can compute a dissimilarity matrix that shows how different or distant is the birth year from the weight and height of each person. The resulting matrix would help us determine how many groups and which members to include in each group. </span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r year, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a><span class="in">persons_df_with_year &lt;- persons_data |&gt;</span></span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a><span class="in">  dplyr::mutate(</span></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a><span class="in">    Year = c(2018,</span></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="in">             1999,</span></span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a><span class="in">             2020,</span></span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="in">             1889,</span></span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a><span class="in">             2003),</span></span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a><span class="in">    .before  = 2</span></span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a><span class="in">  ) </span></span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="in">year_table &lt;- persons_df_with_year |&gt;</span></span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::tt(digits = 0,</span></span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a><span class="in">                caption = "Birth Year, Weight(kg) and Height(cm) of Five People, expressed in Kilograms and Centimeters",</span></span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a><span class="in">                theme = "spacing") |&gt;</span></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::style_tt(align = "lccc")</span></span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a><span class="in">year_table</span></span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a>Let's come up with the dissimilarity matrix for these data using the two dissimilarity formulas we've looked at. </span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, dissimiliary, echo = TRUE, eval = TRUE}</span></span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a><span class="in">cluster_dissimilarity &lt;- function(x, </span></span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a><span class="in">                                  dissimilarity_method = c("halved","absolute"),</span></span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a><span class="in">                                  correlation = c("pearson","spearman")){</span></span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a><span class="in">  # Stop if not a matrix or data frame</span></span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a><span class="in">  stopifnot(is.matrix(x) || is.data.frame(x))</span></span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a><span class="in">  # If function args don't match these, stop.</span></span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a><span class="in">  dissimilarity_method &lt;- match.arg(dissimilarity_method)</span></span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a><span class="in">  correlation &lt;- match.arg(correlation)</span></span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a><span class="in">  # Just in case any columns are strings or factors, </span></span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a><span class="in">  # convert to numeric to compute correlation</span></span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a><span class="in">  x &lt;- data.matrix(x)</span></span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a><span class="in">  cor_coeff &lt;- cor(x,method = correlation)</span></span>
+<span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a><span class="in">  dissimilarity_coeff &lt;- switch(dissimilarity_method,</span></span>
+<span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a><span class="in">     "halved"  = (1 - cor_coeff)/2,</span></span>
+<span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a><span class="in">     "absolute"= 1 - abs(cor_coeff)</span></span>
+<span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
+<span id="cb7-336"><a href="#cb7-336" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-337"><a href="#cb7-337" aria-hidden="true" tabindex="-1"></a><span class="in">  # remove redundant correlations</span></span>
+<span id="cb7-338"><a href="#cb7-338" aria-hidden="true" tabindex="-1"></a><span class="in">  dissimilarity_coeff[upper.tri(dissimilarity_coeff, diag = FALSE)] &lt;- NA</span></span>
+<span id="cb7-339"><a href="#cb7-339" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb7-340"><a href="#cb7-340" aria-hidden="true" tabindex="-1"></a><span class="in">  return(dissimilarity_coeff)</span></span>
+<span id="cb7-341"><a href="#cb7-341" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb7-342"><a href="#cb7-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-343"><a href="#cb7-343" aria-hidden="true" tabindex="-1"></a><span class="in">pearsons_dissimilarity &lt;- cluster_dissimilarity(persons_df_with_year, </span></span>
+<span id="cb7-344"><a href="#cb7-344" aria-hidden="true" tabindex="-1"></a><span class="in">                              dissimilarity_method = "halved",</span></span>
+<span id="cb7-345"><a href="#cb7-345" aria-hidden="true" tabindex="-1"></a><span class="in">                              correlation = "pearson") |&gt;</span></span>
+<span id="cb7-346"><a href="#cb7-346" aria-hidden="true" tabindex="-1"></a><span class="in">  # Need to convert to df before creating to tinytable</span></span>
+<span id="cb7-347"><a href="#cb7-347" aria-hidden="true" tabindex="-1"></a><span class="in">  as.data.frame() </span></span>
+<span id="cb7-348"><a href="#cb7-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-349"><a href="#cb7-349" aria-hidden="true" tabindex="-1"></a><span class="in"># Add rownames to the data frame</span></span>
+<span id="cb7-350"><a href="#cb7-350" aria-hidden="true" tabindex="-1"></a><span class="in">rownames(pearsons_dissimilarity) &lt;- c("Name","Year","Weight","Height")</span></span>
+<span id="cb7-351"><a href="#cb7-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-352"><a href="#cb7-352" aria-hidden="true" tabindex="-1"></a><span class="in">  pearsons_table &lt;- pearsons_dissimilarity |&gt;</span></span>
+<span id="cb7-353"><a href="#cb7-353" aria-hidden="true" tabindex="-1"></a><span class="in">    tinytable::tt(digits = 3,</span></span>
+<span id="cb7-354"><a href="#cb7-354" aria-hidden="true" tabindex="-1"></a><span class="in">                caption = "Dissimilarity Coefficients Between Year, Weight(kg) and Height(cm) Using Pearson's r and the Halved Dissimilarity Formula",</span></span>
+<span id="cb7-355"><a href="#cb7-355" aria-hidden="true" tabindex="-1"></a><span class="in">                theme = "spacing",</span></span>
+<span id="cb7-356"><a href="#cb7-356" aria-hidden="true" tabindex="-1"></a><span class="in">                rownames = TRUE) |&gt;</span></span>
+<span id="cb7-357"><a href="#cb7-357" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::style_tt(align = "lcccc")</span></span>
+<span id="cb7-358"><a href="#cb7-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-359"><a href="#cb7-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-360"><a href="#cb7-360" aria-hidden="true" tabindex="-1"></a><span class="in">```{r absolute,echo = FALSE, eval = TRUE}</span></span>
+<span id="cb7-361"><a href="#cb7-361" aria-hidden="true" tabindex="-1"></a><span class="in">absolute_dissimilarity &lt;- cluster_dissimilarity(persons_df_with_year, </span></span>
+<span id="cb7-362"><a href="#cb7-362" aria-hidden="true" tabindex="-1"></a><span class="in">                              dissimilarity_method = "absolute",</span></span>
+<span id="cb7-363"><a href="#cb7-363" aria-hidden="true" tabindex="-1"></a><span class="in">                              correlation = "pearson") |&gt;</span></span>
+<span id="cb7-364"><a href="#cb7-364" aria-hidden="true" tabindex="-1"></a><span class="in">  # Need to convert to df before creating to tinytable</span></span>
+<span id="cb7-365"><a href="#cb7-365" aria-hidden="true" tabindex="-1"></a><span class="in">  as.data.frame() </span></span>
+<span id="cb7-366"><a href="#cb7-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-367"><a href="#cb7-367" aria-hidden="true" tabindex="-1"></a><span class="in">  absolute_table &lt;- absolute_dissimilarity |&gt;</span></span>
+<span id="cb7-368"><a href="#cb7-368" aria-hidden="true" tabindex="-1"></a><span class="in">    tinytable::tt(digits = 3,</span></span>
+<span id="cb7-369"><a href="#cb7-369" aria-hidden="true" tabindex="-1"></a><span class="in">                caption = "Dissimilarity Coefficients Using Pearson's r and the Absolute Dissimilarity Formula",</span></span>
+<span id="cb7-370"><a href="#cb7-370" aria-hidden="true" tabindex="-1"></a><span class="in">                theme = "spacing") |&gt;</span></span>
+<span id="cb7-371"><a href="#cb7-371" aria-hidden="true" tabindex="-1"></a><span class="in">  tinytable::style_tt(align = "lccc")</span></span>
+<span id="cb7-372"><a href="#cb7-372" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-373"><a href="#cb7-373" aria-hidden="true" tabindex="-1"></a>::: {.columns gap="4em"}</span>
+<span id="cb7-374"><a href="#cb7-374" aria-hidden="true" tabindex="-1"></a>::: {.column width="60%"}</span>
+<span id="cb7-375"><a href="#cb7-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r pearsons_table, echo=FALSE, results="asis"}</span></span>
+<span id="cb7-376"><a href="#cb7-376" aria-hidden="true" tabindex="-1"></a><span class="in">pearsons_table</span></span>
+<span id="cb7-377"><a href="#cb7-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-378"><a href="#cb7-378" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-379"><a href="#cb7-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-380"><a href="#cb7-380" aria-hidden="true" tabindex="-1"></a>::: {.column width="40%"}</span>
+<span id="cb7-381"><a href="#cb7-381" aria-hidden="true" tabindex="-1"></a><span class="in">```{r absolute_table, echo=FALSE, results="asis"}</span></span>
+<span id="cb7-382"><a href="#cb7-382" aria-hidden="true" tabindex="-1"></a><span class="in">absolute_table</span></span>
+<span id="cb7-383"><a href="#cb7-383" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-384"><a href="#cb7-384" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-385"><a href="#cb7-385" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-386"><a href="#cb7-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-387"><a href="#cb7-387" aria-hidden="true" tabindex="-1"></a><span class="fu">## r packages</span></span>
+<span id="cb7-388"><a href="#cb7-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-389"><a href="#cb7-389" aria-hidden="true" tabindex="-1"></a><span class="in">`cluster`</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -988,7 +2232,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <!-- <span class="faux-block"> [PGP public key](../../../pgp_jpm.asc.txt) &emsp;  Fingerprint:</strong><br><span class="fingerprint">6F8E F16C D290 19CE C37C  1C80 0D8D 4F29 935E C085</span></span> -->
 </div>
   </div>
-</footer>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 </body></html>

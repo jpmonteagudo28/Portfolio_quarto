@@ -3,3 +3,9 @@ dissimilarity
 example	
 unnamed-chunk-1	persons_data
 unnamed-chunk-2	
+euclidean	persons_data
+year	persons_data
+dissimiliary	persons_df_with_year
+absolute	cluster_dissimilarity	persons_df_with_year
+pearsons_table	pearsons_table
+absolute_table	absolute_table

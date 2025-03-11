@@ -9,7 +9,7 @@ format:
     code-tools: true
     code-overflow: wrap
     code-line-numbers: false
-    code-block-border-left: true
+    lightbox: true
 # doi: 
 citation: true
 draft: true
@@ -37,6 +37,9 @@ options(digits = 3,
         rlang__backtrace_on_error = "none")
 ```
 
+> The programs (together with their sources and the data sets used in
+the book) are available on floppy disks by writing to the authors.
+
 ## cluster analysis 
 
 The goal of cluster analysis is to find groups in the data. Sometimes groups are naturally present in the data, and sometimes they are artificially created. These groups are called clusters and the analyst tries to discover them using statistical techniques. Cluster analysis establishes the groups to which several data points belong. It does not assign objects to groups that have been defined in advance.
@@ -53,8 +56,8 @@ knitr::include_graphics("img/one_mode.png")
 
 ```
 
-Before the clusters are identified, the data needs to be transformed to make them suitable for cluster analysis. Why? Because depending on the units of our measurements,the grouping may be different. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.
-```{r example, echo = FALSE, eval = TRUE}
+Before the clusters are identified, the data needs to be transformed^[The aim of transforming the data is to assign equal weights to all variables, thus getting rid of relative weights across the board to achieve an objective comparison. However, some variables will, at times, be more important than other, and this matter should not be disregarded.] to make them suitable for cluster analysis. Why? Because depending on the units of our measurements, the grouping may be interpreted differently. For example, if we have a data set with the heights of people in centimeters and weights in kilograms, the clustering may be different than if we had the heights in inches and weights in pounds.
+```{r example, echo = TRUE, eval = TRUE}
 
 persons_data <- data.frame(
   Name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),
@@ -73,33 +76,314 @@ person_table <- persons_data |>
 person_table
 ```
 
-```{r, echo = FALSE, eval = FALSE}
+```{r, echo = TRUE, eval = FALSE}
 
 
 par(family = "serif")
 plot.new()
 plot.window(
-  xlim = range(persons_data$Weight),
-  ylim = range(persons_data$Height)
+  xlim = c(0,90),
+  ylim = c(0,200)
             )
 
 points(persons_data$Weight, persons_data$Height, pch = 19, col = "gray50")
 text(persons_data$Weight, persons_data$Height, labels = persons_data$Name, pos = 3, cex = 1.10)
 axis(1, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE)
 axis(2, at = seq(0, 200, 20), tcl = -0.05, labels = TRUE, las=2)
-mtext("Weight (kg)", side = 1, line = 2.5, at = c(80,-10), font = 2, cex = 1.2)
-mtext("Height (cm)", side = 2, line = -6.5, at = c(15,180),las = 2, font = 2, cex = 1.2)
+mtext("Weight (kg)", side = 1, line = 2.5, at = 80, font = 2, cex = 1.2)
+mtext("Height (cm)", side = 2, line = -6.5, at = 200,las = 2, font = 2, cex = 1.2)
+
+pounds <- persons_data$Weight * 2.20462
+inches <- persons_data$Height * 0.393701
+
+plot.new()
+plot.window(
+  xlim = c(0,200),
+  ylim = c(0,120)
+            )
+
+points(pounds,inches, pch = 19, col = "gray50")
+text(pounds, inches, labels = persons_data$Name, pos = 3, cex = 1.10)
+axis(1, at = seq(0, 200, 15), tcl = -0.05, labels = TRUE)
+axis(2, at = seq(0, 90, 15), tcl = -0.05, labels = TRUE, las=2)
+mtext("Weight (lbs)", side = 1, line = 2.5, at = 180, font = 2, cex = 1.2)
+mtext("Height (in)", side = 2, line = -6.5, at = 90,las = 2, font = 2, cex = 1.2)
 ```
 
 
-```{r, echo = FALSE}
-#|lightbox: true
-knitr::include_graphics("img/plot1.png")
+
+```{r, fig.show="hold", out.width="100%", echo = FALSE}
+
+knitr::include_graphics(c("img/plot1.png", "img/flatter.png"))
+```
+Notice in this example that the first plot offers a clearer natural partition of groups than the second plot. We can see that Charlie and Alice are most likely children while Diana, Bob and Eve are adults. The height of a person gives a better indication of adulthood than weight. So when we plot height in inches againts weight in pounds, weight becomes the dominant variable and the distinction between clusters become less clear.
+
+## variable selection
+
+What variables shall we choose? Should we standardize or use the raw data? To answer the first question, let me say that we should use variables that contain relevant information about each object. Sometimes these decisions will come down to common sense or expert knowledge. For example,using phone numbers, license plates,favorite colors,country flags,a variable where all rows are missing, etc., for each object is useless because none of these variable provide relevant information about the objects they represent. 
+
+The negative side effect of using such variables is that are clusters will fail to form because of the randomness introduced by these “trash” variables. The soultion here is to assign a weight or zero or remove them from our data. 
+
+To answer the standardization question– we should standardize the data prior to calculating disances if we think the units chosen were not appropriate or well thought-out measures and we'd like to assign weights to the variables. Additionally, if, based on prior knowledge, we would like to apply certain weights to each variable, we can standardize or just chnage the measurement units. However, if we'd like to keep the data intact because the measurements are meaningful, don't standardize.
+
+In our particular example, we'd like to avoid the dependence on measurement units, wso we standardize the data to convert the original measurements to uniteless variables. 
+
+$$
+\begin{split}
+m_{f} = \frac{1}{n} \sum_{x = 1}^{n}x_{f}   \\
+std_{f} = \sqrt{\frac{1}{n-1} \sum_{x = 1}^{n} (x_{f} - m_{f}^2)} \\
+\end{split}
+$$
+
+However,because the mean and standard deviation are affected by outliers, it is better to use the mean absolute deviation to calculate the standardized values. 
+$$
+\begin{split}
+s_{f} = \frac{1}{n} \sum_{x = 1}^{n}|x_{f}-m_{f}| \\
+z_{if} = \frac{x_{if} - m_{f}}{s_{f}}
+\end{split}
+$$
+Now our data have mean of zero and a mean absolute deviation of 1. We can begin using the standardized data instead of the original^[If every variable is expressed in the same units, there's no need for standardization.].
+
+## distance metrics
+Next, we find the distances between the objects to quantify their degree of dissimilarity. All distance function must satisfy the following requirements:
+
+$$
+\begin{split}
+d(i,j) \geq 0 \\
+d(i,i) = 0 \\
+d(i,j) = d(j,i)\\
+d(i,j) \leq d(i,h) + d(h,j)\\
+\end{split}
+$$
+So distances must be nonnegative numbers^[by the same token, we can only calculate distances for non-missing object pairs. $n$ is the total number of non-missing objects]. The distance of an object to itself must be zero. The distance between to objects is the same regardless of the order in which they are compared. And lastly, the distance between two objects is always less than or equal to the sum of the distances between the two objects and a third object.
+
+### euclidean distance
+
+$$
+\begin{split}
+d(i,j) = \sqrt{\sum_{n=1}^{p} (x_{in} - x_{jn})^2}
+\end{split}
+$$ 
+
+### manhattan distance
+
+$$
+\begin{split}
+d(i,j) = \sum_{n =1}^{p} |x_{in}-x_{jn}|
+\end{split}
+$$
+
+
+### minkowski distance  
+
+This is a generalization of the Euclidean and Manhattan metric, where $q$ is any real number larger than 1. 
+$$
+\begin{split}
+d(i,j) = {\sum_{n =1}^{p}|x_{in}-x_{jn}|^\frac{1}{q}}
+\end{split}
+$$
+
+
+### weighted euclidean distance
+
+A slight variation on the Euclidean distance where each variable receives a weight^[giving a variable a weight of 2 is the same thing as using it twice] according to its relative importance.
+$$
+\begin{split}
+d(i,j) = \sqrt{wn\sum_{n=1}^{p} (x_{in} - x_{jn})^2}
+\end{split}
+$$
+
+Here's the Euclidean and Manhattan distances for our previous example: 
+```{r euclidean, echo = TRUE,eval = TRUE}
+euclidean <- dist(persons_data[,2:3],
+                  method = "euclidean",
+                  diag = FALSE,
+                  upper = FALSE) |>
+  as.matrix() 
+
+# Keep only the lower triangle (excluding diagonal)
+euclidean[upper.tri(euclidean, diag = FALSE)] <- NA
+
+  euclidean <- euclidean |>
+    as.data.frame() |>
+    dplyr::rename(
+      Alice = 1,
+      Charlie = 2,
+      Diana = 3,
+      Bob = 4,
+      Eve = 5
+    ) 
+
+rownames(euclidean) <- persons_data$Name
+
+euclidean_table <- euclidean |>
+  tinytable::tt(
+    digits = 2,
+    caption = "Euclidean Distance of Unstandardized Weight(kg) and Height(cm) for five people",
+     theme = "spacing",
+    rownames = TRUE
+    ) |>
+  style_tt(align = "c",
+           boostrap_class = "table table-hover")
+
+euclidean_table
+
+manhattan <- dist(persons_data[,2:3],
+                  method = "manhattan",
+                  diag = FALSE,
+                  upper = FALSE) |>
+  as.matrix() 
+
+manhattan[upper.tri(manhattan, diag = FALSE)] <- NA
+
+  manhattan <- manhattan |>
+    as.data.frame() |>
+    dplyr::rename(
+      Alice = 1,
+      Charlie = 2,
+      Diana = 3,
+      Bob = 4,
+      Eve = 5
+    ) 
+
+rownames(manhattan) <- persons_data$Name
+
+manhattan_table <- manhattan |>
+  tinytable::tt(
+    digits = 2,
+    caption = "Manhattan Distance of Unstandardized Weight(kg) and Height(cm) for five people",
+     theme = "spacing",
+    rownames = TRUE
+    ) |>
+  style_tt(align = "c",
+           boostrap_class = "table table-hover")
+
+manhattan_table
+```
+Notice that regardless of the distance metric used, the groups are comparably the same. However, this matrix doesn't clearly show the cluster structure of our data like the bivariate scatterplot. Nevertheless, this is the matrix our clustering algorithm works with. 
+
+
+## dissimilarities
+
+We refer to the many possibilities that can function as a distance matrix as *dissimilarities*. Dissimilarity coefficients must be nonnegative numbers that are small when $i$ and $j$ are near to each other and large when they are very different. Dissimilarities can be computed for binary, nominal, ordinal, interval, and continuous variables, or a combination of these. 
+
+One such dissimilarity index is Pearson's product-moment coefficient^[. Pearson's *r* looks for a linear relationship between two variables while Spearman's rho looks for a monotonic relationship, not a linear one.] or Spearman's rho. These correlation coefficients can be converted to dissimilarities
+
+$$
+\begin{split}
+R(f,g) = \frac{\sum_{i=1}^{n} (x_{if} - m_{f})(X_{ig} - m_{g})}{\sqrt{\sum_{i=1}^{n} (x_{if} - m_{f})^2} \sqrt{\sum_{i=1}^{n} (x_{ig} - m_{g})^2}} \\ 
+\\
+\\
+d(f,g) = (1 - R(f,g))/2
+\end{split}
+$$
+Using the previous formula for $d(f,g)$, we see that variables with a high positive correlation will have a dissimilarity coefficient close to zero while variables with a high negative correlation will be very dissimilar. Another formula that's available is the following:
+
+$$
+\begin{split}
+d(f,g) = 1 - |R(f,g)|
+\end{split}
+$$
+
+By adding a third variable, `Year`, to represent each person's birth year, we can compute a dissimilarity matrix that shows how different or distant is the birth year from the weight and height of each person. The resulting matrix would help us determine how many groups and which members to include in each group. 
+
+```{r year, echo = TRUE, eval = TRUE}
+
+persons_df_with_year <- persons_data |>
+  dplyr::mutate(
+    Year = c(2018,
+             1999,
+             2020,
+             1889,
+             2003),
+    .before  = 2
+  ) 
+
+year_table <- persons_df_with_year |>
+  tinytable::tt(digits = 0,
+                caption = "Birth Year, Weight(kg) and Height(cm) of Five People, expressed in Kilograms and Centimeters",
+                theme = "spacing") |>
+  tinytable::style_tt(align = "lccc")
+
+year_table
 ```
 
-> The programs (together with their sources and the data sets used in
-the book) are available on floppy disks by writing to the authors.
+Let's come up with the dissimilarity matrix for these data using the two dissimilarity formulas we've looked at. 
 
+```{r, dissimiliary, echo = TRUE, eval = TRUE}
+
+cluster_dissimilarity <- function(x, 
+                                  dissimilarity_method = c("halved","absolute"),
+                                  correlation = c("pearson","spearman")
+                                  ){
+  
+  # Stop if not a matrix or data frame
+  stopifnot(is.matrix(x) || is.data.frame(x))
+  
+  # If function args don't match these, stop.
+  dissimilarity_method <- match.arg(dissimilarity_method)
+  correlation <- match.arg(correlation)
+  
+  # Just in case any columns are strings or factors, 
+  # convert df to numeric to compute correlation
+  x <- data.matrix(x)
+  
+  cor_coeff <- cor(x,method = correlation)
+  
+  dissimilarity_coeff <- switch(dissimilarity_method,
+     "halved"  = (1 - cor_coeff)/2,
+     "absolute"= 1 - abs(cor_coeff)
+  )
+  
+  # remove redundant correlations
+  dissimilarity_coeff[upper.tri(dissimilarity_coeff, diag = FALSE)] <- NA
+  
+  return(dissimilarity_coeff)
+}
+
+pearsons_dissimilarity <- cluster_dissimilarity(persons_df_with_year, 
+                              dissimilarity_method = "halved",
+                              correlation = "pearson") |>
+  # Need to convert to df before creating to tinytable
+  as.data.frame() 
+
+# Add rownames to the data frame
+rownames(pearsons_dissimilarity) <- c("Name","Year","Weight","Height")
+
+  pearsons_table <- pearsons_dissimilarity |>
+    tinytable::tt(digits = 3,
+                caption = "Dissimilarity Coefficients Between Year, Weight(kg) and Height(cm) Using Pearson's r and the Halved Dissimilarity Formula",
+                theme = "spacing",
+                rownames = TRUE) |>
+  tinytable::style_tt(align = "lcccc")
+```
+
+```{r absolute,echo = FALSE, eval = TRUE}
+absolute_dissimilarity <- cluster_dissimilarity(persons_df_with_year, 
+                              dissimilarity_method = "absolute",
+                              correlation = "pearson") |>
+  # Need to convert to df before creating to tinytable
+  as.data.frame() 
+
+  absolute_table <- absolute_dissimilarity |>
+    tinytable::tt(digits = 3,
+                caption = "Dissimilarity Coefficients Using Pearson's r and the Absolute Dissimilarity Formula",
+                theme = "spacing") |>
+  tinytable::style_tt(align = "lccc")
+```
+::: {.columns gap="4em"}
+::: {.column width="60%"}
+```{r pearsons_table, echo=FALSE, results="asis"}
+pearsons_table
+```
+:::
+
+::: {.column width="40%"}
+```{r absolute_table, echo=FALSE, results="asis"}
+absolute_table
+```
+:::
+:::
 
 ## r packages
 
