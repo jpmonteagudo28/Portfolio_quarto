@@ -144,6 +144,10 @@ z_{if} = \frac{x_{if} - m_{f}}{s_{f}}
 $$
 Now our data have mean of zero and a mean absolute deviation of 1. We can begin using the standardized data instead of the original^[If every variable is expressed in the same units, there's no need for standardization.].
 
+### other variables
+
+
+
 ## distance metrics
 Next, we find the distances between the objects to quantify their degree of dissimilarity. All distance function must satisfy the following requirements:
 
@@ -265,7 +269,7 @@ Notice that regardless of the distance metric used, the groups are comparably th
 
 ## dissimilarities
 
-We refer to the many possibilities that can function as a distance matrix as *dissimilarities*. Dissimilarity coefficients must be nonnegative numbers that are small when $i$ and $j$ are near to each other and large when they are very different. Dissimilarities can be computed for binary, nominal, ordinal, interval, and continuous variables, or a combination of these. 
+We refer to the many possibilities that can function as a distance matrix as *dissimilarities*. Dissimilarity coefficients must be non-negative numbers that are small when $i$ and $j$ are near to each other and large when they are very different. Dissimilarities can be computed for binary, nominal, ordinal, interval, and continuous variables, or a combination of these. 
 
 One such dissimilarity index is Pearson's product-moment coefficient^[. Pearson's *r* looks for a linear relationship between two variables while Spearman's rho looks for a monotonic relationship, not a linear one.] or Spearman's rho. These correlation coefficients can be converted to dissimilarities
 
@@ -384,6 +388,26 @@ absolute_table
 ```
 :::
 :::
+
+Note that either formula should give us approximately equal dissimilarity matrices, which is the case here.
+
+## similarities
+
+It is also possible to indicate how close two objects $i$ and $j$ are using similarity coefficients. The more alike the two objects are, the larger their similarity, $s(i,j)$. The similarity coefficient takes on values between 0 and 1, where 0 means that $i$ and $j$ are not similar at all and  reflects perfect similarity or sameness. For accurate similarity, the following conditions must hold:
+
+$$
+\begin{split}
+0 \leq s(i,j) \leq 1 \\
+s(i,i) = 1\\
+s(i,j) = s(j,i) \\
+\end{split}
+$$
+The table of similarity coefficients is called a similarity matrix just a dissimilarity matrix is used for dissimilarity coefficients. 
+
+If you thought that we can simply use Pearson's r or Spearman's $\rho$ for the similarity coefficient, you would unfortunately be wrong. Remember that these coefficients also take on negative values. We must transform them in order to bring them to the [0,1] range. 
+
+  * If variables with a strong negative correlation are considered to be very different because they're oriented in the opposite direction, then we should use: $s(f,g) = \frac{(1 + R(f,g))}{2}$ which returns $s(f,g) = 1$ when $R(f,g) = 1$. 
+  * When veriables with a strong negative correlation should be grouped– when they measure the same construct– we should use this formula: $s(f,g) = |R(f,g)|$ which returns $s(f,g) = 1$ when $R(f,g) = -1$. 
 
 ## r packages
 
