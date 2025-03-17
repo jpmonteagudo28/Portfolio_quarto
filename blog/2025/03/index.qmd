@@ -144,9 +144,6 @@ z_{if} = \frac{x_{if} - m_{f}}{s_{f}}
 $$
 Now our data have mean of zero and a mean absolute deviation of 1. We can begin using the standardized data instead of the original^[If every variable is expressed in the same units, there's no need for standardization.].
 
-### other variables
-
-
 
 ## distance metrics
 Next, we find the distances between the objects to quantify their degree of dissimilarity. All distance function must satisfy the following requirements:
@@ -402,12 +399,24 @@ s(i,i) = 1\\
 s(i,j) = s(j,i) \\
 \end{split}
 $$
-The table of similarity coefficients is called a similarity matrix just a dissimilarity matrix is used for dissimilarity coefficients. 
+The table of similarity coefficients is called a similarity matrix and,like a dissimilarity matrix is used to store similarity coefficients. 
 
 If you thought that we can simply use Pearson's r or Spearman's $\rho$ for the similarity coefficient, you would unfortunately be wrong. Remember that these coefficients also take on negative values. We must transform them in order to bring them to the [0,1] range. 
 
   * If variables with a strong negative correlation are considered to be very different because they're oriented in the opposite direction, then we should use: $s(f,g) = \frac{(1 + R(f,g))}{2}$ which returns $s(f,g) = 1$ when $R(f,g) = 1$. 
   * When veriables with a strong negative correlation should be grouped– when they measure the same construct– we should use this formula: $s(f,g) = |R(f,g)|$ which returns $s(f,g) = 1$ when $R(f,g) = -1$. 
+  
+### other variables
+
+#### binary 
+
+When a variable can only take two possible outcomes–presence or absence of an attribute–, we don't use standardization; however, we can still assign weights to the ones we consider more important. We can still calculate dissimilarity coefficients, but now our matrix would be a $2 \times 2$ contingency table where each variable represents the attribute combination for each pair. 
+
+```{r binary, echo = FALSE, eval = TRUE}
+knitr::include_graphics(("img/binary.png"))
+```
+
+
 
 ## r packages
 

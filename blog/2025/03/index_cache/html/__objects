@@ -9,3 +9,4 @@ dissimiliary	cluster_dissimilarity	pearsons_dissimilarity	pearsons_table
 absolute	absolute_dissimilarity	absolute_table
 pearsons_table	
 absolute_table	
+binary	
